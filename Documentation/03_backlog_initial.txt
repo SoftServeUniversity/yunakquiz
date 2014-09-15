@@ -1,0 +1,33 @@
+As a Guest I need to be able to use main page to be able to navigate
+As a Guest I need to be able to use main page layout with to be able to change interface language at any time.
+As a Guest I need to be able to use categories page to be able to look through their contents
+As a Guest I need to be able to use subcategories page to be able to find specific test
+As a Guest I need to be able to use search results page to able to look though results or paginated results it lots of them are.
+As a Guest I need to be able to use advances search page to be able to filter results by categories, tags, word, etc.
+As a Guest I need to be able to use page where I can take a test to be able to mark my answers, press pass button, to see breadcrumb way to the test and name of current test.
+As a Guest I need to be able to use passed tests results page where I can see general score, correct and wrong answers, information about correct answer and buttons to go back and to pass test again
+As a Guest I need to be able to use login dialog I order to be able to become registered in the system
+As a Guest I need to be able to use sign up ( registration ) dialog I order to be able to become registered in the system and have my information present there.
+As a Guest I need to be able to use contacts page of site administration, moderators etc. to be able to communicate with them.
+As a Guest I need to be able to use statistics page for specific test to be interested with passing this test with top score.
+As a Guest I need to be able to use statistics for specified category/subcategory to be interested to become better.
+As a Guest I need to be able to use general statistics for personal tests of some user.
+As a Guest I need to be able to use general statistics to be able to research dig data.
+
+
+As a user I must to be able to use personal page to be able to look, edit personal information and delete my account.
+As a user I must to be able to use profile of other user with relative to others information.
+As a user I must to be able to use list of my own tests to be able to to be able to use their moderation status, get into statistics page of them, edit any test, filter through my tests, delete them and press add test button.
+As a user I must to be able to use page where I can create test to be able to add any number of question, any number of answers to them, specify any number of correct answers and finally save test, save and send for moderation or cancel creation of the test. Tests should have q/a, category, subcategory and tags.
+As a user I must to be able to use page where I can edit my test in order to send it for review also I can see moderators recommendations history here.
+As a user I must to be able to use page with FAQ in order not to bother admins/moderators.
+
+
+As a moderator I need to be able to use page with list of test for moderation in order to filter my category and check them.
+As a moderator I need to be able to use page where I can look through the test, edit it (q/a, category etc ), make moderators notes, publish it in my category or send it for revision.
+As a moderator I need to be able to use page with ability to filter through all tests by categories etc. in order to edit them, change its category etc.
+
+
+As an administrator I need to be able to use page with the list of users in order to filter, search and edit users in order to manage them, confirm etc.
+As an administrator I need to be able to use dialog for user edit in order to mark him/her, confirm or edit personal information.
+As an administrator I need to be able to use page with tabs to manage categories and subcategories, activation of db backup scripts, localization options, site static pages content, heading, footers content etc in order to have flexible site.

@@ -1,0 +1,13 @@
+Feature: Attempts statistics page
+    In order to learn about attempts statistics
+    User want to view attempts statistics page
+    
+    Scenario: View attempts statistics page
+        Given User directed to attempts statistics page
+        When User opened attempts statistics page
+        Then user should see "Система Пластових електронних опитників" title
+        And user should see navigation menu
+        And user should see login status block
+        And user should see "Загальна статистика системи" page title
+        And user should see attempts statistics module
+        And user should see footer menu with copyright info
