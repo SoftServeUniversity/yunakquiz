@@ -15,7 +15,7 @@ Feature: Administrative Panel, Tests category Bookmark
         And site navigation menu
         And navigation menu of Administration panel with tests category as active bookmark 
         And descending list of tests category with "Add new category" button  
-        |№ number| |Category name| |Parentness category| |"Edit category" button| |"Delete category" button|
+        | № number | Category name | Parentness category | "Edit category" button | "Delete category" button |
         And in the bottom of page i see footer menu
         
     Scenario: Open Administration panel, Tests category Bookmark as an user without administration privileges
