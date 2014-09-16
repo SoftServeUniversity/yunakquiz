@@ -10,7 +10,7 @@ Feature: Search enine for tests
         And site navigation menu 
         And I see name of current page "Guest Search"
         And text input form with "Search" button
-        And button "Extended search"
+        And button "Advanced search"
         And in the bottom of page i see footer menu
     
     Scenario: Search keyword 
