@@ -62,4 +62,4 @@ Feature: Creating of new test page
     Scenario: Saving test to drafts without filling all fields 
         Given filled not all fields
         When I push "Save as draft"
-        Then fields that were not filled will have red border
+        Then I see my cabinet page
