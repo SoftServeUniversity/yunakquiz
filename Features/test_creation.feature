@@ -26,12 +26,12 @@ Feature: Creating of new test page
     
     Scenario: Sending new test for moderator with filling all fields
         Given filled all fields 
-        And push button "Send to moderator"
+        When push button "Send to moderator"
         Then you will be relocated to user cabinet
         
     Scenario: Sending new test for moderator without filling all fields
         Given filled not all fields
-        And push button "Send to moderator"
+        When push button "Send to moderator"
         Then fields that were not filled will have red border
         
     Scenario: Adding new question to the test
@@ -56,10 +56,10 @@ Feature: Creating of new test page
         
     Scenario: Saving test to drafts with filling all fields 
         Given I fill all fields in the test
-        And I push "Save as draft"
+        When I push "Save as draft"
         Then I see my cabinet page
         
     Scenario: Saving test to drafts without filling all fields 
         Given filled not all fields
-        And I push "Save as draft"
+        When I push "Save as draft"
         Then fields that were not filled will have red border
