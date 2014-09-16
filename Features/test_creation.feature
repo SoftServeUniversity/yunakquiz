@@ -32,7 +32,7 @@ Feature: Creating of new test page
     Scenario: Sending new test for moderator without filling all fields
         Given filled not all fields
         And push button "Send to moderator"
-        Then fields that weren't filled would have red border
+        Then fields that were not filled will have red border
         
     Scenario: Adding new question to the test
         Given push button "Add new question" 
@@ -41,24 +41,25 @@ Feature: Creating of new test page
      Scenario: Removing question from the test
         Given push button "Remove test"   
         Then I don't see form for question
-           
-    
-    Scenario: Removing test question 
-        Given
-        When
-        Then
         
     Scenario: Choosing right answer for question
-        Given
-        When
-        Then
+        Given I push the "Right answer" button on the answer field 
+        Then I see green checkmark near field
         
-    Scenario: Adding answer for test
-        Given
-        When
-        Then
+    Scenario: Adding answer for question
+        Given I push "Add answer" button
+        Then I see new answer field under the old one
         
-    Scenario: Saving test to drafts
-        Given
-        When
-        Then
+    Scenario: Removing answer for question
+        Given I push "Remove answer" button
+        Then that answer is deleted from field
+        
+    Scenario: Saving test to drafts with filling all fields 
+        Given I fill all fields in the test
+        And I push "Save as draft"
+        Then I see my cabinet page
+        
+    Scenario: Saving test to drafts without filling all fields 
+        Given filled not all fields
+        And I push "Save as draft"
+        Then fields that were not filled will have red border
