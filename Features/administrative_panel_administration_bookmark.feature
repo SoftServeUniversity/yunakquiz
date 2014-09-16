@@ -15,7 +15,7 @@ Feature: Administration panel, administration bookmark
         And site navigation menu
         And navigation menu of Administration panel with administration as active bookmark 
         And list of administration and moderator privileges users and all their information 
-        |Name of user| |Email of user| |Status| |"Change status" button| |"Delete user" button|
+        | Name of user | Email of user| Status| "Change status" button | "Delete user" button |
         And in the bottom of page i see footer menu
         
     Scenario: Open Administration panel, administration bookmark as an user without administration privileges
