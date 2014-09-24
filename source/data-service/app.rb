@@ -17,17 +17,17 @@ module PlastApp
 
     get '/assessments' do
       content_type :json
-      [{id: 1, name: 'assessments 1'}, {id: 2, name: 'assessments 2'}].to_json
+      [{id: 1, name: 'assessment 1'}, {id: 2, name: 'assessment 2'}].to_json
     end
 
     put '/assessments' do
       content_type :json
-      {response: 'Added an assessments'}.to_json
+      {response: 'Added an assessment'}.to_json
     end
 
     post '/assessments/:id' do
       content_type :json
-      {response: "Updated to #{params['id']} assessments"}.to_json
+      {response: "Updated to #{params['id']} assessment"}.to_json
     end
 
     delete '/assessments/:id' do
