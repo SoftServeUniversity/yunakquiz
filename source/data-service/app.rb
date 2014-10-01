@@ -5,11 +5,17 @@ module PlastApp
   require 'rubygems'
   require 'mongo'
   require 'json/ext' # required for .to_json
-
+  require 'sinatra/cross_origin'
+  
   require 'sinatra/asset_pipeline'
 
   class YunakQuiz < Sinatra::Base
     register Sinatra::AssetPipeline
+    register Sinatra::CrossOrigin
+
+    configure do
+      enable :cross_origin
+    end
 
     get '/' do
       erb :index
