@@ -1,30 +1,131 @@
 /* app css stylesheet */
-
-.menu {
+/*styles used in homepage*/
+.outer-wraper{
+  width: 100%;
+  height: 100%;
+}
+.inner-wraper{
+  margin-left: auto;
+  margin-right: auto;
+}
+.header-menu-container{
+  position: relative;
+  padding: 10px;
+}
+.page-header h4{
+  font-size: 1.9em;
+}
+.navmenu {
+  margin-left: 10%;
+}
+.navmenu ul  {
+  text-decoration: none;
+ }
+.navmenu li {
   list-style: none;
-  border-bottom: 0.1em solid black;
-  margin-bottom: 2em;
-  padding: 0 0 0.5em;
+  display: inline-block;
+  margin-left: 15px;
+  margin-right: 15px;
+}
+.navmenu li a {
+  font-size: 1.5em;
+  color: #5bc0de;
 }
 
-.menu:before {
-  content: "[";
+.navmenu li a:hover  {
+  text-decoration: none;
+  color: #0490ba;
+ }
+a:active, a:focus {
+  background-color: #eee;
+  text-decoration: none;
+  outline: 0;
 }
+.login-header-menu{
+  position:absolute;
+  right:5px;
+  top:10px;
+}
+.footer-menu-container{
+  font-size: 0.8em;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  height: 60px;
+  position: absolute;
+  bottom: 0;
+  text-align: center;
+}
+.footer-menu {
+  width:  202px;
+  height: 20px;
+  margin: 10px auto 0px;
+}
+.footer-menu li {
+  list-style: none;
+  display: inline-block;
+  color: #5bc0de;
+}
+.footer-menu ul {
+  padding-left: 0px;
+}
+.about-test-quotation{
+  border-left: 2px solid #ccc; 
+  margin-left: 20px; 
+  padding-left: 10px
+}
+.quiz-description{
+  font: 18px italic arial;     
+  color: #9b9a9a;
+}
+.pageTitleBox {
+  height: 50px;
+  margin-bottom: 20px;
+}
+.pageTitle {
+  margin-bottom: 15px;
+  margin-top: 15px;
+  text-align: center;
+}
+.quote-author {
+  color:#a5a1a1;
+}
+ body {
+  margin-bottom: 60px;
+ }
+ html {
+  position: relative;
+  min-height: 100%;
+}
+/*eof of styles in homepage*/
 
-.menu:after {
-  content: "]";
+/*Category container*/
+.triangle-topright {
+    width: 0;
+    height: 0;
+    border-top: 15px solid rgb(6,106,255);
+    border-left: 15px solid transparent;
 }
-
-.menu > li {
-  display: inline;
+.rectangle {
+    color:white;
+    position: relative;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 2px;
+    display: block;
+    width: 100px;
+    height: 23px;
+    overflow: hidden;
+    background: rgb(74,147,255);
+    text-align: center;
+    z-index: 2;
 }
-
-.menu > li:before {
-  content: "|";
-  padding-right: 0.3em;
+.categories-container{
+  border: 1px solid #ccc;
+  padding: 18px 20px 0px;
+  margin-bottom: 30px;
+  margin-top: -25px;
+  margin-left: 14px;
+  z-index: 1;
 }
-
-.menu > li:nth-child(1):before {
-  content: "";
-  padding: 0;
-}
+/* eof Category container*/

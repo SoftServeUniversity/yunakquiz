@@ -1,0 +1,25 @@
+<div class="container">
+	<br> 
+	<br> 
+	<br> 
+	<div class="col-lg-3 col-md-3 col-sm-5 col-xs-5 col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-xs-offset-1" ng-repeat="parCat in parCategories">
+		<div class="row"> 
+			<div class="col-xs-12 col-sm-12 "> 
+				<div class="col-lg-10 col-sm-10 ">
+					<span class="rectangle">{{parCat.parCatName}}</span>
+					<div class="triangle-topright"></div>
+					<div class="row categories-container">
+						<ul class="list-unstyled  col-sm-offset-1 ">
+							<li>
+								<a href="#"class=""> Тестів:  {{(parCat.subCatNames).length}} </a>
+							</li>
+							<li ng-repeat="subCategory in parCat.subCatNames">
+								<a href="#">{{subCategory}}</a>
+							</li>
+						</ul> 
+					</div>
+				</div> 
+			</div>
+		</div>
+	</div>
+</div>

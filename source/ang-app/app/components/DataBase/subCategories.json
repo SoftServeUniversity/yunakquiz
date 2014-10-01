@@ -1,0 +1,64 @@
+{ "Футбол"	:	{"subCatName"	:	"Футбол",
+				 "measuresID"	:	["ID1",
+									 "ID2",
+									 "ID3"
+			],
+				"parCatName"	:	 "Спорт"
+	},
+  "Хокей"	:	{"subCatName"	:	 "Хокей",
+				 "measuresID"	:	["ID3",
+									 "ID4",
+									 "ID5"
+			],
+				 "parCatName"	:	"Спорт"
+	},
+  "Баскетбол"	:	{"subCatName"	:	"Баскетбол",
+					 "measuresID"	:	["ID6",
+										 "ID7",
+										 "ID8"
+					],
+					"parCatName"	:	"Спорт"
+  },
+  "Країни"	:	{"subCatName"	:	"Країни",
+				 "measuresID"	:	["ID9",
+									 "ID10",
+									 "ID11"
+				],
+				 "parCatName"	:	"Туризм"
+  },
+  "Підкатегорія1.1"	:	{"subCatName"	:	"Підкатегорія1.1",
+						 "measuresID"	:	["ID12",
+											 "ID13",
+											 "ID14"
+						],
+						 "parCatName"	:	"Туризм"
+  },
+  "Підкатегорія2.1"	:	{"subCatName"	:	"Підкатегорія2.1",
+						 "measuresID"	:	["ID15",
+											 "ID16",
+											 "ID17"
+						],
+						 "parCatName"	:	"Туризм"
+ },
+  "Підкатегорія1.2"	:	{"subCatName"	:	"Підкатегорія1.2",
+						 "measuresID"	:	["ID21",
+											 "ID22",
+											 "ID23"
+						],
+						 "parCatName"	:	"Комп’ютери" 
+	},
+  "Підкатегорія2.2"	:	{"subCatName"	:	"Підкатегорія2.2",
+						 "measuresID"	:	["ID24",
+											 "ID25",
+											 "ID26"
+						],
+						 "parCatName"	:	"Комп’ютери"
+	},
+  "Підкатегорія3.2"	:	{"subCatName"	:	"Підкатегорія3.2",
+						 "measuresID"	:	["ID24",
+											 "ID25",
+											 "ID26"
+						],
+						 "parCatName"	:	"Комп’ютери"
+	},
+}

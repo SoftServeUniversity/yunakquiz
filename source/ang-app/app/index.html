@@ -11,32 +11,42 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="bower_components/html5-boilerplate/css/normalize.css">
   <link rel="stylesheet" href="bower_components/html5-boilerplate/css/main.css">
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
   <link rel="stylesheet" href="app.css"/>
   <script src="bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"></script>
 </head>
 <body>
-  <ul class="menu">
-    <li><a href="#/measures">Measures</a></li>
-    <li><a href="#/assessments/1">Pass an assessment</a></li>
-    <li><a href="#/auth/signup">Sign up</a></li>
-    <li><a href="#/auth/login">Login User</a></li>
-  </ul>
+  <div class="outer-wraper container">
+    <div class="inner-wraper container ">
+      <header-menu></header-menu> 
+      <div ng-view></div>
+    </div>
+    <div ng-include src="'modules/layouts/footer.html'"></div>  
+  </div>
 
   <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
   <![endif]-->
 
-  <div ng-view></div>
-
-  <div>App version: v<span app-version></span></div>
+  
 
   <!-- In production use:
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
   -->
   <script src="bower_components/angular/angular.js"></script>
   <script src="bower_components/angular-route/angular-route.js"></script>
+  <script src="bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   <script src="app.js"></script>
   <script src="modules/measures/measures.js"></script>
+  <script src="modules/header-menu/header-menu.js"></script>
+  <script src="modules/guest-search/guest-search.js"></script>
+  <script src="modules/contacts/contacts.js"></script>
+  <script src="modules/statistics/statistics.js"></script>
+  <script src="modules/about-us/about-us.js"></script>
+  <script src="modules/categories-container/categories-container.js"></script>
+  <script src="modules/subcategory/subcategory.js"></script>
   <script src="modules/assessments/assessments.js"></script>
   <script src="modules/users/users.js"></script>
   <script src="modules/sessions/sessions.js"></script>
