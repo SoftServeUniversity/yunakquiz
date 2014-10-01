@@ -1,0 +1,32 @@
+<h1>Result page </h1>
+<h2 ng-bind="assessmentResult.name"></h2>
+
+<a href=""> Category </a>
+<a href=""> SubCategory </a>
+
+<div>
+	<h3>Твій вислід: <span>{{counter}}</span> зі <span>100</span> балів!</h3>
+	<div></div>
+</div>
+<ol class="assessmentQuestions">
+	<li ng-repeat="question in assessmentResult.questions"  
+	ng-class="{'assessmentAnswerCorrect': question.correct,'assessmentAnswerUncorrect': !question.correct}"> 
+		<h3>{{question.title}}</h3>
+		<h5>Ваша відповідь:</h5>
+		<ul>
+			<li ng-repeat="answer in question.answers | filter:{checked:true}"> {{answer.title}}</li>
+		</ul>
+		<h5>Правильна відповідь:</h5>
+		<ul >
+		<li ng-repeat="answer in question.answers | filter:{correct:true}"> {{answer.title}}</li>
+		</ul>
+		<p>Пояснення: {{question.description}}</p>
+	</li>
+</ol>
+
+<button ng-click="redirectToAssessment()">Pass again</button> 
+
+<p>
+  Showing of 'interpolate' filter:
+  {{ 'Current version is v%VERSION%.' | interpolate }}
+</p>
