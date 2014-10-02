@@ -1,3 +1,5 @@
+<div class="row">
+<div class="col-md-12">
 <h1 ng-bind="assessment.name"></h1>
 
 <a href=""> Category </a>
@@ -5,20 +7,21 @@
 <a href=""> SubCategory </a>
 
 <p ng-bind="assessment.description"></p>
-<ol class="assessmentQuestions">
-	<li ng-repeat="question in assessment.questions" ng-class="{'assessmentQuestionInvalid':question.invalid}"> 
+<ul class="list-group assessmentQuestion">
+	<li ng-repeat="question in assessment.questions" ng-class="{'list-group-item-danger':question.invalid}"  class="list-group-item" > 
 		<p>{{question.title}}</p>
 		
 
-		<ol class="assessmentAnswers">
-			<li ng-repeat="answer in question.answers" ng-click="checkAnswer(answer,question)" ng-class="{'assessmentAnswerChecked':answer.checked}"> {{answer.title}}</li>
-		</ol>
+		<ul class="list-group assessmentAnswer">
+			<li ng-repeat="answer in question.answers" ng-click="checkAnswer(answer,question)" ng-class="{'list-group-item-info':answer.checked}" class="list-group-item"> {{answer.title}}</li>
+		</ul>
 	</li>
-</ol>
+</ul>
 
-<button ng-click="passAssessment()">Pass assessment</button> 
+<button ng-click="passAssessment()" class="btn btn-primary" role="button">Pass assessment</button> 
 
 <p>
   Showing of 'interpolate' filter:
   {{ 'Current version is v%VERSION%.' | interpolate }}
 </p>
+</div></div>
