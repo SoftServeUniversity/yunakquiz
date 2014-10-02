@@ -1,3 +1,4 @@
+<div class="jumbotron">
 <h1>Result page </h1>
 <h2 ng-bind="assessmentResult.name"></h2>
 
@@ -10,7 +11,6 @@
   		<div class="progress-bar" role="progressbar" aria-valuenow="{{counter}}" aria-valuemin="0" aria-valuemax="100" style="width: {{counter}}%;">{{counter}}%
   		</div>
 	</div>
-</div>
 </div>
 <ul class="list-group assessmentQuestion">
 	<li ng-repeat="question in assessmentResult.questions"  
