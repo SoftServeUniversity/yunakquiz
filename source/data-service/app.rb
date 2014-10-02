@@ -30,6 +30,21 @@ module PlastApp
       {response: "Updated to #{params['id']} assessment"}.to_json
     end
 
+     get '/assessments/:id' do
+      content_type :json
+
+      myObj = {
+        'title' => Assessment.find(params['id']).title,
+        'questions' => Assessment.find(params['id']).questions.select("id, title").as_json,
+         }
+
+      myObj['questions'].each_with_index do |value, index|
+             value['answers'] = Question.find(value['id']).answers.select("id, title").as_json
+          end
+      
+       JSON.pretty_generate(myObj) 
+    end
+
     delete '/assessments/:id' do
       content_type :json
       {response: "Assessment #{params['id']} has been deleted"}.to_json
