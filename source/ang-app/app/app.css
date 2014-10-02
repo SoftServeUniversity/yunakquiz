@@ -15,24 +15,24 @@
 .page-header h4{
   font-size: 1.9em;
 }
-.navmenu {
+.header-navmenu {
   margin-left: 10%;
 }
-.navmenu ul  {
+.header-navmenu ul  {
   text-decoration: none;
  }
-.navmenu li {
+.header-navmenu li {
   list-style: none;
   display: inline-block;
   margin-left: 15px;
   margin-right: 15px;
 }
-.navmenu li a {
+.header-navmenu li a {
   font-size: 1.5em;
   color: #5bc0de;
 }
 
-.navmenu li a:hover  {
+.header-navmenu li a:hover  {
   text-decoration: none;
   color: #0490ba;
  }
@@ -51,7 +51,7 @@ a:active, a:focus {
   margin-left: auto;
   margin-right: auto;
   width: 100%;
-  height: 60px;
+  height: 80px;
   position: absolute;
   bottom: 0;
   text-align: center;
@@ -91,7 +91,7 @@ a:active, a:focus {
   color:#a5a1a1;
 }
  body {
-  margin-bottom: 60px;
+  margin-bottom: 100px;
  }
  html {
   position: relative;

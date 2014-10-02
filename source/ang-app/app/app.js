@@ -10,21 +10,17 @@ angular.module('yunakQuiz', [
   'yunakQuiz.version',
   'yunakQuiz.headerMenu',
   'yunakQuiz.guestSearch',
-  'yunakQuiz.contacts',
   'yunakQuiz.statistics',
-  'yunakQuiz.aboutUs',
+  'yunakQuiz.staticPartialsRoute',
   'yunakQuiz.categoriesContainer',
-  'yunakQuiz.subcategoryContainer'
+  'yunakQuiz.subcategory'
 ]).config(['$routeProvider',
   	  function($routeProvider) {
     		$routeProvider.
       		  when('/', {
-        		templateUrl: 'modules/layouts/home-page-greetings.html',
+        		templateUrl: 'modules/partials/home-page-greetings.html',
       		  }).
       		  otherwise({
         	  redirectTo: '/'
       });
-  }]);/*.
-config(['$routeProvider', function($routeProvider) {
-  $routeProvider.otherwise({redirectTo: '/measures'});
-}]);*/
+  }]);
