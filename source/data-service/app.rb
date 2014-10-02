@@ -65,6 +65,7 @@ module PlastApp
 
       myObj = {
         'title' => Assessment.find(params['id']).title,
+        'description' => Assessment.find(params['id']).description,
         'questions' => Assessment.find(params['id']).questions.select("id, title").as_json,
          }
 

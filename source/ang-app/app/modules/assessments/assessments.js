@@ -16,28 +16,14 @@ var yunakQuizApp = angular.module('yunakQuiz.assessments', ['ngRoute'])
   ;
    
 }]);
-yunakQuizApp.controller('AssessmentsCtrl', ['$scope', '$routeParams', '$location', function($scope, $routeParams, $location) {
+yunakQuizApp.controller('AssessmentsCtrl', ['$scope', '$http', '$routeParams', '$location', function($scope, $http, $routeParams, $location) {
 
-$scope.assessment ={
-	id: 1, 
-	name: "Правила футболу",
-	description: "Тест на знання правил футболу",
-	questions: [
-		{title: 'Скільки гравців має бути у футбольній команді?',
-		 answers : [{title:"11", checked:false}, 
-		 {title:"12", checked:false}, 
-		 {title:"5", checked:false}]},
-		{title: 'Скільки триває один тайм?',
-		 answers : [{title:"20 хвилин", checked:false}, 
-		 {title:"45 хвилин", checked:false}, 
-		 {title:"До останього гравця", checked:false}]},
-		{title: 'Що вібдувається коли гравець торкнеться м"яча рукою?',
-		 answers : [{title:"Порушення плавил", checked:false}, 
-		 {title:"Призначиться штрафний удар", checked:false},
-		 {title:"Датуть пиріжок", checked:false}, 
-		 {title:"Дадуть в голову", checked:false}]}
-	]
-};
+$scope.assessment ={};
+
+ $http({ method: 'GET', url: 'http://localhost:9292/assessments/'+$routeParams.assessment_id }).success(function(data, status, headers, config) {
+				$scope.assessment = data; 
+			});
+
 
 $scope.checkAnswer = function(answer,question){
 	
@@ -129,4 +115,9 @@ yunakQuizApp.controller('AssessmentsResultCtrl', ['$scope', '$routeParams', '$lo
 	$scope.counter = $scope.correctAnswerCounter();
 }]);
 
-
+// yunakQuizApp.factory('Assessment', ['$resource',
+//   function($resource){
+//     return $resource('http://localhost:9292/assessments/1', {}, {
+//       get: {method:'GET', isArray:true}
+//     });
+//   }]);
