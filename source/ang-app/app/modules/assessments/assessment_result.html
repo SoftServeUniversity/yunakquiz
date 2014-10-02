@@ -1,9 +1,12 @@
 <div>
-<h1>Result page </h1>
-<h2 ng-bind="assessmentResult.name"></h2>
+<h2 class="text-center"><span class="label label-primary">Result page</span><h2>
+<h2 class="text-center"> {{assessmentResult.name}}</h2>
 
-<a href=""> Category </a>
-<a href=""> SubCategory </a>
+<ol class="breadcrumb">
+  <li><a href="#"> Category</a></li>
+  <li><a href="#">SubCategory</a></li>
+  <li class="active">{{assessmentResult.name}}</li>
+</ol>
 
 <div>
 	<h3>Твій вислід: <span>{{counter}}</span> зі <span>100</span> балів!</h3>

@@ -20,24 +20,22 @@ yunakQuizApp.controller('AssessmentsCtrl', ['$scope', '$routeParams', '$location
 
 $scope.assessment ={
 	id: 1, 
-	name: "Assessment 1",
-	description: "Description for test",
+	name: "Правила футболу",
+	description: "Тест на знання правил футболу",
 	questions: [
-		{title: 'Question 1',
-		 description: "Description 1",
-		 answers : [{title:"aaa1", checked:false}, 
-		 {title:"bbb", checked:false}, 
-		 {title:"ccc", checked:false}]},
-		{title: 'Question 2',
-		 description: "Description 2",
-		 answers : [{title:"aaa2", checked:false}, 
-		 {title:"bbb2", checked:false}, 
-		 {title:"ccc2", checked:false}]},
-		{title: 'Question 3',
-		 description: "Description 3",
-		 answers : [{title:"aaa3", checked:false}, 
-		 {title:"bbb3", checked:false}, 
-		 {title:"ccc3", checked:false}]}
+		{title: 'Скільки гравців має бути у футбольній команді?',
+		 answers : [{title:"11", checked:false}, 
+		 {title:"12", checked:false}, 
+		 {title:"5", checked:false}]},
+		{title: 'Скільки триває один тайм?',
+		 answers : [{title:"20 хвилин", checked:false}, 
+		 {title:"45 хвилин", checked:false}, 
+		 {title:"До останього гравця", checked:false}]},
+		{title: 'Що вібдувається коли гравець торкнеться м"яча рукою?',
+		 answers : [{title:"Порушення плавил", checked:false}, 
+		 {title:"Призначиться штрафний удар", checked:false},
+		 {title:"Датуть пиріжок", checked:false}, 
+		 {title:"Дадуть в голову", checked:false}]}
 	]
 };
 
@@ -79,21 +77,29 @@ yunakQuizApp.controller('AssessmentsResultCtrl', ['$scope', '$routeParams', '$lo
 
 	$scope.getAssessmentResult = function(){ 
 	var assessmentResult = {
+
 	id: 1, 
-	name: "Assessment 1",
-	description: "Description for test",
+	name: "Правила футболу",
+	description: "Тест на знання правил футболу",
 	questions: [
-		{title: 'Question 1',
-		 description: "Description 1",
-		 answers : [{title:"aaa1", checked:true,correct:true}, {title:"bbb", checked:false,correct:false}, {title:"ccc", checked:false,correct:false}] ,
+		{title: 'Скільки гравців має бути у футбольній команді?',
+		 description: "В футбольній команді 11 гравців не враховуючи запасних",
+		 answers : [{title:"11", checked:true,correct:true},
+		  {title:"12", checked:false,correct:false}, 
+		  {title:"5", checked:false,correct:false}] ,
 		 correct:true},
-		{title: 'Question 2',
-		 description: "Description 2",
-		 answers : [{title:"aaa2", checked:true,correct:true}, {title:"bbb2", checked:false,correct:true}, {title:"ccc2", checked:false,correct:false}] ,
+		{title: 'Скільки триває один тайм?',
+		 description: "Один тамй триває 45 хвилин + додатковий час призначений арбітром",
+		 answers : [{title:"20 хвилин", checked:false,correct:false}, 
+		 {title:"45 хвилин", checked:true,correct:true}, 
+		 {title:"До останього гравця", checked:false,correct:false}] ,
 		correct:true},
-		{title: 'Question 3',
-		 description: "Description 3",
-		 answers : [{title:"aaa3", checked:true,correct:false}, {title:"bbb3", checked:false,correct:true}, {title:"ccc3", checked:true,correct:false}], 
+		{title: 'Що вібдувається коли гравець торкнеться м"яча рукою?',
+		 description: "Буде зафіксовано порушення правил і призначать штрафний удар, якщо цей гравець не голкіпер-)",
+		 answers : [{title:"Буде зафіксовано порушення правил", checked:true,correct:true}, 
+		 {title:"Призначиться штрафний удар", checked:false,correct:true},
+		 {title:"Датуть пиріжок", checked:true,correct:false}, 
+		 {title:"Дадуть в голову", checked:false,correct:false}], 
 		correct:false}
 		]
 	};
