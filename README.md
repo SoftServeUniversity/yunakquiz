@@ -16,4 +16,11 @@ Yunak Quiz Application
 * ``` npm start ``` to start the Node.js server
 * ``` npm test ``` to run Karma unit tests (you can leave it open to track in real time)
 * ``` npm run update-webdriver ```
-* ``` npm run protractor ``` to run end-to-end tests
+* You need Java to run protractor
+* To install Java run ``` sudo apt-get update ``` then ``` sudo apt-get install default-jre ``` and ``` sudo apt-get install default-jdk ```
+* ``` npm run protractor ``` to run cucumber end-to-end tests
+
+### Cucumber 
+* Put your ``` *.feature ``` files to ``` source/ang-app/e2e-tests/features/ ```
+* And your ``` *.js ``` steps files to ``` source/ang-app/e2e-tests/features/step_definitions/ ```
+
