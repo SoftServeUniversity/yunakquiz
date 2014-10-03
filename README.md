@@ -18,9 +18,10 @@ Yunak Quiz Application
 * ``` npm run update-webdriver ```
 * You need Java to run protractor
 * To install Java run ``` sudo apt-get update ``` then ``` sudo apt-get install default-jre ``` and ``` sudo apt-get install default-jdk ```
-* ``` npm run protractor ``` to run cucumber end-to-end tests
+* ``` npm run protractor ``` to run protractor end-to-end tests
 
 ### Cucumber 
 * Put your ``` *.feature ``` files to ``` source/ang-app/e2e-tests/features/ ```
 * And your ``` *.js ``` steps files to ``` source/ang-app/e2e-tests/features/step_definitions/ ```
+* Protractor uses cucumber files from this folders, so just run protractor to checkout your steps
 
