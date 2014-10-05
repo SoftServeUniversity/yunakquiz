@@ -1,15 +1,16 @@
 module PlastApp
   require 'sinatra'
+  require 'sinatra/activerecord'
   require 'json'
   require 'rest_client'
   require 'rubygems'
-  require 'mongo'
   require 'json/ext' # required for .to_json
-
   require 'sinatra/asset_pipeline'
-
+  
   class YunakQuiz < Sinatra::Base
     register Sinatra::AssetPipeline
+    set :database, 'sqlite3:./db/quiz.db'
+    Dir['./models/*.rb'].each {|file| require file} 
 
     get '/' do
       erb :index
