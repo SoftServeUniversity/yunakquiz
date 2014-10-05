@@ -1,16 +1,11 @@
 module PlastApp
   require 'sinatra'
-  require 'json'
-  require 'rest_client'
   require 'rubygems'
-  require 'mongo'
-  require 'json/ext' # required for .to_json
+  require 'sinatra/activerecord'
 
-  require 'sinatra/asset_pipeline'
+
 
   class YunakQuiz < Sinatra::Base
-    register Sinatra::AssetPipeline
-
     get '/' do
       erb :index
     end

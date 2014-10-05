@@ -13,8 +13,8 @@
 							<li>
 								<a href="#"class=""> Тестів:  {{(parCat.subCatNames).length}} </a>
 							</li>
-							<li ng-repeat="subCategory in parCat.subCatNames">
-								<a href="#">{{subCategory}}</a>
+							<li ng-repeat="subCategory in subCategories">
+								<a href="#"ng-if="subCategory.parcat_id==parCat.id">{{subCategory.subCatName}}</a>
 							</li>
 						</ul> 
 					</div>

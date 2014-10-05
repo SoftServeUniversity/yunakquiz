@@ -24,3 +24,4 @@ angular.module('yunakQuiz', [
         	  redirectTo: '/'
       });
   }]);
+

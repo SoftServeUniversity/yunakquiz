@@ -6,9 +6,14 @@
       			restrict: 'E',
       			templateUrl: './modules/categories-container/categories-container.html',
       			controller: ['$http','$scope', function($http,$scope){
-      					$http.get('../components/DataBase/parent-categories.json').success(function(data){
+                $scope.parCategories={};
+                $scope.subCategories={};
+      					$http.post('http://localhost:4567/parcat').success(function(data){
     						  $scope.parCategories = data;
                 });
+                $http.post('http://localhost:4567/subcat').success(function(data){
+                  $scope.subCategories = data;
+                });                
       			}],
 				    controllerAs: 'parentCategoriesList'
           }
