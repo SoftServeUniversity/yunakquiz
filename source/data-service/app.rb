@@ -13,10 +13,9 @@ module PlastApp
     register Sinatra::AssetPipeline
     register Sinatra::CrossOrigin
 
-    configure do
-      enable :cross_origin
-    end
-
+    # Global enabled CORS
+    enable :cross_origin
+    
     get '/' do
       erb :index
     end
@@ -32,6 +31,7 @@ module PlastApp
     end
 
     post '/assessments/:id' do
+      cross_origin
       content_type :json
       {response: "Updated to #{params['id']} assessment"}.to_json
     end
