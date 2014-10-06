@@ -1,15 +1,15 @@
 <div>
-<h1 ng-bind="assessment.title" class="text-center"></h1>
+<h1 ng-bind="quiz.title" class="text-center"></h1>
 
 <ol class="breadcrumb">
   <li><a href="#"> Category</a></li>
   <li><a href="#">SubCategory</a></li>
-  <li class="active">{{assessment.title}}</li>
+  <li class="active">{{quiz.title}}</li>
 </ol>
 
-<p ng-bind="assessment.description"></p>
+<p ng-bind="quiz.description"></p>
 <ul class="list-group assessmentQuestion">
-	<li ng-repeat="question in assessment.questions" ng-class="{'list-group-item-danger':question.invalid,' disabled':!question.invalid}"  class="list-group-item" > 
+	<li ng-repeat="question in quiz.questions" ng-class="{'list-group-item-danger':question.invalid,' disabled':!question.invalid}"  class="list-group-item" > 
 		<p>{{question.title}}</p>
 		
 
@@ -19,7 +19,7 @@
 	</li>
 </ul>
 
-<button ng-click="passAssessment()" class="btn btn-primary" role="button">Pass assessment</button> 
+<button ng-click="passQuiz()" class="btn btn-primary" role="button">Pass quiz</button> 
 
 <p>
   Showing of 'interpolate' filter:

@@ -4,12 +4,12 @@ var yunakQuizApp = angular.module('yunakQuiz.assessments', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider
-  	.when('/assessments/:assessment_id', {
+  	.when('/assessments/:quiz_id', {
     templateUrl: 'modules/assessments/assessment_show.html',
-    controller: 'AssessmentsCtrl',
+    controller: 'QuizCtrl',
     })
 
-  	.when('/assessments/:assessment_id/result', {
+  	.when('/assessments/:quiz_id/result', {
     templateUrl: 'modules/assessments/assessment_result.html',
     controller: 'AssessmentsResultCtrl'
   })
@@ -24,49 +24,52 @@ yunakQuizApp.factory('QuizData', ['$http', function($http){
           .success(function(data, status, headers, config) {
 				callback(data); 
 			});
-        }
+        }, 
+        quiz:{}
       }
     }
   ]);
 
 
-yunakQuizApp.controller('AssessmentsCtrl', ['$scope','QuizData', '$http', '$routeParams', '$location', function($scope,QuizData, $http, $routeParams, $location) {
+yunakQuizApp.controller('QuizCtrl', ['$scope','QuizData', '$routeParams', '$location', function($scope,QuizData, $routeParams, $location) {
 
-QuizData.get($routeParams.assessment_id, function(data){
-      $scope.assessment = data;
+QuizData.get($routeParams.quiz_id, function(data){
+      $scope.quiz = data; 
     });
 
+
+
 $scope.checkAnswer = function(answer,question){
-	
 	
 	answer.checked = !answer.checked;
 	checkQuestion(question);
 };
 
-function checkAssessment(assessment){
-	var questions = assessment.questions;
-	var assessmentValid=true;
+function checkQuiz(quiz){
+	var questions = quiz.questions;
+	var quizValid=true;
 	for(var i =0; i < questions.length; i++){
 		checkQuestion(questions[i]);
 		if(questions[i].invalid){
-			assessmentValid = false;
+			quizValid = false;
 		};
 	};
-	return assessmentValid;
+	return quizValid;
 };
 
 function checkQuestion(question){
 	question.invalid=true;
 	for(var y=0;y<question.answers.length;y++){
 		if(question.answers[y].checked){
-			question.invalid=false;
-			break;
+			question.invalid=false;}
+		else {question.answers[y].checked = false}
 		};
-	}; 
+	 
 };
 
-$scope.passAssessment = function(){
-	if (checkAssessment($scope.assessment)) {
+$scope.passQuiz = function(){
+	if (checkQuiz($scope.quiz)) {
+		QuizData.quiz = $scope.quiz;
 		$location.path($location.path()+'/result');	
 	};
 };
@@ -74,55 +77,51 @@ $scope.passAssessment = function(){
 
 }]);
 
-yunakQuizApp.controller('AssessmentsResultCtrl', ['$scope', '$routeParams', '$location', function($scope, $routeParams, $location) {
+yunakQuizApp.controller('AssessmentsResultCtrl', ['$scope','QuizData', '$routeParams', '$location', function($scope, QuizData, $routeParams, $location) {
 
-	$scope.getAssessmentResult = function(){ 
-	var assessmentResult = {
+$scope.assessment = QuizData.quiz;
 
-	id: 1, 
-	name: "Правила футболу",
-	description: "Тест на знання правил футболу",
-	questions: [
-		{title: 'Скільки гравців має бути у футбольній команді?',
-		 description: "В футбольній команді 11 гравців не враховуючи запасних",
-		 answers : [{title:"11", checked:true,correct:true},
-		  {title:"12", checked:false,correct:false}, 
-		  {title:"5", checked:false,correct:false}] ,
-		 correct:true},
-		{title: 'Скільки триває один тайм?',
-		 description: "Один тамй триває 45 хвилин + додатковий час призначений арбітром",
-		 answers : [{title:"20 хвилин", checked:false,correct:false}, 
-		 {title:"45 хвилин", checked:true,correct:true}, 
-		 {title:"До останього гравця", checked:false,correct:false}] ,
-		correct:true},
-		{title: 'Що вібдувається коли гравець торкнеться м"яча рукою?',
-		 description: "Буде зафіксовано порушення правил і призначать штрафний удар, якщо цей гравець не голкіпер-)",
-		 answers : [{title:"Буде зафіксовано порушення правил", checked:true,correct:true}, 
-		 {title:"Призначиться штрафний удар", checked:false,correct:true},
-		 {title:"Датуть пиріжок", checked:true,correct:false}, 
-		 {title:"Дадуть в голову", checked:false,correct:false}], 
-		correct:false}
-		]
-	};
-	return assessmentResult;
-	};
+
+function checkQuestions (){
+	for (var i=0;i<$scope.assessment.questions.length; i++){
+		$scope.assessment.questions[i].nice = checkAnswer($scope.assessment.questions[i]);
+	}
+}
+
+function checkAnswer (question){
+	var correct=false;
+	for (var i=0;i<question.answers.length; i++){
+		if(question.answers[i].correct){
+			if(question.answers[i].checked){
+				correct= true;
+			}
+			else {
+				correct= false;
+			}
+		}
+		
+	}
+	return correct;
+}
+
+
 	
 	$scope.correctAnswerCounter = function(){
-		var questions = $scope.assessmentResult.questions
-		var questionsLength = $scope.assessmentResult.questions.length;	
+		checkQuestions();
+		var questions = $scope.assessment.questions;
 		var counter = 0;
-		for (var i=0;i<questionsLength; i++){
-			if (questions[i].correct) {counter++}
+		for (var i=0;i<questions.length; i++){
+			if (questions[i].nice) {counter++}
 		}
-		var count = (counter / questionsLength)*100 ;
+		var count = (counter / questions.length)*100 ;
 		var count = Math.round(count);
 		return count;
 
 	}
 
-	$scope.assessmentResult = $scope.getAssessmentResult();
+
 	$scope.redirectToAssessment = function(){
-		$location.path('/assessments/'+$routeParams.assessment_id);	
+		$location.path('/assessments/'+$routeParams.quiz_id);	
 
 	
 	};

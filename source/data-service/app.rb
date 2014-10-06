@@ -73,7 +73,7 @@ module PlastApp
          }
 
       myObj['questions'].each_with_index do |value, index|
-             value['answers'] = Question.find(value['id']).answers.select("id, title").as_json
+             value['answers'] = Question.find(value['id']).answers.select("id, title","correct").as_json
           end
       
        JSON.pretty_generate(myObj) 
