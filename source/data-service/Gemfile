@@ -1,8 +1,8 @@
 source 'http://rubygems.org'
 
+gem 'rake'
 gem 'rack'
 gem 'json'
-#gem 'rest-client'
 gem 'sinatra'
 gem 'sqlite3'
 gem 'activerecord'
