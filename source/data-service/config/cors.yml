@@ -1,0 +1,2 @@
+# To enable cross origin requests for all routes:
+cross_origin: true

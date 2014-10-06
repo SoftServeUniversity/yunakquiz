@@ -6,7 +6,7 @@ module PlastApp
   require 'active_record'
   require 'json/ext' # required for .to_json
   require 'sinatra/cross_origin'
-  
+  require 'sinatra/config_file'
   require 'sinatra/asset_pipeline'
 
   ActiveRecord::Base.establish_connection(
@@ -36,11 +36,13 @@ module PlastApp
   class YunakQuiz < Sinatra::Base
     register Sinatra::AssetPipeline
     register Sinatra::CrossOrigin
+    register Sinatra::ConfigFile
 
-    configure do
-      enable :cross_origin
+
+    Dir.glob("config/*.yml") do |file| 
+      config_file file
     end
-
+    
     get '/' do
       erb :index
     end
@@ -56,6 +58,7 @@ module PlastApp
     end
 
     post '/assessments/:id' do
+      cross_origin
       content_type :json
       {response: "Updated to #{params['id']} assessment"}.to_json
     end
