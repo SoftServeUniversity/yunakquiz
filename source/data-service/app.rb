@@ -6,7 +6,7 @@ module PlastApp
   require 'mongo'
   require 'json/ext' # required for .to_json
   require 'sinatra/cross_origin'
-  require 'sinatra/config_file'
+
   require 'sinatra/asset_pipeline'
 
   class YunakQuiz < Sinatra::Base
@@ -14,10 +14,7 @@ module PlastApp
     register Sinatra::CrossOrigin
     register Sinatra::ConfigFile
 
-
-    Dir.glob("config/*.yml") do |file| 
-      config_file file
-    end
+    Dir.glob('./config/*.rb').each {|file| require file}
     
     get '/' do
       erb :index
