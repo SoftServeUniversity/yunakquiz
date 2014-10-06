@@ -27,31 +27,35 @@ $scope.assessment ={};
 
 $scope.checkAnswer = function(answer,question){
 	
-	question.invalid=false;
+	
 	answer.checked = !answer.checked;
+	checkQuestion(question);
 };
 
-function checkquestions(){
-	var questions = $scope.assessment.questions;
-	var questionsCount = questions.length;
+function checkAssessment(assessment){
+	var questions = assessment.questions;
 	var assessmentValid=true;
-	for(var i =0; i < questionsCount; i++){
-		questions[i].invalid =true;
-		for(var y=0;y<questions[i].answers.length;y++){
-			if(questions[i].answers[y].checked){
-				questions[i].invalid=false;
-			};
-
-		};
-		if(questions[i].invalid) {
+	for(var i =0; i < questions.length; i++){
+		checkQuestion(questions[i]);
+		if(questions[i].invalid){
 			assessmentValid = false;
-		}
+		};
 	};
 	return assessmentValid;
 };
 
+function checkQuestion(question){
+	question.invalid=true;
+	for(var y=0;y<question.answers.length;y++){
+		if(question.answers[y].checked){
+			question.invalid=false;
+			break;
+		};
+	}; 
+};
+
 $scope.passAssessment = function(){
-	if (checkquestions()) {
+	if (checkAssessment($scope.assessment)) {
 		$location.path($location.path()+'/result');	
 	};
 };
