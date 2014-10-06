@@ -16,14 +16,25 @@ var yunakQuizApp = angular.module('yunakQuiz.assessments', ['ngRoute'])
   ;
    
 }]);
-yunakQuizApp.controller('AssessmentsCtrl', ['$scope', '$http', '$routeParams', '$location', function($scope, $http, $routeParams, $location) {
 
-$scope.assessment ={};
-
- $http({ method: 'GET', url: 'http://localhost:9292/assessments/'+$routeParams.assessment_id }).success(function(data, status, headers, config) {
-				$scope.assessment = data; 
+yunakQuizApp.factory('QuizData', ['$http', function($http){
+    return{
+        get: function(id, callback){
+          $http({ method: 'GET', url: 'http://localhost:9292/assessments/'+id })
+          .success(function(data, status, headers, config) {
+				callback(data); 
 			});
+        }
+      }
+    }
+  ]);
 
+
+yunakQuizApp.controller('AssessmentsCtrl', ['$scope','QuizData', '$http', '$routeParams', '$location', function($scope,QuizData, $http, $routeParams, $location) {
+
+QuizData.get($routeParams.assessment_id, function(data){
+      $scope.assessment = data;
+    });
 
 $scope.checkAnswer = function(answer,question){
 	
