@@ -6,15 +6,18 @@ module PlastApp
   require 'mongo'
   require 'json/ext' # required for .to_json
   require 'sinatra/cross_origin'
-  
+  require 'sinatra/config_file'
   require 'sinatra/asset_pipeline'
 
   class YunakQuiz < Sinatra::Base
     register Sinatra::AssetPipeline
     register Sinatra::CrossOrigin
+    register Sinatra::ConfigFile
 
-    # Global enabled CORS
-    enable :cross_origin
+
+    Dir.glob("config/*.yml") do |file| 
+      config_file file
+    end
     
     get '/' do
       erb :index
