@@ -12,7 +12,7 @@ module PlastApp
   class YunakQuiz < Sinatra::Base
     register Sinatra::AssetPipeline
     register Sinatra::CrossOrigin
-    register Sinatra::ConfigFile
+    
 
     Dir.glob('./config/*.rb').each {|file| require file}
     
