@@ -3,21 +3,21 @@ module PlastApp
   require 'json'
   require 'rest_client'
   require 'rubygems'
-  require 'active_record'
+  require 'sinatra/activerecord'
   require 'json/ext' # required for .to_json
 
   require 'sinatra/asset_pipeline'
 
-  ActiveRecord::Base.establish_connection(
-  :adapter  => 'sqlite3',
-  :database => 'YunakQuiz.db'
-  )
-
+  
   class YunakQuiz < Sinatra::Base
     register Sinatra::AssetPipeline
+    register Sinatra::ActiveRecordExtension
 
+    Dir.glob('./config/*.rb').each {|file| require file}
+    Dir.glob('./models/*.rb').each {|file| require file}
+  
     get '/' do
-      erb :index
+        erb :index
     end
 
     get '/assessments' do
