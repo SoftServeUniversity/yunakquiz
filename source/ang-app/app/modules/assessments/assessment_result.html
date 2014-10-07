@@ -1,15 +1,14 @@
 <div>
-<h2 class="text-center"><span class="label label-primary">Result page</span><h2>
-<h2 class="text-center"> {{assessment.name}}</h2>
+<h3  ng-bind="assessment.title" class="text-center assessment-title"></h3>
 
 <ol class="breadcrumb">
   <li><a href="#"> Category</a></li>
   <li><a href="#">SubCategory</a></li>
-  <li class="active">{{assessment.name}}</li>
+  <li class="active">{{assessment.title}}</li>
 </ol>
 
 <div>
-	<h3>Твій вислід: <span>{{counter}}</span> зі <span>100</span> балів!</h3>
+	<h3 class="text-center">Твій вислід: <span>{{counter}}</span> зі <span>100</span> балів!</h3>
 	<div class="progress">
   		<div class="progress-bar" role="progressbar" aria-valuenow="{{counter}}" aria-valuemin="0" aria-valuemax="100" style="width: {{counter}}%;">{{counter}}%
   		</div>
@@ -27,7 +26,7 @@
 		<ul class="list-group">
 		<li ng-repeat="answer in question.answers | filter:{correct:true}" class="list-group-item"> {{answer.title}}</li>
 		</ul>
-		<p>Пояснення: {{question.description}}</p>
+		<p ng-show="question.description">Пояснення: {{question.description}}</p>
 	</li>
 </ul>
 

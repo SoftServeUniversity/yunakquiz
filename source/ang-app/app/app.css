@@ -140,6 +140,12 @@ a:active, a:focus {
 .assessmentAnswer>li{
   cursor:pointer;
 }
+.assessment-title{
+  background:#428bca; 
+  line-height:50px;
+  color:#fff; 
+  margin:0 0 20px 0;
+}
 
 /* end assessment styles */
 
