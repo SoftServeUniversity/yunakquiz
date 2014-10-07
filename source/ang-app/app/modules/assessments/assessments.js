@@ -89,17 +89,19 @@ function checkQuestions (){
 }
 
 function checkAnswer (question){
-	var correct=false;
+	var correct=true;
 	for (var i=0;i<question.answers.length; i++){
 		if(question.answers[i].correct){
 			if(question.answers[i].checked){
-				correct= true;
+				correct= true && correct;
 			}
 			else {
 				correct= false;
 			}
 		}
-		
+		else if(question.answers[i].checked){
+			correct= false;
+		}
 	}
 	return correct;
 }
