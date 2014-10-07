@@ -4,70 +4,72 @@ var yunakQuizApp = angular.module('yunakQuiz.assessments', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider
-  	.when('/assessments/:assessment_id', {
+  	.when('/assessments/:quiz_id', {
     templateUrl: 'modules/assessments/assessment_show.html',
-    controller: 'AssessmentsCtrl',
+    controller: 'QuizCtrl',
     })
 
-  	.when('/assessments/:assessment_id/result', {
+  	.when('/assessments/:quiz_id/result', {
     templateUrl: 'modules/assessments/assessment_result.html',
     controller: 'AssessmentsResultCtrl'
   })
   ;
    
 }]);
-yunakQuizApp.controller('AssessmentsCtrl', ['$scope', '$routeParams', '$location', function($scope, $routeParams, $location) {
 
-$scope.assessment ={
-	id: 1, 
-	name: "Assessment 1",
-	description: "Description for test",
-	questions: [
-		{title: 'Question 1',
-		 description: "Description 1",
-		 answers : [{title:"aaa1", checked:false}, 
-		 {title:"bbb", checked:false}, 
-		 {title:"ccc", checked:false}]},
-		{title: 'Question 2',
-		 description: "Description 2",
-		 answers : [{title:"aaa2", checked:false}, 
-		 {title:"bbb2", checked:false}, 
-		 {title:"ccc2", checked:false}]},
-		{title: 'Question 3',
-		 description: "Description 3",
-		 answers : [{title:"aaa3", checked:false}, 
-		 {title:"bbb3", checked:false}, 
-		 {title:"ccc3", checked:false}]}
-	]
-};
+yunakQuizApp.factory('QuizData', ['$http', function($http){
+    return{
+        get: function(id, callback){
+          $http({ method: 'GET', url: 'http://localhost:9292/assessments/'+id })
+          .success(function(data, status, headers, config) {
+				callback(data); 
+			});
+        }, 
+        quiz:{}
+      }
+    }
+  ]);
+
+
+yunakQuizApp.controller('QuizCtrl', ['$scope','QuizData', '$routeParams', '$location', function($scope,QuizData, $routeParams, $location) {
+
+QuizData.get($routeParams.quiz_id, function(data){
+      $scope.quiz = data; 
+    });
+
+
 
 $scope.checkAnswer = function(answer,question){
 	
-	question.invalid=false;
 	answer.checked = !answer.checked;
+	checkQuestion(question);
 };
 
-function checkquestions(){
-	var questions = $scope.assessment.questions;
-	var questionsCount = questions.length;
-	var assessmentValid=true;
-	for(var i =0; i < questionsCount; i++){
-		questions[i].invalid =true;
-		for(var y=0;y<questions[i].answers.length;y++){
-			if(questions[i].answers[y].checked){
-				questions[i].invalid=false;
-			};
-
+function checkQuiz(quiz){
+	var questions = quiz.questions;
+	var quizValid=true;
+	for(var i =0; i < questions.length; i++){
+		checkQuestion(questions[i]);
+		if(questions[i].invalid){
+			quizValid = false;
 		};
-		if(questions[i].invalid) {
-			assessmentValid = false;
-		}
 	};
-	return assessmentValid;
+	return quizValid;
 };
 
-$scope.passAssessment = function(){
-	if (checkquestions()) {
+function checkQuestion(question){
+	question.invalid=true;
+	for(var y=0;y<question.answers.length;y++){
+		if(question.answers[y].checked){
+			question.invalid=false;}
+		else {question.answers[y].checked = false}
+		};
+	 
+};
+
+$scope.passQuiz = function(){
+	if (checkQuiz($scope.quiz)) {
+		QuizData.quiz = $scope.quiz;
 		$location.path($location.path()+'/result');	
 	};
 };
@@ -75,52 +77,73 @@ $scope.passAssessment = function(){
 
 }]);
 
-yunakQuizApp.controller('AssessmentsResultCtrl', ['$scope', '$routeParams', '$location', function($scope, $routeParams, $location) {
+yunakQuizApp.controller('AssessmentsResultCtrl', ['$scope','QuizData', '$routeParams', '$location', function($scope, QuizData, $routeParams, $location) {
 
-	$scope.getAssessmentResult = function(){ 
-	var assessmentResult = {
-	id: 1, 
-	name: "Assessment 1",
-	description: "Description for test",
-	questions: [
-		{title: 'Question 1',
-		 description: "Description 1",
-		 answers : [{title:"aaa1", checked:true,correct:true}, {title:"bbb", checked:false,correct:false}, {title:"ccc", checked:false,correct:false}] ,
-		 correct:true},
-		{title: 'Question 2',
-		 description: "Description 2",
-		 answers : [{title:"aaa2", checked:true,correct:true}, {title:"bbb2", checked:false,correct:true}, {title:"ccc2", checked:false,correct:false}] ,
-		correct:true},
-		{title: 'Question 3',
-		 description: "Description 3",
-		 answers : [{title:"aaa3", checked:true,correct:false}, {title:"bbb3", checked:false,correct:true}, {title:"ccc3", checked:true,correct:false}], 
-		correct:false}
-		]
-	};
-	return assessmentResult;
-	};
+$scope.assessment = QuizData.quiz || {title:"Hello world"};
+
+
+function checkQuestions (){
+	for (var i=0;i<$scope.assessment.questions.length; i++){
+		$scope.assessment.questions[i].nice = checkAnswer($scope.assessment.questions[i]);
+	}
+}
+
+function checkAnswer (question){
+	var correct=true;
+	for (var i=0;i<question.answers.length; i++){
+		if(question.answers[i].correct){
+			if(question.answers[i].checked){
+				correct= true && correct;
+			}
+			else {
+				correct= false;
+			}
+		}
+		else if(question.answers[i].checked){
+			correct= false;
+		}
+	}
+	return correct;
+}
+
+
 	
 	$scope.correctAnswerCounter = function(){
-		var questions = $scope.assessmentResult.questions
-		var questionsLength = $scope.assessmentResult.questions.length;	
+		var questions = $scope.assessment.questions;
 		var counter = 0;
-		for (var i=0;i<questionsLength; i++){
-			if (questions[i].correct) {counter++}
+		for (var i=0;i<questions.length; i++){
+			if (questions[i].nice) {counter++}
 		}
-		var count = (counter / questionsLength)*100 ;
+		var count = (counter / questions.length)*100 ;
 		var count = Math.round(count);
 		return count;
 
 	}
 
-	$scope.assessmentResult = $scope.getAssessmentResult();
+
 	$scope.redirectToAssessment = function(){
-		$location.path('/assessments/'+$routeParams.assessment_id);	
+		$location.path('/assessments/'+$routeParams.quiz_id);	
 
 	
 	};
 
-	$scope.counter = $scope.correctAnswerCounter();
+
+	if ($scope.assessment.questions)
+	{
+		checkQuestions();
+		$scope.counter = $scope.correctAnswerCounter();
+	}	
+	else 
+	{
+		$scope.redirectToAssessment();
+	}
+
+	
 }]);
 
-
+// yunakQuizApp.factory('Assessment', ['$resource',
+//   function($resource){
+//     return $resource('http://localhost:9292/assessments/1', {}, {
+//       get: {method:'GET', isArray:true}
+//     });
+//   }]);
