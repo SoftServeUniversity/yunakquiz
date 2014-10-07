@@ -1,5 +1,5 @@
 'use strict';
-
+/** module for assessments and router  */
 var yunakQuizApp = angular.module('yunakQuiz.assessments', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
