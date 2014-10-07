@@ -13,24 +13,11 @@ module PlastApp
   
   class YunakQuiz < Sinatra::Base
     register Sinatra::AssetPipeline
-    register Sinatra::CrossOrigin
-
+    
     configure do
-        enable :cross_origin
         enable :sessions
-        set :session_secret, 'cca369ff55af5ceefc50939498d93f5905272422baf5d86dd0c4271e2e68a9ba'
-        set :allow_origin, :any
-        set :allow_methods, [:head, :get, :post, :options, :delete, :put]
-        set :allow_credentials, true
-        set :max_age, "86400"
-        set :allow_headers, ['*', 'Content-Type', 'Origin', 'Accept', 'X-Requested-With', 'x-xsrf-token', 'X-HTTP-Method-Override', 'Cache-Control']
-        set :expose_headers, ['Content-Type']
     end
     
-    set :database, 'sqlite3:./db/quiz.db'
-    
-    options '/*' do
-        '*'
     end
     
     post '/register' do
@@ -51,8 +38,7 @@ module PlastApp
         user.save
         return [200, "ok"]
       end
-        puts "this user already exists!"
-        return [409, "this user is already exists"]
+        return [409, "This username already exists"]
     end
   
   end
