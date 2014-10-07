@@ -1,25 +1,105 @@
-<h1>Sign up</h1>
-<form>
-  <p>
-    Username: <br/>
-    <input type="text" name="username"/>
-  </p>
-  <p>
-    First Name <br/>
-    <input type="text" name="first_name"/>
-  </p>
-  <p>
-    Last Name: <br/>
-    <input type="text" name="last_name"/>
-  </p>
-  <p>
-    Password <br/>
-    <input type="password" name="password"/>
-  </p>
-  <p>
-    Confirm password: <br/>
-    <input type="password" name="confirm_password"/>
-  </p>
-
-  <button>Submit</button>
-</form>
+<div class="container">
+  <div class="col-md-2"></div>
+  <div class="col-md-8">
+    <h3 class="text-center">Реєстрація</h3>
+    <form class="form-horizontal" role="form" ng-submit="reg.submitRegistration()">
+      <div class="form-group">
+        <label for="first_name" class="col-sm-4 control-label">Імя</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" id="first_name" placeholder="First name" ng-model="reg.user.first_name">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="last_name" class="col-sm-4 control-label">Прізвище</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" id="last_name" placeholder="Last name" ng-model="reg.user.last_name">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="username" class="col-sm-4 control-label">Нік*</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" id="username" placeholder="Nick name" ng-model="reg.user.username">
+        </div>
+      </div> 
+       <div class="form-group">
+        <label for="password" class="col-sm-4 control-label">Пароль*</label>
+        <div class="col-sm-6">
+          <input type="password" class="form-control" id="last_name" placeholder="Password" ng-model="reg.user.password">
+        </div>
+      </div>
+       <div class="form-group">
+        <label for="confirm_password" class="col-sm-4 control-label">Повторіть пароль*</label>
+        <div class="col-sm-6">
+          <input type="password" class="form-control" id="confirm_password" placeholder="Repeat password" ng-model="reg.user.confirm_password">
+        </div>
+      </div>
+        <div class="form-group">
+        <label for="email" class="col-sm-4 control-label">Пошта</label>
+        <div class="col-sm-6">
+          <input type="email" class="form-control" id="email" placeholder="Email" ng-model="reg.user.email">
+        </div>
+      </div>
+       <div class="form-group">
+        <label for="birthday" class="col-sm-4 control-label">День народження*</label>
+        <div class="col-sm-6">
+          <input type="date" class="form-control" id="birthday" placeholder="Birthday" ng-model="reg.user.birthday">
+        </div>
+      </div>
+       <div class="form-group">
+        <label for="plast_hovel" class="col-sm-4 control-label">Пластовий курінь</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" id="plast_hovel" placeholder="Plast hovel" ng-model="reg.user.plast_hovel">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="plast_region" class="col-sm-4 control-label">Станиця</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" id="plast_region" placeholder="Plast region" ng-model="reg.user.plast_region">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="plast_level" class="col-sm-4 control-label">
+          Пластовий ступінь
+        </label>
+        <div class="dropdown col-sm-6">
+          <button class="btn btn-default dropdown-toggle" type="button" id="level" data-toggle="dropdown" ng-model="reg.user.plast_level">
+            Початківець
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="plast_level">
+            <li role="presentation">
+              <a role="menuitem" tabindex="-1" href="#">Досвідчений</a>
+            </li>
+            <li role="presentation">
+              <a role="menuitem" tabindex="-1" href="#">Експерт</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="picture" class="col-sm-4 control-label"> Завантажити аватар </label>
+        <div class="col-sm-6" id="picture">
+          <input type="file" ng-model="reg.user.picture">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="number" class="col-sm-4 control-label">Введіть число </label>
+        <div class="col-sm-1">
+          123
+        </div>
+        <div class="col-sm-1" id="number">
+          <input type="text">
+        </div>
+      </div>
+      <div class="form-group text-center">
+        <button type="button" class="btn btn-danger" ng-click="reg.cancel()">
+          Відмінити
+        </button>
+        <button type="submit" class="btn btn-success">
+          Реєстрація
+        </button>
+      </div>
+    </form>
+  </div>
+  <div class="col-md-2"></div>
+</div>
