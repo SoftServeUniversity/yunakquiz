@@ -79,7 +79,7 @@ $scope.passQuiz = function(){
 
 yunakQuizApp.controller('AssessmentsResultCtrl', ['$scope','QuizData', '$routeParams', '$location', function($scope, QuizData, $routeParams, $location) {
 
-$scope.assessment = QuizData.quiz;
+$scope.assessment = QuizData.quiz || {title:"Hello world"};
 
 
 function checkQuestions (){
@@ -107,7 +107,6 @@ function checkAnswer (question){
 
 	
 	$scope.correctAnswerCounter = function(){
-		checkQuestions();
 		var questions = $scope.assessment.questions;
 		var counter = 0;
 		for (var i=0;i<questions.length; i++){
@@ -126,7 +125,18 @@ function checkAnswer (question){
 	
 	};
 
-	$scope.counter = $scope.correctAnswerCounter();
+
+	if ($scope.assessment.questions)
+	{
+		checkQuestions();
+		$scope.counter = $scope.correctAnswerCounter();
+	}	
+	else 
+	{
+		$scope.redirectToAssessment();
+	}
+
+	
 }]);
 
 // yunakQuizApp.factory('Assessment', ['$resource',
