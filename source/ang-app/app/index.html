@@ -13,19 +13,23 @@
   <link rel="stylesheet" href="bower_components/html5-boilerplate/css/main.css">
   <link rel="stylesheet" href="app.css"/>
   <script src="bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"></script>
+  <script src="bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
 </head>
-<body ng-controller="ApplicationController as appCtrl">
-  <login> </login>
+<body>
   <ul class="menu">
     <li><a href="#/measures">Measures</a></li>
     <li><a href="#/assessments/1">Pass an assessment</a></li>
     <li><a href="#/auth/signup">Sign up</a></li>
-    <li><a href="#/auth/login">Login User</a></li>
+    <li><a href="#" data-toggle="modal" data-target="#login">Login User</a></li>
   </ul>
 
   <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
   <![endif]-->
+  <login></login>
   <div ng-view></div>
 
   <div>App version: v<span app-version></span></div>
