@@ -2,7 +2,7 @@
   <div class="col-md-2"></div>
   <div class="col-md-8">
     <h3 class="text-center">Реєстрація</h3>
-    <form class="form-horizontal" role="form">
+    		<form class="form-horizontal" role="form" ng-submit="reg.submitRegistration()">
       <p class="form-group text-center text-danger">{{reg.message}}</p>
       <div class="form-group">
         <label for="first_name" class="col-sm-4 control-label">Імя</label>
@@ -86,7 +86,7 @@
           Відмінити
         </button>
         <!-- <button type="submit" class="btn btn-success" ng-submit="reg.submitRegistration()"> -->
-        <button type="submit" class="btn btn-success" ng-click="reg.submitRegistration()">
+				<button type="submit" class="btn btn-success">
           Реєстрація
         </button>
       </div>
