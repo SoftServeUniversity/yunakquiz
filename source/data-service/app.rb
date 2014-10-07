@@ -13,8 +13,7 @@ module PlastApp
   
   class YunakQuiz < Sinatra::Base
     register Sinatra::AssetPipeline
-    register Sinatra::CrossOrigin
-
+    
     configure do
       	enable :sessions
     end
