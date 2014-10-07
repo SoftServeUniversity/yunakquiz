@@ -6,7 +6,7 @@ module PlastApp
   require 'sinatra/activerecord'
   require 'json/ext' # required for .to_json
   require 'sinatra/cross_origin'
-  require 'sinatra/config_file'
+
   require 'sinatra/asset_pipeline'
 
 
@@ -14,6 +14,7 @@ module PlastApp
   class YunakQuiz < Sinatra::Base
     register Sinatra::AssetPipeline
     register Sinatra::ActiveRecordExtension
+    register Sinatra::CrossOrigin
 
     Dir.glob('./config/*.rb').each {|file| require file}
     Dir.glob('./models/*.rb').each {|file| require file}
