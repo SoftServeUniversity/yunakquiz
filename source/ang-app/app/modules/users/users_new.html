@@ -2,7 +2,8 @@
   <div class="col-md-2"></div>
   <div class="col-md-8">
     <h3 class="text-center">Реєстрація</h3>
-    <form class="form-horizontal" role="form" ng-submit="reg.submitRegistration()">
+    <form class="form-horizontal" role="form">
+      <p class="form-group text-center text-danger">{{reg.message}}</p>
       <div class="form-group">
         <label for="first_name" class="col-sm-4 control-label">Імя</label>
         <div class="col-sm-6">
@@ -62,24 +63,13 @@
           Пластовий ступінь
         </label>
         <div class="dropdown col-sm-6">
-          <button class="btn btn-default dropdown-toggle" type="button" id="level" data-toggle="dropdown" ng-model="reg.user.plast_level">
-            Початківець
-            <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu" role="menu" aria-labelledby="plast_level">
-            <li role="presentation">
-              <a role="menuitem" tabindex="-1" href="#">Досвідчений</a>
-            </li>
-            <li role="presentation">
-              <a role="menuitem" tabindex="-1" href="#">Експерт</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="picture" class="col-sm-4 control-label"> Завантажити аватар </label>
-        <div class="col-sm-6" id="picture">
-          <input type="file" ng-model="reg.user.picture">
+        <span  class="nullable">
+              <select class="btn btn-default dropdown-toggle" id="level" data-toggle="dropdown" ng-model="reg.user.plast_level">
+                  <option value="Початківець">Початківець</option>
+                  <option value="Досвідчений">Досвідчений</option>
+                  <option value="Експерт">Експерт</option>
+              </select>
+            </span><br/>
         </div>
       </div>
       <div class="form-group">
@@ -95,7 +85,8 @@
         <button type="button" class="btn btn-danger" ng-click="reg.cancel()">
           Відмінити
         </button>
-        <button type="submit" class="btn btn-success">
+        <!-- <button type="submit" class="btn btn-success" ng-submit="reg.submitRegistration()"> -->
+        <button type="submit" class="btn btn-success" ng-click="reg.submitRegistration()">
           Реєстрація
         </button>
       </div>
