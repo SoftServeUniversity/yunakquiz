@@ -3,34 +3,20 @@ module PlastApp
   require 'json'
   require 'rest_client'
   require 'rubygems'
-  require 'mongo'
+  require 'sinatra/activerecord'
   require 'json/ext' # required for .to_json
 
   require 'sinatra/asset_pipeline'
-
-  class Measure < ActiveRecord::Base
-    has_many :assessments
-  end
   
-  class Assessment < ActiveRecord::Base
-    has_many :questions
-    belongs_to :measure
-  end
-
-  class Question < ActiveRecord::Base
-    belongs_to :assessment
-    has_many :answers
-  end
-
-  class Answer < ActiveRecord::Base
-    belongs_to :question
-  end
-
   class YunakQuiz < Sinatra::Base
     register Sinatra::AssetPipeline
+    register Sinatra::ActiveRecordExtension
 
+
+    Dir.glob('./models/*.rb').each {|file| require file}
+  
     get '/' do
-      erb :index
+        erb :index
     end
 
     get '/assessments' do
