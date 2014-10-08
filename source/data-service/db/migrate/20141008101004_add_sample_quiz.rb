@@ -1,7 +1,6 @@
-class SampleQuizData < ActiveRecord::Migration
+class AddSampleQuiz < ActiveRecord::Migration
   def change
-
-      Category.create(title: "Спорт")
+  	  Category.create(title: "Спорт")
       Category.create(parent_id: 1, title: "Футбол")
       Quiz.create(category_id: 2,
                         title: "Тест на знання правил футболу",
