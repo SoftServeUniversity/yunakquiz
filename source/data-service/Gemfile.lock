@@ -64,6 +64,7 @@ GEM
       sprockets
       sprockets-helpers
       sprockets-sass
+    sinatra-cross_origin (0.3.2)
     sprockets (2.12.2)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -100,6 +101,7 @@ DEPENDENCIES
   rest-client
   sinatra
   sinatra-asset-pipeline
+  sinatra-cross_origin (~> 0.3.1)
   sprockets-sass
   thin (= 1.6.2)
   tux
