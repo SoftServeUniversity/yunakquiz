@@ -8,6 +8,8 @@ module PlastApp
   require 'sinatra/cross_origin'
   require 'sinatra/asset_pipeline'
 
+  class User < ActiveRecord::Base
+  end
   
   class YunakQuiz < Sinatra::Base
     register Sinatra::AssetPipeline
@@ -16,6 +18,10 @@ module PlastApp
     register Sinatra::CrossOrigin
     Dir.glob('./config/*.rb').each {|file| require file}
     Dir.glob('./models/*.rb').each {|file| require file}
+    
+    options '/*' do
+      '*'
+    end
 
     get '/' do
         erb :index
