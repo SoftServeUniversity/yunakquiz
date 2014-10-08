@@ -7,17 +7,34 @@ module PlastApp
   require 'json/ext' # required for .to_json
   require 'sinatra/cross_origin'
   require 'sinatra/asset_pipeline'
-  
-  class User < ActiveRecord::Base
-  end
+
   
   class YunakQuiz < Sinatra::Base
     register Sinatra::AssetPipeline
-    
-    configure do
-        enable :sessions
+
+    register Sinatra::ActiveRecordExtension
+    register Sinatra::CrossOrigin
+    Dir.glob('./config/*.rb').each {|file| require file}
+    Dir.glob('./models/*.rb').each {|file| require file}
+
+    get '/' do
+        erb :index
     end
-    
+
+    get '/assessments' do
+      content_type :json
+      [{id: 1, name: 'assessment 1'}, {id: 2, name: 'assessment 2'}].to_json
+    end
+
+    put '/assessments' do
+      content_type :json
+      {response: 'Added an assessment'}.to_json
+    end
+
+    post '/assessments/:id' do
+      cross_origin
+      content_type :json
+      {response: "Updated to #{params['id']} assessment"}.to_json
     end
     
     post '/register' do
