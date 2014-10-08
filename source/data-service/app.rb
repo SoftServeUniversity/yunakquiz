@@ -5,12 +5,17 @@ module PlastApp
   require 'rubygems'
   require 'mongo'
   require 'json/ext' # required for .to_json
+  require 'sinatra/cross_origin'
 
   require 'sinatra/asset_pipeline'
 
   class YunakQuiz < Sinatra::Base
     register Sinatra::AssetPipeline
+    register Sinatra::CrossOrigin
+    
 
+    Dir.glob('./config/*.rb').each {|file| require file}
+    
     get '/' do
       erb :index
     end
@@ -26,6 +31,7 @@ module PlastApp
     end
 
     post '/assessments/:id' do
+      cross_origin
       content_type :json
       {response: "Updated to #{params['id']} assessment"}.to_json
     end
