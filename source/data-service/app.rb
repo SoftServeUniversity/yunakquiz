@@ -59,6 +59,21 @@ module PlastApp
       content_type :json
       {response: "Assessment #{params['id']} has been deleted"}.to_json
     end
+    
+    get '/categories/parent' do
+      content_type :json
+      Category.where("category_id = '0'").select(['id','category_id','title']).to_json
+    end
+
+    get '/categories/subcat' do
+      content_type :json
+      Category.where('category_id!=?','0').select(['id','category_id','title']).to_json
+    end 
+
+    get '/quizzes/ids' do
+      content_type :json
+      Quiz.select(['id','category_id','title']).to_json
+    end    
 
   end
 
