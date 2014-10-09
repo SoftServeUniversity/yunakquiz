@@ -1,5 +1,5 @@
-  class Category < ActiveRecord::Base
-    has_and_belongs_to_many :categories
+class Category < ActiveRecord::Base
     has_many :quizzes
+    has_many :categories 
+    belongs_to :category
   end
-    

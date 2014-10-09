@@ -1,7 +1,7 @@
 #encoding: utf-8 
 
-Category.create(title: "Спорт")
-Category.create(parent_id: 1, title: "Футбол")
+Category.create(title: "Спорт" ,category_id: 0)
+Category.create(category_id: 1, title: "Футбол")
 Quiz.create(category_id: 2, title: "Тест на знання правил футболу", description: "Детальний опис тесту")
 Question.create(quiz_id: 1, title: "Скільки гравців в команді?", description: "")
 Answer.create(question_id: 1, title: "11", correct: true)
