@@ -18,7 +18,7 @@ module PlastApp
 
     Dir.glob('./config/*.rb').each {|file| require file}
     Dir.glob('./models/*.rb').each {|file| require file}
-  
+
 
     get '/' do
         erb :index
@@ -44,13 +44,12 @@ module PlastApp
       content_type :json
 
       myObj = {
-        'title' => Assessment.find(params['id']).title,
-        'description' => Assessment.find(params['id']).description,
-        'questions' => Assessment.find(params['id']).questions.select("id, title").as_json,
+        'title' => Quiz.find(params['id']).title,
+        'questions' => Quiz.find(params['id']).questions.select("id, title").as_json,
          }
 
       myObj['questions'].each_with_index do |value, index|
-             value['answers'] = Question.find(value['id']).answers.select("id, title","correct").as_json
+             value['answers'] = Question.find(value['id']).answers.select("id, title,correct").as_json
           end
       
        JSON.pretty_generate(myObj) 
