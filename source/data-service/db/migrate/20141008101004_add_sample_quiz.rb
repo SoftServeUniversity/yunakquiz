@@ -1,3 +1,4 @@
+#encoding: utf-8 
 class AddSampleQuiz < ActiveRecord::Migration
   def change
   	  Category.create(title: "Спорт")

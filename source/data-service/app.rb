@@ -42,12 +42,12 @@ module PlastApp
       content_type :json
 
       myObj = {
-        'title' => Assessment.find(params['id']).title,
-        'questions' => Assessment.find(params['id']).questions.select("id, title").as_json,
+        'title' => Quiz.find(params['id']).title,
+        'questions' => Quiz.find(params['id']).questions.select("id, title").as_json,
          }
 
       myObj['questions'].each_with_index do |value, index|
-             value['answers'] = Question.find(value['id']).answers.select("id, title").as_json
+             value['answers'] = Question.find(value['id']).answers.select("id, title,correct").as_json
           end
       
        JSON.pretty_generate(myObj) 
