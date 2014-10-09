@@ -5,8 +5,8 @@
       		function($routeProvider) {
         		$routeProvider.
             	when('/guest-search', {
-              	templateUrl: './modules/guest-search/guest-search-page.html',
-            })
+              		templateUrl: './modules/guest-search/guest-search-page.html',
+            	})
       	}
     ]);      
 })();

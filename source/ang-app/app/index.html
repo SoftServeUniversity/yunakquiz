@@ -22,7 +22,22 @@
       <header-menu></header-menu> 
       <div ng-view></div>
     </div>
-    <div ng-include src="'modules/layouts/footer.html'"></div>  
+    <footer class="footer-menu-container container">
+      <nav class="footer-menu">
+        <ul >
+          <li>
+            <a href="#">Головна</a> &nbsp;|
+          </li>
+          <li>
+            <a href="#about-us">Про Нас</a> &nbsp;|
+          </li>
+          <li>
+            <a href="#contacts">Контакти</a>
+          </li>
+         </ul>
+      </nav>
+      <p>Copyright@ Softserve 2014 <div>App version: v<span app-version></span></div></p>
+    </footer>  
   </div>
 
   <!--[if lt IE 7]>
@@ -42,9 +57,8 @@
   <script src="modules/measures/measures.js"></script>
   <script src="modules/header-menu/header-menu.js"></script>
   <script src="modules/guest-search/guest-search.js"></script>
-  <script src="modules/contacts/contacts.js"></script>
+  <script src="modules/partials/staticPartialsRoutes.js"></script>
   <script src="modules/statistics/statistics.js"></script>
-  <script src="modules/about-us/about-us.js"></script>
   <script src="modules/categories-container/categories-container.js"></script>
   <script src="modules/subcategory/subcategory.js"></script>
   <script src="modules/assessments/assessments.js"></script>
