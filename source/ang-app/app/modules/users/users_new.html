@@ -3,7 +3,6 @@
   <div class="col-md-8">
     <h3 class="text-center">Реєстрація</h3>
     		<form class="form-horizontal" role="form" ng-submit="reg.submitRegistration()" name="regform" novalidate>
-      <p class="form-group text-center text-danger">{{reg.message}}</p>
       <div class="form-group">
         <label for="first_name" class="col-sm-4 control-label">Імя</label>
         <div class="col-sm-6">
@@ -19,10 +18,11 @@
       <div class="form-group">
         <label for="username" class="col-sm-4 control-label">Нік*</label>
         <div class="col-sm-6">
-          <input type="text" class="form-control" name="username" ng-minlength=3 id="username" placeholder="Nick name" ng-model="reg.user.username" required>
+          <input type="text" class="form-control" name="username" ng-minlength=3 id="username" placeholder="Nick name" ng-change="reg.checkUsernameUniqueness()" ng-model="reg.user.username" required>
           <div class="error-container text-danger" ng-show="(regform.username.$dirty && regform.username.$invalid) || (regform.submitted && regform.username.$invalid)">
             <small class="error" ng-show="regform.username.$error.required">Please input a username</small>
             <small class="error" ng-show="regform.username.$error.minlength">Your username is required to be at least 3 characters</small>
+            <small ng-show="regform.username.$error.unique">Username has already been taken</small>
           </div>
         </div>
       </div> 

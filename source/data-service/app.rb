@@ -61,7 +61,7 @@ module PlastApp
         user.save
         return [200, "ok"]
       end
-        return [409, "This username already exists"]
+        return [400, user.errors.messages.to_json]
     end
   
   end
