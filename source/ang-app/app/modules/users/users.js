@@ -11,6 +11,10 @@ angular.module('yunakQuiz.users', ['ngRoute'])
 .controller("RegistrationController", ["$http", "$location", "$scope", function($http, $location, $scope){
   this.user = {};
   this.alreadyTakenUsernames = [];
+  this.getRandom = function(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+  this.captcha = this.getRandom(100, 999);
   this.cancel = function(){
     $location.path("/");
   };
@@ -25,7 +29,7 @@ angular.module('yunakQuiz.users', ['ngRoute'])
   };
   this.submitRegistration = function(){
     $scope.regform.submitted = false;
-    if ($scope.regform.$valid) {
+    if ($scope.regform.$valid && this.captcha == this.enteredCaptcha) {
       $http.post("http://localhost:9292/register", this.user)
         .success(function(data){
           $location.path("/");
