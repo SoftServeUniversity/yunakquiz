@@ -1,14 +1,19 @@
 'use strict';
-
-angular.module('yunakQuiz.assessments', ['ngRoute'])
+/** module for assessments and router  */
+var yunakQuizApp = angular.module('yunakQuiz.assessments', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/assessments/:assessment_id', {
+  $routeProvider
+  	.when('/assessments/:quiz_id', {
     templateUrl: 'modules/assessments/assessment_show.html',
-    controller: 'AssessmentsCtrl'
-  });
-}])
+    controller: 'QuizCtrl',
+    })
 
-.controller('AssessmentsCtrl', [function() {
-
+  	.when('/assessments/:quiz_id/result', {
+    templateUrl: 'modules/assessments/assessment_result.html',
+    controller: 'AssessmentsResultCtrl'
+  })
+  ;
+   
 }]);
+
