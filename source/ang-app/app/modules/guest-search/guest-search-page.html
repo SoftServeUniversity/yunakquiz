@@ -1,0 +1,46 @@
+
+<div ng-controller="SearchCtrl">
+
+    <div class="row">
+    	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pageTitleBox bg-primary">
+    		<div class="center-block"><h3 class="pageTitle">Гостьовий пошук</h3></div>
+        </div>
+    </div> 
+    <!-- End of header -->
+    <div class="">
+        <input type="text" class="" id="search_input" placeholder="введіть шось для пошуку...">
+            <span class="">
+                <button class="" type="button" ng-click="">пошук</button>
+            </span>
+    </div>
+
+    <div class="">
+        <div class="">
+            <div class="">
+                <div class="">
+                    <span class=""><!--<img src="/modules/img/reset.png" height="10" width="10" alt="back" />--> шукати скрізь</span>
+                </div>
+            </div>
+                <ul>
+                    <li ng-repeat="parCat in allCats | filter: {category_id: '0'}">
+                      <input type="checkbox" ng-model="parCat.search"/> {{parCat.title}} {{parCat.search}}
+                          <ul ng-repeat="subCat in allCats | filter: {category_id: parCat.id}"> 
+                          <!--ng-show="parCat.search" ng-init="subCat.search=false" -->
+                                <li><input type="checkbox" ng-model="subCat.search"  />{{subCat.title}}{{subCat.search}}</li> 
+                          </ul>
+                    </li>
+                </ul>
+            <br />
+            <button class="" id="applyFilter" ng-click="">Застосувати фільтр</button>                           
+        </div>
+
+        <div class="">
+        	<div class="">                       
+        	</div>
+    	</div>
+			
+            <div id="place_for_pagination">
+			</div>
+    </div>
+
+</div>
