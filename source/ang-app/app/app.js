@@ -7,7 +7,8 @@ angular.module('yunakQuiz', [
   'yunakQuiz.assessments',
   'yunakQuiz.users',
   'yunakQuiz.sessions',
-  'yunakQuiz.version'
+  'yunakQuiz.version',
+  'yunakQuiz.administrationPanel'
 ]).
 config(['$routeProvider', function($routeProvider) {
   $routeProvider.otherwise({redirectTo: '/measures'});
