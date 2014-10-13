@@ -32,11 +32,11 @@
         //place for loop to clean allcats object
 
         var searchRequest = {
-          keyWord: keyWord,
-          allCats: allCats
+          tags: ['teg2'],
+          categories: [1,2,3,4,6,7,8,9,10,11,12] 
         };
-        searchRequest.allCats[8].search = true; // just for testing
-        searchRequest.allCats[1].search = true; // just for testing
+        //searchRequest.allCats[8].search = true; // just for testing
+        //searchRequest.allCats[1].search = true; // just for testing
 
         console.log(searchRequest);
 

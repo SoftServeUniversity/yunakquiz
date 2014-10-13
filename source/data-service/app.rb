@@ -9,15 +9,6 @@ module PlastApp
 
   require 'sinatra/asset_pipeline'
 
-  class Categories < ActiveRecord::Base
-  end
-
-  class Tags < ActiveRecord::Base
-  end
-
-  class Quizzes < ActiveRecord::Base
-  end
-
   class YunakQuiz < Sinatra::Base
     register Sinatra::AssetPipeline
 
@@ -53,7 +44,7 @@ module PlastApp
 
     get '/guest-search' do
       content_type :json
-      Categories.select('id, category_id, title').to_json
+      Category.select('id, category_id, title').to_json
     end 
      
     options '/*' do 
@@ -65,52 +56,56 @@ module PlastApp
       content_type :json
 
       data = JSON.parse(request.body.read)
-      search = [] # init new array for search
+      
+      #search = [] # init new array for search
 
       #-------------------checking of input data------------------
+      #
+      #if data.has_key?('keyWord')
+      #  search.push(data['keyWord']) 
+      #else
+      #  halt 500, "error message" #need to look for right error number http
+      #end
 
-      if data.has_key?('keyWord')
-        search.push(data['keyWord']) 
-      else
-        halt 500, "error message" #need to look for right error number http
-      end
+      #data['allCats'].each { |x| 
+      #  if x.has_key?('search') && x['search'] == true
+      #      search.push(x)
+      #  end
+      #}
 
-      data['allCats'].each { |x| 
-        if x.has_key?('search') && x['search'] == true
-            search.push(x)
-        end
-      }
-
-      if search.length <= 1 #check if there were something 
-        halt 500, "error message" #need to look for right error number http
-      end
-
-      
+      #if search.length <= 1 #check if there were something 
+      #  halt 500, "error message" #need to look for right error number http
+      #end
+      #print ("here comes data:")
+      #puts data
       #--------------------search in db part----------------------
       
-      def subcat_search (category_id, keyWord) #function that takes category id and keyword and return the quizze 
-        
-        tags = Tags.where(tag: keyWord).as_json # select all tags with keyword 
-        
-        quizze = []
-        tags.each {|key| quizze.push(Quizzes.where(id: key['quiz_id']).as_json)} # select quizzes id with quiz_id in tag
-
-        category = []
-        quizze.each {|key, value| category.push(Categories.where(id: key['category_id']).as_json)} #select categories id with categoty_id in quizzes 
+      def subcat_search (search_request) #function that takes category id and keyword and return the quizze 
 
         search_result = []
-        category.each {|key, value|
-          if key['id'] == category_id
-            search_result = Quizzes.where(category_id: key['id']).as_json 
-          end          
-        } 
-        puts search_result
-        return search_result
+
+        search_request['tags'].each do |t_key| 
+          
+          if Tag.where(:tag => t_key).length > 0  # checkout if tag exist in database
+            search_request['categories'].each do|c_key| 
+              if (test = Quiz.where(:category_id => c_key).includes(:tags).where("tags.tag" => t_key).as_json).length > 0 # if there no corresponding items in database it will return empty object 
+                test[1] = t_key #added for future 
+                search_result.push(test)
+              end
+
+            end
+
+          else 
+            #some error or else
+          end
+
+        end
+
+          return search_result   
       end
 
-      puts(subcat_search(1,'teg1'))
-
-      {response: "sss"}.to_json
+      puts (subcat_search(data))
+      {response: "We working on it, good response will be later. ;-)"}.to_json
       
     end
 
