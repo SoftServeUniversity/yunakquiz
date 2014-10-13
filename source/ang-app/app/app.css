@@ -58,3 +58,9 @@
   background:rgb(255,0,0);
 }
 /* end assessment styles */
+
+/* parent-category styles */
+.rectangle a{
+  color: white;
+}
+/* end of parent-category styles */
