@@ -28,16 +28,17 @@ module PlastApp
       return [401, "unauthorized"]
     end
 
+    
     post '/login' do
       data = JSON.parse request.body.read
-      user = User.where(username: data['username'], hashed_password: data['password']).first 
+      user = User.authenticate(data['username'], data['password'])
       if !user.nil?
         if data['remember']
-          session[:user_id] = user.id
+           session[:user_id] = user.id
         end
         return [200, user.username]
       end
-      return [401, "unauthorized"]
+        return [401, "unauthorized"]
     end
 
     get '/' do
@@ -97,23 +98,17 @@ module PlastApp
     
     post '/register' do
       data = JSON.parse request.body.read
-      user = User.new
-      user.username = data['username'] 
-      user.first_name = data['first_name']
-      user.last_name = data['last_name']
-      user.hashed_password = data['password']
-      user.email = data['email']
-      user.birthday = data['birthday']
-      user.plast_hovel = data['plast_hovel']
-      user.plast_region = data['plast_region']
-      user.plast_level = data['plast_level']
-      user.picture = data['picture']
-      
-      if !User.find_by username: user.username
-        user.save
+      user = User.new(data)
+      if user.save
         return [200, "ok"]
+      else
+        return [400, user.errors.messages.to_json]
       end
-      return [400, user.errors.messages.to_json]
+    end
+    
+    get '/logout' do
+      session.clear
+      return [200, "ok"]
     end
   
   end

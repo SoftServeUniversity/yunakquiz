@@ -147,5 +147,13 @@ a:active, a:focus {
   margin:0 0 20px 0;
 }
 
+.form-label {
+	min-width: 22%;
+}
+
+.modal-header {
+	background-color: #eae8e8;
+	border-radius: 7px 7px 0px 0px;
+}
 /* end assessment styles */
 
