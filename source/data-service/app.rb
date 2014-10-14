@@ -55,32 +55,27 @@ module PlastApp
       cross_origin
       content_type :json
 
-      data = JSON.parse(request.body.read)
-      
-      #search = [] # init new array for search
-
       #-------------------checking of input data------------------
-      #
-      #if data.has_key?('keyWord')
-      #  search.push(data['keyWord']) 
-      #else
-      #  halt 500, "error message" #need to look for right error number http
-      #end
+      
+      def input_data_check (data) #function that takes object and check if it good for subcat_search function
 
-      #data['allCats'].each { |x| 
-      #  if x.has_key?('search') && x['search'] == true
-      #      search.push(x)
-      #  end
-      #}
+        search = {} # init new object for search
+        
+        if data.has_key?('tags') && data.has_key?('categories') && (data['tags'].length > 0) && (data['categories'].length > 0)
+          search['tags'] = data['tags'] 
+          search['categories'] = data['categories']
+        else
+          halt 500, "error message" #need to look for right error number http
+        end
 
-      #if search.length <= 1 #check if there were something 
-      #  halt 500, "error message" #need to look for right error number http
-      #end
-      #print ("here comes data:")
-      #puts data
+        puts (search)
+
+        return search
+      end 
+
       #--------------------search in db part----------------------
       
-      def subcat_search (search_request) #function that takes category id and keyword and return the quizze 
+      def subcat_search (search_request) #function that takes object that contain 2 keys: [tags], [categories] and return array 
 
         search_result = []
 
@@ -88,6 +83,7 @@ module PlastApp
           
           if Tag.where(:tag => t_key).length > 0  # checkout if tag exist in database
             search_request['categories'].each do|c_key| 
+              
               if (test = Quiz.where(:category_id => c_key).includes(:tags).where("tags.tag" => t_key).as_json).length > 0 # if there no corresponding items in database it will return empty object 
                 test[1] = t_key #added for future 
                 search_result.push(test)
@@ -103,9 +99,8 @@ module PlastApp
 
           return search_result   
       end
-
-      puts (subcat_search(data))
-      {response: "We working on it, good response will be later. ;-)"}.to_json
+      
+      (subcat_search(input_data_check(JSON.parse(request.body.read)))).to_json
       
     end
 
