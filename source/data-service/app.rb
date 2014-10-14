@@ -74,6 +74,16 @@ module PlastApp
       Quiz.select(['id','category_id','title']).to_json
     end    
 
+    get '/categories/subcategory/:category_id' do
+      content_type :json
+      Category.where("category_id=?", params['category_id']).to_json
+    end  
+
+    get '/categories/parentcat/:id' do
+      content_type :json
+      Category.where("id=?", params['id']).to_json
+    end
+
   end
 
 end

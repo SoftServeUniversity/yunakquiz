@@ -41,6 +41,7 @@ a:active, a:focus {
   text-decoration: none;
   outline: 0;
 }
+
 .login-header-menu{
   position:absolute;
   right:5px;
@@ -119,6 +120,9 @@ a:active, a:focus {
     background: rgb(74,147,255);
     text-align: center;
     z-index: 2;
+}
+.rectangle a{
+  color: white;
 }
 .categories-container{
   border: 1px solid #ccc;
