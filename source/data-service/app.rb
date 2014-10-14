@@ -96,11 +96,10 @@ module PlastApp
           end
 
         end
-
           return search_result   
       end
-      
-      (subcat_search(input_data_check(JSON.parse(request.body.read)))).to_json
+     #-------------------------------------------------------------- 
+      (subcat_search(input_data_check(JSON.parse(request.body.read)))).to_json #return results to site
       
     end
 
