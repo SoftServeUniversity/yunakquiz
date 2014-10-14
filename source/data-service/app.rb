@@ -8,9 +8,6 @@ module PlastApp
   require 'sinatra/cross_origin'
   require 'sinatra/asset_pipeline'
 
-  class User < ActiveRecord::Base
-  end
-
   class YunakQuiz < Sinatra::Base
 
     register Sinatra::AssetPipeline
@@ -40,15 +37,15 @@ module PlastApp
     end
 
     post '/login' do
-      	data = JSON.parse request.body.read
-      	user = User.where(username: data['username'], hashed_password: data['password']).first 
-      	if !user.nil?
-        	if data['remember']
-          		session[:user_id] = user.id
-        	end
-        		return [200, user.username]
-      	end
-      		return [401, "unauthorized"]
+      data = JSON.parse request.body.read
+      user = User.authenticate(data['username'], data['password'])
+      if !user.nil?
+        if data['remember']
+           session[:user_id] = user.id
+        end
+        return [200, user.username]
+      end
+        return [401, "unauthorized"]
     end
 
     post '/assessments/:id' do
@@ -58,8 +55,8 @@ module PlastApp
     end
 
     get '/logout' do
-      	session.delete(:user_id)
-      	return [200, "ok"]
+      session.clear
+      return [200, "ok"]
     end
 
   end
