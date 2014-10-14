@@ -99,8 +99,18 @@ module PlastApp
           return search_result   
       end
      #-------------------------------------------------------------- 
-      (subcat_search(input_data_check(JSON.parse(request.body.read)))).to_json #return results to site
+      #(subcat_search(input_data_check(JSON.parse(request.body.read)))).to_json #return results to site
       
+
+      #test = (Quiz.where({ category_id: [1, 2, 3, 4, \
+      #5, 6, 7, 8, 9, 10, 11, 12]}).joins(:tags).where('tags.tag \
+      #= "teg1"').where('tags.tag = "teg2"').as_json) # WORKING VERSION
+
+      test = (Quiz.where({ category_id: [1, 2, 3, 4, \
+      5, 6, 7, 8, 9, 10, 11, 12]}).joins(:tags).where("tags.tag" => ['teg1','teg2']).as_json) # WORKING VERSION
+      
+      print ('HERE WE GO MOTHERFUCKER')
+      puts (test)
     end
 
   end
