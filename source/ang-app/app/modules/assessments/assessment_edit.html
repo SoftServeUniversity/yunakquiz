@@ -1,5 +1,5 @@
-<div>
-<h3 ng-bind="quiz.title" class="text-center assessment-title"></h3>
+<div class="quiz">
+<h3 ng-bind="quiz.title" editable-text="quiz.title" class="text-center assessment-title"></h3>
 
 <p ng-bind="quiz.description"></p>
 <ul class="list-group assessmentQuestion">
@@ -13,7 +13,7 @@
 </ul>
 
 <button ng-click="saveQuiz()" class="btn btn-primary" role="button">Save quiz</button>
-<button ng-click="sendQuiz()" class="btn btn-primary" role="button">Send to review</button>  
+<button ng-click="sendQuiz()" class="btn btn-primary" role="button">Send for review</button>  
 
 <p>
   Showing of 'interpolate' filter:
