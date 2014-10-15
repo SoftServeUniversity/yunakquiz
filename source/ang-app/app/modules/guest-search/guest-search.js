@@ -7,8 +7,7 @@
       		function($routeProvider) {
             $routeProvider.
             	when('/guest-search', {
-              	templateUrl: './modules/guest-search/guest-search-page.html',
-              	controller: 'SearchCtrl'
+              	templateUrl: './modules/guest-search/guest-search-page.html'
             })
       	}
     ]);      
@@ -23,7 +22,7 @@
       $http.get("http://localhost:9292/guest-search")
       .success(function(data){
         $scope.allCats = data;  
-        //searchFactory($scope.allCats, $scope.keyWord);
+        searchFactory($scope.allCats, $scope.keyWord);
       });
 
     });
@@ -37,7 +36,7 @@
         //place for loop to clean allcats object
 
         var searchRequest = {
-          tags: ['teg1'],
+          tags: ['bar'],
           categories: [1,2,3,4,5,6,7,8,9,10,11] 
         };
         //searchRequest.allCats[8].search = true; // just for testing
