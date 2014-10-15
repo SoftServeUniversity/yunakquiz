@@ -32,15 +32,26 @@ module PlastApp
        
     put '/admin/assessments/:id' do
       content_type :json
-      push = JSON.parse(request.body.read)
-      {response: 'Updated an assessment'}.to_json
+      data = JSON.parse(request.body.read)
+      quiz = Quiz.update(data)
+      if quiz.save
+        return [200, "Quiz updated"]
+      else
+        return [400, quiz.errors.messages.to_json]
+      end
     
     end
 
     post '/admin/assessments' do
       content_type :json
-      push = JSON.parse(request.body.read)
-      {response: "Created Quiz with ID: xxx"}.to_json
+      data = JSON.parse(request.body.read)
+      #check permisions here
+      quiz_id = Quiz.createQ(data)
+      if quiz_id
+        return [200, quiz_id.to_json]
+      else
+        return [400, quiz.errors.messages.to_json]
+      end
     end
 
      get '/assessments/:id' do

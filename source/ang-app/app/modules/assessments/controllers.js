@@ -127,11 +127,15 @@ yunakQuizApp.controller('QuizEditCtrl', ['$scope','QuizData', '$routeParams', '$
 
 	/** Redirect to result-page if quiz is valid  */
 	$scope.saveQuiz = function(){
+		/*just mock to test faster */
+		$scope.quiz.id = 1;
 		QuizData.save($scope.quiz);
 	};
 
-	function sendQuiz(){
-
+	$scope.sendQuiz = function(){
+		/*just mock to simulate new Quiz */
+		$scope.quiz.id = undefined;
+		QuizData.save($scope.quiz);
 	};
 
 
