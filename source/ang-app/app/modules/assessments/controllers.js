@@ -116,3 +116,12 @@ yunakQuizApp.controller('AssessmentsResultCtrl', ['$scope','QuizData', '$routePa
 
 	
 }]);
+
+/** Quiz Edit controller  */
+yunakQuizApp.controller('QuizEditCtrl', ['$scope','QuizData', '$routeParams', '$location', function($scope, QuizData, $routeParams, $location) {
+
+	/** get quiz object */
+	$scope.assessment = QuizData.quiz;
+
+	
+}]);
