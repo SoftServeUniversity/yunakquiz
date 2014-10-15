@@ -46,28 +46,22 @@ module PlastApp
       content_type :json
       data = JSON.parse(request.body.read)
       #check permisions here
-      quiz_id = Quiz.createQ(data)
-      if quiz_id
-        return [200, quiz_id.to_json]
+      quiz = Quiz.createQ(data)
+      if quiz
+        return [200, quiz.id.to_json]
       else
         return [400, quiz.errors.messages.to_json]
       end
     end
 
-     get '/assessments/:id' do
+    get '/assessments/:id' do
       content_type :json
-
-      myObj = {
-        'id' => params['id'],
-        'title' => Quiz.find(params['id']).title,
-        'questions' => Quiz.find(params['id']).questions.select("id, title").as_json,
-         }
-
-      myObj['questions'].each_with_index do |value, index|
-             value['answers'] = Question.find(value['id']).answers.select("id, title,correct").as_json
-          end
-      
-       JSON.pretty_generate(myObj) 
+      quiz = Quiz.queryQ(params['id'])
+      if quiz
+        JSON.pretty_generate(quiz) 
+      else
+        return [400, quiz.errors.messages.to_json]
+      end
     end
 
     delete '/assessments/:id' do
