@@ -52,65 +52,49 @@ module PlastApp
     end
 
     post '/search' do
+      
       cross_origin
       content_type :json
 
-      #-------------------checking of input data------------------
+      # Recive object from front end and put it in data
       
-      def input_data_check (data) #function that takes object and check if it good for subcat_search function
-
-        search = {} # init new object for search
-        
-        if data.has_key?('tags') && data.has_key?('categories') && (data['tags'].length > 0) && (data['categories'].length > 0)
-          search['tags'] = data['tags'] 
-          search['categories'] = data['categories']
-        else
-          halt 500, "error message" #need to look for right error number http
-        end
-
-        puts (search)
-
-        return search
-      end 
-
-      #--------------------search in db part----------------------
+      search_request = JSON.parse(request.body.read)
       
-      def subcat_search (search_request) #function that takes object that contain 2 keys: [tags], [categories] and return array 
+      # This part of code must be in another file   
 
-        search_result = []
+      #---------------Preparing object for search-----------------
 
-        search_request['tags'].each do |t_key| 
-          
-          if Tag.where(:tag => t_key).length > 0  # checkout if tag exist in database
-            search_request['categories'].each do|c_key| 
-              
-              if (test = Quiz.where(:category_id => c_key).includes(:tags).where("tags.tag" => t_key).as_json).length > 0 # if there no corresponding items in database it will return empty object 
-                test[1] = t_key #added for future 
-                search_result.push(test)
-              end
+      # This function takes hash with 2 arrays as an argument
+      # and adding %*% to each teg
+      # % is needed for future search!
+      # and of course it returns result 
+      def add_procents_to_tags (search_request) 
 
-            end
+        search_request['tags'].map! {|tag| tag = "%#{tag}%"}
+        return search_request
 
-          else 
-            #some error or else
-          end
-
-        end
-          return search_result   
       end
-     #-------------------------------------------------------------- 
-      #(subcat_search(input_data_check(JSON.parse(request.body.read)))).to_json #return results to site
-      
 
-      #test = (Quiz.where({ category_id: [1, 2, 3, 4, \
-      #5, 6, 7, 8, 9, 10, 11, 12]}).joins(:tags).where('tags.tag \
-      #= "teg1"').where('tags.tag = "teg2"').as_json) # WORKING VERSION
-
-      test = (Quiz.where({ category_id: [1, 2, 3, 4, \
-      5, 6, 7, 8, 9, 10, 11, 12]}).joins(:tags).where("tags.tag" => ['teg1','teg2']).as_json) # WORKING VERSION
+      #--------------------Search in db part----------------------
       
-      print ('HERE WE GO MOTHERFUCKER')
-      puts (test)
+      # This sh*t kills many of my neutrons ;-), so  
+      # this function takes hash as argument
+      # and return from db quizzes that we need, 
+      # according to our request
+      def subcat_search (search_request)  
+
+        return Quiz.where({ category_id: search_request['categories']})\
+        .joins(:tags).where("tags.tag LIKE (?) COLLATE utf8_general_ci", \
+          search_request['tags']) 
+           
+      end
+
+     #------------------------------------------------------------ 
+
+    # This call subcat_search function that takes add_procents_to_tags 
+    # as an arguments, and finnaly all this data return to front-end
+    (subcat_search(add_procents_to_tags(search_request))).to_json
+    
     end
 
   end
