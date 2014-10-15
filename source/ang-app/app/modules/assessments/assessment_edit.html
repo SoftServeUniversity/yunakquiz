@@ -1,19 +1,21 @@
 <div class="quiz">
 <h3 ng-bind="quiz.title" editable-text="quiz.title" class="text-center assessment-title"></h3>
 
-<p ng-bind="quiz.description"></p>
+<p ng-bind="quiz.description" editable-text="quiz.description"></p>
 <ul class="list-group assessmentQuestion">
 	<li ng-repeat="question in quiz.questions" class="list-group-item" > 
-		<p>{{question.title}}</p>
+		<p editable-text="question.title">{{question.title}}</p>
 		
 		<ul class="list-group assessmentAnswer">
-			<li ng-repeat="answer in question.answers" class="list-group-item"> {{answer.title}}</li>
+			<li ng-repeat="answer in question.answers" class="list-group-item" > 
+			<input type="text" ng-model="answer.title"/>
+			</li>
 		</ul>
 	</li>
 </ul>
 
 <button ng-click="saveQuiz()" class="btn btn-primary" role="button">Save quiz</button>
-<button ng-click="sendQuiz()" class="btn btn-primary" role="button">Send for review</button>  
+<button ng-click='' class="btn btn-primary" role="button">Send for review</button>  
 
 <p>
   Showing of 'interpolate' filter:

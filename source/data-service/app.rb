@@ -27,12 +27,12 @@ module PlastApp
       [{id: 1, name: 'assessment 1'}, {id: 2, name: 'assessment 2'}].to_json
     end
 
-    put '/assessments' do
+    post 'admin/assessments/:id' do
       content_type :json
       {response: 'Added an assessment'}.to_json
     end
 
-    post '/assessments/:id' do
+    post 'admin/assessments' do
       cross_origin
       content_type :json
       {response: "Updated to #{params['id']} assessment"}.to_json
@@ -42,6 +42,7 @@ module PlastApp
       content_type :json
 
       myObj = {
+        'id' => params['id'],
         'title' => Quiz.find(params['id']).title,
         'questions' => Quiz.find(params['id']).questions.select("id, title").as_json,
          }

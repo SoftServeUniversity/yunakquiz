@@ -124,7 +124,16 @@ yunakQuizApp.controller('QuizEditCtrl', ['$scope','QuizData', '$routeParams', '$
 	QuizData.get($routeParams.quiz_id, function(data){
 	      $scope.quiz = data; 
 	    });
-	
+
+	/** Redirect to result-page if quiz is valid  */
+	$scope.saveQuiz = function(){
+		QuizData.save($scope.quiz);
+	};
+
+	function sendQuiz(){
+
+	};
+
 
 	
 }]);
