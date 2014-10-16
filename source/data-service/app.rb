@@ -22,26 +22,32 @@ module PlastApp
         erb :index
     end
 
+    options '/*' do
+    end
+
     get '/assessments' do
       content_type :json
       [{id: 1, name: 'assessment 1'}, {id: 2, name: 'assessment 2'}].to_json
     end
-
-    put '/assessments' do
+       
+    put '/admin/assessments/:id' do
       content_type :json
-      {response: 'Added an assessment'}.to_json
+      push = JSON.parse(request.body.read)
+      {response: 'Updated an assessment'}.to_json
+    
     end
 
-    post '/assessments/:id' do
-      cross_origin
+    post '/admin/assessments' do
       content_type :json
-      {response: "Updated to #{params['id']} assessment"}.to_json
+      push = JSON.parse(request.body.read)
+      {response: "Created Quiz with ID: xxx"}.to_json
     end
 
      get '/assessments/:id' do
       content_type :json
 
       myObj = {
+        'id' => params['id'],
         'title' => Quiz.find(params['id']).title,
         'questions' => Quiz.find(params['id']).questions.select("id, title").as_json,
          }
