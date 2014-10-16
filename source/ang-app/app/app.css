@@ -28,7 +28,15 @@
   content: "";
   padding: 0;
 }
-
+.pageTitleBox {
+  height: 50px;
+  margin-bottom: 20px;
+}
+.pageTitle {
+  margin-bottom: 15px;
+  margin-top: 15px;
+  text-align: center;
+}
 /* assessment styles */
 .assessmentQuestions>li{
   list-style-position:inside;
