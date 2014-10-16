@@ -31,31 +31,22 @@
 
 /* assessment styles */
 .quiz textarea{resize:both;}
-.assessmentQuestions>li{
-  list-style-position:inside;
-  padding-left:15px;
-  }
+.quizMarginTop{margin-top:20px;}
+.questionField{position:relative;}
+.closeButton{position:absolute;top:5px; right:5px; cursor:pointer;}
 
-.assessmentAnswers li {
+.assessmentQuestion>li {
+  margin-top:10px;
+}
+
+.assessmentAnswer>li{
   cursor:pointer;
-  padding:5px;
-  margin:5px;
-  list-style-type:lower-alpha;
+}
+.assessment-title{
+  background:#428bca; 
+  line-height:50px;
+  color:#fff; 
+  margin:0 0 20px 0;
 }
 
-.assessmentQuestionInvalid{
-  background:rgb(255,0,0);
-}
-
-.assessmentAnswerChecked {
-  background:rgb(192,192,192);
-}
-
-.assessmentAnswerCorrect {
-  background:rgb(0,128,0);
-}
-
-.assessmentAnswerUncorrect {
-  background:rgb(255,0,0);
-}
 /* end assessment styles */

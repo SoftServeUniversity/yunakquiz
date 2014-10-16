@@ -1,30 +1,51 @@
-<div class="quiz">
-	<div class="text-center">
-		<span ng-bind="quiz.title" editable-text="quiz.title" e-style="width:{{quiz.title.length*8.2}}px;" class="text-center assessment-title"></span>
+<div class="quiz row">
+	<div class="col-md-8">
+
+		<p>Оберіть категорію</p>
+		<select class="form-control">
+			<option ng-repeat="question in quiz.questions">{{question.title}}</option>
+		</select>
+
+		<p>Оберіть під-категорію</p>
+		<select class="form-control">
+			<option ng-repeat="question in quiz.questions">{{question.title}}</option>
+		</select>	
+
+		<h4 class="text-center">
+			<span ng-bind="quiz.title" editable-text="quiz.title" e-style="width:{{quiz.title.length*8.2}}px;" class="text-center"></span>
+		</h4>
+
+		<p>
+			<span ng-bind="quiz.description" editable-text="quiz.description"></span>
+		</p>
+		<ul class="list-group assessmentQuestion">
+			<li ng-repeat="question in quiz.questions" class="list-group-item" > 
+				<p>{{$index+1}}. 
+					<span editable-textarea="question.title" e-rows="3" e-cols="50">{{question.title}}</span>
+				</p>
+			
+				<ul class="list-group assessmentAnswer">
+					<li ng-repeat="answer in question.answers" class="list-group-item">
+						<span editable-textarea="answer.title" e-rows="3" e-cols="50">{{answer.title}}</span>
+					</li>
+				</ul>
+			</li>
+		</ul>
+
+		<button ng-click="saveQuiz()" class="btn btn-primary" role="button">Save quiz</button>
+		<button ng-click="sendQuiz()" class="btn btn-primary" role="button">Send for review</button>  
+
+		<p>
+	  		Showing of 'interpolate' filter:
+	  		{{ 'Current version is v%VERSION%.' | interpolate }}
+		</p>
 	</div>
-
-	<p>
-		<span ng-bind="quiz.description" editable-text="quiz.description"></span>
-	</p>
-	<ul class="list-group assessmentQuestion">
-		<li ng-repeat="question in quiz.questions" class="list-group-item" > 
-			<p>{{$index+1}}. 
-				<span editable-textarea="question.title" e-rows="3" e-cols="100">{{question.title}}</span>
-			</p>
-		
-			<ul class="list-group assessmentAnswer">
-				<li ng-repeat="answer in question.answers" class="list-group-item">
-					<span editable-textarea="answer.title" e-rows="3" e-cols="100">{{answer.title}}</span>
-				</li>
-			</ul>
-		</li>
-	</ul>
-
-	<button ng-click="saveQuiz()" class="btn btn-primary" role="button">Save quiz</button>
-	<button ng-click="sendQuiz()" class="btn btn-primary" role="button">Send for review</button>  
-
-	<p>
-  		Showing of 'interpolate' filter:
-  		{{ 'Current version is v%VERSION%.' | interpolate }}
-	</p>
+	<div class="col-md-4">
+	 	<div class="text-center">
+			<h3>Коментарі модератора</h3>
+		</div>
+		<blockquote>
+			<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet.</p>
+		</blockquote>	
+	</div>
 </div>

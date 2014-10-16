@@ -134,6 +134,46 @@ yunakQuizApp.controller('QuizEditCtrl', ['$scope','QuizData', '$routeParams', '$
 
 	};
 
+}]);
+/** Quiz Create controller  */
+yunakQuizApp.controller('QuizCreateCtrl', ['$scope','QuizData', '$routeParams', '$location', function($scope, QuizData, $routeParams, $location) {
+	$scope.quiz ={};
+	$scope.quiz.questions =[
+		{title:"ffghfgh",
+		answers:[
+			{title:"fghfgfghn", correct:true}
+		]
 
+	}];
+
+
+	$scope.addAnswer= function(question){
+		if(question.answers[question.answers.length-1].title){
+				question.answers.push({});
+		}
+	};
+
+	$scope.deleteAnswer = function(index, question){
+		question.answers.splice(index, 1);
+	}
+
+	$scope.disableAddButton = function(){
+		if($scope.quiz.questions[$scope.quiz.questions.length-1].title){
+			$scope.addQuestionDisabled = false;
+		}
+		else{
+			$scope.addQuestionDisabled = true;	
+		}
+	};
 	
+	$scope.addQuestion = function(){
+		$scope.addQuestionDisabled = true;
+		$scope.quiz.questions.push({answers:[{}]});
+	};
+		
+	$scope.deleteQuestion=function(index){
+		$scope.quiz.questions.splice(index,1);
+	};
+
+
 }]);
