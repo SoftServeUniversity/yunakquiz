@@ -33,8 +33,12 @@ module PlastApp
     put '/admin/assessments/:id' do
       content_type :json
       data = JSON.parse(request.body.read)
-      Quiz.updateQ(data)
-      "ok"    
+      quiz = Quiz.updateQ(data)
+      if quiz
+        return [200, quiz.id.to_json]
+      else
+        return [400, quiz.errors.messages.to_json]
+      end    
     end
 
     post '/admin/assessments' do
