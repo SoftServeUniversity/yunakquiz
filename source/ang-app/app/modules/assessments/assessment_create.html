@@ -21,8 +21,7 @@
 			
 				<label class="col-sm-4 control-label quizMarginTop  text-right">Оберіть категорію</label>
 				<div class="col-sm-8 quizMarginTop ">
-					<select class="form-control">
-						<option ng-repeat="category in categories">{{question.title}}</option>
+					<select ng-change="getSubcats()" ng-model="selectedCat" ng-options="category.title for category in categories" class="form-control">
 					</select>
 		   		</div>
 		   	
@@ -30,8 +29,7 @@
 		   	
 				<label class="col-sm-4 control-label quizMarginTop  text-right">Оберіть під-категорію</label>
 				<div class="col-sm-8 quizMarginTop ">
-					<select class="form-control">
-						<option ng-repeat="subcategory in subcategories">{{question.title}}</option>
+					<select  ng-model="selectedSubcat" ng-options="subcat.title for subcat in subcats" class="form-control">
 					</select>
 				</div>	
 		</div>

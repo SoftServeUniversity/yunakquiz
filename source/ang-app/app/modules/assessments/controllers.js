@@ -139,27 +139,56 @@ yunakQuizApp.controller('QuizEditCtrl', ['$scope','QuizData', '$routeParams', '$
 
 /** Quiz Create controller  */
 yunakQuizApp.controller('QuizCreateCtrl', ['$scope','QuizData', '$routeParams', '$location', function($scope, QuizData, $routeParams, $location) {
-	$scope.quiz ={};
-	$scope.quiz.questions =[
-		{title:"ffghfgh",
-		answers:[
-			{title:"fghfgfghn", correct:true}
-		]
 
-	}];
+	$scope.categories =[
+	{id:1, title:"Спорт"},
+	{id:2, title:"Історія"},
+	];
+	$scope.sub1 = [
+		{id:1, title:"Футбол"},
+		{id:2, title:"Баскетбол"},
+	];
+	$scope.sub2 = [
+		{id:1, title:"Історія України"},
+		{id:2, title:"Історія Світу"},
+	];
 
+	$scope.getSubcats = function() {
+		if($scope.selectedCat.id ==1){
+			$scope.subcats = $scope.sub1;
+		} else {$scope.subcats = $scope.sub2;}
+	};
 
-	$scope.addAnswer= function(question){
+	$scope.init = function() {
+		
+		$scope.quiz = {};
+		$scope.quiz.questions = [];
+		$scope.addQuestion();
+
+	};
+
+	$scope.deleteEmptyAnswer = function() { 
+		var questions = $scope.quiz.questions;
+		for (var i=0;i<questions.length; i++) { 
+			var lastAnswer = questions[i].answers[questions[i].answers.length-1];
+			if(!lastAnswer.title || !lastAnswer.title.trim()){
+				questions[i].answers.pop();
+  			}
+		};
+	};
+		 
+
+	$scope.addAnswer = function(question) {
 		if(question.answers[question.answers.length-1].title){
-				question.answers.push({});
+				question.answers.push({correct:false});
 		}
 	};
 
-	$scope.deleteAnswer = function(index, question){
+	$scope.deleteAnswer = function(index, question) {
 		question.answers.splice(index, 1);
 	}
 
-	$scope.disableAddButton = function(){
+	$scope.disableAddButton = function() {
 		if($scope.quiz.questions[$scope.quiz.questions.length-1].title){
 			$scope.addQuestionDisabled = false;
 		}
@@ -170,7 +199,7 @@ yunakQuizApp.controller('QuizCreateCtrl', ['$scope','QuizData', '$routeParams', 
 	
 	$scope.addQuestion = function(){
 		$scope.addQuestionDisabled = true;
-		$scope.quiz.questions.push({answers:[{}]});
+		$scope.quiz.questions.push({answers:[{correct:false}]});
 	};
 		
 	$scope.deleteQuestion=function(index){
@@ -178,6 +207,7 @@ yunakQuizApp.controller('QuizCreateCtrl', ['$scope','QuizData', '$routeParams', 
 	};
 
 	$scope.saveQuiz = function(){
+		$scope.deleteEmptyAnswer();
 		$scope.quiz.state = 1;
 		QuizData.save($scope.quiz);
 	};
@@ -186,6 +216,8 @@ yunakQuizApp.controller('QuizCreateCtrl', ['$scope','QuizData', '$routeParams', 
 		$scope.quiz.state = 2;
 		QuizData.save($scope.quiz);
 	};
+
+	$scope.init();
 
 }]);
 
