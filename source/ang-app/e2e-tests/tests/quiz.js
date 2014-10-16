@@ -10,7 +10,7 @@ describe('quiz', function() {
 		browser.get('http://localhost:8000/#/assessments/1');
 
 	    it('should render first quiz title', function() {
-	      expect(element.all(by.css('[ng-view] h3')).first().getText()).
+	      expect(element.all(by.css('.quiz .assessment-title')).first().getText()).
 	        toMatch(/Тест на знання правил футболу/);
 	    });
 
@@ -19,9 +19,8 @@ describe('quiz', function() {
 	        toMatch(3);
 	    });
 
-
 	    it('should render quiz page with failed validation ', function() {
-	    	element.all(by.css('button.btn')).click();
+	    	element.all(by.css('.quiz button.btn')).click();
 	        expect(browser.getLocationAbsUrl()).
 	        toMatch('http://localhost:8000/#/assessments/1');
 	    });
@@ -51,7 +50,7 @@ describe('quiz', function() {
       	});
     	
 		it('should render quiz-result-page', function() {
-		    element.all(by.css('button.btn')).click();
+		    element.all(by.css('quiz button.btn')).click();
 		    expect(browser.getLocationAbsUrl()).
 		    toMatch('http://localhost:8000/#/assessments/1/result');
 	    });	
