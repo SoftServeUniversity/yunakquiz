@@ -32,31 +32,35 @@ module PlastApp
        
     put '/admin/assessments/:id' do
       content_type :json
-      push = JSON.parse(request.body.read)
-      {response: 'Updated an assessment'}.to_json
-    
+      data = JSON.parse(request.body.read)
+      quiz = Quiz.updateQ(data)
+      if quiz
+        return [200, quiz.id.to_json]
+      else
+        return [400, quiz.errors.messages.to_json]
+      end    
     end
 
     post '/admin/assessments' do
       content_type :json
-      push = JSON.parse(request.body.read)
-      {response: "Created Quiz with ID: xxx"}.to_json
+      data = JSON.parse(request.body.read)
+      #check permisions here
+      quiz = Quiz.createQ(data)
+      if quiz
+        return [200, quiz.id.to_json]
+      else
+        return [400, quiz.errors.messages.to_json]
+      end
     end
 
-     get '/assessments/:id' do
+    get '/assessments/:id' do
       content_type :json
-
-      myObj = {
-        'id' => params['id'],
-        'title' => Quiz.find(params['id']).title,
-        'questions' => Quiz.find(params['id']).questions.select("id, title").as_json,
-         }
-
-      myObj['questions'].each_with_index do |value, index|
-             value['answers'] = Question.find(value['id']).answers.select("id, title,correct").as_json
-          end
-      
-       JSON.pretty_generate(myObj) 
+      quiz = Quiz.queryQ(params['id'])
+      if quiz
+        JSON.pretty_generate(quiz) 
+      else
+        return [400, quiz.errors.messages.to_json]
+      end
     end
 
     delete '/assessments/:id' do

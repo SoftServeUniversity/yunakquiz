@@ -127,14 +127,16 @@ yunakQuizApp.controller('QuizEditCtrl', ['$scope','QuizData', '$routeParams', '$
 
 	/** Redirect to result-page if quiz is valid  */
 	$scope.saveQuiz = function(){
+		$scope.quiz.state = 1;
 		QuizData.save($scope.quiz);
 	};
 
-	function sendQuiz(){
-
+	$scope.sendForReview = function(){
+		$scope.quiz.state = 2;
+		QuizData.save($scope.quiz);
 	};
-
 }]);
+
 /** Quiz Create controller  */
 yunakQuizApp.controller('QuizCreateCtrl', ['$scope','QuizData', '$routeParams', '$location', function($scope, QuizData, $routeParams, $location) {
 	$scope.quiz ={};
@@ -175,5 +177,15 @@ yunakQuizApp.controller('QuizCreateCtrl', ['$scope','QuizData', '$routeParams', 
 		$scope.quiz.questions.splice(index,1);
 	};
 
+	$scope.saveQuiz = function(){
+		$scope.quiz.state = 1;
+		QuizData.save($scope.quiz);
+	};
+
+	$scope.sendForReview = function(){
+		$scope.quiz.state = 2;
+		QuizData.save($scope.quiz);
+	};
 
 }]);
+
