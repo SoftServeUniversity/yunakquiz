@@ -3,16 +3,26 @@ class Quiz < ActiveRecord::Base
   has_many :questions
   has_and_belongs_to_many :tags
 
-  def self.update(data="")
-  		Quiz.find(data['id'])
+  def self.updateQ(data)
+  		if (data['id'] == nil)
+  			return "Quiz not found"	
+  		end
+	  	quiz = Quiz.find(data['id'])
+
+		quiz.update(title: data['title'])
+
+		data['questions'].each do |q|
+  			Question.updateQ(q)
+  		end
+
   end
 
-  def self.createQ(data=[])
+  def self.createQ(data)
   		quiz = Quiz.create(title: data['title'], category_id: ['categoty_id'])
   		data['questions'].each do |q|
-  			question = quiz.questions.create(title: q['title'])
+  			question = quiz.questions.create(title: q['title'], description: q['description'])
   				q['answers'].each do |a|
-  					question.answers.create(title: a['title'])
+  					question.answers.create(a)
   				end	
   			end
   		quiz	
