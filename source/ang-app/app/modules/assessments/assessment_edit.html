@@ -1,22 +1,30 @@
 <div class="quiz">
-<h3 ng-bind="quiz.title" editable-text="quiz.title" class="text-center assessment-title"></h3>
+	<div class="text-center">
+		<span ng-bind="quiz.title" editable-text="quiz.title" e-style="width:{{quiz.title.length*8.2}}px;" class="text-center assessment-title"></span>
+	</div>
 
-<p ng-bind="quiz.description"></p>
-<ul class="list-group assessmentQuestion">
-	<li ng-repeat="question in quiz.questions" class="list-group-item" > 
-		<p>{{question.title}}</p>
+	<p>
+		<span ng-bind="quiz.description" editable-text="quiz.description"></span>
+	</p>
+	<ul class="list-group assessmentQuestion">
+		<li ng-repeat="question in quiz.questions" class="list-group-item" > 
+			<p>{{$index+1}}. 
+				<span editable-textarea="question.title" e-rows="3" e-cols="100">{{question.title}}</span>
+			</p>
 		
-		<ul class="list-group assessmentAnswer">
-			<li ng-repeat="answer in question.answers" class="list-group-item"> {{answer.title}}</li>
-		</ul>
-	</li>
-</ul>
+			<ul class="list-group assessmentAnswer">
+				<li ng-repeat="answer in question.answers" class="list-group-item">
+					<span editable-textarea="answer.title" e-rows="3" e-cols="100">{{answer.title}}</span>
+				</li>
+			</ul>
+		</li>
+	</ul>
 
-<button ng-click="saveQuiz()" class="btn btn-primary" role="button">Save quiz</button>
-<button ng-click="sendQuiz()" class="btn btn-primary" role="button">Send for review</button>  
+	<button ng-click="saveQuiz()" class="btn btn-primary" role="button">Save quiz</button>
+	<button ng-click="sendQuiz()" class="btn btn-primary" role="button">Send for review</button>  
 
-<p>
-  Showing of 'interpolate' filter:
-  {{ 'Current version is v%VERSION%.' | interpolate }}
-</p>
+	<p>
+  		Showing of 'interpolate' filter:
+  		{{ 'Current version is v%VERSION%.' | interpolate }}
+	</p>
 </div>

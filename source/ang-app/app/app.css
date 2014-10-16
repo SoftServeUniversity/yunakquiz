@@ -30,6 +30,7 @@
 }
 
 /* assessment styles */
+.quiz textarea{resize:both;}
 .assessmentQuestions>li{
   list-style-position:inside;
   padding-left:15px;
