@@ -37,6 +37,9 @@
   margin-top: 15px;
   text-align: center;
 }
+.form-group {
+  margin-bottom: 15px;
+}
 /* assessment styles */
 .assessmentQuestions>li{
   list-style-position:inside;
