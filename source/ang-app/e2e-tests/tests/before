@@ -1,0 +1,43 @@
+~before
+1. load main page on "http://localhost:8000/"
+2. find element by class "login-header-menu ".
+3. click on it
+
+LOGIN MODEL WINDOW
+
+1. expect to be element by class "modal fade in"
+2. expect element by ng-model "lgn.user.username"
+3. expect element by ng-model "lgn.user.password"
+4. expect element "pull-left"
+5. expect "btn-primary"
+
+LOGIN WITH CORRECT DATA
+
+1. find element by ng-model "lgn.user.username"
+2. insert correct text
+3. find element by ng-model "lgn.user.password"
+4. insert correct text
+5. click on element "btn-primary"
+5. expect to be element by class "modal fade"
+
+LOGIN WITH INCORRECT DATA
+
+1. find element by ng-model lgn.user.username
+2. insert incorrect text
+3. find element by ng-model lgn.user.password
+4. insert incorrect text
+5. expect text of element by class "text-danger" to be Enter username and password!"
+
+LOGIN WITH EMPTY DATA
+
+1. find element by ng-model lgn.user.username
+2. insert empty text
+3. find element by ng-model lgn.user.password
+4. insert empty text
+5. expect text of element by class "text-danger" to be Invalid username and/or password!!"
+
+GO TO REGISTER
+
+1. find element "pull-left"
+2. click on it
+3. expect browser change page to "http://localhost:8000/#/auth/signup"
