@@ -7,7 +7,9 @@ describe('Login Model Window', function() {
   it('should open model window', function() {
     browser.get('http://localhost:8000/');
     element(by.css('.login-header-menu')).click();
-    expect(element(by.id('login')).getAttribute('class')).toBe('modal fade in');
+    browser.sleep(1000);
+    expect(element(by.id('login')).isDisplayed()).toBe(true);
+    //expect(element(by.id('login')).getAttribute('class')).toBe('modal fade in');
   });
 
   describe('Functionality of MLW', function() {
@@ -24,90 +26,41 @@ describe('Login Model Window', function() {
       expect(element(by.css('.btn-primary')).isPresent()).toBe(true);
     });
 
-  // describe('Phone list view', function() {
-
-  //   beforeEach(function() {
-  //     browser.get('app/index.html#/phones');
-  //   });
-
-
-  //   it('should filter the phone list as user types into the search box', function() {
-
-  //     var phoneList = element.all(by.repeater('phone in phones'));
-  //     var query = element(by.model('query'));
-
-  //     expect(phoneList.count()).toBe(20);
-
-  //     query.sendKeys('nexus');
-  //     expect(phoneList.count()).toBe(1);
-
-  //     query.clear();
-  //     query.sendKeys('motorola');
-  //     expect(phoneList.count()).toBe(8);
-  //   });
-
-
-  //   it('should be possible to control phone order via the drop down select box', function() {
-
-  //     var phoneNameColumn = element.all(by.repeater('phone in phones').column('{{phone.name}}'));
-  //     var query = element(by.model('query'));
-
-  //     function getNames() {
-  //       return phoneNameColumn.map(function(elm) {
-  //         return elm.getText();
-  //       });
-  //     }
-
-  //     query.sendKeys('tablet'); //let's narrow the dataset to make the test assertions shorter
-
-  //     expect(getNames()).toEqual([
-  //       "Motorola XOOM\u2122 with Wi-Fi",
-  //       "MOTOROLA XOOM\u2122"
-  //     ]);
-
-  //     element(by.model('orderProp')).element(by.css('option[value="name"]')).click();
-
-  //     expect(getNames()).toEqual([
-  //       "MOTOROLA XOOM\u2122",
-  //       "Motorola XOOM\u2122 with Wi-Fi"
-  //     ]);
-  //   });
-
-
-  //   it('should render phone specific links', function() {
-  //     var query = element(by.model('query'));
-  //     query.sendKeys('nexus');
-  //     element.all(by.css('.phones li a')).first().click();
-  //     browser.getLocationAbsUrl().then(function(url) {
-  //       expect(url.split('#')[1]).toBe('/phones/nexus-s');
-  //     });
-  //   });
-  // });
-
-
-  // describe('Phone detail view', function() {
-
-  //   beforeEach(function() {
-  //     browser.get('app/index.html#/phones/nexus-s');
-  //   });
-
-
-  //   it('should display nexus-s page', function() {
-  //     expect(element(by.binding('phone.name')).getText()).toBe('Nexus S');
-  //   });
-
-
-  //   it('should display the first phone image as the main phone image', function() {
-  //     expect(element(by.css('img.phone.active')).getAttribute('src')).toMatch(/img\/phones\/nexus-s.0.jpg/);
-  //   });
-
-
-  //   it('should swap main image if a thumbnail image is clicked on', function() {
-  //     element(by.css('.phone-thumbs li:nth-child(3) img')).click();
-  //     expect(element(by.css('img.phone.active')).getAttribute('src')).toMatch(/img\/phones\/nexus-s.2.jpg/);
-
-  //     element(by.css('.phone-thumbs li:nth-child(1) img')).click();
-  //     expect(element(by.css('img.phone.active')).getAttribute('src')).toMatch(/img\/phones\/nexus-s.0.jpg/);
-  //   });
+    it('should redirect to signup page, after click on signup button', function() {
+        //element(by.buttonText('Зареєструватись')).click();
+        element(by.css('[ng-click="lgn.register()"]')).click();
+        expect(browser.getLocationAbsUrl()).toMatch("/auth/signup");
     });
+
+    describe('Login with correct data', function() {
+
+      it('should close modal window and show name of user', function() {
+        element(by.model('lgn.user.username')).sendKeys("tfilonych");
+        element(by.model('lgn.user.password')).sendKeys("11111111");
+        element(by.buttonText('Увійти')).click();
+        browser.sleep(1000);
+        expect(element(by.id('login')).isDisplayed()).toBe(false);
+        expect(element(by.binding('appCtrl.username')).getText()).toBe("tfilonych");
+      });
+
+    });
+
+    describe('Login with incorrect data', function() {
+
+      it('should display error message "Invalid username and/or password!"', function() {
+        element(by.model('lgn.user.username')).sendKeys("azazaza");
+        element(by.model('lgn.user.password')).sendKeys("11111111111");
+        element(by.buttonText('Увійти')).click();
+        expect(element(by.binding('lgn.message')).getText()).toBe("Invalid username and/or password!");
+      });
+
+      it('should display error message "Enter username and password!"', function() {
+        element(by.buttonText('Увійти')).click();
+        expect(element(by.binding('lgn.message')).getText()).toBe("Enter username and password!");
+      });
+
+    });
+
+
+  });
 });
