@@ -125,15 +125,104 @@ yunakQuizApp.controller('QuizEditCtrl', ['$scope','QuizData', '$routeParams', '$
 	      $scope.quiz = data; 
 	    });
 
+	$scope.categories =[
+	{id:1, title:"Спорт"},
+	{id:2, title:"Історія"},
+	];
+	$scope.sub1 = [
+		{id:1, title:"Футбол"},
+		{id:2, title:"Баскетбол"},
+	];
+	$scope.sub2 = [
+		{id:1, title:"Історія України"},
+		{id:2, title:"Історія Світу"},
+	];
+
+	$scope.getSubcats = function() {
+		if($scope.selectedCat.id ==1){
+			$scope.subcats = $scope.sub1;
+		} else {$scope.subcats = $scope.sub2;}
+	};
+
+	$scope.deleteEmptyAnswer = function() { 
+		var questions = $scope.quiz.questions;
+		for (var i=0;i<questions.length; i++) { 
+			var lastAnswer = questions[i].answers[questions[i].answers.length-1];
+			if(!lastAnswer.title || !lastAnswer.title.trim()){
+				questions[i].answers.pop();
+  			};
+		};
+	};
+		 
+
+	$scope.addAnswer = function(question) {
+		if(question.answers[question.answers.length-1].title){
+				question.answers.push({correct:false});
+		}
+	};
+
+	$scope.deleteAnswer = function(index, question) {
+		question.answers.splice(index, 1);
+	}
+
+	$scope.setCorrectAnswer=function(answer){
+		answer.correct = !answer.correct;
+		};
+
+	$scope.disableAddButton = function() {
+		if($scope.quiz.questions[$scope.quiz.questions.length-1].title){
+			$scope.addQuestionDisabled = false;
+		}
+		else{
+			$scope.addQuestionDisabled = true;	
+		}
+	};
+	
+	$scope.validateQuiz = function(){
+		var questions = $scope.quiz.questions;
+		$scope.quiz.valid = true;
+		for(var i = 0; i < questions.length;i++){
+			$scope.validateQuestion(questions[i]);
+			$scope.quiz.valid = $scope.quiz.valid && questions[i].valid;
+		};
+
+	};
+
+	$scope.validateQuestion = function(question){
+		var answers = question.answers;
+		question.valid = false;
+		for(var i = 0; i < answers.length;i++){
+			question.valid = question.valid || answers[i].correct;
+		};
+	};
+
+	$scope.addQuestion = function(){
+		$scope.addQuestionDisabled = true;
+		$scope.quiz.questions.push({answers:[{correct:false}]});
+	};
+		
+	$scope.deleteQuestion=function(index){
+		$scope.quiz.questions.splice(index,1);
+	};
+
+
+
+
 	/** Redirect to result-page if quiz is valid  */
 	$scope.saveQuiz = function(){
-		$scope.quiz.state = 1;
-		QuizData.save($scope.quiz);
+		$scope.validateQuiz();
+		if($scope.quiz.valid){
+			$scope.quiz.state = 1;
+			QuizData.save($scope.quiz);
+		};
 	};
 
 	$scope.sendForReview = function(){
-		$scope.quiz.state = 2;
-		QuizData.save($scope.quiz);
+		$scope.validateQuiz();
+		if($scope.quiz.valid){
+			$scope.quiz.state = 2;
+			QuizData.save($scope.quiz);
+		};
 	};
 }]);
 
@@ -159,6 +248,7 @@ yunakQuizApp.controller('QuizCreateCtrl', ['$scope','QuizData', '$routeParams', 
 		} else {$scope.subcats = $scope.sub2;}
 	};
 
+
 	$scope.init = function() {
 		
 		$scope.quiz = {};
@@ -167,26 +257,20 @@ yunakQuizApp.controller('QuizCreateCtrl', ['$scope','QuizData', '$routeParams', 
 
 	};
 
-	$scope.deleteEmptyAnswer = function() { 
-		var questions = $scope.quiz.questions;
-		for (var i=0;i<questions.length; i++) { 
-			var lastAnswer = questions[i].answers[questions[i].answers.length-1];
-			if(!lastAnswer.title || !lastAnswer.title.trim()){
-				questions[i].answers.pop();
-  			}
-		};
-	};
-		 
-
 	$scope.addAnswer = function(question) {
-		if(question.answers[question.answers.length-1].title){
+		// if(question.answers[question.answers.length-1].title){
 				question.answers.push({correct:false});
-		}
+		// }
 	};
 
 	$scope.deleteAnswer = function(index, question) {
 		question.answers.splice(index, 1);
 	}
+
+	$scope.setCorrectAnswer=function(question,answer){
+		question.invalid = false;
+		answer.correct = !answer.correct;
+		};
 
 	$scope.disableAddButton = function() {
 		if($scope.quiz.questions[$scope.quiz.questions.length-1].title){
@@ -199,22 +283,53 @@ yunakQuizApp.controller('QuizCreateCtrl', ['$scope','QuizData', '$routeParams', 
 	
 	$scope.addQuestion = function(){
 		$scope.addQuestionDisabled = true;
-		$scope.quiz.questions.push({answers:[{correct:false}]});
+		$scope.quiz.questions.push({answers:[{correct:false},{correct:false}]});
 	};
 		
 	$scope.deleteQuestion=function(index){
 		$scope.quiz.questions.splice(index,1);
 	};
 
+	$scope.validateQuiz = function(){
+		var questions = $scope.quiz.questions;
+		$scope.quiz.invalid = false;
+		for(var i = 0; i < questions.length;i++){
+			$scope.validateQuestion(questions[i]);
+			if(questions[i].invalid){
+				$scope.quiz.invalid = true;
+			};
+		};
+
+	};
+
+	$scope.validateQuestion = function(question){
+		var answers = question.answers;
+		question.invalid = true;
+		for(var i = 0; i < answers.length;i++){
+			
+			if (answers[i].correct) {
+				question.invalid =  false;
+			};
+		};
+		
+	};
+
+
+	/** Redirect to result-page if quiz is valid  */
 	$scope.saveQuiz = function(){
-		$scope.deleteEmptyAnswer();
-		$scope.quiz.state = 1;
-		QuizData.save($scope.quiz);
+		$scope.validateQuiz();
+		if(!$scope.quiz.invalid){
+			$scope.quiz.state = 1;
+			QuizData.save($scope.quiz);
+		};
 	};
 
 	$scope.sendForReview = function(){
-		$scope.quiz.state = 2;
-		QuizData.save($scope.quiz);
+		$scope.validateQuiz();
+		if(!$scope.quiz.invalid){
+			$scope.quiz.state = 2;
+			QuizData.save($scope.quiz);
+		};
 	};
 
 	$scope.init();

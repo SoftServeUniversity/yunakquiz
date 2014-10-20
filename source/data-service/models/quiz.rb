@@ -17,19 +17,18 @@ class Quiz < ActiveRecord::Base
   					question.answers.find_or_create_by(id: a['id']).update(a)
   				end	
   			end
-		
-  		quiz
+  	return quiz
   end
 
   def self.createQ(data)
-  		quiz = Quiz.create(title: data['title'], category_id: ['categoty_id'])
+  		quiz = Quiz.create(title: data['title'],description: data['description'], category_id: ['categoty_id'])
   		data['questions'].each do |q|
   			question = quiz.questions.create(title: q['title'], description: q['description'])
   				q['answers'].each do |a|
   					question.answers.create(a)
   				end	
   			end
-  		quiz	
+  	return quiz	
   end
 
   def self.queryQ(id)
@@ -40,6 +39,7 @@ class Quiz < ActiveRecord::Base
   	quizObject = {
         'id' => id,
         'title' => quiz.title,
+        'description'=>quiz.description,
         'questions' => quiz.questions.as_json,
          }
 
