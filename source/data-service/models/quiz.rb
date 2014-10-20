@@ -8,20 +8,16 @@ class Quiz < ActiveRecord::Base
   			return "Quiz not found"	
   		end
 	  	quiz = Quiz.find(data['id'])
-		quiz.update(title: data['title'], description: data['description'], category_id: data['category_id'])
+  		quiz.update(title: data['title'], description: data['description'], category_id: data['category_id'])
 
-		data['questions'].each do |q|
-  			question = quiz.questions.find_or_create_by(id: q['id'])
-			question.update(title: q['title'], description: q['description'])
-  				q['answers'].each do |a|
-  					question.answers.find_or_create_by(id: a['id']).update(a)
-  				end	
-  			end
+  		Question.updateQ(data['questions'], quiz)
+
   	return quiz
   end
 
   def self.createQ(data)
-  		quiz = Quiz.create(title: data['title'],description: data['description'], category_id: ['categoty_id'])
+    category = Category.find(data['category_id'])
+  		quiz = category.quizzes.create(title: data['title'],description: data['description'])
   		data['questions'].each do |q|
   			question = quiz.questions.create(title: q['title'], description: q['description'])
   				q['answers'].each do |a|
@@ -39,6 +35,7 @@ class Quiz < ActiveRecord::Base
   	quizObject = {
         'id' => id,
         'title' => quiz.title,
+        'category_id'=> quiz.category_id,
         'description'=>quiz.description,
         'questions' => quiz.questions.as_json,
          }

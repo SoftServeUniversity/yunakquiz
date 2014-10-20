@@ -1,47 +1,72 @@
 <div class="quiz row">
+<h3 class="text-center assessment-title">Редагування тесту</h3>
+<div ng-show="sendMessage" class="alert alert-danger col-sm-12">{{sendMessage}}</div>
 	<div class="col-md-8">
+		<form name="quizEditForm" novalidate>
+			<div class="col-md-12 jumbotron">
+				
+				
+					<label class="col-sm-4 control-label text-right">Введіть назву тесту</label>
+					<div class="col-sm-8 ">
+						<input ng-model="quiz.title" class="form-control" type="text" required />
+					</div>
+				
 
-		<p>Оберіть категорію</p>
-		<select class="form-control">
-			<option ng-repeat="question in quiz.questions">{{question.title}}</option>
-		</select>
+				
+					<label class="col-sm-4 control-label quizMarginTop text-right">Введіть опис тесту</label>
+					<div class="col-sm-8 quizMarginTop ">
+						<textarea ng-model="quiz.description" class="form-control"  type="text" required></textarea>
+					</div>
+				
 
-		<p>Оберіть під-категорію</p>
-		<select class="form-control">
-			<option ng-repeat="question in quiz.questions">{{question.title}}</option>
-		</select>	
+				
+					<label class="col-sm-4 control-label quizMarginTop  text-right">Оберіть категорію</label>
+					<div class="col-sm-8 quizMarginTop ">
+						<select ng-change="" ng-model="selectedCat" ng-options="category.title for category in cats" class="form-control" required>
+						</select>
+			   		</div>
+			   	
 
-		<h4 class="text-center">
-			<span ng-bind="quiz.title" editable-text="quiz.title" e-style="width:{{quiz.title.length*8.2}}px;" class="text-center"></span>
-		</h4>
+			   	
+					<label class="col-sm-4 control-label quizMarginTop  text-right">Оберіть під-категорію</label>
+					<div class="col-sm-8 quizMarginTop ">
+						<select ng-model="selectedSubcat" ng-options="subcat.title for subcat in subcats | filter:{category_id:selectedCat.id}" class="form-control" required>
+						</select>
+					</div>	
+			</div>
 
-		<p>
-			<span ng-bind="quiz.description" editable-text="quiz.description"></span>
-		</p>
-		<ul class="list-group assessmentQuestion">
-			<li ng-repeat="question in quiz.questions" class="list-group-item" > 
-				<p>{{$index+1}}. 
-					<span editable-textarea="question.title" e-rows="3" e-cols="50">{{question.title}}</span>
-				</p>
-			
-				<ul class="list-group assessmentAnswer">
-					<li ng-repeat="answer in question.answers" class="list-group-item">
-						<span editable-textarea="answer.title" e-rows="3" e-cols="50">{{answer.title}}</span>
-					</li>
-				</ul>
-			</li>
-		</ul>
+			<div ng-repeat="question in quiz.questions" ng-if="!question.toDelete" class="col-sm-12 well questionField">
+				
+				<input ng-change="disableAddButton()" ng-model="question.title" class="form-control" placeholder="Введіть текст запитання" type="text" required />
+						
+				<textarea ng-model="question.description" class="form-control quizMarginTop" placeholder="Введіть пояснення до запитання" type="text" required>
+				</textarea>
+						
+				<div ng-repeat="answer in question.answers" ng-if="!answer.toDelete" class="input-group quizMarginTop col-sm-11 col-sm-offset-1">
+				    <span ng-click="setCorrectAnswer(question,answer)" class="input-group-addon glyphicon quizBtnFix" ng-class="{'glyphicon-ok':answer.correct}">
+				    </span>
+				    <input ng-model="answer.title" type="text" class="form-control" placeholder="Введіть відповідь" type="text" required />
+				    <span  ng-show="question.answers.length>2" ng-click="deleteAnswer(answer)" class="btn input-group-addon glyphicon glyphicon-remove  quizBtnFix">
+				    </span>
+				</div>
+				<div ng-show="question.invalid" class="quizMarginTop col-sm-11 col-sm-offset-1 text-danger">* Позначте хоча б одну правильну відповідь</div>
+				<button ng-click="addAnswer(question)" class="btn btn-primary quizMarginTop" role="button">add Answer</button>
+				<div ng-show="quiz.questions.length>1" ng-click="deleteQuestion(question)" class="closeButton glyphicon glyphicon-remove"></div>
+			</div>
+			<div class=" col-sm-12">
+				<button ng-class="{'disabled':addQuestionDisabled}" ng-click="addQuestion()" class="btn btn-primary" role="button">add Question</button>
+			</div>
 
+			<div class=" col-sm-12 quizMarginTop">
+				<button ng-click="saveQuiz(1)" ng-disabled="quizEditForm.$invalid" class="btn btn-primary" role="button">Save quiz</button>
+				<button ng-click="sendQuiz(2)"  ng-disabled="quizEditForm.$invalid" class="btn btn-primary" role="button">Send for review</button>  
 
-
-<button ng-click="saveQuiz()" class="btn btn-primary" role="button">Save quiz</button>
-<button ng-click="sendForReview()" class="btn btn-primary" role="button">Send for review</button>  
-
-
-		<p>
-	  		Showing of 'interpolate' filter:
-	  		{{ 'Current version is v%VERSION%.' | interpolate }}
-		</p>
+			<p>
+		  		Showing of 'interpolate' filter:
+		  		{{ 'Current version is v%VERSION%.' | interpolate }}
+			</p>
+			</div>
+		</form>
 	</div>
 	<div class="col-md-4">
 	 	<div class="text-center">

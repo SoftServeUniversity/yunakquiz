@@ -11,11 +11,7 @@ yunakQuizApp.factory('QuizData', ['$http', '$location', function($http, $locatio
       },
       save: function(quiz){
           if (quiz.id) { 
-            $http.put("http://localhost:9292/admin/assessments/"+quiz.id, quiz)
-             .success(function(data, status, headers, config) {
-              
-             })
-             .error( function(data, status, headers, config) {});
+            return $http.put("http://localhost:9292/admin/assessments/"+quiz.id, quiz);
           }
           else { 
             $http.post('http://localhost:9292/admin/assessments', quiz)

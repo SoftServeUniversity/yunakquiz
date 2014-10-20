@@ -18,7 +18,7 @@ var yunakQuizApp = angular.module('yunakQuiz.assessments', ['ngRoute'])
     controller: 'QuizCreateCtrl'
   })
     .when('/admin/assessments/:quiz_id/', {
-    templateUrl: 'modules/assessments/assessment_edit1.html',
+    templateUrl: 'modules/assessments/assessment_edit.html',
     controller: 'QuizEditCtrl'
   })
   

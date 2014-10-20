@@ -1,7 +1,6 @@
 	<div class="quiz row col-sm-12">
 
 		<h3 class="text-center assessment-title">Створення нового тесту</h3>
-		
 		<form name="quizCreateForm" novalidate>
 			<div class="col-sm-8 col-sm-offset-2 jumbotron">
 				
@@ -30,7 +29,7 @@
 			   	
 					<label class="col-sm-4 control-label quizMarginTop  text-right">Оберіть під-категорію</label>
 					<div class="col-sm-8 quizMarginTop ">
-						<select ng-model="selectedSubcat" ng-options="subcat.title for subcat in subcats" class="form-control" required>
+						<select  ng-change="setSubcat()" ng-model="selectedSubcat" ng-options="subcat.title for subcat in subcats" class="form-control" required>
 						</select>
 					</div>	
 			</div>
@@ -58,8 +57,8 @@
 			</div>
 
 			<div class=" col-sm-12 quizMarginTop">
-				<button ng-click="saveQuiz()" ng-disabled="quizCreateForm.$invalid" class="btn btn-primary" role="button">Save quiz</button>
-				<button ng-click="sendQuiz()"  ng-disabled="quizCreateForm.$invalid" class="btn btn-primary" role="button">Send for review</button>  
+				<button ng-click="saveQuiz(1)" ng-disabled="quizCreateForm.$invalid" class="btn btn-primary" role="button">Save quiz</button>
+				<button ng-click="sendQuiz(2)"  ng-disabled="quizCreateForm.$invalid" class="btn btn-primary" role="button">Send for review</button>  
 
 			<p>
 		  		Showing of 'interpolate' filter:
