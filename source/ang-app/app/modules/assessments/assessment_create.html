@@ -1,4 +1,4 @@
-	<div class="quiz row col-sm-12">
+	<div class="quiz row">
 
 		<h3 class="text-center assessment-title">Створення нового тесту</h3>
 		<form name="quizCreateForm" novalidate>
@@ -18,7 +18,7 @@
 				<label class="col-lg-4 control-label quizMarginTop text-right">Введіть опис тесту</label>
 				<div class="col-lg-8 quizMarginTop ">
 					<tags-input ng-model="quiz.tags" display-property="tag" add-from-autocomplete-only="true" placeholder="Додайте теги">
-						<auto-complete source="loadTags($query)"></auto-complete>
+						<auto-complete source="loadTags($query)" min-length="1" load-on-focus="true"></auto-complete>
 					</tags-input>
 				</div>
 			
@@ -50,17 +50,17 @@
 				    </span>
 				</div>
 				<div ng-show="question.invalid" class="quizMarginTop col-md-11 col-md-offset-1 text-danger">* Позначте хоча б одну правильну відповідь</div>
-				<button ng-click="addAnswer(question)" class="btn btn-primary quizMarginTop" role="button">add Answer</button>
+				<button ng-click="addAnswer(question)" class="btn btn-info quizMarginTop"><span class="glyphicon glyphicon-plus"></span> Додати відповідь</button>
 				<div ng-show="quiz.questions.length>1" ng-click="deleteQuestion($index)" class="closeButton glyphicon glyphicon-remove"></div>
 			</div>
 			<div class=" col-sm-12">
-				<button ng-click="addQuestion()" class="btn btn-primary" role="button">add Question</button>
+				<button ng-click="addQuestion()" class="btn btn-info"><span class="glyphicon glyphicon-plus"></span> Додати питання</button>
 			</div>
 
 			<div class=" col-sm-12 quizMarginTop">
-				<button ng-click="saveQuiz(1)" ng-disabled="quizCreateForm.$invalid" class="btn btn-primary" role="button">Save quiz</button>
-				<button ng-click="sendQuiz(2)"  ng-disabled="quizCreateForm.$invalid" class="btn btn-primary" role="button">Send for review</button>  
-
+				<button ng-click="saveQuiz()" ng-disabled="quizCreateForm.$invalid" class="btn btn-warning">Зберегти  чорновик</button>
+				<button ng-click="reviewQuiz()" ng-disabled="quizCreateForm.$invalid" class="btn btn-success">Відправити на модерацію</button>  
+				
 			<p>
 		  		Showing of 'interpolate' filter:
 		  		{{ 'Current version is v%VERSION%.' | interpolate }}
