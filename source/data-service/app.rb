@@ -1,3 +1,4 @@
+# encoding: UTF-8
 module PlastApp
   require 'sinatra'
   require 'json'
@@ -9,14 +10,14 @@ module PlastApp
 
   require 'sinatra/asset_pipeline'
 
-  
   class YunakQuiz < Sinatra::Base
     register Sinatra::AssetPipeline
-
     register Sinatra::ActiveRecordExtension
     register Sinatra::CrossOrigin
+
     Dir.glob('./config/*.rb').each {|file| require file}
     Dir.glob('./models/*.rb').each {|file| require file}
+
 
     get '/' do
         erb :index
@@ -38,10 +39,40 @@ module PlastApp
       {response: "Updated to #{params['id']} assessment"}.to_json
     end
 
+     get '/assessments/:id' do
+      content_type :json
+
+      myObj = {
+        'title' => Quiz.find(params['id']).title,
+        'questions' => Quiz.find(params['id']).questions.select("id, title").as_json,
+         }
+
+      myObj['questions'].each_with_index do |value, index|
+             value['answers'] = Question.find(value['id']).answers.select("id, title,correct").as_json
+          end
+      
+       JSON.pretty_generate(myObj) 
+    end
+
     delete '/assessments/:id' do
       content_type :json
       {response: "Assessment #{params['id']} has been deleted"}.to_json
     end
+
+    get '/categories/parent' do
+      content_type :json
+      Category.where("category_id = '0'").select(['id','category_id','title']).to_json
+    end
+
+    get '/categories/subcat' do
+      content_type :json
+      Category.where('category_id!=?','0').select(['id','category_id','title']).to_json
+    end 
+
+    get '/quizzes/ids' do
+      content_type :json
+      Quiz.select(['id','category_id','title']).to_json
+    end    
 
     get '/categories/subcategory/:category_id' do
       content_type :json
