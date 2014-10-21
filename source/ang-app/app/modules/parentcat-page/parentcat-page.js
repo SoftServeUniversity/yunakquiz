@@ -7,16 +7,12 @@
        	when('/parentcat-page/:par_id', {
        		templateUrl: './modules/parentcat-page/parentcat-page.html',
        		controller: 'parentCatPage'
-       	}).
-        when('/subcategory/:par_id',{
-          templateUrl: './modules/subcategory/subcategory.html',
-          controller: 'parentCatPage'
-        })
+       	})
    		}
  	]);
 
   
- 	app.controller('parentCatPage', ['$scope', '$http','$routeParams','$filter', function ($scope, $http, $routeParams, $filter) {
+ 	app.controller('parentCatPage', ['$scope', '$http','$routeParams', function ($scope, $http, $routeParams) {
     $scope.parCategory = {};
     $scope.quizzes = {};
     $scope.subCategories = {};
