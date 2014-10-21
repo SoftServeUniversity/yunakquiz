@@ -16,4 +16,6 @@ Answer.create(question_id: 3, title: "Порушенння правил", correc
 Answer.create(question_id: 3, title: "Штрафний удар", correct: true)
 Answer.create(question_id: 3, title: "Дадуть пиріжок", correct: false)
 Answer.create(question_id: 3, title: "Дадуть в голову", correct: false)
-
+Contact.create(id: 1, role: "Адміністратор", phone: "+38 032 244-44-44", mail: "someone@somemail.com", address:"79000, Fedkovycha Str. 60A, building 1")
+Contact.create(id: 2, role: "Модератор", phone: "+38 032 244-44-44", mail: "someone@somemail.com", address:"79000, Fedkovycha Str. 60A, building 1")
+Contact.create(id: 3, role: "Ще хтось", phone: "+38 032 244-44-44", mail: "someone@somemail.com", address:"79000, Fedkovycha Str. 60A, building 1")

@@ -1,3 +1,4 @@
+# encoding: UTF-8
 module PlastApp
   require 'sinatra'
   require 'sinatra/activerecord'
@@ -7,7 +8,7 @@ module PlastApp
   require 'json/ext' # required for .to_json
   require 'sinatra/cross_origin'
   require 'sinatra/asset_pipeline'
-  
+
   class YunakQuiz < Sinatra::Base
     register Sinatra::AssetPipeline
     register Sinatra::ActiveRecordExtension
@@ -15,6 +16,7 @@ module PlastApp
 
     Dir.glob('./config/*.rb').each {|file| require file}
     Dir.glob('./models/*.rb').each {|file| require file}
+    Dir.glob('./lib/*.rb').each {|file| require file}
     
     options '/*' do
       '*'
@@ -81,36 +83,47 @@ module PlastApp
       {response: "Assessment #{params['id']} has been deleted"}.to_json
     end
     
-    get '/categories/parent' do
+    get '/categories/:id' do
       content_type :json
-      Category.where("category_id = '0'").select(['id','category_id','title']).to_json
+      #if id = 'parcat' then return all par cat ,id ='subcat' then return all subcats,id='all' then return all categories
+      GetAllCat.getCategories(params['id'])
     end
 
-    get '/categories/subcat' do
+    # get '/categories/parent/:id' do
+    #   content_type :json
+    #   Category.where("id=?", params['id']).to_json
+    # end
+
+    get '/categories/subcat/:id' do
       content_type :json
-      Category.where('category_id!=?','0').select(['id','category_id','title']).to_json
+      Category.where("category_id=?", params['id']).select(['id','category_id','title']).to_json
     end 
 
-    get '/quizzes/ids' do
+    get '/quizzes/:category_id' do
       content_type :json
-      Quiz.select(['id','category_id','title']).to_json
-    end    
-    
-    post '/register' do
-      data = JSON.parse request.body.read
-      user = User.new(data)
-      if user.save
-        return [200, "ok"]
-      else
-        return [400, user.errors.messages.to_json]
+      # this function is part of module SerchQuizzes ,returns quizzes with passed category_id or if 0 passed returns all quizzes
+      SearchQuizzes.withCatId(params['category_id']).to_json 
+    end  
+
+    post '/search' do
+      content_type :json
+    search_request = JSON.parse(request.body.read) 
+#this function is part of module SerchQuizzes as parameter gets object {category_id: ['1','2',..'n'] , tags:['teg1','teg2',..'n']}
+#if category_id is not passed then search in all subcategories
+    SearchQuizzes.withTags(search_request) 
+    end
+    get '/subcat_quiz/:id' do
+      content_type :json
+      match_quizzes=Quiz.where("category_id=?",params[:id]).order('updated_at').reverse_order.limit(3).select(['id','category_id','title','description','updated_at']).as_json
+      match_quizzes.each_with_index do |value, index|
+        value['tags'] = Quiz.find(value['id']).tags.select("id, tag").as_json #finding tags of each quiz
       end
+        match_quizzes.to_json
     end
-    
-    get '/logout' do
-      session.clear
-      return [200, "ok"]
+    get '/contacts' do
+      content_type :json
+      Contact.select(['id','role','phone','address','mail']).to_json
     end
-  
-  end
+end
 end
 

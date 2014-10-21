@@ -1,11 +1,22 @@
-<div class="row">
-	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pageTitleBox bg-primary">
+	<div class="col-sm-12 pageTitleBox bg-primary">
 		<div class="center-block"><h3 class="pageTitle">Контакти</h3></div>
     </div>
 </div>
-<h1>Contact Page Not emplemented yet , add Your code here</h1>
-<p>This is the partial for Contact page</p>
+<div class="row">
+	<div class="well col-sm-8 contact-us">
+		<div class="col-sm-10 col-sm-offset-1" ng-repeat="person in contacts">
+			<span class="rectangle">{{person.role}}</span>
+			<div class="triangle-topright"></div>
+			<div class="row categories-container">
+				<h4>{{person.address}}</h4>
+				<div class="col-sm-3 col-sm-offset-1"><span>{{person.mail}}</span></div>
+				<div class="col-sm-5 col-sm-offset-3 contacts">{{person.phone}}</div>
+			</div>
+		</div>		
+	</div>
+</div>
 <p>
   Showing of 'interpolate' filter:
-  {{ 'Current version is v%VERSION%.' | interpolate }}
+ {{ 'Current version is v%VERSION%.' | interpolate }}
+>>>>>>> formerge
 </p>
