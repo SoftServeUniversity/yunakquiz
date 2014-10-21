@@ -16,7 +16,7 @@ yunakQuizApp.controller('QuizCtrl', ['$scope','QuizData', '$routeParams', '$loca
 	};
 
 	/** Validate if all questions in quiz has marked answers  */
-	function checkQuiz(quiz){
+	$scope.checkQuiz = function (quiz){
 		var questions = quiz.questions;
 		var quizValid=true;
 		for(var i =0; i < questions.length; i++){
@@ -29,7 +29,7 @@ yunakQuizApp.controller('QuizCtrl', ['$scope','QuizData', '$routeParams', '$loca
 	};
 
 	/** Validate if question has at least one answer picked  */
-	function checkQuestion(question){
+	$scope.checkQuestion = function (question){
 		question.invalid=true;
 		for(var y=0; y<question.answers.length; y++){
 			if(question.answers[y].checked){
@@ -56,8 +56,17 @@ yunakQuizApp.controller('AssessmentsResultCtrl', ['$scope','QuizData', '$routePa
 	/** get quiz object with picked answers   */
 	$scope.assessment = QuizData.quiz;
 
+	/** check questions and count score if we have quiz object  */
+	if ($scope.assessment.questions){
+		checkQuestions();
+		$scope.counter = $scope.correctAnswerCounter();
+	}	
+	else {
+		$scope.redirectToAssessment();
+	};
+
 	/** Check all questions in quiz */
-	function checkQuestions (){
+	$scope.checkQuestions = function (){
 		for (var i=0; i<$scope.assessment.questions.length; i++){
 			$scope.assessment.questions[i].nice = checkAnswer($scope.assessment.questions[i]);
 		}
@@ -70,14 +79,10 @@ yunakQuizApp.controller('AssessmentsResultCtrl', ['$scope','QuizData', '$routePa
 			if(question.answers[i].correct){
 				if(question.answers[i].checked){
 					correct= true && correct;
-				}
-				else {
-					correct= false;
-				}
-			}
-			else if(question.answers[i].checked){
-				correct= false;
-			}
+				} 
+				else {correct= false;}
+			} 
+			else if(question.answers[i].checked){correct= false;}
 		}
 		return correct;
 	}
@@ -99,26 +104,12 @@ yunakQuizApp.controller('AssessmentsResultCtrl', ['$scope','QuizData', '$routePa
 	/** redirection to pass quiz again  */
 	$scope.redirectToAssessment = function(){
 		$location.path('/assessments/'+$routeParams.quiz_id);	
-
-	
 	};
 
-	/** check questions and count score if we have quiz object  */
-	if ($scope.assessment.questions)
-	{
-		checkQuestions();
-		$scope.counter = $scope.correctAnswerCounter();
-	}	
-	else 
-	{
-		$scope.redirectToAssessment();
-	}
-
-	
 }]);
 
 /** Quiz Edit controller  */
-yunakQuizApp.controller('QuizEditCtrl', ['$scope','QuizData', '$routeParams', '$location', function($scope, QuizData, $routeParams, $location) {
+yunakQuizApp.controller('QuizEditCtrl', ['$scope','QuizData', '$routeParams', function($scope, QuizData, $routeParams) {
 
 	/** get quiz object */
 	$scope.subcats =[
@@ -138,7 +129,7 @@ yunakQuizApp.controller('QuizEditCtrl', ['$scope','QuizData', '$routeParams', '$
 	    $scope.setSubcat();	
 	   });
 
-	$scope.setCat=function(){
+	$scope.setCat = function(){
 		for (var i=0; i < $scope.cats.length; i++){		
 			if ($scope.cats[i].id == $scope.selectedSubcat.category_id){
 				$scope.selectedCat = $scope.cats[i];
@@ -238,19 +229,19 @@ yunakQuizApp.controller('QuizEditCtrl', ['$scope','QuizData', '$routeParams', '$
 }]);
 
 /** Quiz Create controller  */
-yunakQuizApp.controller('QuizCreateCtrl', ['$scope','QuizData', '$routeParams', '$location', function($scope, QuizData, $routeParams, $location) {
+yunakQuizApp.controller('QuizCreateCtrl', ['$scope','QuizData', function($scope, QuizData) {
 
 	$scope.categories =[
-	{id:1, title:"Спорт"},
-	{id:2, title:"Історія"},
+	{id:1,category_id:0,title:"Спорт"},
+	{id:4,category_id:0,title:"Історія"}
 	];
 	$scope.sub1 = [
-		{id:1, title:"Футбол"},
-		{id:2, title:"Баскетбол"},
+		{id:2,category_id:1,title:"Футбол"},
+		{id:3,category_id:1,title:"Хокей"}
 	];
 	$scope.sub2 = [
-		{id:1, title:"Історія України"},
-		{id:2, title:"Історія Світу"},
+		{id:5,category_id:4,title:"Історія України"},
+		{id:6,category_id:4,title:"Історія світу"}
 	];
 
 	$scope.getSubcats = function() {

@@ -2,33 +2,33 @@
 
 		<h3 class="text-center assessment-title">Створення нового тесту</h3>
 		<form name="quizCreateForm" novalidate>
-			<div class="col-sm-8 col-sm-offset-2 jumbotron">
+			<div class="col-lg-8 col-lg-offset-2 jumbotron">
 				
 				
-					<label class="col-sm-4 control-label text-right">Введіть назву тесту</label>
-					<div class="col-sm-8 ">
+					<label class="col-lg-4 control-label text-right">Введіть назву тесту</label>
+					<div class="col-lg-8 ">
 						<input ng-model="quiz.title" class="form-control" type="text" required />
 					</div>
 				
 
 				
-					<label class="col-sm-4 control-label quizMarginTop text-right">Введіть опис тесту</label>
-					<div class="col-sm-8 quizMarginTop ">
+					<label class="col-lg-4 control-label quizMarginTop text-right">Введіть опис тесту</label>
+					<div class="col-lg-8 quizMarginTop ">
 						<textarea ng-model="quiz.description" class="form-control"  type="text" required></textarea>
 					</div>
 				
 
 				
-					<label class="col-sm-4 control-label quizMarginTop  text-right">Оберіть категорію</label>
-					<div class="col-sm-8 quizMarginTop ">
+					<label class="col-lg-4 control-label quizMarginTop  text-right">Оберіть категорію</label>
+					<div class="col-lg-8 quizMarginTop ">
 						<select ng-change="getSubcats()" ng-model="selectedCat" ng-options="category.title for category in categories" class="form-control" required>
 						</select>
 			   		</div>
 			   	
 
 			   	
-					<label class="col-sm-4 control-label quizMarginTop  text-right">Оберіть під-категорію</label>
-					<div class="col-sm-8 quizMarginTop ">
+					<label class="col-lg-4 control-label quizMarginTop  text-right">Оберіть під-категорію</label>
+					<div class="col-lg-8 quizMarginTop ">
 						<select  ng-change="setSubcat()" ng-model="selectedSubcat" ng-options="subcat.title for subcat in subcats" class="form-control" required>
 						</select>
 					</div>	
@@ -41,14 +41,14 @@
 				<textarea ng-model="question.description" class="form-control quizMarginTop" placeholder="Введіть пояснення до запитання" type="text" required>
 				</textarea>
 						
-				<div ng-repeat="answer in question.answers" class="input-group quizMarginTop col-sm-11 col-sm-offset-1">
+				<div ng-repeat="answer in question.answers" class="input-group quizMarginTop col-md-11 col-xs-12 col-md-offset-1">
 				    <span ng-click="setCorrectAnswer(question,answer)" class="input-group-addon glyphicon quizBtnFix" ng-class="{'glyphicon-ok':answer.correct}">
 				    </span>
 				    <input ng-model="answer.title" type="text" class="form-control" placeholder="Введіть відповідь" type="text" required />
 				    <span  ng-show="question.answers.length>2" ng-click="deleteAnswer($index,question)" class="btn input-group-addon glyphicon glyphicon-remove  quizBtnFix">
 				    </span>
 				</div>
-				<div ng-show="question.invalid" class="quizMarginTop col-sm-11 col-sm-offset-1 text-danger">* Позначте хоча б одну правильну відповідь</div>
+				<div ng-show="question.invalid" class="quizMarginTop col-md-11 col-md-offset-1 text-danger">* Позначте хоча б одну правильну відповідь</div>
 				<button ng-click="addAnswer(question)" class="btn btn-primary quizMarginTop" role="button">add Answer</button>
 				<div ng-show="quiz.questions.length>1" ng-click="deleteQuestion($index)" class="closeButton glyphicon glyphicon-remove"></div>
 			</div>
