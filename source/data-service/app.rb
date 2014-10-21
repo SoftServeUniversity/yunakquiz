@@ -16,6 +16,7 @@ module PlastApp
     register Sinatra::CrossOrigin
     Dir.glob('./config/*.rb').each {|file| require file}
     Dir.glob('./models/*.rb').each {|file| require file}
+    Dir.glob('./lib/*.rb').each {|file| require file}
 
     get '/' do
         erb :index
@@ -51,52 +52,34 @@ module PlastApp
       '*'           
     end
 
-    post '/search' do
-      
-      cross_origin
+    get '/categories/:id' do
       content_type :json
-
-      # Recive object from front end and put it in data
-      
-      search_request = JSON.parse(request.body.read)
-      
-      # This part of code must be in another file   
-
-      #---------------Preparing object for search-----------------
-
-      # This function takes hash with 2 arrays as an argument
-      # and adding %*% to each teg
-      # % is needed for future search!
-      # and of course it returns result 
-      def add_procents_to_tags (search_request) 
-
-        search_request['tags'].map! {|tag| tag = "%#{tag}%"}
-        return search_request
-
-      end
-
-      #--------------------Search in db part----------------------
-      
-      # This sh*t kills many of my neutrons ;-), so  
-      # this function takes hash as argument
-      # and return from db quizzes that we need, 
-      # according to our request
-      def subcat_search (search_request)  
-
-        return Quiz.where({ category_id: search_request['categories']})\
-        .joins(:tags).where("tags.tag LIKE (?) COLLATE utf8_general_ci", \
-          search_request['tags']) 
-           
-      end
-
-     #------------------------------------------------------------ 
-
-    # This call subcat_search function that takes add_procents_to_tags 
-    # as an arguments, and finnaly all this data return to front-end
-    (subcat_search(add_procents_to_tags(search_request))).to_json
-    
+      #if id = 'parcat' then return all par cat ,id ='subcat' then return all subcats,id='all' then return all categories
+      GetAllCat.getCategories(params['id'])
+    end
+    get '/categories/parent/:id' do
+      content_type :json
+      Category.where("id=?", params['id']).to_json
     end
 
+    get '/categories/subcat/:id' do
+      content_type :json
+      Category.where("category_id=?", params['id']).select(['id','category_id','title']).to_json
+    end 
+
+    get '/quizzes/:category_id' do
+      content_type :json
+      # this function is part of module SerchQuizzes ,returns quizzes with passed category_id or if 0 passed returns all quizzes
+      SearchQuizzes.withCatId(params['category_id']).to_json 
+    end  
+
+    post '/search' do
+      content_type :json
+    search_request = JSON.parse(request.body.read) 
+#this function is part of module SerchQuizzes as parameter gets object {category_id: ['1','2',..'n'] , tags:['teg1','teg2',..'n']}
+#if category_id is not passed then search in all subcategories
+    SearchQuizzes.withTags(search_request) 
+    end
   end
 
 end
