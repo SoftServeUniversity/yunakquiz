@@ -4,7 +4,7 @@
 yunakQuizApp.factory('QuizData', ['$http', '$location', function($http, $location){
     return{
       get: function(id, callback){
-          $http({ method: 'GET', url: 'http://localhost:9292/assessments/'+id })
+          $http.get('http://localhost:9292/assessments/'+id )
             .success(function(data, status, headers, config) {
 				      callback(data); 
 			       });
@@ -25,5 +25,26 @@ yunakQuizApp.factory('QuizData', ['$http', '$location', function($http, $locatio
     }
   }
 ]);
+
+yunakQuizApp.service('tags', function($q) {
+  var tags = [
+    {"tag": "Tag1" },
+    {"tag": "Tag2" },
+    {"tag": "Tag3" },
+    {"tag": "Tag4" },
+    {"tag": "Tag5" },
+    {"tag": "Tag6" },
+    {"tag": "Tag7" },
+    {"tag": "Tag8" },
+    {"tag": "Tag9" },
+    {"tag": "Tag10" }
+  ];
+  
+  this.load = function() {
+    var deferred = $q.defer();
+    deferred.resolve(tags);
+    return deferred.promise;
+  };
+});
 
 

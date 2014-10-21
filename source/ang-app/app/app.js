@@ -8,6 +8,7 @@ angular.module('yunakQuiz', [
   'yunakQuiz.users',
   'yunakQuiz.sessions',
   'yunakQuiz.version',
+  'ngTagsInput'
  ]).
 config(['$routeProvider', function($routeProvider) {
   $routeProvider.otherwise({redirectTo: '/measures'});
