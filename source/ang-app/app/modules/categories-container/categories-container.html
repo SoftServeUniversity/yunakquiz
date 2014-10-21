@@ -2,12 +2,11 @@
 	<br> 
 	<br> 
 	<br> 
-	<div class="col-lg-3 col-md-3 col-sm-5 col-xs-5 col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-xs-offset-1" 
-		ng-repeat="parCat in parCategories">
+	<div class="col-lg-3 col-md-3 col-sm-5 col-xs-5 col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-xs-offset-1" ng-repeat="parCat in parCategories">
 		<div class="row"> 
 			<div class="col-xs-12 col-sm-12 "> 
 				<div class="col-lg-10 col-sm-10 ">
-					<span class="rectangle"><a ng-href="#parentcat-page/{{parCat.id}}">{{parCat.title}}</span>
+					<span class="rectangle"><a ng-href="#parentcat-page/{{parCat.id}}">{{parCat.title}}</a></span>
 					<div class="triangle-topright"></div>
 					<div class="row categories-container">
 						<ul class="list-unstyled  col-sm-offset-1 ">
@@ -15,7 +14,7 @@
 								<span class="quote-author"> Тестів:  {{testsCount(parCat.id)}} </span>
 							</li>
 							<li ng-if="parCat.id==subCat.category_id" ng-repeat="subCat in subCategories">
-								<a href="#">{{subCat.title}}</a>
+								<a ng-href="#subcategory/{{subCat.id}}">{{subCat.title}}</a>
 							</li>
 						</ul> 
 					</div>

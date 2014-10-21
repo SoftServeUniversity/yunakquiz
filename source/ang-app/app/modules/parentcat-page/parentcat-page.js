@@ -1,5 +1,5 @@
 (function (){
-	var  app = angular.module('yunakQuiz.parentCatPage' ,['ngRoute']);
+	var  app = angular.module('yunakQuiz.parentCatPage' ,['ngRoute','yunakQuiz.categoriesContainer']);
 
 	app.config(['$routeProvider',
   	function($routeProvider) {
@@ -10,23 +10,31 @@
        	})
    		}
  	]);
-
+  app.factory("getSubCatByCatId", ['$http', function ($http) {
+    return { 
+      get : function(id, callback) {
+        $http.get('http://localhost:9292/categories/subcat/'  + id).success(function(data){
+        callback(data);
+        });
+      }
+    }
+  }]);
   
- 	app.controller('parentCatPage', ['$scope', '$http','$routeParams', function ($scope, $http, $routeParams) {
+ 	app.controller('parentCatPage', ['$scope', '$http','$routeParams','$filter', 'quizesById', 'catsById', 'getSubCatByCatId', function ($scope, $http, $routeParams, $filter, quizesById, catsById, getSubCatByCatId) {
     $scope.parCategory = {};
     $scope.quizzes = {};
     $scope.subCategories = {};
     var current_id =  $routeParams.par_id;
 
-    $http.get('http://localhost:9292/categories/parentcat/' + current_id).success(function(data){
-     	$scope.parCategory = data;
-    });
-    $http.get('http://localhost:9292/categories/subcategory/' + current_id).success(function(data){
-      $scope.subCategories = data;
-    });
-    $http.get('http://localhost:9292/quizzes/ids').success(function(data){
-      $scope.quizzes = data;
-    });
+    catsById.get(current_id ,function(data){
+          $scope.parCategory = data;
+        });
+    getSubCatByCatId.get(current_id ,function(data){
+          $scope.subCategories = data;
+        });
+      quizesById.get(0, function(data){
+            $scope.quizzes = data;
+          });          
         
     $scope.numberTest = function(subcat_id){
       var number = 0;
