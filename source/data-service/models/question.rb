@@ -16,8 +16,13 @@ class Question < ActiveRecord::Base
 
   		end
 
-  	end
-  	
+  end
 
-  
+  def self.createQ(questions, quiz)
+    questions.each do |q|
+      question = quiz.questions.create(title: q['title'], description: q['description'])
+      Answer.createQ(q['answers'], question)
+    end
+  end
+
 end

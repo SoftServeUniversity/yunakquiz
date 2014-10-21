@@ -12,5 +12,11 @@ class Answer < ActiveRecord::Base
 	        end
 	   	end
 	end   
+
+	def self.createQ (answers, question)
+		answers.each do |a|
+            question.answers.create(a)
+        end 
+	end
 end
 

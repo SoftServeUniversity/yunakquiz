@@ -17,13 +17,9 @@ class Quiz < ActiveRecord::Base
 
   def self.createQ(data)
     category = Category.find(data['category_id'])
-  		quiz = category.quizzes.create(title: data['title'],description: data['description'])
-  		data['questions'].each do |q|
-  			question = quiz.questions.create(title: q['title'], description: q['description'])
-  				q['answers'].each do |a|
-  					question.answers.create(a)
-  				end	
-  			end
+  	quiz = category.quizzes.create(title: data['title'],description: data['description'])
+  	Question.createQ(data['questions'], quiz)
+
   	return quiz	
   end
 
