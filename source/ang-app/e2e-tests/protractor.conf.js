@@ -2,16 +2,16 @@ exports.config = {
   allScriptsTimeout: 11000,
 
   specs: [
-    './features/*.feature'
+    './test/category_2.js'
   ],
 
   capabilities: {
     'browserName': 'chrome'
   },
 
-  baseUrl: 'http://localhost:8000/app/',
+  baseUrl: 'http://localhost:8000/',
 
-  framework: 'cucumber',
+  framework: 'jasmine',
 
   jasmineNodeOpts: {
     defaultTimeoutInterval: 30000
