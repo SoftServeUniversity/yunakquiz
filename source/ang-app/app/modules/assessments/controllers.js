@@ -127,11 +127,11 @@ yunakQuizApp.controller('QuizEditCtrl', ['$scope','QuizData', '$routeParams', '$
 		{id:5,category_id:4,title:"Історія України"},
 		{id:6,category_id:4,title:"Історія світу"}
 	];
+
 	$scope.cats =[
 		{id:1,category_id:0,title:"Спорт"},
 		{id:4,category_id:0,title:"Історія"}
 	];
-
 
 	QuizData.get($routeParams.quiz_id, function(data){
 	    $scope.quiz = data; 
@@ -154,9 +154,6 @@ yunakQuizApp.controller('QuizEditCtrl', ['$scope','QuizData', '$routeParams', '$
 			};
 		};
 	};
-
-
-
 
 	$scope.addAnswer = function(question) {
 		question.answers.push({correct:false});
@@ -207,8 +204,19 @@ yunakQuizApp.controller('QuizEditCtrl', ['$scope','QuizData', '$routeParams', '$
 		$scope.quiz.questions.push({answers:[{correct:false}]});
 	};
 		
-	$scope.deleteQuestion=function(question){
+	$scope.deleteQuestion = function(question){
 		question.toDelete = true;
+	};
+
+	$scope.showMessage = function(message,msgClass){
+		window.scrollTo(0,0);
+		$scope.sendMessage =message;
+		$scope.sendMessageClass = msgClass;
+		setTimeout(function () {
+        	$scope.$apply(function () {
+            	delete $scope.sendMessage;
+        	});
+    	}, 2000);
 	};
 
 	/** Redirect to result-page if quiz is valid  */
@@ -219,10 +227,11 @@ yunakQuizApp.controller('QuizEditCtrl', ['$scope','QuizData', '$routeParams', '$
 			$scope.quiz.state = state;
 			QuizData.save($scope.quiz)
 			.success(function(data, status, headers, config) {
-				$scope.sendMessage="Ваш тест збережено"; alert($scope.sendMessage);
+				$scope.showMessage('Ваш тест збережено','alert-success');
 			})
             .error( function(data, status, headers, config) { 
-             	$scope.sendMessage="Ваш тест не збережено";});
+				$scope.showMessage('Ваш тест не збережено','alert-danger');
+             });
 		};
 	};
 
