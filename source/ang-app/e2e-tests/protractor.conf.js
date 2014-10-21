@@ -3,7 +3,9 @@ exports.config = {
 
   specs: [
     // './tests/*.js'
-    './tests/login.js'
+    //'./tests/login.js'
+    './tests/signup.js'
+
   ],
 
   capabilities: {
