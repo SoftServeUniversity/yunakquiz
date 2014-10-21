@@ -1,12 +1,13 @@
 # encoding: UTF-8
 module PlastApp
   require 'sinatra'
-  require 'sinatra/activerecord'
   require 'json'
   require 'rest_client'
   require 'rubygems'
+  require 'sinatra/activerecord'
   require 'json/ext' # required for .to_json
   require 'sinatra/cross_origin'
+
   require 'sinatra/asset_pipeline'
 
   class YunakQuiz < Sinatra::Base
@@ -17,39 +18,8 @@ module PlastApp
     Dir.glob('./config/*.rb').each {|file| require file}
     Dir.glob('./models/*.rb').each {|file| require file}
     Dir.glob('./lib/*.rb').each {|file| require file}
-    
-    options '/*' do
-      '*'
-    end
-    
-    get '/access' do
-      if session[:user_id]
-        user = User.find(session[:user_id])
-        return [200, user.username]
-    	end
-      return [401, "unauthorized"]
-    end
 
-    
-    post '/login' do
-      data = JSON.parse request.body.read
-      user = User.authenticate(data['username'], data['password'])
-      if !user.nil?
-        if data['remember']
-           session[:user_id] = user.id
-        end
-        return [200, user.username]
-      end
-        return [401, "unauthorized"]
-    end
-    post '/register' do
-      data = JSON.parse request.body.read
-      user = User.new(data)
-      if user.save
-        return [200, "ok"]
-      else
-        return [400, user.errors.messages.to_json]
-    end
+
     get '/' do
         erb :index
     end
@@ -84,22 +54,25 @@ module PlastApp
       
        JSON.pretty_generate(myObj) 
     end
+    options '/*' do
+    '*'
+    end    
 
     delete '/assessments/:id' do
       content_type :json
       {response: "Assessment #{params['id']} has been deleted"}.to_json
     end
-    
+
     get '/categories/:id' do
       content_type :json
       #if id = 'parcat' then return all par cat ,id ='subcat' then return all subcats,id='all' then return all categories
       GetAllCat.getCategories(params['id'])
     end
 
-    # get '/categories/parent/:id' do
-    #   content_type :json
-    #   Category.where("id=?", params['id']).to_json
-    # end
+    get '/categories/parent/:id' do
+      content_type :json
+      Category.where("id=?", params['id']).to_json
+    end
 
     get '/categories/subcat/:id' do
       content_type :json
@@ -131,6 +104,7 @@ module PlastApp
       content_type :json
       Contact.select(['id','role','phone','address','mail']).to_json
     end
-end
+
 end
 
+end

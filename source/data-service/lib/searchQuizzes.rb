@@ -1,4 +1,5 @@
-module SearchQuizzes
+module PlastApp
+  module SearchQuizzes
 	
   def SearchQuizzes.withCatId(categories_id)
     if categories_id == '0' 
@@ -22,8 +23,7 @@ module SearchQuizzes
         if  quiz.tags.where("tag like ?", "%" + tag + "%").length > 0
           foundedTags =quiz.as_json
           foundedTags['tags'] = quiz.tags.select(['tag','id']).as_json
-          # result.push(foundedTags)
-          # break
+
         else 
           foundedTags = 0
           break
@@ -35,4 +35,5 @@ module SearchQuizzes
     end
     return result.to_json
   end
+end
 end
