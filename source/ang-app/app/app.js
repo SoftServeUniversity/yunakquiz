@@ -11,9 +11,9 @@ angular.module('yunakQuiz', [
   'yunakQuiz.headerMenu',
   'yunakQuiz.guestSearch',
   'yunakQuiz.statistics',
-  'yunakQuiz.staticPartialsRoute',
   'yunakQuiz.categoriesContainer',
-  'yunakQuiz.subcategory'
+  'yunakQuiz.subcategory',
+  'yunakQuiz.parentCatPage'
 ]).
 config(['$routeProvider',
   	  function($routeProvider) {

@@ -42,7 +42,14 @@ module PlastApp
       end
         return [401, "unauthorized"]
     end
-
+    post '/register' do
+      data = JSON.parse request.body.read
+      user = User.new(data)
+      if user.save
+        return [200, "ok"]
+      else
+        return [400, user.errors.messages.to_json]
+    end
     get '/' do
         erb :index
     end
