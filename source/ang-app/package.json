@@ -10,9 +10,10 @@
     "http-server": "^0.6.1",
     "karma": "~0.10",
     "karma-junit-reporter": "^0.2.2",
-    "protractor-cucumber": "^0.1.1",
+    "protractor": "^1.1.1",
     "shelljs": "^0.2.6",
     "cucumber": "latest"
+
   },
   "scripts": {
     "postinstall": "bower install",
@@ -27,3 +28,6 @@
     "protractor": "protractor e2e-tests/protractor.conf.js"
   }
 }
+
+
+

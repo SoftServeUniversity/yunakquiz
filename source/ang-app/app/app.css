@@ -77,4 +77,33 @@
   position: relative;
   min-height: 100%;
 }
-/*eof of styles in homepage*/
+
+/* assessment styles */
+.assessmentQuestions>li{
+  list-style-position:inside;
+  padding-left:15px;
+  }
+
+.assessmentAnswers li {
+  cursor:pointer;
+  padding:5px;
+  margin:5px;
+  list-style-type:lower-alpha;
+}
+
+.assessmentQuestionInvalid{
+  background:rgb(255,0,0);
+}
+
+.assessmentAnswerChecked {
+  background:rgb(192,192,192);
+}
+
+.assessmentAnswerCorrect {
+  background:rgb(0,128,0);
+}
+
+.assessmentAnswerUncorrect {
+  background:rgb(255,0,0);
+}
+/* end assessment styles */
