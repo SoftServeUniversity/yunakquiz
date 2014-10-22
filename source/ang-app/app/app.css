@@ -9,11 +9,13 @@
   text-align: center;
 }
 .header-navmenu {
-  margin-left: 20%;
+  margin-left: 15%;
 }
 .header-navmenu li {
   list-style: none;
   display: inline-block;
+  margin-left: 20px; 
+  margin-right: 20px;
 }
 .header-navmenu li a {
   font-size: 1.5em;
