@@ -1,0 +1,75 @@
+<div class="row col-md-12 profile-container" ng-controller="ProfileController as profile" ng-init="profile.user=cab.user">
+  <div class="col-md-2"></div>
+  <div class="col-md-2">
+    <div class="col-md-6" flow-init="{singleFile:true}" flow-name="profile.$flow">
+     <img class="thumbnail profile-avatar" ng-src="img/ava/{{profile.user.picture || 'no_avatar.png'}}" flow-img="$flow.files[0]" />
+      <div class="btn button-group row col-md-6">
+        <button type="button" class="btn btn-default" flow-btn ng-click="profile.changeAvatar()" >Change</button>
+        <button type="button" class="btn btn-primary" ng-show="$flow.files.length" ng-click="profile.saveAvatar()">Save</button>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 form-horizontal">
+      <div class="row" ng-class="{'form-group': profile.editable}">
+        <div class="col-md-5 text-right"><strong>First Name</strong></div>
+        <div class="col-md-7">
+          <input type="text" ng-model="profile.user.first_name" class="form-control" ng-show="profile.editable">
+          <p ng-hide="profile.editable">{{profile.user.first_name}}</p>
+        </div>
+      </div>
+      <div class="row" ng-class="{'form-group': profile.editable}">
+        <div class="col-md-5 text-right"><strong>Last Name</strong></div>
+        <div class="col-md-7">
+          <input type="text" ng-model="profile.user.last_name" class="form-control" ng-show="profile.editable">
+          <p ng-hide="profile.editable">{{profile.user.last_name}}</p>
+        </div>
+      </div>
+        <div class="row" ng-class="{'form-group': profile.editable}">
+        <div class="col-md-5 text-right"><strong>Email</strong></div>
+        <div class="col-md-7">
+          <input type="text" ng-model="profile.user.email" class="form-control" ng-show="profile.editable">
+          <p ng-hide="profile.editable">{{profile.user.email}}</p>
+        </div>
+      </div>
+       <div class="row" ng-class="{'form-group': profile.editable}">
+        <div class="col-md-5 text-right"><strong>Birthday</strong></div>
+        <div class="col-md-7">
+          <input type="date" ng-model="profile.user.birthday" class="form-control" ng-show="profile.editable">
+          <p ng-hide="profile.editable">{{profile.user.birthday | date: "MMM dd, yyyy"}}</p>
+        </div>
+      </div>
+      <div class="row" ng-class="{'form-group': profile.editable}">
+        <div class="col-md-5 text-right"><strong>Plast hovel</strong></div>
+        <div class="col-md-7">
+          <input type="text" ng-model="profile.user.plast_hovel" class="form-control" ng-show="profile.editable">
+          <p ng-hide="profile.editable">{{profile.user.plast_hovel}}</p>
+        </div>
+      </div>
+      <div class="row" ng-class="{'form-group': profile.editable}">
+        <div class="col-md-5 text-right"><strong>Plast region</strong></div>
+        <div class="col-md-7">
+          <input type="text" ng-model="profile.user.plast_region" class="form-control" ng-show="profile.editable">
+          <p ng-hide="profile.editable">{{profile.user.plast_region}}</p>
+        </div>
+      </div>
+       <div class="row" ng-class="{'form-group': profile.editable}">
+        <div class="col-md-5 text-right"><strong>Plast level</strong></div>
+        <div class="col-md-7">
+          <select class="form-control" id="plast_level" ng-model="profile.user.plast_level" class="form-control" ng-show="profile.editable">
+            <option value="початківець">Початківець</option>
+            <option value="досвідчений">Досвідчений</option>
+            <option value="експерт">Експерт</option>
+          </select>
+          <p ng-hide="profile.editable">{{profile.user.plast_level}}</p>
+        </div>
+      </div>
+      <div class="col-md-5"></div>
+    <div class="row col-md-7">
+      <button type="button" class="btn btn-primary" ng-click="profile.edit()" ng-hide="profile.editable">Edit</button>
+      <button type="button" class="btn btn-success" ng-show="profile.editable" ng-click="profile.saveEdit()">Save</button>
+      <button type="button" class="btn btn-danger" ng-show="profile.editable" ng-click="profile.cancelEdit()">Cancel</button>
+      <button type="button" class="btn btn-danger" ng-hide="profile.editable">Delete profile</button>
+    </div>
+  </div>
+  <div class="col-md-2"></div>
+</div>
