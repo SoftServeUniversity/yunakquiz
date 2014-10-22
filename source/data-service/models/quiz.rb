@@ -26,20 +26,23 @@ class Quiz < ActiveRecord::Base
   def self.queryQ(id)
   	
 	#qq.questions.collect {|q| q.answers.select('id',"title",'correct').to_json}
-	quiz = Quiz.find(id)
+  quiz = Quiz.find_by(id: id)
+    if quiz.nil?
+      return {'error' => "Quiz not found"}
+    else  
+    	quizObject = {
+          'id' => id,
+          'title' => quiz.title,
+          'category_id'=> quiz.category_id,
+          'description'=>quiz.description,
+          'questions' => quiz.questions.as_json,
+           }
 
-  	quizObject = {
-        'id' => id,
-        'title' => quiz.title,
-        'category_id'=> quiz.category_id,
-        'description'=>quiz.description,
-        'questions' => quiz.questions.as_json,
-         }
-
-    quizObject['questions'].each do |this_question|
-            this_question['answers'] = Question.find(this_question['id']).answers.as_json
-          end
-    return quizObject      
+      quizObject['questions'].each do |this_question|
+        this_question['answers'] = Question.find_by(id: this_question['id']).answers.as_json
+      end
+      return quizObject      
+    end
   end
 
 end
