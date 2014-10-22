@@ -12,7 +12,7 @@ yunakQuizApp.controller('QuizCtrl', ['$scope','QuizData', '$routeParams', '$loca
 	$scope.checkAnswer = function(answer,question){
 		
 		answer.checked = !answer.checked;
-		checkQuestion(question);
+		$scope.checkQuestion(question);
 	};
 
 	/** Validate if all questions in quiz has marked answers  */
@@ -20,7 +20,7 @@ yunakQuizApp.controller('QuizCtrl', ['$scope','QuizData', '$routeParams', '$loca
 		var questions = quiz.questions;
 		var quizValid=true;
 		for(var i =0; i < questions.length; i++){
-			checkQuestion(questions[i]);
+			$scope.checkQuestion(questions[i]);
 			if(questions[i].invalid){
 				quizValid = false;
 			};
@@ -43,7 +43,7 @@ yunakQuizApp.controller('QuizCtrl', ['$scope','QuizData', '$routeParams', '$loca
 
 	/** Redirect to result-page if quiz is valid  */
 	$scope.passQuiz = function(){
-		if (checkQuiz($scope.quiz)) {
+		if ($scope.checkQuiz($scope.quiz)) {
 			QuizData.quiz = $scope.quiz;
 			$location.path($location.path()+'/result');	
 		};
@@ -56,24 +56,16 @@ yunakQuizApp.controller('AssessmentsResultCtrl', ['$scope','QuizData', '$routePa
 	/** get quiz object with picked answers   */
 	$scope.assessment = QuizData.quiz;
 
-	/** check questions and count score if we have quiz object  */
-	if ($scope.assessment.questions){
-		checkQuestions();
-		$scope.counter = $scope.correctAnswerCounter();
-	}	
-	else {
-		$scope.redirectToAssessment();
-	};
 
 	/** Check all questions in quiz */
 	$scope.checkQuestions = function (){
 		for (var i=0; i<$scope.assessment.questions.length; i++){
-			$scope.assessment.questions[i].nice = checkAnswer($scope.assessment.questions[i]);
+			$scope.assessment.questions[i].nice = $scope.checkAnswer($scope.assessment.questions[i]);
 		}
 	}
 
 	/** check question for correct answers  */
-	function checkAnswer (question){
+	$scope.checkAnswer = function(question){
 		var correct=true;
 		for (var i=0;i<question.answers.length; i++){
 			if(question.answers[i].correct){
@@ -105,6 +97,15 @@ yunakQuizApp.controller('AssessmentsResultCtrl', ['$scope','QuizData', '$routePa
 	$scope.redirectToAssessment = function(){
 		$location.path('/assessments/'+$routeParams.quiz_id);	
 	};
+	/** check questions and count score if we have quiz object  */
+	if ($scope.assessment.questions){
+		$scope.checkQuestions();
+		$scope.counter = $scope.correctAnswerCounter();
+	}	
+	else {
+		$scope.redirectToAssessment();
+	};
+
 
 }]);
 
