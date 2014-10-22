@@ -58,3 +58,25 @@
   background:rgb(255,0,0);
 }
 /* end assessment styles */
+/*from category container*/
+.categories-container{
+  border: 1px solid #ccc;
+  padding: 18px 20px 0px;
+  margin-bottom: 30px;
+  margin-top: -25px;
+  margin-left: 14px;
+  z-index: 1;
+}
+/* eof Category container*/
+/*contacts page*/
+.categories-container .contacts{
+  padding-bottom: 20px;
+}
+.contact-us{
+  margin-left: 15%;
+  margin-right: 15%;
+  background: #f5f5f5;
+}
+.contact-us h4{
+  color:#5bc0de;
+}

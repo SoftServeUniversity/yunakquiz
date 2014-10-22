@@ -43,6 +43,11 @@ module PlastApp
       {response: "Assessment #{params['id']} has been deleted"}.to_json
     end
 
+    get '/contacts' do
+      content_type :json
+      Contact.select(['id','role','phone','address','mail']).to_json
+    end
+
   end
 
 end
