@@ -3,14 +3,12 @@
 yunakQuizApp.controller('QuizCtrl', ['$scope','QuizData', '$routeParams', '$location', function($scope,QuizData, $routeParams, $location) {
 
 	/** get quiz by _id from QuizData service  */
-	QuizData.get($routeParams.quiz_id, function(data){
-	      $scope.quiz = data; 
-	    });
-
-
+	QuizData.get($routeParams.quiz_id).success(function(data, status, headers, config){
+		$scope.quiz = data;
+	}); 
+	      
 	/** mark checked answers, and call validate function  */
 	$scope.checkAnswer = function(answer,question){
-		
 		answer.checked = !answer.checked;
 		checkQuestion(question);
 	};
@@ -58,7 +56,7 @@ yunakQuizApp.controller('AssessmentsResultCtrl', ['$scope','QuizData', '$routePa
 
 	/** check questions and count score if we have quiz object  */
 	if ($scope.assessment.questions){
-		checkQuestions();
+		$scope.checkQuestions();
 		$scope.counter = $scope.correctAnswerCounter();
 	}	
 	else {
@@ -111,7 +109,7 @@ yunakQuizApp.controller('AssessmentsResultCtrl', ['$scope','QuizData', '$routePa
 /** Quiz Edit controller  */
 yunakQuizApp.controller('QuizEditCtrl', ['$scope','QuizData', '$routeParams','tags', function($scope, QuizData, $routeParams, tags) {
 
-	/** get quiz object */
+	/** MOCK - get categories and subCats object */
 	$scope.subcats =[
 		{id:2,category_id:1,title:"Футбол"},
 		{id:3,category_id:1,title:"Хокей"},
@@ -124,15 +122,18 @@ yunakQuizApp.controller('QuizEditCtrl', ['$scope','QuizData', '$routeParams','ta
 		{id:4,category_id:0,title:"Історія"}
 	];
 
-	QuizData.get($routeParams.quiz_id, function(data){
-	    $scope.quiz = data; 
-	    $scope.setSubcat();	
-	   });
+	/** get Quiz by ID */
+	QuizData.get($routeParams.quiz_id).success(function(data, status, headers, config){
+		$scope.quiz = data;
+		$scope.setSubcat();
+	}); 
 	
+	/** get all tags from backend*/
 	$scope.loadTags = function(query) {
 	    return tags.load();
 	};
 
+	/** set parent category according selected subCat*/
 	$scope.setCat = function(){
 		for (var i=0; i < $scope.cats.length; i++){		
 			if ($scope.cats[i].id == $scope.selectedSubcat.category_id){
@@ -141,6 +142,7 @@ yunakQuizApp.controller('QuizEditCtrl', ['$scope','QuizData', '$routeParams','ta
 		};
 	};
 
+	/** set selected subCat to be equal subcat in Quiz */
 	$scope.setSubcat  = function() {
 		for (var i=0; i < $scope.subcats.length; i++){		
 			if ($scope.subcats[i].id == $scope.quiz.category_id){
@@ -150,19 +152,23 @@ yunakQuizApp.controller('QuizEditCtrl', ['$scope','QuizData', '$routeParams','ta
 		};
 	};
 
+	/** add empty answer*/
 	$scope.addAnswer = function(question) {
 		question.answers.push({correct:false});
 	};
 
+	/** mark answer to delete in backend */
 	$scope.deleteAnswer = function(answer) {
 		answer.toDelete = true;
 	}
 
+	/** set that this answer to be correct/incorrect */
 	$scope.setCorrectAnswer=function(question,answer){
 		question.invalid = false;
 		answer.correct = !answer.correct;
 	};
 
+	/** check all questions to be valid */
 	$scope.validateQuiz = function(){
 		var questions = $scope.quiz.questions;
 		$scope.quiz.invalid = false;
@@ -176,6 +182,7 @@ yunakQuizApp.controller('QuizEditCtrl', ['$scope','QuizData', '$routeParams','ta
 		};
 	};
 
+	/** check question to be valid */
 	$scope.validateQuestion = function(question){
 		var answers = question.answers;
 		question.invalid = true;
@@ -187,11 +194,13 @@ yunakQuizApp.controller('QuizEditCtrl', ['$scope','QuizData', '$routeParams','ta
 		};
 	};
 
+	/** add empty question */
 	$scope.addQuestion = function(){
 		$scope.addQuestionDisabled = true;
 		$scope.quiz.questions.push({answers:[{correct:false},{correct:false}]});
 	};
 		
+	/** delete question or mark to delete it on backend */	
 	$scope.deleteQuestion = function(question,index){
 		if(question.id){
 			question.toDelete = true;
@@ -201,6 +210,7 @@ yunakQuizApp.controller('QuizEditCtrl', ['$scope','QuizData', '$routeParams','ta
 		}
 	};
 
+	/** show status message */
 	$scope.showMessage = function(message,msgClass){
 		window.scrollTo(0,0);
 		$scope.sendMessage =message;
@@ -212,32 +222,35 @@ yunakQuizApp.controller('QuizEditCtrl', ['$scope','QuizData', '$routeParams','ta
     	}, 2000);
 	};
 
+	/** save draft Quiz */
 	$scope.saveQuiz=function(){
 		$scope.sendQuiz(1);
 	};
 
+	/** save Quiz for review */
 	$scope.reviewQuiz=function(){
 		$scope.sendQuiz(2);
 	};
 
-	/** Redirect to result-page if quiz is valid  */
+	/** send Quiz to backend  */
 	$scope.sendQuiz = function(state){
 		$scope.quiz.category_id = $scope.selectedSubcat.id;
 		$scope.validateQuiz();
 		if(!$scope.quiz.invalid){
 			$scope.quiz.state = state;
+			
 			QuizData.save($scope.quiz)
-			.success(function(data, status, headers, config) {
-				if(state==1){
-					$scope.showMessage('Ваш тест збережено','alert-success');
-				}
-				else {
-					$scope.showMessage('Ваш тест відправлено на модерацію','alert-warning');
-				};
-			})
-            .error( function(data, status, headers, config) { 
-				$scope.showMessage('Ваш тест не збережено','alert-danger');
-             });
+				.success(function(data, status, headers, config) {
+					if(state==1){
+						$scope.showMessage('Ваш тест збережено','alert-success');
+					}
+					else {
+						$scope.showMessage('Ваш тест відправлено на модерацію','alert-warning');
+					};
+				})
+	            .error( function(data, status, headers, config) { 
+					$scope.showMessage('Ваш тест не збережено','alert-danger');
+	            });
 		};
 	};
 
@@ -246,6 +259,7 @@ yunakQuizApp.controller('QuizEditCtrl', ['$scope','QuizData', '$routeParams','ta
 /** Quiz Create controller  */
 yunakQuizApp.controller('QuizCreateCtrl', ['$scope','QuizData','tags', function($scope, QuizData,tags) {
 
+	/** MOCK - get categories and subCats object */
 	$scope.categories =[
 	{id:1,category_id:0,title:"Спорт"},
 	{id:4,category_id:0,title:"Історія"}
