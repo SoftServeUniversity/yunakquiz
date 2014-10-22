@@ -17,6 +17,7 @@ module PlastApp
     register Sinatra::CrossOrigin
     Dir.glob('./config/*.rb').each {|file| require file}
     Dir.glob('./models/*.rb').each {|file| require file}
+    Dir.glob('./lib/*.rb').each {|file| require file}    
 
     get '/' do
         erb :index
@@ -41,6 +42,18 @@ module PlastApp
     delete '/assessments/:id' do
       content_type :json
       {response: "Assessment #{params['id']} has been deleted"}.to_json
+    end
+
+    get '/categories/:id' do
+      content_type :json
+      #if id = 'parcat' then return all par cat ,id ='subcat' then return all subcats,id='all' then return all categories
+      PlastApp::GetAllCat.getCategories(params['id'])
+    end
+
+    get '/quizzes/:category_id' do
+      content_type :json
+      # this function is part of module SerchQuizzes ,returns quizzes with passed category_id or if 0 passed returns all quizzes
+      PlastApp::SearchQuizzes.withCatId(params['category_id']).to_json 
     end
 
   end
