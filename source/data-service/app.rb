@@ -40,7 +40,7 @@ module PlastApp
       {response: "Updated to #{params['id']} assessment"}.to_json
     end
     
-    post '/register' do
+    post '/user' do
       data = JSON.parse request.body.read
       user = User.new(data)
       if user.save
