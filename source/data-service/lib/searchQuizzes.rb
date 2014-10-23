@@ -2,37 +2,36 @@ module SearchQuizzes
 	
   def SearchQuizzes.withCatId(categories_id)
     if categories_id == '0' 
-      return Quiz.select(['id', 'category_id', 'title', 'description', 'updated_at'])
+
+      return Quiz.select(['id', 'category_id', 'title', 'description', \
+      'updated_at'])
+
     else
-      return Quiz.where(category_id: categories_id).select(['id', 'category_id', 'title', 'description', 'updated_at'])
+
+      return Quiz.where(category_id: categories_id).select(['id', 'category_id'\
+      , 'title', 'description', 'updated_at'])
+
     end
   end
   
   def SearchQuizzes.withTags(search_request)
 
-    searchTags = search_request['tags']
-    categories_id = search_request['categories_id']
-    foundedTags ={}
+    search_request['tags'].map! {|tag| tag = "%#{tag}%"}
+    
     result =[]
     
-    quizWithId = SearchQuizzes.withCatId(categories_id)
-
-    quizWithId.each_with_index do |quiz, index|
-      searchTags.each do |tag|
-        if  quiz.tags.where("tag like ?", "%" + tag + "%").length > 0
-          foundedTags =quiz.as_json
-          foundedTags['tags'] = quiz.tags.select(['tag','id']).as_json
-          # result.push(foundedTags)
-          # break
-        else 
-          foundedTags = 0
-          break
-          end
-      end
-        if foundedTags !=0
-        result.push(foundedTags)
-      end
-    end
+    result = Quiz.find_by_sql ["SELECT quizzes.* FROM quizzes     \
+      INNER JOIN tags ON quizzes.id = tags.quiz_id WHERE \
+      category_id IN (?) AND tag LIKE ?", search_request['categories_id'], \
+      search_request['tags']]
+    
     return result.to_json
+  end
+
+  def addingLikeToArray(search_request)
+
+    # Function that will be adding like to array acording to quntity of tags
+    # in array
+
   end
 end
