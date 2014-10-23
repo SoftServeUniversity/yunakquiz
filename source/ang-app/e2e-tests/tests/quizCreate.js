@@ -4,7 +4,7 @@
 
 describe('e2e test for quiz creation page', function() {
 
-	xdescribe('quiz titles', function() {
+	describe('quiz titles', function() {
 
 		browser.get('/#/admin/assessments/create');
 
@@ -52,7 +52,7 @@ describe('e2e test for quiz creation page', function() {
 
 	});
 
-	xdescribe('quiz body', function() {
+	describe('quiz body', function() {
 
 		browser.get('http://localhost:8000/#/admin/assessments/create');
 
@@ -202,10 +202,6 @@ describe('e2e test for quiz creation page', function() {
 
 	    	expect(element(by.binding('sendMessage')).getText())
 	    	.toBe('Ваш тест відправлено на модерацію');
-	    });
-
-	    xit('should mark the correct answer in third question', function() {
-	    	
 	    });
 
 	});

@@ -45,7 +45,7 @@
 				</textarea>
 						
 				<div ng-repeat="answer in question.answers" ng-if="!answer.toDelete" class="input-group quizMarginTop col-sm-11  col-xs-12  col-sm-offset-1">
-				    <span ng-click="setCorrectAnswer(question,answer)" class="input-group-addon glyphicon quizBtnFix glyphicon-ok opacityElem" ng-class="{'quizCorrectAnswer':answer.correct}">
+				    <span ng-click="setCorrectAnswer(question,answer)" class="input-group-addon glyphicon quizBtnFix glyphicon-ok markCorrectAnswerBtn" ng-class="{'quizCorrectAnswer':answer.correct}">
 				    </span>
 				    <input ng-model="answer.title" type="text" class="form-control" placeholder="Введіть відповідь" type="text" required />
 				    <span  ng-show="question.answers.length>2" ng-click="deleteAnswer(answer)" class="btn input-group-addon glyphicon glyphicon-remove quizDeleteAnswer quizBtnFix">
