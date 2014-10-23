@@ -14,7 +14,7 @@ describe('categoryPage', function(){
 			expect(browser.getLocationAbsUrl()).toMatch('http://localhost:8000/#/parentcat-page/1');
 		});
 	        	it('should see first category title', function(){
-	        		expect(element(by.css('h3')).getText()).toMatch(/Спорт/);
+	        		expect(element(by.css('h3')).getText()).toMatch('/Спорт/');
 	        	});
 
 	        	it('should see subcategories of current category', function(){
@@ -86,7 +86,7 @@ describe('categoryPage', function(){
 	        		expect(thirdSubCat.get(2).all(by.repeater('quizz in quizzes')).count()).toMatch(0);
 	        	});
 	});
-/*
+
 // testing 2 category
 
 describe('second category', function(){
@@ -255,6 +255,6 @@ describe('third category', function(){
 	        		var thirdSubCat = element.all(by.css('.rectangle'));
 	        		expect(thirdSubCat.get(2).all(by.repeater('quizz in quizzes')).count()).toMatch(0);
 	        	});
-	});*/
+	});
 
 });
