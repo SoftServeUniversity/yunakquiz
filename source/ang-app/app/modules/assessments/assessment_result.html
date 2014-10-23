@@ -2,7 +2,7 @@
 <h3  ng-bind="assessment.title" class="text-center assessment-title"></h3>
 
 <ol class="breadcrumb">
-  <li><a href="#"> Category</a></li>
+  <li><a href="#">Category</a></li>
   <li><a href="#">SubCategory</a></li>
   <li class="active">{{assessment.title}}</li>
 </ol>
@@ -24,7 +24,7 @@
 		</ul>
 		<h5>Правильна відповідь:</h5>
 		<ul class="list-group">
-		<li ng-repeat="answer in question.answers | filter:{correct:true}" class="list-group-item"> {{answer.title}}</li>
+			<li ng-repeat="answer in question.answers | filter:{correct:true}" class="list-group-item"> {{answer.title}}</li>
 		</ul>
 		<p ng-show="question.description">Пояснення: {{question.description}}</p>
 	</li>
