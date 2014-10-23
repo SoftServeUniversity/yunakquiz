@@ -36,7 +36,7 @@
 .closeButton{position:absolute;top:5px; right:5px; cursor:pointer;}
 .assessmentQuestion>li{margin-top:10px;}
 .quizBtnFix{position:relative;top:0; width:40px; cursor:pointer;}
-.opacityElem{opacity:0.4;}
+.markCorrectAnswerBtn{opacity:0.4;}
 .quizCorrectAnswer{background:#99E6AC;opacity:1;}
 .quizDeleteAnswer{background:#F69999;}
 .assessmentAnswer>li{cursor:pointer;}

@@ -2,7 +2,7 @@
 
 /* https://github.com/angular/protractor/blob/master/docs/toc.md */
 
-describe('quiz', function() {
+xdescribe('quiz', function() {
 
 	describe('kl;jl;jkl;', function() {
 
@@ -50,7 +50,7 @@ describe('quiz', function() {
       	});
     	
 		it('should render quiz-result-page', function() {
-		    element.all(by.css('quiz button.btn')).click();
+		    element.all(by.css('.quiz button.btn')).click();
 		    expect(browser.getLocationAbsUrl()).
 		    toMatch('http://localhost:8000/#/assessments/1/result');
 	    });	
@@ -83,7 +83,7 @@ describe('quiz', function() {
       	});
     	
 		it('should render quiz-result-page', function() {
-		    element.all(by.css('button.btn')).click();
+		    element.all(by.css('.quiz button.btn')).click();
 		    expect(browser.getLocationAbsUrl()).
 		    toMatch('http://localhost:8000/#/assessments/1/result');
 	    });	
