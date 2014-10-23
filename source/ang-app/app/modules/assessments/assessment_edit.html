@@ -5,32 +5,32 @@
 		<form name="quizEditForm" novalidate>
 			<div class="col-md-12 jumbotron">
 		
-				<label class="col-md-5 control-label text-right">Введіть назву тесту</label>
+				<label class="col-md-5 control-label text-right">Назва тесту</label>
 				<div class="col-md-7 ">
 					<input ng-model="quiz.title" class="form-control" type="text" required />
 				</div>
 			
 			
-				<label class="col-md-5 control-label quizMarginTop text-right">Введіть опис тесту</label>
+				<label class="col-md-5 control-label quizMarginTop text-right">Опис тесту</label>
 				<div class="col-md-7 quizMarginTop ">
 					<textarea ng-model="quiz.description" class="form-control"  type="text" required></textarea>
 				</div>
 			
-				<label class="col-lg-5 control-label quizMarginTop text-right">Введіть опис тесту</label>
+				<label class="col-lg-5 control-label quizMarginTop text-right">Теги до тесту</label>
 				<div class="col-lg-7 quizMarginTop ">
 					<tags-input ng-model="quiz.tags" display-property="tag" placeholder="Додайте теги" add-from-autocomplete-only="true">
 						<auto-complete source="loadTags($query)" min-length="1" load-on-focus="true"></auto-complete>
 					</tags-input>
 				</div>
 			
-				<label class="col-md-5 control-label quizMarginTop  text-right">Оберіть категорію</label>
+				<label class="col-md-5 control-label quizMarginTop  text-right">Категорія</label>
 				<div class="col-md-7 quizMarginTop ">
 					<select ng-change="" ng-model="selectedCat" ng-options="category.title for category in cats" class="form-control" required>
 					</select>
 			   	</div>
 			   
 			   
-				<label class="col-md-5 control-label quizMarginTop  text-right">Оберіть під-категорію</label>
+				<label class="col-md-5 control-label quizMarginTop  text-right">Підкатегорія</label>
 				<div class="col-md-7 quizMarginTop ">
 					<select ng-model="selectedSubcat" ng-options="subcat.title for subcat in subcats |filter:{category_id:selectedCat.id}" class="form-control" required>
 					</select>
@@ -45,7 +45,7 @@
 				</textarea>
 						
 				<div ng-repeat="answer in question.answers" ng-if="!answer.toDelete" class="input-group quizMarginTop col-sm-11  col-xs-12  col-sm-offset-1">
-				    <span ng-click="setCorrectAnswer(question,answer)" class="input-group-addon glyphicon quizBtnFix glyphicon-ok opacityElem" ng-class="{'quizCorrectAnswer':answer.correct}">
+				    <span ng-click="setCorrectAnswer(question,answer)" class="input-group-addon glyphicon quizBtnFix glyphicon-ok markCorrectAnswerBtn" ng-class="{'quizCorrectAnswer':answer.correct}">
 				    </span>
 				    <input ng-model="answer.title" type="text" class="form-control" placeholder="Введіть відповідь" type="text" required />
 				    <span  ng-show="question.answers.length>2" ng-click="deleteAnswer(answer)" class="btn input-group-addon glyphicon glyphicon-remove quizDeleteAnswer quizBtnFix">
@@ -60,8 +60,8 @@
 			</div>
 
 			<div class=" col-sm-12 quizMarginTop">
-				<button ng-click="saveQuiz()" ng-disabled="quizCreateForm.$invalid" class="btn btn-warning">Зберегти  чорновик</button>
-				<button ng-click="reviewQuiz()" ng-disabled="quizCreateForm.$invalid" class="btn btn-success">Відправити на модерацію</button> 
+				<button ng-click="saveQuiz()" ng-disabled="quizEditForm.$invalid" class="btn btn-warning">Зберегти  чорновик</button>
+				<button ng-click="reviewQuiz()" ng-disabled="quizEditForm.$invalid" class="btn btn-success">Відправити на модерацію</button> 
 
 			<p>
 		  		Showing of 'interpolate' filter:
