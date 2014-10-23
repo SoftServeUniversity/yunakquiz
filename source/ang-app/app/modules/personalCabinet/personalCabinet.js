@@ -26,10 +26,15 @@ angular.module('yunakQuiz.personalCabinet', ['ngRoute'])
   			});
 }])
 
-.controller('PublishedCtrl', [function() {
+.controller('PublishedCtrl', ['$scope', function($scope) {
+	$scope.published = true;
+	$scope.isActive = function(tab) {
+		return $scope.currentTub == tab;
+	}
 
 }])
-.controller('UnfinishedCtrl', [function() {
+.controller('UnfinishedCtrl', ['$scope', function($scope) {
+	$scope.unfinished = true;
 
 }])
 .controller('UnapprovedCtrl', [function() {
