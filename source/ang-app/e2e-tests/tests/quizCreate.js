@@ -5,9 +5,9 @@
 describe('e2e test for quiz creation page', function() {
 
 	describe('quiz titles', function() {
-
-		browser.get('/#/admin/assessments/create');
-
+		beforeEach(function() {
+			browser.get('/#/admin/assessments/create');
+		});
 	    it('should render title of page', function() {
 	    	element(by.css('.quiz .assessment-title')).getText().then(function(title) {
 			expect(title).toBe('Створення нового тесту');
@@ -42,19 +42,13 @@ describe('e2e test for quiz creation page', function() {
 	    	expect(element(by.model('selectedSubcat')).$('option:checked').getText()).toBe('Оберіть Підкатегорію');
 	    });
 
-	    xit('should be only one option for quiz subcategory when not choose category', function() {
-
-		});
-
-	    xit('should render select field for quiz subcategory when choose category', function() {
-
-	    });
-
 	});
 
 	describe('quiz body', function() {
 
-		browser.get('http://localhost:8000/#/admin/assessments/create');
+		beforeEach(function() {
+			browser.get('http://localhost:8000/#/admin/assessments/create');
+		});
 
 	    it('should render one quiestion block', function() {
 	    	expect(element.all(by.repeater('question in quiz.questions')).count()).toBe(1);
@@ -75,11 +69,13 @@ describe('e2e test for quiz creation page', function() {
 		});
 
 		it('should mark third answer as correct', function() {
+			element(by.buttonText('Додати відповідь')).click();
 	    	element.all(by.repeater('answer in question.answers')).get(2).element(by.css('.markCorrectAnswerBtn')).click();
 			expect(element(by.css('.quizCorrectAnswer')).isPresent()).toBe(true);
 		});	
 
 	    it('should delete third answer field', function() {
+	    	element(by.buttonText('Додати відповідь')).click();
 	    	element.all(by.repeater('answer in question.answers')).get(2).element(by.css('.quizDeleteAnswer')).click();
 	        expect(element.all(by.repeater('answer in question.answers')).count()).toBe(2);	    	
 	    });
@@ -95,6 +91,7 @@ describe('e2e test for quiz creation page', function() {
 	    });
 
 	    it('should delete second question block', function() {
+	    	element(by.buttonText('Додати питання')).click();
 	    	element.all(by.repeater('question in quiz.questions')).get(1).element(by.css('.closeButton')).click();
 	        expect(element.all(by.repeater('question in quiz.questions')).count()).toBe(1);
 	    });
@@ -122,45 +119,43 @@ describe('e2e test for quiz creation page', function() {
 			questions = element.all(by.repeater('question in quiz.questions'));
 			addQuestion = element(by.buttonText('Додати питання'));
 
-			element(by.model('quiz.title')).sendKeys('bvnbnvnvnvbnvnv');
-			element(by.model('quiz.description')).sendKeys('bvnbnvnvnvbnvnvghgfhfgh');
-			element(by.cssContainingText('option', 'Історія')).click();
-			element(by.cssContainingText('option', 'Історія України')).click();
+			element(by.model('quiz.title')).sendKeys('Тест на знання правил футболу');
+			element(by.model('quiz.description')).sendKeys('Детальний опис тесту');
+			element(by.cssContainingText('option', 'Спорт')).click();
+			element(by.cssContainingText('option', 'Футбол')).click();
 			
 			answers = questions.get(0).all(by.repeater('answer in question.answers'));
 			addAnswer = questions.get(0).element(by.buttonText('Додати відповідь'));
-			questions.get(0).element(by.model('question.title')).sendKeys('bvnbnvnvnvbnvnv');
-			questions.get(0).element(by.model('question.description')).sendKeys('bvnbnvnvnvbnvnv');
-			answers.get(0).element(by.model('answer.title')).sendKeys('bvnbnvnvnvbnvnv');
-			answers.get(1).element(by.model('answer.title')).sendKeys('bvnbnvnvnvbnvnv');
+			questions.get(0).element(by.model('question.title')).sendKeys('Скільки гравців в команді?');
+			questions.get(0).element(by.model('question.description')).sendKeys('опис до першого питання');
+			answers.get(0).element(by.model('answer.title')).sendKeys('11');
+			answers.get(1).element(by.model('answer.title')).sendKeys('12');
 			addAnswer.click();
-			answers.get(2).element(by.model('answer.title')).sendKeys('bvnbnvnvnvbnvnv');
+			answers.get(2).element(by.model('answer.title')).sendKeys('5');
 			addAnswer.click();
-			answers.get(3).element(by.model('answer.title')).sendKeys('bvnbnvnvnvbnvnv');
+			answers.get(3).element(by.model('answer.title')).sendKeys('22');
 			addQuestion.click();
 			
 			answers = questions.get(1).all(by.repeater('answer in question.answers'));
 			addAnswer = questions.get(1).element(by.buttonText('Додати відповідь'));
-			questions.get(1).element(by.model('question.title')).sendKeys('bvnbnvnvnvbnvnv');
-			questions.get(1).element(by.model('question.description')).sendKeys('bvnbnvnvnvbnvnv');
-			answers.get(0).element(by.model('answer.title')).sendKeys('bvnbnvnvnvbnvnv');
-			answers.get(1).element(by.model('answer.title')).sendKeys('bvnbnvnvnvbnvnv');
+			questions.get(1).element(by.model('question.title')).sendKeys('Скільки триває один тайм?');
+			questions.get(1).element(by.model('question.description')).sendKeys('опис до другого питання');
+			answers.get(0).element(by.model('answer.title')).sendKeys('20хв');
+			answers.get(1).element(by.model('answer.title')).sendKeys('45хв');
 			addAnswer.click();
-			answers.get(2).element(by.model('answer.title')).sendKeys('bvnbnvnvnvbnvnv');
-			addAnswer.click();
-			answers.get(3).element(by.model('answer.title')).sendKeys('bvnbnvnvnvbnvnv');
+			answers.get(2).element(by.model('answer.title')).sendKeys('до останнього гравця');
 			addQuestion.click();
 			
 			answers = questions.get(2).all(by.repeater('answer in question.answers'));
 			addAnswer = questions.get(2).element(by.buttonText('Додати відповідь'));
-			questions.get(2).element(by.model('question.title')).sendKeys('bvnbnvnvnvbnvnv');
-			questions.get(2).element(by.model('question.description')).sendKeys('bvnbnvnvnvbnvnv');
-			answers.get(0).element(by.model('answer.title')).sendKeys('bvnbnvnvnvbnvnv');
-			answers.get(1).element(by.model('answer.title')).sendKeys('bvnbnvnvnvbnvnv');
+			questions.get(2).element(by.model('question.title')).sendKeys('Що відбудеться, коли гравець торкнеться м’яча рукою?');
+			questions.get(2).element(by.model('question.description')).sendKeys('опис до третьго питання');
+			answers.get(0).element(by.model('answer.title')).sendKeys('Порушенння правил');
+			answers.get(1).element(by.model('answer.title')).sendKeys('Штрафний удар');
 			addAnswer.click();
-			answers.get(2).element(by.model('answer.title')).sendKeys('bvnbnvnvnvbnvnv');
+			answers.get(2).element(by.model('answer.title')).sendKeys('Дадуть пиріжок');
 			addAnswer.click();
-			answers.get(3).element(by.model('answer.title')).sendKeys('bvnbnvnvnvbnvnv');
+			answers.get(3).element(by.model('answer.title')).sendKeys('Дадуть в голову');
 		});
 
 	    it('should render the tip to mark the correct answer', function() {
@@ -176,9 +171,9 @@ describe('e2e test for quiz creation page', function() {
 	    	questions.get(1).all(by.repeater('answer in question.answers'))
 	    	.get(1).element(by.css('.markCorrectAnswerBtn')).click();
 	    	questions.get(2).all(by.repeater('answer in question.answers'))
-	    	.get(2).element(by.css('.markCorrectAnswerBtn')).click();
+	    	.get(0).element(by.css('.markCorrectAnswerBtn')).click();
 	    	questions.get(2).all(by.repeater('answer in question.answers'))
-	    	.get(3).element(by.css('.markCorrectAnswerBtn')).click();
+	    	.get(1).element(by.css('.markCorrectAnswerBtn')).click();
 
 	    	element(by.buttonText('Зберегти чорновик')).click();
 
@@ -194,9 +189,9 @@ describe('e2e test for quiz creation page', function() {
 	    	questions.get(1).all(by.repeater('answer in question.answers'))
 	    	.get(1).element(by.css('.markCorrectAnswerBtn')).click();
 	    	questions.get(2).all(by.repeater('answer in question.answers'))
-	    	.get(2).element(by.css('.markCorrectAnswerBtn')).click();
+	    	.get(0).element(by.css('.markCorrectAnswerBtn')).click();
 	    	questions.get(2).all(by.repeater('answer in question.answers'))
-	    	.get(3).element(by.css('.markCorrectAnswerBtn')).click();
+	    	.get(1).element(by.css('.markCorrectAnswerBtn')).click();
 
 	    	element(by.buttonText('Відправити на модерацію')).click();
 
