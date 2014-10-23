@@ -47,9 +47,16 @@ describe('Login Model Window', function() {
 
     describe('Login with incorrect data', function() {
 
-      it('should display error message "Invalid username and/or password!"', function() {
-        element(by.model('lgn.user.username')).sendKeys("azazaza");
+      it('should display error message "Invalid username and/or password!" when we submit wrong password', function() {
+        element(by.model('lgn.user.username')).sendKeys("tfilonych");
         element(by.model('lgn.user.password')).sendKeys("11111111111");
+        element(by.buttonText('Увійти')).click();
+        expect(element(by.binding('lgn.message')).getText()).toBe("Invalid username and/or password!");
+      });
+
+      it('should display error message "Invalid username and/or password!" when we submit wrong username', function() {
+        element(by.model('lgn.user.username')).sendKeys("azazaza");
+        element(by.model('lgn.user.password')).sendKeys("11111111");
         element(by.buttonText('Увійти')).click();
         expect(element(by.binding('lgn.message')).getText()).toBe("Invalid username and/or password!");
       });
