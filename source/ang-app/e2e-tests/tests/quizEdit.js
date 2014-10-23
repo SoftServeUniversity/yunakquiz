@@ -5,8 +5,10 @@
 describe('QuizEdit', function() {
 
 	describe('Header', function() {
-
-		browser.get('http://localhost:8000/#/admin/assessments/1');
+		
+		beforeEach(function() {
+			browser.get('http://localhost:8000/#/admin/assessments/1');
+		});
 
 	    it('should have page title ', function() {
 	    	expect(element(by.css('.quiz .assessment-title')).getText()).
@@ -46,9 +48,12 @@ describe('QuizEdit', function() {
 	});
 
   	describe('Body', function() {
-
-		browser.get('http://localhost:8000/#/admin/assessments/1');
+	   	
 	   	var questions = element.all(by.repeater('question in quiz.questions'));
+ 		
+  		beforeEach(function() {
+			browser.get('http://localhost:8000/#/admin/assessments/1');
+		});
 
 	    it('should render quiz with three questions', function() {
 	        expect(questions.count()).toBe(3);
@@ -70,10 +75,12 @@ describe('QuizEdit', function() {
 
     });
 
-  	xdescribe('Adding and deleting new questions and answers', function() {
-
-	    browser.get('http://localhost:8000/#/admin/assessments/1');
-	    var questions = element.all(by.repeater('question in quiz.questions'));
+  	describe('Adding and deleting new questions and answers', function() {
+		var questions = element.all(by.repeater('question in quiz.questions'));
+	   
+		beforeEach(function() {
+			browser.get('http://localhost:8000/#/admin/assessments/1');
+		});	    
 
 	    it('should add new answer', function() {
 	    	questions.get(0).element(by.css('[ng-click="addAnswer(question)"]')).click();

@@ -3,8 +3,10 @@
 describe('quiz', function() {
 
 	describe('interactions with pass quiz page', function() {
-	
-		browser.get('http://localhost:8000/#/assessments/1');
+		
+		beforeEach(function() {
+			browser.get('http://localhost:8000/#/assessments/1');
+		});
 
 		it('should show pass quiz page heading with current quiz title in it', function() {
 			expect(element.all(by.binding('quiz.title')).getText()).
