@@ -22,11 +22,11 @@ describe('QuizEdit', function() {
 
 	    it('should have Quiz description', function() {
 	      	var input = element(by.model('quiz.description'));
-			expect(input).isDisplayed;
+			expect(input.isPresent()).toBe(true);
 	    });
 
 	    it('should have Quiz tags', function() {
-	      expect(element.all(by.model('quiz.tags'))).isDisplayed;
+	      expect(element(by.model('quiz.tags')).isPresent()).toBe(true);
 	    });
 
 	    it('should have category with options', function() {
@@ -42,7 +42,7 @@ describe('QuizEdit', function() {
 	    });
 
 	    it('should have Quiz comment', function() {
-	       expect(element(by.model('quiz.comment'))).isDisplayed;
+	       expect(element(by.css('blockquote')).isPresent()).toBe(true);
 	    });
 
 	});
