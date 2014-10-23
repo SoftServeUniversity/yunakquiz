@@ -118,28 +118,41 @@ describe('QuizEdit', function() {
     
     describe('Saving and sending for review', function() {	
 		var questions;
+		var answers;
 
 		beforeEach(function () {
     		browser.get('http://localhost:8000/#/admin/assessments/1');
 	   		questions = element.all(by.repeater('question in quiz.questions'));
+			
+
+
 	    });
     	
 	    it('should be able save valid Quiz', function() {
+	    	var testMessage = 'test';
 	    	questions.get(0).element(by.css('[ng-click="addAnswer(question)"]')).click();
-	        element(by.css('[ng-click="saveQuiz()"]')).click();
+			answers = questions.get(0).all(by.repeater('answer in question.answers'));
+			answers.last().element(by.model('answer.title')).sendKeys(testMessage);
+
+	    	element(by.css('[ng-click="saveQuiz()"]')).click();
 	        browser.get('http://localhost:8000/#/admin/assessments/1');
-	        var answers = questions.get(0).all(by.repeater('answer in question.answers'))
-	        expect(answers.count()).toBe(4);
+	        var answers = questions.get(0).all(by.model('answer.title'))
+	        expect(answers.last().getAttribute('value')).toBe(testMessage);
+	     
 	        questions.get(0).all(by.css('[ng-click="deleteAnswer(answer)"]')).last().click();
 	        element(by.css('[ng-click="saveQuiz()"]')).click();
       	});
 		
 		it('should be able send for review valid Quiz', function() {
 			questions.get(0).element(by.css('[ng-click="addAnswer(question)"]')).click();
-	      	element(by.css('[ng-click="reviewQuiz()"]')).click();
+			answers = questions.get(0).all(by.repeater('answer in question.answers'));
+			answers.last().element(by.model('answer.title')).sendKeys('test');	
+
+			element(by.css('[ng-click="reviewQuiz()"]')).click();
 	        browser.get('http://localhost:8000/#/admin/assessments/1');
 	        var answers = questions.get(0).all(by.repeater('answer in question.answers'))
 	        expect(answers.count()).toBe(4);
+
 	        questions.get(0).all(by.css('[ng-click="deleteAnswer(answer)"]')).last().click();
 	        element(by.css('[ng-click="reviewQuiz()"]')).click();
 
