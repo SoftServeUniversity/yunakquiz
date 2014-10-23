@@ -47,7 +47,7 @@ describe('QuizEdit', function() {
 
   	describe('Body', function() {
 
-		browser.get('http://localhost:8000/#/admin/assessments/1');
+		//browser.get('http://localhost:8000/#/admin/assessments/1');
 	   	var questions = element.all(by.repeater('question in quiz.questions'));
 
 	    it('should render quiz with three questions', function() {
@@ -70,7 +70,7 @@ describe('QuizEdit', function() {
 
     });
 
-  	xdescribe('Adding and deleting new questions and answers', function() {
+  	describe('Adding and deleting new questions and answers', function() {
 
 	    browser.get('http://localhost:8000/#/admin/assessments/1');
 	    var questions = element.all(by.repeater('question in quiz.questions'));
