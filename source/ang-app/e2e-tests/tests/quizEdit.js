@@ -5,8 +5,10 @@
 describe('QuizEdit', function() {
 
 	describe('Header', function() {
-
-		browser.get('http://localhost:8000/#/admin/assessments/1');
+		
+		beforeEach(function() {
+			browser.get('http://localhost:8000/#/admin/assessments/1');
+		});
 
 	    it('should have page title ', function() {
 	    	expect(element(by.css('.quiz .assessment-title')).getText()).
@@ -47,8 +49,12 @@ describe('QuizEdit', function() {
 
   	describe('Body', function() {
 
-		//browser.get('http://localhost:8000/#/admin/assessments/1');
-	   	var questions = element.all(by.repeater('question in quiz.questions'));
+	   	var questions;
+ 		
+  		beforeEach(function() {
+			browser.get('http://localhost:8000/#/admin/assessments/1');
+			questions = element.all(by.repeater('question in quiz.questions'));
+		});
 
 	    it('should render quiz with three questions', function() {
 	        expect(questions.count()).toBe(3);
@@ -72,8 +78,13 @@ describe('QuizEdit', function() {
 
   	describe('Adding and deleting new questions and answers', function() {
 
-	    browser.get('http://localhost:8000/#/admin/assessments/1');
-	    var questions = element.all(by.repeater('question in quiz.questions'));
+  		var questions;
+
+		beforeEach(function() {
+			browser.get('http://localhost:8000/#/admin/assessments/1');
+			questions = element.all(by.repeater('question in quiz.questions'));
+		});	    
+
 
 	    it('should add new answer', function() {
 	    	questions.get(0).element(by.css('[ng-click="addAnswer(question)"]')).click();
@@ -87,19 +98,20 @@ describe('QuizEdit', function() {
       	});
 
       	it('new question should have two blank answers', function() {
+	        element(by.css('[ng-click="addQuestion()"]')).click();
 	        var answers = questions.last().all(by.repeater('answer in question.answers'))
 	        expect(answers.count()).toBe(2);
       	});
 
 	    it('should be able to delete question', function() {
 	        questions.last().element(by.css('[ng-click="deleteQuestion(question,$index)"]')).click();
-	        expect(questions.count()).toBe(3);
+	        expect(questions.count()).toBe(2);
       	});
 
       	it('should be able to delete answer', function() {
-	        questions.get(0).element(by.css('[ng-click="deleteAnswer(answer)"]')).click();
+	        questions.get(0).all(by.css('[ng-click="deleteAnswer(answer)"]')).last().click();
 	        var answers = questions.get(0).all(by.repeater('answer in question.answers'))
-	        expect(answers.count()).toBe(3);
+	        expect(answers.count()).toBe(2);
       	});
     	
     });
