@@ -1,8 +1,12 @@
 describe('back-end function', function() {
 
-	exports.httpBackendMock = function() {
-		angular.module('httpBackendMock', ['yunakQuiz', 'ngMockE2E'])
-    .run(function($httpBackend) {
+	var app = angular.module('myApp', ['ngMockE2E', 'yunakQuiz']);
+
+    app.config(function($provide) {
+      $provide.decorator('$httpBackend', angular.mock.e2e.$httpBackendDecorator);
+    });
+
+    app.run(function($httpBackend) {
 	
     var category1 = [{id: 1, category_id: 0, title: "Cпорт"}];
 	var category3 = [{id: 3, category_id: 0, title: "Комп'ютери"}];
@@ -50,5 +54,4 @@ describe('back-end function', function() {
 
 	$httpBackend.whenGET().passThrough();
   });
-  };
-});
+ });
