@@ -5,7 +5,7 @@
 		<div class="row categories-container">
 			<ul class="list-unstyled col-sm-offset-1">
 				<li>
-					<span class="quote-author"> Тестів:  {{testsCount(parCat.id)}} </span>
+					<span class="quote-author">Тестів:  {{testsCount(parCat.id)}} </span>
 				</li>
 				<li ng-if="parCat.id==subCat.category_id" ng-repeat="subCat in subCategories">
 					<a ng-href="#subcategory/{{subCat.id}}">{{subCat.title}}</a>

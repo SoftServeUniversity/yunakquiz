@@ -3,22 +3,19 @@
 
     app.factory("catsById", ['$http', function ($http) {
       return { //if id = 'parcat' then return all par cat ,id ='subcat' then return all subcats,id='all' then return all categories
-        get : function(id, callback) {
-          $http.get('http://localhost:9292/categories/' + id).success(function(data){
-            callback(data);
-          });
+        get : function(id) {
+          return $http.get('http://localhost:9292/categories/' + id)
+          }
         }
-      }
-    }]);
+      }]);
+
     app.factory("quizesById", ['$http', function ($http) {
       return { //return quizz by id or return all if 0 provided as id
-        get : function(id, callback) {
-          $http.get('http://localhost:9292/quizzes/' + id).success(function(data){
-            callback(data);
-          });
+        get : function(id) {
+          return $http.get('http://localhost:9292/quizzes/' + id)
+          }
         }
-      }
-    }]);
+      }]);
 
     app.directive('categoriesContainer', function() {
       return {
@@ -28,15 +25,16 @@
           $scope.parCategories = {};
           $scope.quizzes = {};
           $scope.subCategories = {};
-          catsById.get('parcat', function(data){
+          catsById.get('parcat').success(function(data){
             $scope.parCategories = data; 
           });
-          catsById.get('subcat', function(data){
+          catsById.get('subcat').success(function(data){
             $scope.subCategories = data; 
           });      
-          quizesById.get(0, function(data){
+          quizesById.get(0).success(function(data){
             $scope.quizzes = data;
-          });                
+          });
+                            
           $scope.testsCount = function(parcat_id){
             var testsCount = 0;
             var subCat = $scope.subCategories;
