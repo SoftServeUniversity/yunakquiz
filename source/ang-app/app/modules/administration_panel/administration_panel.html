@@ -1,39 +1,27 @@
 <div class="row">
-	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pageTitleBox bg-primary">
+	<div class="col-md-12 pageTitleBox bg-primary">
 		<div class="center-block"><h3 class="pageTitle">Адміністративна панель</h3></div>
     </div>
 </div>
 <section>
-	<ul class="nav nav-tabs">
-		<li ng-class="{active:isSelected(1)}">
-			<a href="#administration-panel/1" >Користувачі</a>
+	<ul class="nav nav-tabs admin-panel-tabs">
+		<li ng-class="{active:isSelected('userTab')}">
+			<a href="#administration-panel/userTab" >Користувачі</a>
 		</li>
-		<li ng-class="{active:isSelected(2)}">
-			<a href="#administration-panel/2" >Чорний список</a>
+		<li ng-class="{active:isSelected('blacklistTab')}">
+			<a href="#administration-panel/blacklistTab" >Чорний список</a>
 		</li>
-		<li ng-class="{active:isSelected(3)}">
-			<a href="#administration-panel/3" >Адміністрація</a>
+		<li ng-class="{active:isSelected('administrationTab')}">
+			<a href="#administration-panel/administrationTab" >Адміністрація</a>
 		</li>
-		<li ng-class="{active:isSelected(4)}">
-			<a href="#administration-panel/4" >Категорії тестів</a>
+		<li ng-class="{active:isSelected('quizzescategoriesTab')}">
+			<a href="#administration-panel/quizzescategoriesTab" >Категорії тестів</a>
 		</li>
-		<li ng-class="{active:isSelected(5)}">
-			<a href="#administration-panel/5" >Про нас</a>
+		<li ng-class="{active:isSelected('aboutusTab')}">
+			<a href="#administration-panel/aboutusTab" >Про нас</a>
 		</li>
-		<li ng-class="{active:isSelected(6)}">
-			<a href="#administration-panel/6" >Часті питання</a>
+		<li ng-class="{active:isSelected('faqTab')}">
+			<a href="#administration-panel/faqTab" >Часті питання</a>
 		</li>
 	</ul>
 </section>
-
-<user-tab ng-show="isSelected(1)"></user-tab>
-<blacklist-tab ng-show="isSelected(2)"></blacklist-tab>
-<administration-tab ng-show="isSelected(3)"></administration-tab>
-<quizzescategories-tab ng-show="isSelected(4)"></quizzescategories-tab>
-<aboutus-tab class="panel" ng-show="isSelected(5)"></aboutus-tab>
-<faq-tab ng-show="isSelected(6)"></faq-tab>
-<h1>Administration page Not implemented yet</h1>
-<p>
-  Showing of 'interpolate' filter:
-  {{ 'Current version is v%VERSION%.' | interpolate }}
-</p>
