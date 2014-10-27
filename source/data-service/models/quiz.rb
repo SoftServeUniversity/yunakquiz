@@ -4,6 +4,7 @@ class Quiz < ActiveRecord::Base
   has_and_belongs_to_many :tags
   enum status: %i(draft review enhance published deleted)
 
+
   def self.updateQ(data)
   	if (data['id'] == nil)
   		return "Quiz not found"	
@@ -41,9 +42,15 @@ class Quiz < ActiveRecord::Base
     end
   end
 
-  def self.queryList(status="draft")
-      
-      return Quiz.where(status: Quiz.statuses[status]).as_json
+  def self.queryList(status="published")
+    statusCode =  Quiz.statuses[status] 
+    if statusCode
+      return Quiz.where(status: statusCode).as_json
+    end
   end 
+
+  def self.deleteQ(id)
+    Quiz.find_by(id: id).deleted!
+  end   
 
 end

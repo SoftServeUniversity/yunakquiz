@@ -29,11 +29,13 @@ module PlastApp
       content_type :json
       [{id: 1, name: 'assessment 1'}, {id: 2, name: 'assessment 2'}].to_json
     end
+
     
     get '/admin/assessments/:id/comments' do
       content_type :json
       Comment.get(params['id']).to_json
     end 
+
 
     put '/admin/assessments/:id' do
       content_type :json
@@ -68,17 +70,21 @@ module PlastApp
       end
     end
 
-    delete '/assessments/:id' do
+    delete '/admin/assessments/:id' do
       content_type :json
+      Quiz.deleteQ(params['id'])
       {response: "Assessment #{params['id']} has been deleted"}.to_json
     end
 
     get '/admin/assessments/:status' do
       content_type :json
       quizzes = Quiz.queryList(params['status'])
-      
-      JSON.pretty_generate(quizzes) 
-      
+      if quizzes
+        JSON.pretty_generate(quizzes) 
+      else
+        return [400, "Not found "+params['status']]
+      end
+            
     end
 
   end

@@ -4,25 +4,13 @@ angular.module('yunakQuiz.personalCabinet', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider
-  			.when('/personal_cabinet/published', {
-	    		templateUrl: 'modules/personalCabinet/published.html',
-	    		controller: 'PublishedCtrl'
-  			})
-  			.when('/personal_cabinet/unfinished', {
-	    		templateUrl: 'modules/personalCabinet/unfinished.html',
-	    		controller: 'UnfinishedCtrl'
-  			})
-  			.when('/personal_cabinet/unapproved', {
-	    		templateUrl: 'modules/personalCabinet/unapproved.html',
-	    		controller: 'UnapprovedCtrl'
-  			})
-  			.when('/personal_cabinet/created', {
-	    		templateUrl: 'modules/personalCabinet/created.html',
-	    		controller: 'CreatedCtrl'
-  			})
   			.when('/personal_cabinet/profile', {
 	    		templateUrl: 'modules/personalCabinet/profile.html',
 	    		controller: 'ProfileCtrl'
+  			})
+  			.when('/personal_cabinet/:status', {
+	   			templateUrl: 'modules/personalCabinet/quizzestabs.html',
+	    		controller: 'QuizzesTabsCtrl'
   			});
 }])
 
@@ -41,23 +29,34 @@ angular.module('yunakQuiz.personalCabinet', ['ngRoute'])
 
 }])
 
-.controller('CreatedCtrl', ['$scope', 'QuizData', function($scope, QuizData) {
+.controller('QuizzesTabsCtrl', ['$scope', '$routeParams', 'QuizData', function($scope, $routeParams, QuizData) {
+	
+	$scope.activeTab = $routeParams.status
 	$scope.quizUrl = "http://localhost:8000/#/assessments/";
 	$scope.quizEditUrl = "http://localhost:8000/#/admin/assessments/"
 
-	QuizData.getAll("draft")
-		.success(function(data, status, headers, config){
-			$scope.quizzes = data;
-		})
-		.error(function(data){
-			$location.path('/404/');
-		});
+	
+	$scope.getQuizess = function(){
+		QuizData.getAll($scope.activeTab)
+			.success(function(data, status, headers, config){
+				$scope.quizzes = data;
+			})
+			.error(function(data){
+				$location.path('/404/');
+			});
+	};
 	 
 
-
 	$scope.deleteQuiz = function(quiz_id) {
-		confirm(quiz_id);
+		if (confirm("Ви точно бажаєти видалити тест №"+quiz_id)) {
+			QuizData.deleteQuiz(quiz_id)
+				.success(function(data){
+					$scope.getQuizess();
+				})
+		}
 	};
+
+	$scope.getQuizess();
 }])
 
 .controller('ProfileCtrl', [function() {
