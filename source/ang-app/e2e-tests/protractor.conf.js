@@ -3,6 +3,7 @@ exports.config = {
 
   specs: [
     './test/category_2.js'
+    //'./test/HomePage.js'
   ],
 
   capabilities: {

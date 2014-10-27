@@ -24,6 +24,7 @@
     $scope.parCategory = {};
     $scope.quizzes = {};
     $scope.subCategories = {};
+
     var current_id =  $routeParams.par_id;
 
     catsById.get(current_id ,function(data){
