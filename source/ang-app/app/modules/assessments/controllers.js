@@ -131,11 +131,19 @@ yunakQuizApp.controller('QuizEditCtrl', ['$scope','QuizData', '$routeParams','ta
 		.success(function(data, status, headers, config){
 			$scope.quiz = data;
 			$scope.setSubcat();
+			$scope.getComments(data['id']);
 		})
 		.error(function(data){
 			$location.path('/404/');
 		});
-	
+
+	$scope.getComments = function(quiz_id) {
+		QuizData.getComments(quiz_id)
+			.success(function(data, status, headers, config){
+				$scope.comments = data;
+			});
+	};
+			
 	/** get all tags from backend*/
 	$scope.loadTags = function(query) {
 	    return tags.load();
