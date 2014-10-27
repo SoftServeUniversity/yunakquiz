@@ -129,24 +129,24 @@ yunakQuizApp.controller('QuizEditCtrl', ['$scope','QuizData', '$routeParams','ta
 
 	/** save draft Quiz */
 	$scope.saveQuiz=function(){
-		$scope.sendQuiz(1);
+		$scope.sendQuiz("draft");
 	};
 
 	/** save Quiz for review */
 	$scope.reviewQuiz=function(){
-		$scope.sendQuiz(2);
+		$scope.sendQuiz("review");
 	};
 
 	/** send Quiz to backend  */
-	$scope.sendQuiz = function(state){
+	$scope.sendQuiz = function(status){
 		$scope.quiz.category_id = $scope.selectedSubcat.id;
 		$scope.validateQuiz();
 		if(!$scope.quiz.invalid){
-			$scope.quiz.state = state;
+			$scope.quiz.status = status;
 			
 			QuizData.save($scope.quiz)
 				.success(function(data, status, headers, config) {
-					if(state==1){
+					if($scope.quiz.status=="draft"){
 						$scope.showMessage('Ваш тест збережено','alert-success');
 					}
 					else {

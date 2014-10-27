@@ -10,7 +10,7 @@ class Quiz < ActiveRecord::Base
   		return "Quiz not found"	
   	end
 	  quiz = Quiz.find(data['id'])
-  	quiz.update(title: data['title'], description: data['description'], category_id: data['category_id'])
+  	quiz.update(title: data['title'], description: data['description'], category_id: data['category_id'], status: data['status'])
     Question.updateQ(data['questions'], quiz)
   	return quiz
   end
