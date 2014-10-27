@@ -19,16 +19,16 @@
         <div class="row">
             <div class="col-lg-10 col-md-10 col-lg-offset-1 col-md-offset-1">
                 <ul id="myTab" class="nav nav-tabs">
-                    <li ng-class="{ 'active': published }">
+                    <li ng-class="{ 'active': 'published'==activeTab }">
                         <a class="bg-success" href="#/personal_cabinet/published">Опубліковані</a>
                     </li>
-                    <li ng-class="{ 'active': unfinished }">
+                    <li ng-class="{ 'active': 'enhance'==activeTab }">
                         <a class="bg-danger" href="#/personal_cabinet/enhance">Недоопрацьовані</a>
                     </li>
-                    <li class="">
+                    <li ng-class="{ 'active': 'review'==activeTab }">
                         <a class="bg-warning" href="#/personal_cabinet/review">Незатверджені</a>
                     </li>
-                    <li class="">
+                    <li ng-class="{ 'active': 'draft'==activeTab }">
                         <a class="bg-info" href="#/personal_cabinet/draft">Створені</a>
                     </li>
                     <li class="">
