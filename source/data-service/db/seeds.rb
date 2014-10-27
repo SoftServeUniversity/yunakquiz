@@ -20,4 +20,5 @@ Answer.create(question_id: 3, title: "Порушенння правил", correc
 Answer.create(question_id: 3, title: "Штрафний удар", correct: true)
 Answer.create(question_id: 3, title: "Дадуть пиріжок", correct: false)
 Answer.create(question_id: 3, title: "Дадуть в голову", correct: false)
-
+Comment.create(quiz_id: 1, text: "Гарний тест")
+Comment.create(quiz_id: 1, text: "Потрібно додати питання з двома правильними відповідями")
