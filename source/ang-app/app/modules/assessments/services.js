@@ -9,6 +9,9 @@ yunakQuizApp.factory('QuizData', ['$http', function($http){
 				callback(data); 
 			});
         }, 
+        getAll: function(status){
+          return $http.get('http://localhost:9292/admin/assessments/'+status )
+        },
         quiz:{}
       }
     }

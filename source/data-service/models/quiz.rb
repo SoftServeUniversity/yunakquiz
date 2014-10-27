@@ -41,4 +41,9 @@ class Quiz < ActiveRecord::Base
     end
   end
 
+  def self.queryList(status="draft")
+      
+      return Quiz.where(status: Quiz.statuses[status]).as_json
+  end 
+
 end

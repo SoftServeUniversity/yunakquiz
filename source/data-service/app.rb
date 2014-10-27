@@ -73,6 +73,14 @@ module PlastApp
       {response: "Assessment #{params['id']} has been deleted"}.to_json
     end
 
+    get '/admin/assessments/:status' do
+      content_type :json
+      quizzes = Quiz.queryList(params['status'])
+      
+      JSON.pretty_generate(quizzes) 
+      
+    end
+
   end
 
 end
