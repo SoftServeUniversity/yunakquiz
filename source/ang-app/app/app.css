@@ -59,18 +59,9 @@
 }
 /* end assessment styles */
 /*admin panel styles*/
-.admin-panel-tabs {
-  border-bottom: 1px solid #ddd;
-}
 .admin-panel-tabs > li > a {
-  margin-right: 2px;
   font-weight: bold;
   background-color: #d9edf7;
-  border: 1px  solid #ddd;
-  border-bottom-color: transparent;
-  border-radius: 4px 4px 0 0;
 }
-.admin-panel-tabs > li > a:hover {
-  border-color: #eee #eee #ddd;
-}
+
 /*eof admin panel styles*/

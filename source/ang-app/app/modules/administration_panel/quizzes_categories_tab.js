@@ -1,5 +1,5 @@
 (function (){
-	var  app = angular.module('yunakQuiz.quizzescategoriesTab' ,['ngRoute','yunakQuiz.categoriesContainer']);
+	var  app = angular.module('yunakQuiz.quizzescategoriesTab' ,['ngRoute']);
 
 		app.config(['$routeProvider',
       function($routeProvider) {
