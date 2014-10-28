@@ -14,22 +14,6 @@ describe('category page', function(){
 	var subcategory3 = [{"id": 8, "category_id": 3, "title": "Комплектуючі"}, {"id": 9, "category_id": 3, "title": "Програмування"},{"id": 10, "category_id": 3, "title": "Мережі"}];
 	var subcategory4 = [{"id": 5, "category_id": 4, "title": "Країни"}, {"id": 11, "category_id": 4, "title": "Столиці"},{"id": 12, "category_id": 4, "title": "Гори"}];
 
-	var quizzes = [
-		{"id": 1, "category_id": 2, "title": "Тест на знання правил футболу"},
-		{"id": 2, "category_id": 6, "title": "Тест на знання правил хокею"},
-		{"id": 3, "category_id": 8, "title": "Тест на знання комплектуючих"},
-		{"id": 4, "category_id": 9, "title": "Тест на знання програмування"},
-		{"id": 5, "category_id": 10, "title": "Тест на знання мереж"},
-		{"id": 6, "category_id": 10, "title": "Тест на знання мережевих протоколів"},
-		{"id": 7, "category_id": 5, "title": "Тест на знання географії"},
-		{"id": 8, "category_id": 6, "title": "Тест про проходження хокею"},
-		{"id": 9, "category_id": 6, "title": "Тест про історію хокею"},
-		{"id": 10, "category_id": 6, "title": "Тест відомих хокеїстів світу"},
-		{"id": 11, "category_id": 6, "title": "Тест про історію хокею в Україні"},
-		{"id": 12, "category_id": 6, "title": "Тест про хокеїстів України"},
-		{"id": 13, "category_id": 6, "title": "Тест на знання правил"}
-	];
-
 	var quizzes2 = [{"id": 1, "category_id": 2, "title": "Тест на знання правил футболу"}];
 	var quizzes5 = [{"id": 7, "category_id": 5, "title": "Тест на знання географії"}];
 	var quizzes6 = [{"id": 2, "category_id": 6, "title": "Тест на знання правил хокею"},

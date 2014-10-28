@@ -4,4 +4,15 @@
     </div>
 </div> 
 
-<h3> Тут може бути Ваша реклама !!! </h3>
+<h3> Questions :</h3>
+
+<div class="FAQ_Page">
+	<div>
+		<ol>
+			<li ng-repeat="Question in Questions"  ng-show="Question.ans">
+				{{Question.quest}} <br/>
+				{{Question.ans}}
+			</li>
+		</ol>
+	</div>
+</div>
