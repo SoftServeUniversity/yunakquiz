@@ -1,7 +1,8 @@
 "use strict";
 
 (function (){
-	var  app = angular.module('yunakQuiz.guestSearch', ['ngRoute','yunakQuiz.subcategory','yunakQuiz.categoriesContainer']);
+	var  app = angular.module('yunakQuiz.guestSearch', ['ngRoute',
+    'yunakQuiz.subcategory','yunakQuiz.categoriesContainer']);
 
 		app.config(['$routeProvider',
       		function($routeProvider) {
@@ -12,73 +13,79 @@
             })
       	}
     ]);      
-
-//==============================================================================
     
-    //Ctrl for guest-search-page
-    app.controller('SearchCtrl', 
-      ['$scope', '$http', 'searchTag', '$timeout', 'catsById', function ($scope, $http, searchTag, $timeout, catsById) {
+    //Ctrl for guest search page
+    app.controller('SearchCtrl', ['$scope', '$http', 'searchTag', 
+      function ($scope, $http, searchTag) {
         
-        var searchTimeout;
-        $scope.searchTags = [];
-        $scope.searchData = {categories_id:[]}
-        $scope.parCategories = {};
-        $scope.subCategories = {};
-        $scope.selectedCategories = {};
+        // Variable initalization 
+        $scope.allCats = [];
+        $scope.tags = [];
         $scope.searchResults = {};
-  
-        //-- add the id to an array with a true-ey value
-        $scope.addRemClassActiveSingleCat = function(subCatId) {
-        //-- Set selected categiries as true/false
-          if($scope.selectedCategories[subCatId]) {
-            $scope.selectedCategories[subCatId] = false;
-          } else {
-            $scope.selectedCategories[subCatId] = true;
-            };
-        };
 
-        $scope.addRemClassActiveParCat = function(id) {
-        //-- Set selected categiries as true/false
-          if($scope.selectedCategories[id]) {
-            $scope.selectedCategories[id] = false;
-          } else {
-            $scope.selectedCategories[id] = true;
+        // Select parCat and set subCat according to
+        // parCat state
+        $scope.selectSubCat = function(allCats, parCat) {
+
+          parCat.search = !parCat.search;
+
+          for (var i = 0 ; allCats.length > i ; i++){
+            if (allCats[i].category_id == parCat.id) {
+              allCats[i].search = parCat.search;
             };
-            for(var subKey in $scope.subCategories){
-              if($scope.subCategories[subKey].category_id == id) {
-                $scope.selectedCategories[$scope.subCategories[subKey].id] = $scope.selectedCategories[id]; 
-              };
-            };
-        };
-        // Getting all parent categories
-        catsById.get('parcat' ,function(data){
-          $scope.parCategories = data;
-        });
-        // Getting all sub categories
-        catsById.get('subcat' ,function(data){
-          $scope.subCategories = data;
-        });
-        // wach function for live search
-        $scope.$watch('searchTags', function (val) {
-          if (searchTimeout) $timeout.cancel(searchTimeout);
-            searchTimeout = $timeout(function() {
-              $scope.check($scope.searchData);
-            }, 1000);   
-        });
-        // Check if minimum 3 chars in search request and adding categories to request
-        $scope.check =  function (searchData) {
-          if($scope.searchTags.length >= 3){
-            searchData = {categories_id:[]}
-            for(var key in $scope.selectedCategories){
-              if($scope.selectedCategories[key] == true){
-                searchData.categories_id.push(key);
-              };
-            };
-            searchData.tags = $scope.searchTags.split(' '); // tags:['teg','teg8','teg10' ...]}
-            searchTag.request(searchData, function(data){
-              $scope.searchResults = data;
-            });
           };
         };
+        
+        // Reciving all Categories from server in one 
+        // array 
+        $http.get("http://localhost:9292/guest-search")
+        .success(function(data){
+          $scope.allCats = data;
+        });
+
+        // Function that creates searchRequest and
+        // Make search request 
+        $scope.searchData = function(allCats, searchRequest){
+
+          // Clean searchRequest variable
+          $scope.searchRequest = {categories_id:[], tags:[]};
+
+          for (var i = 0 ; allCats.length > i ; i++){
+            if (allCats[i].search){
+              $scope.searchRequest.categories_id.push(allCats[i].id);
+            };
+          };
+
+          // Check if there were some categories_id 
+          // if not then push all ids from allCats
+          if ($scope.searchRequest.categories_id.length === 0){
+            for (var i = 0 ; allCats.length > i ; i++) {
+              $scope.searchRequest.categories_id.push(allCats[i].id);
+            };
+          };
+
+          for (var i = 0 ; $scope.tags.length > i ; i++){
+            $scope.searchRequest.tags.push($scope.tags[i].text);
+          };
+
+          // Check if there were some tags
+          // if not search response all quizzes
+          if ($scope.searchRequest.tags.length === 0){
+            $scope.searchRequest.tags = ['_']; // It takes all words 
+          };
+          
+          // Main request to server for search
+          // If it empty show error
+          searchTag.request($scope.searchRequest, function(data){
+            $scope.searchResults = data;
+
+            if ($scope.searchResults.length === 0){
+              $scope.searchResults[0] = {title: 'Нічого не знайдено'};
+            };
+          });
+
+        };
+
     }]);
+
  })();

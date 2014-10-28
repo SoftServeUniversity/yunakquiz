@@ -14,24 +14,28 @@ module SearchQuizzes
     end
   end
   
+  # Main search function
+  # It's take object that contain two 
+  # keys: category_id(Array)
+  #       tags (Array)
   def SearchQuizzes.withTags(search_request)
 
-    search_request['tags'].map! {|tag| tag = "%#{tag}%"}
-    
-    result =[]
-    
-    result = Quiz.find_by_sql ["SELECT quizzes.* FROM quizzes     \
-      INNER JOIN tags ON quizzes.id = tags.quiz_id WHERE \
-      category_id IN (?) AND tag LIKE ?", search_request['categories_id'], \
-      search_request['tags']]
+    # Initialize SQlite string for search
+    search_string = "SELECT quizzes.*, tag FROM quizzes    \
+      INNER JOIN tags ON quizzes.id = tags.quiz_id WHERE   \
+      category_id IN (?)"
+
+    # Check if it all ok
+    if search_request['tags'].length > 0 
+      search_request['tags'].map! {|tag| search_string     \
+        << " AND tag LIKE '%#{tag}%'"}
+    else
+    end
+     
+    # Request to db     
+    result = Quiz.find_by_sql [search_string, search_request['categories_id']]
     
     return result.to_json
   end
 
-  def addingLikeToArray(search_request)
-
-    # Function that will be adding like to array acording to quntity of tags
-    # in array
-
-  end
 end
