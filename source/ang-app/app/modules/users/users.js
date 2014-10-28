@@ -9,10 +9,10 @@ angular.module('yunakQuiz.users', ['ngRoute', 'ngResource'])
     controllerAs: "reg"
   });
 }])
-.controller("RegistrationController", ["userService", "$location", "$scope", "userValidationService", "existUser"
+.controller("RegistrationController", ["userService", "$location", "$scope", "userValidationService", "existUser",
   function(userService, $location, $scope, userValidationService, existUser){
     this.user = {};
-    this.validation = new $userValidation($scope);
+    this.validation = new userValidationService($scope);
     this.emailPattern = /^[\w+\.]?\w+@\w+\.[a-z]{2,4}$/;
     this.getRandom = function(min, max) {
       return Math.floor(Math.random() * (max - min + 1)) + min;
