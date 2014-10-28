@@ -23,14 +23,14 @@ var yunakQuizApp = angular.module('yunakQuiz.personalCabinet', ['ngRoute'])
   $scope.quizUrl = '#/assessments/';
 
   $scope.getAll = function(){
-    QuizData.getAll($routeParams.state).success(function(data) {
+    QuizData.getAll($scope.tab).success(function(data) {
         $scope.quizes = data;
     });
   };
 
 
   $scope.editQuiz= function(quizId){
-    $location.path('/assessments/'+quizId);
+    $location.path('/admin/assessments/'+quizId);
   };
 
   $scope.deleteQuiz= function(quizId){

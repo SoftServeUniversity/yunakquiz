@@ -42,7 +42,7 @@ describe('QuizEdit', function() {
 	    });
 
 	    it('should have Quiz comment', function() {
-	       expect(element(by.css('blockquote')).isPresent()).toBe(true);
+	       expect(element.all(by.repeater('comment in comments')).isPresent()).toBe(true);
 	    });
 
 	});

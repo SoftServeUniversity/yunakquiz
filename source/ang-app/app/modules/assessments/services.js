@@ -7,23 +7,26 @@ yunakQuizApp.factory('QuizData', ['$http', '$location', function($http, $locatio
             return $http.get('http://localhost:9292/assessments/'+id )
           },
 
-      save: function(quiz){
-          if (quiz.id) { 
+      update: function(quiz){
             return $http.put("http://localhost:9292/admin/assessments/"+quiz.id, quiz);
-          }
-          else { 
+          },
+          
+      create: function(quiz){       
             return $http.post('http://localhost:9292/admin/assessments', quiz)
-          }
-      },
+          },
 
       getAll: function(state){
             return $http.get('http://localhost:9292/admin/assessments/'+state ) 
-         },
+          },
 
-      deleteQuiz: function(id){
+      delete: function(id){
             return $http.delete('http://localhost:9292/admin/assessments/'+id ) 
-         },
-           
+          },
+
+      getComments: function(id){
+            return $http.get('http://localhost:9292/admin/assessments/'+id+'/comments')
+          }, 
+
       quiz:{}
     }
   }
