@@ -13,24 +13,26 @@ var yunakQuizApp = angular.module('yunakQuiz.personalCabinet', ['ngRoute'])
   .when('/admin/personalCabinet/:state', {
     templateUrl: 'modules/personalCabinet/quizesList.html',
     controller: 'PersonalCabinetCtrl'
-  });
+  })   
 }])
 
 .controller('PersonalCabinetCtrl', ['$scope','QuizData', '$routeParams','$http','$location', function($scope, QuizData, $routeParams, $http, $location) {
   
   $scope.tab = $routeParams.state || "published";
-
+  $scope.search={};
   $scope.quizUrl = '#/assessments/';
 
   $scope.getAll = function(){
     QuizData.getAll($scope.tab).success(function(data) {
-        $scope.quizes = data;
+        $scope.quizzes = data;
     });
   };
 
-
-  $scope.editQuiz= function(quizId){
-    $location.path('/admin/assessments/'+quizId);
+  $scope.quizSearch = function(){
+    QuizData.getSearch($scope.tab,$scope.search).success(function(data) {
+        console.log(data);
+        $scope.quizzes = data;
+    });
   };
 
   $scope.deleteQuiz= function(quizId){
@@ -44,6 +46,6 @@ var yunakQuizApp = angular.module('yunakQuiz.personalCabinet', ['ngRoute'])
 
 .controller('PersonalCabinetProfileCtrl', ['$scope', '$routeParams','$http', function($scope, $routeParams, $http) {
 
-  $scope.tab = $routeParams.state;
+  $scope.tab = 'profile';
 
 }]);

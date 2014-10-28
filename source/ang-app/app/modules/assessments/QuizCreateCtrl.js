@@ -114,6 +114,7 @@ yunakQuizApp.controller('QuizCreateCtrl', ['$scope','QuizData','tags', '$locatio
 					}
 					else {
 						$scope.showMessage('Ваш тест відправлено на модерацію','alert-warning');
+						$location.path('/admin/personalCabinet/review');
 					};
 				})
 	            .error( function(data, status, headers, config) { 

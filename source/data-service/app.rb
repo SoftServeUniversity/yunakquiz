@@ -71,11 +71,23 @@ module PlastApp
 
     get '/admin/assessments/:status' do
       content_type :json
-      quizzes = Quiz.queryList(params['status'])
+      quizzes = Quiz.quizQuery(params['status'])
       if quizzes
         JSON.pretty_generate(quizzes) 
       else
         return [400, "Not found "+params['status']]
+      end
+    end
+
+    post '/admin/assessments/:status' do
+      content_type :json
+      data = JSON.parse(request.body.read)
+      #check permisions here
+      quizzes = Quiz.quizQuery(params['status'],data['title'])
+      if quizzes
+        JSON.pretty_generate(quizzes)
+      else
+        return [400, 'Error']
       end
     end
    

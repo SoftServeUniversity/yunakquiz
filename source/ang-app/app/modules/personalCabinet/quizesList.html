@@ -2,7 +2,7 @@
 	<table class="table table-hover">
 		<thead>
 			<tr class="info">
-				<th>#</th>
+				<th>№</th>
 				<th>Назва тесту</th>
 				<th>Категорія тесту</th>
 				<th>Підкатегорія тесту</th>
@@ -11,14 +11,30 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat="quiz in quizes">
-				<th>{{$index+1}}</th>
-				<th><a ng-href="{{quizUrl+quiz.id}}">{{quiz.title}}</a></th>
-				<th>{{quiz.category_id}}</th>
-				<th>{{quiz.category_id}}</th>
-				<th><button ng-click="editQuiz(quiz.id)" type="button" class="btn btn-info btn-xs">Редагувати тест</button></th>
-				<th><button ng-click="deleteQuiz(quiz.id)" type="button" class="btn btn-danger btn-xs">Видалити тест</button></th>
+			<tr ng-repeat="quiz in quizzes">
+				<td>{{$index+1}}</td>
+				<td>
+					<a ng-href="{{quizUrl+quiz.id}}">{{quiz.title}}</a>
+				</td>
+				<td>{{quiz.category_id}}</td>
+				<td>{{quiz.category_id}}</td>
+				<td>
+					<a ng-href="#/admin/assessments/{{quiz.id}}" type="button" class="btn btn-info btn-xs">Редагувати тест</a>
+				</td>
+				<td>
+					<a ng-click="deleteQuiz(quiz.id)" type="button" class="btn btn-danger btn-xs">Видалити тест</a>
+				</td>
 			</tr>
 		</tbody>
 	</table>
-
+<div class="row text-center">
+	<ul class="pagination">
+	  <li><a href="#">&laquo;</a></li>
+	  <li><a href="#">1</a></li>
+	  <li><a href="#">2</a></li>
+	  <li><a href="#">3</a></li>
+	  <li><a href="#">4</a></li>
+	  <li><a href="#">5</a></li>
+	  <li><a href="#">&raquo;</a></li>
+	</ul>
+</div>

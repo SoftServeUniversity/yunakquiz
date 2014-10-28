@@ -41,12 +41,15 @@ class Quiz < ActiveRecord::Base
     end
   end
 
-  def self.queryList(status="published")
+
+  def self.quizQuery(status='published', query = '')
     statusCode =  Quiz.statuses[status] 
-    if statusCode
-      return Quiz.where(status: statusCode).as_json
+    query = '%'+query[0,20]+'%'
+    if statusCode 
+      return Quiz.where("status=? AND title like ?", statusCode, query).as_json
     end
-  end 
+  end
+
 
   def self.deleteQ(id)
     Quiz.find_by(id: id).deleted!

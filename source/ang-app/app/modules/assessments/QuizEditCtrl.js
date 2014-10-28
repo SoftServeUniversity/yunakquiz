@@ -148,9 +148,11 @@ yunakQuizApp.controller('QuizEditCtrl', ['$scope','QuizData', '$routeParams','ta
 				.success(function(data, status, headers, config) {
 					if(state=="draft"){
 						$scope.showMessage('Ваш тест збережено','alert-success');
+
 					}
 					else {
 						$scope.showMessage('Ваш тест відправлено на модерацію','alert-warning');
+						$location.path('/admin/personalCabinet/review');
 					};
 				})
 	            .error( function(data, status, headers, config) { 
