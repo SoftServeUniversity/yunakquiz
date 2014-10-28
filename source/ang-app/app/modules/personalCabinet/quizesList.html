@@ -1,0 +1,24 @@
+<div ng-include="'modules/personalCabinet/personalCabinetHeader.html'"></div>
+	<table class="table table-hover">
+		<thead>
+			<tr class="info">
+				<th>#</th>
+				<th>Назва тесту</th>
+				<th>Категорія тесту</th>
+				<th>Підкатегорія тесту</th>
+				<th></th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="quiz in quizes">
+				<th>{{$index+1}}</th>
+				<th><a ng-href="{{quizUrl+quiz.id}}">{{quiz.title}}</a></th>
+				<th>{{quiz.category_id}}</th>
+				<th>{{quiz.category_id}}</th>
+				<th><button ng-click="editQuiz(quiz.id)" type="button" class="btn btn-info btn-xs">Редагувати тест</button></th>
+				<th><button ng-click="deleteQuiz(quiz.id)" type="button" class="btn btn-danger btn-xs">Видалити тест</button></th>
+			</tr>
+		</tbody>
+	</table>
+

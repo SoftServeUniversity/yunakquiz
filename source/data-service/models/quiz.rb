@@ -2,20 +2,21 @@ class Quiz < ActiveRecord::Base
   belongs_to :category
   has_many :questions
   has_and_belongs_to_many :tags
+  enum status: %i(draft review enhance published deleted)
 
   def self.updateQ(data)
   	if (data['id'] == nil)
   		return "Quiz not found"	
   	end
 	  quiz = Quiz.find(data['id'])
-  	quiz.update(title: data['title'], description: data['description'], category_id: data['category_id'])
+    quiz.update(title: data['title'], description: data['description'], category_id: data['category_id'], status: data['status'])
     Question.updateQ(data['questions'], quiz)
   	return quiz
   end
 
   def self.createQ(data)
     category = Category.find(data['category_id'])
-  	quiz = category.quizzes.create(title: data['title'],description: data['description'])
+  	quiz = category.quizzes.create(title: data['title'],description: data['description'], status: data['status'])
   	Question.createQ(data['questions'], quiz)
 
   	return quiz	
@@ -38,6 +39,17 @@ class Quiz < ActiveRecord::Base
       end
       return quizObject      
     end
+  end
+
+  def self.queryList(status="published")
+    statusCode =  Quiz.statuses[status] 
+    if statusCode
+      return Quiz.where(status: statusCode).as_json
+    end
+  end 
+
+  def self.deleteQ(id)
+    Quiz.find_by(id: id).deleted!
   end
 
 end

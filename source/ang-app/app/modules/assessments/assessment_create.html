@@ -1,6 +1,7 @@
 <div class="quiz row">
 	<h3 class="text-center assessment-title">Створення нового тесту</h3>
-	<div ng-if="sendMessage" ng-bind="sendMessage" class="alert col-sm-12 text-center" ng-class="sendMessageClass"></div>
+	<div ng-if="sendMessage" ng-bind="sendMessage" class="alert col-sm-12 text-center" ng-class="sendMessageClass">
+	</div>
 	<form name="quizCreateForm" novalidate>
 		<div class="col-lg-8 col-lg-offset-2 jumbotron">
 			<div class="row">
@@ -29,7 +30,7 @@
 				<label class="col-lg-4 control-label text-right">Оберіть категорію</label>
 				<div class="col-lg-8">
 					<select ng-change="getSubcats()" ng-model="selectedCat" ng-options="category.title for category in categories" class="form-control" required>
-						<option value="">Оберіть категорію</option>
+						<option ng-hide="subcats" value="">Оберіть категорію</option>
 					</select>
 			   	</div>
 			</div>
@@ -38,7 +39,7 @@
 				<label class="col-lg-4 control-label text-right">Оберіть Підкатегорію</label>
 				<div class="col-lg-8">
 					<select  ng-change="setSubcat()" ng-model="selectedSubcat" ng-options="subcat.title for subcat in subcats" class="form-control" required>
-						<option value="">Оберіть Підкатегорію</option>
+						<option ng-hide="quiz.category_id" value="">Оберіть Підкатегорію</option>
 					</select>
 				</div>
 			</div>

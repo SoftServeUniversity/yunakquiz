@@ -5,6 +5,7 @@ angular.module('yunakQuiz', [
   'ngRoute',
   'yunakQuiz.measures',
   'yunakQuiz.assessments',
+  'yunakQuiz.personalCabinet',
   'yunakQuiz.users',
   'yunakQuiz.sessions',
   'yunakQuiz.version',
