@@ -99,12 +99,23 @@ module PlastApp
         value['tags'] = Quiz.find(value['id']).tags.select("id, tag").as_json #finding tags of each quiz
       end
         match_quizzes.to_json
+
     end
+
+    post '/user' do
+      data = JSON.parse request.body.read
+      user = User.new(data)
+      if user.save
+        return [200, "ok"]
+      else
+        return [400, user.errors.messages.to_json]
+      end
+
     get '/contacts' do
       content_type :json
       Contact.select(['id','role','phone','address','mail']).to_json
     end
 
-end
+  end
 
 end
