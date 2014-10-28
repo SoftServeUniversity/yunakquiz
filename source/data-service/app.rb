@@ -10,34 +10,60 @@ module PlastApp
 
   class YunakQuiz < Sinatra::Base
     register Sinatra::AssetPipeline
-
     register Sinatra::ActiveRecordExtension
     register Sinatra::CrossOrigin
+
     Dir.glob('./config/*.rb').each {|file| require file}
     Dir.glob('./models/*.rb').each {|file| require file}
     
-    options '/*' do
-      '*'
-    end
-
     get '/' do
         erb :index
+    end
+
+    options '/*' do
     end
 
     get '/assessments' do
       content_type :json
       [{id: 1, name: 'assessment 1'}, {id: 2, name: 'assessment 2'}].to_json
     end
-
-    put '/assessments' do
+    
+    get '/admin/assessments/:id/comments' do
       content_type :json
-      {response: 'Added an assessment'}.to_json
+      Comment.get(params['id']).to_json
+    end 
+
+    put '/admin/assessments/:id' do
+      content_type :json
+      data = JSON.parse(request.body.read)
+      quiz = Quiz.updateQ(data)
+      if quiz
+        return [200, quiz.id.to_json]
+      else
+        return [400, quiz.errors.messages.to_json]
+      end    
     end
 
-    post '/assessments/:id' do
-      cross_origin
+    post '/admin/assessments' do
       content_type :json
-      {response: "Updated to #{params['id']} assessment"}.to_json
+      data = JSON.parse(request.body.read)
+      #check permisions here
+      quiz = Quiz.createQ(data)
+      if quiz
+        return [200, quiz.id.to_json]
+      else
+        return [400, quiz.errors.messages.to_json]
+      end
+    end
+
+    get '/assessments/:id' do
+      content_type :json
+      quiz = Quiz.queryQ(params['id'])
+      if quiz['id']
+        JSON.pretty_generate(quiz) 
+      else
+        return [400, quiz.to_json]
+      end
     end
     
     post '/user' do
@@ -49,6 +75,22 @@ module PlastApp
         return [400, user.errors.messages.to_json]
       end
     end
-  
+
+    delete '/admin/assessments/:id' do
+      content_type :json
+      Quiz.deleteQ(params['id'])
+      {response: "Assessment #{params['id']} has been deleted"}.to_json
+    end
+
+    get '/admin/assessments/:status' do
+      content_type :json
+      quizzes = Quiz.queryList(params['status'])
+      if quizzes
+        JSON.pretty_generate(quizzes) 
+      else
+        return [400, "Not found "+params['status']]
+      end
+    end
+
   end
 end
