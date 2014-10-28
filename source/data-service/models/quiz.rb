@@ -2,7 +2,7 @@ class Quiz < ActiveRecord::Base
   belongs_to :category
   has_many :questions
   has_and_belongs_to_many :tags
-  enum status: %i(draft review enhance published deleted)
+  enum status: [:draft, :review, :enhance, :published, :deleted)
 
   def self.updateQ(data)
   	if (data['id'] == nil)
@@ -39,6 +39,17 @@ class Quiz < ActiveRecord::Base
       end
       return quizObject      
     end
+  end
+
+  def self.queryList(status="published")
+    statusCode =  Quiz.statuses[status] 
+    if statusCode
+      return Quiz.where(status: statusCode).as_json
+    end
+  end 
+
+  def self.deleteQ(id)
+    Quiz.find_by(id: id).deleted!
   end
 
 end
