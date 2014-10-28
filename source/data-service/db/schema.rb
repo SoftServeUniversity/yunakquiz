@@ -11,7 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141013180812) do
+ActiveRecord::Schema.define(version: 20141027145727) do
+
+  create_table "Role", force: true do |t|
+    t.string "name"
+  end
+
+  create_table "admin_role", force: true do |t|
+    t.string "name"
+  end
 
   create_table "answers", force: true do |t|
     t.integer "question_id"
@@ -24,6 +32,17 @@ ActiveRecord::Schema.define(version: 20141013180812) do
     t.string   "title"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "moder_role", force: true do |t|
+    t.string "name"
+  end
+
+  create_table "permissions", force: true do |t|
+    t.string  "tabs"
+    t.integer "admin"
+    t.integer "moder"
+    t.integer "user"
   end
 
   create_table "questions", force: true do |t|
@@ -47,10 +66,21 @@ ActiveRecord::Schema.define(version: 20141013180812) do
     t.integer "tag_id"
   end
 
+  create_table "roles", force: true do |t|
+    t.string   "name"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "tags", force: true do |t|
     t.string   "tag"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "user_role", force: true do |t|
+    t.string "name"
   end
 
   create_table "users", force: true do |t|
@@ -67,6 +97,7 @@ ActiveRecord::Schema.define(version: 20141013180812) do
     t.string   "picture"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "role_id"
   end
 
 end

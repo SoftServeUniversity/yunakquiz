@@ -17,3 +17,17 @@ Answer.create(question_id: 3, title: "Штрафний удар", correct: true)
 Answer.create(question_id: 3, title: "Дадуть пиріжок", correct: false)
 Answer.create(question_id: 3, title: "Дадуть в голову", correct: false)
 
+Role.create(name: 'admin')
+Role.create(name: 'moder')
+Role.create(name: 'user')
+
+Permission.create(tabs: 'admin1', admin: '1')
+Permission.create(tabs: 'admin2', admin: '1')
+Permission.create(tabs: 'admin3', admin: '1')
+
+Permission.create(tabs: 'moder1', moder: '2')
+Permission.create(tabs: 'moder2', moder: '2')
+Permission.create(tabs: 'moder3', moder: '2')
+
+Permission.create(tabs: 'comm1', admin: '1', moder: '2', user: '3')
+Permission.create(tabs: 'comm2', admin: '1', moder: '2', user: '3')
