@@ -9,7 +9,7 @@ angular.module('yunakQuiz.users', ['ngRoute', 'ngResource'])
     controllerAs: "reg"
   });
 }])
-.controller("RegistrationController", ["userService", "$location", "$scope", "userValidationService", "existUser"
+.controller("RegistrationController", ["userService", "$location", "$scope", "userValidationService", "existUser",
   function(userService, $location, $scope, userValidationService, existUser){
     this.user = {};
     this.validation = new $userValidation($scope);

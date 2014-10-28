@@ -110,6 +110,7 @@ module PlastApp
       else
         return [400, user.errors.messages.to_json]
       end
+    end
 
     get '/contacts' do
       content_type :json
