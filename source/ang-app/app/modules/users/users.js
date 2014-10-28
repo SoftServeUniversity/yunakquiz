@@ -8,7 +8,9 @@ angular.module('yunakQuiz.users', ['ngRoute'])
     controllerAs: "reg"
   });
 }])
-.controller("RegistrationController", ["$http", "$location", "$scope", function($http, $location, $scope){
+
+.controller("RegistrationController", ["$http", "$location", "$scope", function($http, $location, $scope) {
+
   this.user = {};
   this.alreadyTakenUsernames = [];
   this.getRandom = function(min, max) {
@@ -27,6 +29,7 @@ angular.module('yunakQuiz.users', ['ngRoute'])
       confirmationField.$setValidity('dontMatch', true);
     }
   };
+  
   this.submitRegistration = function(){
     $scope.regform.submitted = false;
     if ($scope.regform.$valid && this.captcha == this.enteredCaptcha) {
@@ -44,6 +47,7 @@ angular.module('yunakQuiz.users', ['ngRoute'])
       $scope.regform.submitted = true;
     }
   };
+
   this.checkUsernameUniqueness = function(){
     var usernameField = $scope.regform.username;
     if (usernameField.$error.required || usernameField.$error.minlength){
