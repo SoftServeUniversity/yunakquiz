@@ -33,30 +33,12 @@ module PlastApp
     end
 
     get '/admin' do
-      
-      # puts "session id is : #{asd}"
       # if session[:user_id]
-        user = User.find(2)
-        puts "user is: #{user.role_id}"
         # user = User.find(session[:user_id])
+        user = User.find(2)
         role = Role.find(user.role_id)
-        puts "role is: #{role.name}"
         base = Permission.where("#{role.name} = #{role.id}").select("tabs").to_json
-        puts "base is: #{base}"
         return base
-      # end
-      # return [401, "unauthorized"]
-
-      # base = [
-        # 'admin1','admin2','comm1','comm2','admin3'
-        # 'moder1','comm1','comm2','moder2'
-      # ].to_json
-      # return base
-      # if session[:user_id]
-      #   user = User.find(session[:user_id])
-      #   role = Role.find(user.role_id)
-      #   permission = role.name+RoleTable
-      #   return [200, role.name]
       # end
       # return [401, "unauthorized"]
     end
@@ -69,7 +51,6 @@ module PlastApp
         puts "Your ID is #{session[:id]}"
         return [200, user.username]
       end
-        puts "login failed"
         return [401, "unauthorized"]
     end
 
