@@ -7,7 +7,7 @@ angular.module('yunakQuiz.sessions', ['ngRoute'])
 	this.message = "";
 	this.submitLogin = function(){
 		if (!this.user.username || !this.user.password){
-			this.message = "Enter username and password!";
+			this.message = "Введіть нікнейм і пароль!";
 		} else {
 			$http.post("http://localhost:9292/login", this.user)
 				.success(function(data){
@@ -16,7 +16,7 @@ angular.module('yunakQuiz.sessions', ['ngRoute'])
 					$scope.$emit("user_logged_in", data);
 				})
 				.error(function(data){
-					lgnCtrl.message = "Invalid username and/or password!";
+					lgnCtrl.message = "Не валідний нік і/або пароль!";
 				});
 		}
 	};
