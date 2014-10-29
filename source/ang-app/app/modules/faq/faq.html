@@ -11,7 +11,7 @@
 		<ol>
 			<li ng-repeat="Question in Questions"  ng-show="Question.ans">
 				{{Question.quest}} <br/>
-				{{Question.ans}}
+				<span ng-hide="">{{Question.ans}}</span>
 			</li>
 		</ol>
 	</div>

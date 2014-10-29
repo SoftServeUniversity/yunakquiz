@@ -53,13 +53,5 @@ exports.httpBackendMock = function() {
 
 	$httpBackend.whenGET('http://localhost:9292/quizzes/0').respond(quizzes);
 	$httpBackend.whenGET().passThrough();
-	// $httpBackend.whenGET('http://localhost:9292/quizzes/5').respond(quizzes5);
-	// $httpBackend.whenGET('http://localhost:9292/quizzes/6').respond(quizzes6);
-	// $httpBackend.whenGET('http://localhost:9292/quizzes/7').respond(quizzes7);
-	// $httpBackend.whenGET('http://localhost:9292/quizzes/8').respond(quizzes8);
-	// $httpBackend.whenGET('http://localhost:9292/quizzes/9').respond(quizzes9);
-	// $httpBackend.whenGET('http://localhost:9292/quizzes/10').respond(quizzes10);
-	// $httpBackend.whenGET('http://localhost:9292/quizzes/11').respond(quizzes11);
-	// $httpBackend.whenGET('http://localhost:9292/quizzes/12').respond(quizzes12);
   });
 };
