@@ -1,18 +1,18 @@
 <div class="row">
-	<div class="col-sm-12 pageTitleBox bg-primary">
-		<div class="center-block"><h3 class="pageTitle">Контакти</h3></div>
-    </div>
+  <div class="col-sm-12 pageTitleBox bg-primary">
+    <div class="center-block"><h3 class="pageTitle">Контакти</h3></div>
+  </div>
 </div>
 <div class="row">
-	<div class="well col-sm-8 contact-us">
-		<div class="col-sm-10 col-sm-offset-1" ng-repeat="person in contacts">
-			<span class="rectangle">{{person.role}}</span>
-			<div class="triangle-topright"></div>
-			<div class="row categories-container">
-				<h4>{{person.address}}</h4>
-				<div class="col-sm-3 col-sm-offset-1"><span>{{person.mail}}</span></div>
-				<div class="col-sm-5 col-sm-offset-3 contacts">{{person.phone}}</div>
-			</div>
-		</div>		
-	</div>
+  <div class="well col-sm-8 contact-us">
+    <div class="col-sm-10 col-sm-offset-1" ng-repeat="person in contacts">
+      <span class="rectangle">{{person.role}}</span>
+      <div class="triangle-topright"></div>
+      <div class="row categories-container">
+        <h4>{{person.address}}</h4>
+        <div class="col-sm-3 col-sm-offset-1"><span>{{person.mail}}</span></div>
+        <div class="col-sm-5 col-sm-offset-3 contacts">{{person.phone}}</div>
+      </div>
+    </div>		
+  </div>
 </div>
