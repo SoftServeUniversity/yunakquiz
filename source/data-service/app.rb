@@ -28,8 +28,9 @@ module PlastApp
       if session[:id]
         user = User.find(session[:id])
         return [200, user.username]
-    	end
-      return [401, "unauthorized"]
+    	else
+        return [401, "unauthorized"]
+      end  
     end
 
     get '/admin' do
@@ -50,8 +51,9 @@ module PlastApp
         session[:id] = user.id
         puts "Your ID is #{session[:id]}"
         return [200, user.username]
-      end
+      else
         return [401, "unauthorized"]
+      end  
     end
 
     get '/' do
