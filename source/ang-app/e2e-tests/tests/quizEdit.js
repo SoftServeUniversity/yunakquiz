@@ -2,7 +2,7 @@
 
 /* https://github.com/angular/protractor/blob/master/docs/toc.md */
 
-describe('QuizEdit', function() {
+xdescribe('QuizEdit', function() {
 
 	describe('Header', function() {
 		
