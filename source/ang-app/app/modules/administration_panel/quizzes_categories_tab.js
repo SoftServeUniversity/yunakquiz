@@ -1,9 +1,9 @@
 (function (){
-	var  app = angular.module('yunakQuiz.quizzescategoriesTab' ,['ngRoute']);
+  var  app = angular.module('yunakQuiz.quizzescategoriesTab' ,['ngRoute']);
 
-		app.config(['$routeProvider',
+    app.config(['$routeProvider',
       function($routeProvider) {
-      	$routeProvider.
+        $routeProvider.
           when('/administration-panel/quizzescategoriesTab', {
             templateUrl: './modules/administration_panel/quizzes_categories_tab.html',
             controller: 'quizzescategoriesTab'

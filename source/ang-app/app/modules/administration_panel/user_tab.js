@@ -1,9 +1,9 @@
 (function (){
-	var  app = angular.module('yunakQuiz.userTab' ,['ngRoute']);
+  var  app = angular.module('yunakQuiz.userTab' ,['ngRoute']);
 
-		app.config(['$routeProvider',
+    app.config(['$routeProvider',
       function($routeProvider) {
-      	$routeProvider.
+        $routeProvider.
           when('/administration-panel/', {
             templateUrl: './modules/administration_panel/user_tab.html',
             controller: 'userTab'
@@ -16,6 +16,5 @@
 
     app.controller('userTab', ['$scope', function ($scope) {
       $scope.tab = 'userTab';
-      }]);
-
+    }]);
 })();

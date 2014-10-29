@@ -1,6 +1,5 @@
 (function (){
-	var  app = angular.module('yunakQuiz.administrationPanel' ,['ngRoute']);
-
+  var  app = angular.module('yunakQuiz.administrationPanel' ,['ngRoute']);
     app.directive('adminPanel', function(){
       return {
         restrict: 'E',
