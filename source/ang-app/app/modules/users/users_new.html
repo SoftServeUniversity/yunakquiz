@@ -2,24 +2,27 @@
   <div class="col-md-2"></div>
   <div class="col-md-8">
     <h3 class="text-center">Реєстрація</h3>
-    		<form class="form-horizontal" role="form" ng-submit="reg.submitRegistration()" name="regform" novalidate>
+    		<form class="form-horizontal" role="form" ng-submit="reg.submitRegistration()" 
+    		  name="regform" novalidate>
       <div class="form-group">
-        <label for="first_name" class="col-sm-4 control-label">Імя</label>
+        <label for="first_name" class="col-sm-4 control-label">Ім'я</label>
         <div class="col-sm-6">
-          <input type="text" class="form-control" id="first_name" placeholder="First name" ng-model="reg.user.first_name">
+          <input type="text" class="form-control" id="first_name" placeholder="Ім'я" 
+            ng-model="reg.user.first_name">
         </div>
       </div>
       <div class="form-group">
         <label for="last_name" class="col-sm-4 control-label">Прізвище</label>
         <div class="col-sm-6">
-          <input type="text" class="form-control" id="last_name" placeholder="Last name" ng-model="reg.user.last_name">
+          <input type="text" class="form-control" id="last_name" placeholder="Прізвище" 
+            ng-model="reg.user.last_name">
         </div>
       </div>
       <div class="form-group">
         <label for="username" class="col-sm-4 control-label">Нік*</label>
         <div class="col-sm-6">
           <input type="text" class="form-control" id="username" name="username" ng-minlength=3
-            placeholder="Nick name" ng-model="reg.user.username" required>
+            placeholder="Нік" ng-model="reg.user.username" required>
           <div class="error-container text-danger" ng-show="reg.validation.usernameError()">
             <small>{{reg.validation.error.username}}</small>
           </div>
@@ -29,7 +32,7 @@
         <label for="password" class="col-sm-4 control-label">Пароль*</label>
         <div class="col-sm-6">
           <input type="password" class="form-control" id="password" name="password" ng-minlength=8 
-            placeholder="Password" ng-model="reg.user.password" required>
+            placeholder="Пароль" ng-model="reg.user.password" required>
           <div class="error-container text-danger" ng-show="reg.validation.passwordError()">
             <small>{{reg.validation.error.password}}</small>
           </div>
@@ -39,7 +42,7 @@
         <label for="confirm_password" class="col-sm-4 control-label">Повторіть пароль*</label>
         <div class="col-sm-6">
           <input type="password" class="form-control" id="confirm_password" name="password_confirmation" 
-            placeholder="Repeat password" ng-model="reg.user.password_confirmation" required> 
+            placeholder="Повторіть пароль" ng-model="reg.user.password_confirmation" required> 
           <div class="error-container text-danger" ng-show="reg.validation.confirmPassError()">
             <small>{{reg.validation.error.password_confirmation}}</small>
           </div>
@@ -49,7 +52,7 @@
       <label for="email" class="col-sm-4 control-label">Пошта*</label>
         <div class="col-sm-6">
           <input type="email" class="form-control" ng-pattern="reg.emailPattern" id="email" name="email" 
-            placeholder="Email" ng-model="reg.user.email" required>
+            placeholder="Пошта" ng-model="reg.user.email" required>
           <div class="error-container text-danger" ng-show="reg.validation.emailError()">
             <small>{{reg.validation.error.email}}</small>
           </div>
@@ -58,7 +61,7 @@
       <div class="form-group">
         <label for="birthday" class="col-sm-4 control-label">День народження*</label>
         <div class="col-sm-6">
-          <input type="date" class="form-control" id="birthday" name="birthday" placeholder="Birthday" 
+          <input type="date" class="form-control" id="birthday" name="birthday" placeholder="День народження" 
             ng-model="reg.user.birthday" required>
           <div class="error-container text-danger" ng-show="reg.validation.birthdayError()">
             <small>{{reg.validation.error.birthday}}</small>
@@ -68,13 +71,15 @@
       <div class="form-group">
         <label for="plast_hovel" class="col-sm-4 control-label">Пластовий курінь</label>
         <div class="col-sm-6">
-          <input type="text" class="form-control" id="plast_hovel" placeholder="Plast hovel" ng-model="reg.user.plast_hovel">
+          <input type="text" class="form-control" id="plast_hovel" placeholder="Пластовий курінь" 
+            ng-model="reg.user.plast_hovel">
         </div>
       </div>
       <div class="form-group">
         <label for="plast_region" class="col-sm-4 control-label">Станиця</label>
         <div class="col-sm-6">
-          <input type="text" class="form-control" id="plast_region" placeholder="Plast region" ng-model="reg.user.plast_region">
+          <input type="text" class="form-control" id="plast_region" placeholder="Станиця" 
+            ng-model="reg.user.plast_region">
         </div>
       </div>
       <div class="form-group">

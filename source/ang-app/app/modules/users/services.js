@@ -16,13 +16,13 @@
       var usernameField = this.$scope.regform.username;
       if (this.hasErrors("username")){
         if (usernameField.$error.required){
-          this.error.username = "Please input a username";
+          this.error.username = "Будь-ласка, введіть нік";
         } else if (usernameField.$error.minlength){
-          this.error.username = "Your username is required to be at least 3 characters";
+          this.error.username = "Довжина нікнейма повинна становити принаймі 3 символи";
         }
       } else {
         if (this.takenUsers.indexOf(usernameField.$viewValue) !== -1){
-          this.error.username = "Username has already been taken";
+          this.error.username = "Користувач з таким іменем вже існує";
         } else {
           this.error.username = "";
         }
@@ -37,9 +37,9 @@
     Validation.prototype.passwordError = function() {
       if (this.hasErrors("password")) {
         if (this.$scope.regform.password.$error.required) {
-          this.error.password = "Please input a password";
+          this.error.password = "Будь-ласка, введіть пароль";
         } else if (this.$scope.regform.password.$error.minlength) {
-          this.error.password = "Your password is required to be at least 8 characters";
+          this.error.password = "Довжина пароля повинна становити принаймі 8 символів";
         }
       } else {
         this.error.password = "";
@@ -50,7 +50,7 @@
     Validation.prototype.birthdayError = function() {
       if (this.hasErrors("birthday")) {
         if (this.$scope.regform.birthday.$error.required) {
-          this.error.birthday = "Please input your birthday";
+          this.error.birthday = "Будь-ласка, введіть день народження";
         }
       } else {
         this.error.birthday = "";
@@ -61,9 +61,9 @@
     Validation.prototype.emailError = function() {
       if (this.hasErrors("email")) {
         if (this.$scope.regform.email.$error.required) {
-          this.error.email = "Please input your email";
+          this.error.email = "Будь-ласка, введіть електронну адресу";
         } else if (this.$scope.regform.email.$error.pattern) {
-          this.error.email = "That is not a valid email. Please input a valid email";
+          this.error.email = "Будь-ласка, введіть валідну електронну адресу";
         }
       } else {
         this.error.email = "";
@@ -75,7 +75,7 @@
       var passwordField = this.$scope.regform.password;
       var confirmationField = this.$scope.regform.password_confirmation;
       if (this.$scope.regform.password_confirmation.$dirty && confirmationField.$viewValue !== passwordField.$viewValue) {
-        this.error.password_confirmation = "Passwords don't match!";
+        this.error.password_confirmation = "Підтвердження пароля не співпадає!";
       } else {
         this.error.password_confirmation = "";
       }
