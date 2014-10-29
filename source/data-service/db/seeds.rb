@@ -7,6 +7,7 @@ Category.create(category_id: 0, title: "Історія")
 Category.create(category_id: 4, title: "Історія України")
 Category.create(category_id: 4, title: "Історія світу")
 
+
 quiz1 = Quiz.create(category_id: 2, title: "Тест на знання правил футболу", description: "Детальний опис тесту")
 question1 = quiz1.questions.create(title: "Скільки гравців в команді?", description: "Згідно правил на полі знаходиться 11 гравців однієї команди")
 question1.answers.create(title: "11", correct: true)
@@ -21,6 +22,9 @@ question3.answers.create( title: "Порушенння правил", correct: t
 question3.answers.create( title: "Штрафний удар", correct: true)
 question3.answers.create( title: "Дадуть пиріжок", correct: false)
 question3.answers.create(title: "Дадуть в голову", correct: false)
+quiz1.comments.create(text: "Дуже гарний тест")
+quiz1.comments.create(text: "Потрібно додати питання із декількома правильними відповідями")
+
 
 Quiz.create(category_id: 2,status:"draft", title: "4Тест на знання правил футболу", description: "Детальний опис тесту")
 Quiz.create(category_id: 2,status:"review", title: "5Тест на знання правил футболу", description: "Детальний опис тесту")
@@ -39,3 +43,4 @@ Quiz.create(category_id: 2,status:"enhance", title: "17Тест на знанн�
 Quiz.create(category_id: 2,status:"draft", title: "18Тест на знання правил футболу", description: "Детальний опис тесту")
 Quiz.create(category_id: 2,status:"published", title: "19Тест на знання правил футболу", description: "Детальний опис тесту")
 Quiz.create(category_id: 2,status:"draft", title: "20Тест на знання правил футболу", description: "Детальний опис тесту")
+

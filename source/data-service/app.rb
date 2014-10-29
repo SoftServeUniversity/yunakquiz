@@ -29,7 +29,12 @@ module PlastApp
       content_type :json
       [{id: 1, name: 'assessment 1'}, {id: 2, name: 'assessment 2'}].to_json
     end
-       
+    
+    get '/admin/assessments/:id/comments' do
+      content_type :json
+      Comment.get(params['id']).to_json
+    end 
+
     put '/admin/assessments/:id' do
       content_type :json
       data = JSON.parse(request.body.read)
@@ -78,7 +83,7 @@ module PlastApp
         return [400, "Not found "+params['status']]
       end
     end
-   
+
 
   end
 
