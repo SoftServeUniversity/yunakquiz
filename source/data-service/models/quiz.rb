@@ -58,6 +58,12 @@ class Quiz < ActiveRecord::Base
     end
   end
 
+  def self.queryCount(status="published")
+    statusCode =  Quiz.statuses[status] 
+    if statusCode
+      return Quiz.where(status: statusCode).count().to_s
+    end
+  end
 
   def self.deleteQ(id)
     Quiz.find_by(id: id).deleted!

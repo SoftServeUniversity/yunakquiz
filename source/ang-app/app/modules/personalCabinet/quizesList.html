@@ -12,7 +12,7 @@
 		</thead>
 		<tbody>
 			<tr ng-repeat="quiz in quizzes">
-				<td>{{$index+1}}</td>
+				<td>{{itemsPerPage*(currentPage-1)+$index+1}}</td>
 				<td>
 					<a ng-href="{{quizUrl+quiz.id}}">{{quiz.title}}</a>
 				</td>
@@ -28,6 +28,6 @@
 		</tbody>
 	</table>
 
-<div class="text-center">	
-	<pagination total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()" max-size="10" class="pagination-md" boundary-links="true"></pagination>
+<div ng-hide="totalItems<itemsPerPage" class="text-center">	
+	<pagination total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()"  items-per-page="itemsPerPage" class="pagination-md" ></pagination>
 </div>

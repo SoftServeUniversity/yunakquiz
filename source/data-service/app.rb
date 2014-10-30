@@ -81,6 +81,7 @@ module PlastApp
       content_type :json
       quizzes = Quiz.queryList(params['status'], params['page'])
       if quizzes
+        response.headers['Pagination-Total-Items'] = Quiz.queryCount(params['status'])
         JSON.pretty_generate(quizzes) 
       else
         return [400, "Not found "+params['status']]

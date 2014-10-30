@@ -16,10 +16,22 @@ var yunakQuizApp = angular.module('yunakQuiz.personalCabinet', ['ngRoute', 'ui.b
   })   
 }])
 
+ .constant('paginationConfig', {
+            boundaryLinks: true,
+            directionLinks: true,
+            maxSize : 10,
+            rotate: false,
+            firstText: '≪',
+            previousText: '<',
+            nextText: '>',
+            lastText: '≫'
+        })
+
 .controller('PersonalCabinetCtrl', ['$scope','QuizData', '$routeParams','$http','$location', function($scope, QuizData, $routeParams, $http, $location) {
   
   $scope.totalItems = 100;
   $scope.currentPage = 1;
+  $scope.itemsPerPage= 10;
 
   $scope.tab = $routeParams.state || "published";
   $scope.search={};
@@ -32,8 +44,9 @@ var yunakQuizApp = angular.module('yunakQuiz.personalCabinet', ['ngRoute', 'ui.b
   // };
 
   $scope.pageChanged = function() {
-    QuizData.getAll($scope.tab, $scope.currentPage).success(function(data) {
+    QuizData.getAll($scope.tab, $scope.currentPage).success(function(data, status, headers, config) {
         $scope.quizzes = data;
+        $scope.totalItems = headers('Pagination-Total-Items');
     });
   };
 
