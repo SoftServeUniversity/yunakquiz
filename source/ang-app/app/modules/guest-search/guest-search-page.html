@@ -45,14 +45,18 @@
             </div>
         </div>
         <br />
-        <button class="btn btn-info btn-block" ng-click="searchData(allCats, searchRequest.tags)">Застосувати фільтр</button>
+        <button class="btn btn-info btn-block" 
+                ng-click="searchData(allCats, searchRequest.tags)">
+                Застосувати фільтр
+        </button>
     </div>
     
                     <!--End of category selection-->
 
                         <!--Tags input block-->
 
-    <div class="input-group col-xs-7 col-xs-offset-4">
+    <div class="input-group col-xs-offset-4">
+        <div class="col-xs-10">
         <tags-input 
                     type="text" 
                     class="bootstrap" 
@@ -60,13 +64,18 @@
                     ng-model="tags" 
                     add-on-space="true"
                     min-length="1">
-                    </tags-input>
+        </tags-input>
         <span class="input-group-btn btn-block">
-            <button class="btn btn-primary" type="button" ng-click="searchData(allCats, searchRequest.tags)">пошук</button>
-        </span>                    
+            <button class="btn btn-primary" 
+                    type="button" 
+                    ng-click="searchData(allCats, searchRequest.tags)">
+                    Пошук
+            </button>
+        </span>  
+        </div>                  
     </div>
 
-        <div class="col-xs-9">
+    <div class="col-xs-9">
         <br />
     </div>
 
@@ -77,11 +86,11 @@
 
     <div class= "col-xs-offset-4">
         <div ng-repeat="quiz in searchResults" >
-            <div class="search-result well col-xs-11">
+            <div class="col-xs-10 search-result well">
                 <div class="content">
                     <h3 class="text-center">{{quiz.title}}</h3>
                     <p class="text-justify">{{quiz.description}}</p><br>
-                    <span><a>{{quiz.tagString}}</a></span>
+                    <span class=""><a><small>{{quiz.tagString}}</small></a></span>
                 </div>
             </div>
         </div>
@@ -92,7 +101,7 @@
 
                         <!--Pagination part-->
 
-<div class="row col-xs-9 col-xs-offset-3"> 
+<div class="row"> 
     <div class="text-center">
         <ul class="pagination ">
             <li><a href="#">&laquo;</a></li>
