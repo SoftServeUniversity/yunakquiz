@@ -17,7 +17,7 @@ module SearchQuizzes
   # Main search function
   # It's take object that contain two 
   # keys: category_id(Array)
-  #       tags (Array)
+  #       tags (Array) and returns result in json
   def SearchQuizzes.withTags(search_request)
 
     # Initialize SQlite string for search
@@ -25,20 +25,23 @@ module SearchQuizzes
     FROM quizzes INNER JOIN tags \
     ON quizzes.id = tags.quiz_id WHERE category_id IN (?)"
 
-    # Check if it all ok
-    if search_request['tags'].length > 0 
-      search_request['tags'].map! {|tag| search_string \
-        << " AND tag LIKE '%#{tag}%'"}
-    else
-    end
+    # Adding % to tegs for db request
+    search_request['tags'].map! {|tag| search_string \
+    << " AND tag LIKE '%#{tag}%'"}
 
-    search_string = search_string << "GROUP BY quizzes.title;"
-     
-    # Request to db     
-    result = Quiz.find_by_sql [search_string, search_request['categories_id']].as_json
-    puts (result.length)
-    
-    return result.to_json
+    # Adding end of db request string
+    search_string = search_string \
+    << "GROUP BY quizzes.title ORDER BY title;"
+
+    # Main Request to db 
+    # Using string that was generated
+    search_result = Quiz.find_by_sql [search_string, \
+    search_request['categories_id']]
+
+    return search_result.to_json
+
   end
+
+  
 
 end
