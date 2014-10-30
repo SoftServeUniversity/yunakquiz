@@ -43,7 +43,7 @@ class Quiz < ActiveRecord::Base
       cJSON =  quiz.category.to_json(:include => :category)
 
       # qJSON = quiz.to_json(:include => [:questions, :category ] )
-      return qJSON
+      return  qJSON
       # return "["+qJSON+","+cJSON+ "]"
       # return quiz.to_json(:include => {:questions => {:include => :answers}})
 
@@ -51,10 +51,11 @@ class Quiz < ActiveRecord::Base
     end
   end
 
-  def self.queryList(status="published")
+  def self.queryList(status="published", page=1, per_page = 10)
+    page = page.to_i - 1
     statusCode =  Quiz.statuses[status] 
     if statusCode
-      return Quiz.where(status: statusCode).as_json
+      return Quiz.where(status: statusCode).offset(page*per_page.to_i).limit(per_page).as_json
     end
   end 
 
