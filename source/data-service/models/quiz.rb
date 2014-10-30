@@ -1,6 +1,7 @@
 class Quiz < ActiveRecord::Base
   belongs_to :category
   has_many :questions
+  has_many :comments
   has_and_belongs_to_many :tags
   enum status: [:draft, :review, :enhance, :published, :deleted]
 
@@ -27,17 +28,8 @@ class Quiz < ActiveRecord::Base
     if quiz.nil?
       return {'error' => "Quiz not found"}
     else  
-    	quizObject = {
-        'id' => id,
-        'title' => quiz.title,
-        'category_id'=> quiz.category_id,
-        'description'=>quiz.description,
-        'questions' => quiz.questions.as_json,
-      }
-      quizObject['questions'].each do |this_question|
-        this_question['answers'] = Question.find_by(id: this_question['id']).answers.as_json
-      end
-      return quizObject      
+    	qJSON = quiz.to_json(:include => [:questions => {:include => :answers}] )
+      return  qJSON
     end
   end
 
@@ -47,6 +39,15 @@ class Quiz < ActiveRecord::Base
     query = '%'+query[0,20]+'%'
     if statusCode 
       return Quiz.where("status=? AND title like ?", statusCode, query).as_json
+    end
+  end
+
+  def self.queryList(status="published", page=1, per_page = 10)
+    page = page.to_i - 1
+    statusCode =  Quiz.statuses[status] 
+    if statusCode
+      return Quiz.where(status: statusCode).offset(page*per_page.to_i).limit(per_page).as_json
+
     end
   end
 

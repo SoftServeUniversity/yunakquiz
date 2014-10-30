@@ -3,8 +3,15 @@
 /* https://github.com/angular/protractor/blob/master/docs/toc.md */
 
 describe('QuizEdit', function() {
+	var ptor =  protractor.getInstance();
+ 	var mockModule = require('../http_backend_quiz.js');
+ 	// ptor.addMockModule('httpBackendMock', mockModule.httpBackendMock);
+	
+	beforeEach(function() {
+    	ptor.addMockModule('httpBackendMock', mockModule.httpBackendMock);  
+ 	});
 
-	describe('Header', function() {
+	xdescribe('Header', function() {
 		
 		beforeEach(function() {
 			browser.get('http://localhost:8000/#/admin/assessments/1');
@@ -42,12 +49,12 @@ describe('QuizEdit', function() {
 	    });
 
 	    it('should have Quiz comment', function() {
-	       expect(element.all(by.repeater('comment in comments')).isPresent()).toBe(true);
+	      expect(element.all(by.binding('comment.text')).count()).toBe(2);
 	    });
 
 	});
 
-  	describe('Body', function() {
+  	xdescribe('Body', function() {
 
 	   	var questions;
  		
@@ -76,7 +83,7 @@ describe('QuizEdit', function() {
 
     });
 
-  	describe('Adding and deleting new questions and answers', function() {
+  	xdescribe('Adding and deleting new questions and answers', function() {
 
   		var questions;
 
@@ -128,22 +135,20 @@ describe('QuizEdit', function() {
 
 	    });
     	
-	    it('should be able save valid Quiz', function() {
+	    xit('should be able save valid Quiz', function() {
 	    	var testMessage = 'test';
 	    	questions.get(0).element(by.css('[ng-click="addAnswer(question)"]')).click();
 			answers = questions.get(0).all(by.repeater('answer in question.answers'));
 			answers.last().element(by.model('answer.title')).sendKeys(testMessage);
-
 	    	element(by.css('[ng-click="saveQuiz()"]')).click();
 	        browser.get('http://localhost:8000/#/admin/assessments/1');
 	        var answers = questions.get(0).all(by.model('answer.title'))
 	        expect(answers.last().getAttribute('value')).toBe(testMessage);
-	     
 	        questions.get(0).all(by.css('[ng-click="deleteAnswer(answer)"]')).last().click();
 	        element(by.css('[ng-click="saveQuiz()"]')).click();
       	});
 		
-		it('should be able send for review valid Quiz', function() {
+		xit('should be able send for review valid Quiz', function() {
 			questions.get(0).element(by.css('[ng-click="addAnswer(question)"]')).click();
 			answers = questions.get(0).all(by.repeater('answer in question.answers'));
 			answers.last().element(by.model('answer.title')).sendKeys('test');	
@@ -159,13 +164,15 @@ describe('QuizEdit', function() {
 	    });
 
 	    it('should be able save Quiz - check by description', function() {
-	        var descMsg = "Детальний опис тесту";
+	        var descMsg = "Детальний опис";
 	        var input = element(by.model('quiz.description'));
 	        input.clear();
 	        input.sendKeys(descMsg);
-
+	  			      	
 	        element(by.css('[ng-click="saveQuiz()"]')).click();
-	        browser.get('http://localhost:8000/#/admin/assessments/1');
+	        browser.pause();
+	        
+	        // browser.get('http://localhost:8000/#/admin/assessments/1');
 			expect(input.getAttribute('value')).toBe(descMsg);
        	});
 

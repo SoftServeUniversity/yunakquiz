@@ -29,7 +29,12 @@ module PlastApp
       content_type :json
       [{id: 1, name: 'assessment 1'}, {id: 2, name: 'assessment 2'}].to_json
     end
-       
+    
+    get '/admin/assessments/:id/comments' do
+      content_type :json
+      Comment.get(params['id']).to_json
+    end 
+
     put '/admin/assessments/:id' do
       content_type :json
       data = JSON.parse(request.body.read)
@@ -57,7 +62,8 @@ module PlastApp
       content_type :json
       quiz = Quiz.queryQ(params['id'])
       if quiz['id']
-        JSON.pretty_generate(quiz) 
+        quiz
+        # JSON.pretty_generate(quiz) 
       else
         return [400, quiz.to_json]
       end
@@ -69,9 +75,11 @@ module PlastApp
       {response: "Assessment #{params['id']} has been deleted"}.to_json
     end
 
-    get '/admin/assessments/:status' do
+    
+
+    get '/admin/assessments/:status/:page' do
       content_type :json
-      quizzes = Quiz.quizQuery(params['status'])
+      quizzes = Quiz.queryList(params['status'], params['page'] )
       if quizzes
         JSON.pretty_generate(quizzes) 
       else
@@ -90,7 +98,6 @@ module PlastApp
         return [400, 'Error']
       end
     end
-   
 
   end
 

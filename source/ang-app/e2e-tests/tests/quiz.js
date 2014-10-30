@@ -1,8 +1,11 @@
 'use strict';
 
-describe('quiz', function() {
+xdescribe('quiz', function() {
+	var ptor =  protractor.getInstance();
+ 	var mockModule = require('../http_backend_quiz.js');
+ 	ptor.addMockModule('httpBackendMock', mockModule.httpBackendMock);
 
-	describe('interactions with pass quiz page', function() {
+ 	describe('interactions with pass quiz page', function() {
 		
 		beforeEach(function() {
 			browser.get('http://localhost:8000/#/assessments/1');

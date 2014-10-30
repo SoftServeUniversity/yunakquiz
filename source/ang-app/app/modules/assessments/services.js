@@ -15,8 +15,9 @@ yunakQuizApp.factory('QuizData', ['$http', '$location', function($http, $locatio
             return $http.post('http://localhost:9292/admin/assessments', quiz)
           },
 
-      getAll: function(state){
-            return $http.get('http://localhost:9292/admin/assessments/'+state ) 
+      getAll: function(state, page){
+            page = page || 0;
+            return $http.get('http://localhost:9292/admin/assessments/'+state+'/'+page ) 
           },
 
       getSearch: function(state,searchData){
