@@ -38,7 +38,16 @@ class Quiz < ActiveRecord::Base
       quizObject['questions'].each do |this_question|
         this_question['answers'] = Question.find_by(id: this_question['id']).answers.as_json
       end
-      return quizObject      
+      
+      qJSON = quiz.to_json(:include => [:questions => {:include => :answers}] )
+      cJSON =  quiz.category.to_json(:include => :category)
+
+      # qJSON = quiz.to_json(:include => [:questions, :category ] )
+      return qJSON
+      # return "["+qJSON+","+cJSON+ "]"
+      # return quiz.to_json(:include => {:questions => {:include => :answers}})
+
+      # return quizObject      
     end
   end
 

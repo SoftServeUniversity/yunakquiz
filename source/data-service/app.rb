@@ -62,7 +62,8 @@ module PlastApp
       content_type :json
       quiz = Quiz.queryQ(params['id'])
       if quiz['id']
-        JSON.pretty_generate(quiz) 
+        quiz
+        # JSON.pretty_generate(quiz) 
       else
         return [400, quiz.to_json]
       end
