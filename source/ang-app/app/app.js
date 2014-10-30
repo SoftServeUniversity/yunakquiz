@@ -8,11 +8,13 @@ angular.module('yunakQuiz', [
   'yunakQuiz.assessments', 
   'yunakQuiz.users', 
   'yunakQuiz.sessions',
-  // 'yunakQuiz.version', - no need for now, need to check in master branch
+  'yunakQuiz.version',
+  'yunakQuiz.headerMenu',
   'yunakQuiz.guestSearch',
+  'yunakQuiz.statistics',
+  'yunakQuiz.staticPartialsRoute',
   'yunakQuiz.categoriesContainer',
-  'yunakQuiz.subcategory', 
-  'yunakQuiz.parentCatPage' 
+  'yunakQuiz.subcategory'
 ]).config(['$routeProvider',
   	  function($routeProvider) {
     		$routeProvider.
@@ -23,13 +25,3 @@ angular.module('yunakQuiz', [
         	  redirectTo: '/'
       });
   }]);
-
-
-
-
-
-
-
-
-
-
