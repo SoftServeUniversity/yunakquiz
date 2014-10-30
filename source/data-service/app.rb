@@ -1,13 +1,12 @@
 # encoding: UTF-8
 module PlastApp
   require 'sinatra'
+  require 'sinatra/activerecord'
   require 'json'
   require 'rest_client'
   require 'rubygems'
-  require 'sinatra/activerecord'
   require 'json/ext' # required for .to_json
   require 'sinatra/cross_origin'
-
   require 'sinatra/asset_pipeline'
 
   class YunakQuiz < Sinatra::Base
@@ -20,46 +19,91 @@ module PlastApp
     Dir.glob('./lib/*.rb').each {|file| require file}
 
 
+    configure do
+        enable :sessions
+    end
+
+    options '/*' do
+    end
+    
     get '/' do
         erb :index
     end
+    
+    get '/access' do
+      	if session[:user_id]
+        	user = User.find(session[:user_id])
+        	return [200, user.username]
+    	  end
+      		return [401, "unauthorized"]
+    end  		
 
     get '/assessments' do
       content_type :json
       [{id: 1, name: 'assessment 1'}, {id: 2, name: 'assessment 2'}].to_json
     end
-
-    put '/assessments' do
+    
+    get '/admin/assessments/:id/comments' do
       content_type :json
-      {response: 'Added an assessment'}.to_json
+      Comment.get(params['id']).to_json
+    end 
+
+    put '/admin/assessments/:id' do
+      content_type :json
+      data = JSON.parse(request.body.read)
+      quiz = Quiz.updateQ(data)
+      if quiz
+        return [200, quiz.id.to_json]
+      else
+        return [400, quiz.errors.messages.to_json]
+      end    
     end
 
-    post '/assessments/:id' do
-      cross_origin
-      content_type :json
-      {response: "Updated to #{params['id']} assessment"}.to_json
+    post '/login' do
+      data = JSON.parse request.body.read
+      user = User.authenticate(data['username'], data['password'])
+      if !user.nil?
+        session[:user_id] = user.id
+        return [200, user.username]
+      end
+        return [401, "unauthorized"]
     end
 
-     get '/assessments/:id' do
+    post '/admin/assessments' do
       content_type :json
-
-      myObj = {
-        'title' => Quiz.find(params['id']).title,
-        'questions' => Quiz.find(params['id']).questions.select("id, title").as_json,
-         }
-
-      myObj['questions'].each_with_index do |value, index|
-             value['answers'] = Question.find(value['id']).answers.select("id, title,correct").as_json
-          end
-      
-       JSON.pretty_generate(myObj) 
+      data = JSON.parse(request.body.read)
+      #check permisions here
+      quiz = Quiz.createQ(data)
+      if quiz
+        return [200, quiz.id.to_json]
+      else
+        return [400, quiz.errors.messages.to_json]
+      end
     end
-    options '/*' do
-    '*'
-    end    
 
     delete '/assessments/:id' do
       content_type :json
+      {response: "Assesment #{params['id']} has been deleted"}.to_json
+    end
+
+    get '/assessments/:id' do
+      content_type :json
+      quiz = Quiz.queryQ(params['id'])
+      if quiz['id']
+        JSON.pretty_generate(quiz) 
+      else
+        return [400, quiz.to_json]
+      end
+    end
+
+    get '/logout' do
+      session.clear
+      return [200, "ok"]
+    end  
+
+    delete '/admin/assessments/:id' do
+      content_type :json
+      Quiz.deleteQ(params['id'])
       {response: "Assessment #{params['id']} has been deleted"}.to_json
     end
 
@@ -92,6 +136,7 @@ module PlastApp
 #if category_id is not passed then search in all subcategories
     SearchQuizzes.withTags(search_request) 
     end
+    
     get '/subcat_quiz/:id' do
       content_type :json
       match_quizzes=Quiz.where("category_id=?",params[:id]).order('updated_at').reverse_order.limit(3).select(['id','category_id','title','description','updated_at']).as_json
@@ -99,7 +144,6 @@ module PlastApp
         value['tags'] = Quiz.find(value['id']).tags.select("id, tag").as_json #finding tags of each quiz
       end
         match_quizzes.to_json
-
     end
 
     post '/user' do
@@ -117,6 +161,15 @@ module PlastApp
       Contact.select(['id','role','phone','address','mail']).to_json
     end
 
-  end
+    get '/admin/assessments/:status' do
+      content_type :json
+      quizzes = Quiz.queryList(params['status'])
+      if quizzes
+        JSON.pretty_generate(quizzes) 
+      else
+        return [400, "Not found "+params['status']]
+      end
+    end
 
-end
+  end
+end  

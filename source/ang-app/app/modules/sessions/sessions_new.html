@@ -1,32 +1,32 @@
 <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">
-                    <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-                </button>
-                <h4 class="modal-title text-center" id="myModalLabel">Вхід в систему</h4>
-            </div>
-            <div class="modal-body">
-                <form role="form" novalidate="true">
-                    <p class="form-group text-center text-danger">{{lgn.message}}</p>
-                    <div class="form-group form-inline">
-                        <label class="form-label" for="username">Пошта</label>
-                        <input ng-model="lgn.user.username" type="text" class="form-control" id="username" placeholder="Email" required>
-                    </div>
-                    <div class="form-group form-inline">
-                        <label class="form-label" for="password">Пароль</label>
-                        <input ng-model="lgn.user.password" type="password" class="form-control" id="password" placeholder="Password" required>
-                    </div>
-                    <div class="checkbox">
-                        <label><input type="checkbox"> Запам'ятати</label>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default pull-left" ng-click="lgn.register()">Зареєструватись</button>
-                <button type="submit" class="btn btn-primary" ng-click="lgn.submitLogin()">Увійти</button>
-            </div>
-        </div>
-    </div>
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+				</button>
+				<h4 class="modal-title text-center" id="myModalLabel">Вхід в систему</h4>
+			</div>
+			<div class="modal-body">
+				<form role="form" novalidate="true">
+					<p class="form-group text-center text-danger">{{lgn.message}}</p>
+					<div class="form-group form-inline">
+						<label class="form-label" for="username">Нікнейм</label>
+						<input ng-model="lgn.user.username" type="text" class="form-control" id="username" placeholder="Нікнейм" required>
+					</div>
+					<div class="form-group form-inline">
+						<label class="form-label" for="password">Пароль</label>
+						<input ng-model="lgn.user.password" type="password" class="form-control" id="password" placeholder="Пароль" required>
+					</div>
+					<div class="checkbox">
+						<label><input type="checkbox"> Запам'ятати</label>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default pull-left" ng-click="lgn.register()">Зареєструватись</button>
+				<button type="submit" class="btn btn-primary" ng-click="lgn.submitLogin()">Увійти</button>
+			</div>
+		</div>
+	</div>
 </div>

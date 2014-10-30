@@ -3,6 +3,6 @@ class CreateTagsTable < ActiveRecord::Migration
 		create_table :tags do |table|
 		table.string :tag
 		table.timestamps
-  		end
+  	end
 	end
 end

@@ -5,6 +5,7 @@ class CreateQuizzesTable < ActiveRecord::Migration
 		table.belongs_to :category
 		table.string :title
 		table.text :description
+		table.integer :status, default: 0
 		table.timestamps
 		end
 	end

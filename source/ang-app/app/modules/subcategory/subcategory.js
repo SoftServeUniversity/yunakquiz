@@ -5,10 +5,10 @@
       function($routeProvider) {
         $routeProvider.
           when('/subcategory/:id', {
-          templateUrl: './modules/subcategory/subcategory.html',
-          controller: 'subcatCtrl'
-        })
-      }
+            templateUrl: './modules/subcategory/subcategory.html',
+            controller: 'subcatCtrl'
+          });
+        }
     ]);
     app.controller("subcatCtrl", 
       ['$scope', '$http', '$routeParams', 'searchTag', '$timeout', 
@@ -16,7 +16,7 @@
         var subcat_id = $routeParams.id;
         var searchTimeout;
         $scope.searchTags = [];
-        $scope.searchData = {categories_id:subcat_id}
+        $scope.searchData = {categories_id:subcat_id};
 
         $http.get('http://localhost:9292/categories/parent/' + subcat_id)
         .success(function(data){$scope.subcategory = data});
@@ -56,4 +56,3 @@
       };
     }]);
 })();
-
