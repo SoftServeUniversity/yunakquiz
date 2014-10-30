@@ -41,12 +41,12 @@ angular.module('yunakQuiz.admin', ['ngRoute'])
 	},
 
 	{name : 	'comm1',
-	 temp : 	'.modules/admin/comm-1.html'
+	 temp : 	'.modules/admin/comm-1.html',
  	 caption: 	'ANYTHING CAN BE HERE'
 	},
 
 	{name : 	'comm2',
-	 temp : 	'.modules/admin/comm-2.html'
+	 temp : 	'.modules/admin/comm-2.html',
 	 caption: 	'SOMETHING ELSE IS HERE'
 	}
 ])
@@ -55,7 +55,8 @@ angular.module('yunakQuiz.admin', ['ngRoute'])
     
 	return{
 		get: function(){
-			return $http.get("http://localhost:9292/admin")		
+			// return $http.get("http://localhost:9292/admin",{ withCredentials: true})		
+			return $http.get("http://localhost:9292/admin")
 		}
 	}
 
@@ -82,7 +83,6 @@ angular.module('yunakQuiz.admin', ['ngRoute'])
   				i = 0;
   			};
   			$scope.results = result;
-
   		})
 		.error(function(data){
 			alert('data is lost');

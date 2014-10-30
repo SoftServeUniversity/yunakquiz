@@ -17,10 +17,11 @@ angular.module('yunakQuiz', [
   'yunakQuiz.admin',
 
   'yunakQuiz.subcategory'
-]).
-config(['$routeProvider',
-  	  function($routeProvider) {
-    		$routeProvider.
+])
+.config(['$routeProvider', '$httpProvider',     
+  	  function($routeProvider, $httpProvider) {
+    		$httpProvider.defaults.withCredentials = true;
+        $routeProvider.
       		  when('/', {
         		templateUrl: 'modules/partials/home-page-greetings.html',
       		  }).
@@ -28,10 +29,19 @@ config(['$routeProvider',
         	  redirectTo: '/'
       });
   }])
+//enable browser cookies for CORS
+// .config([
+//     '$httpProvider',
+//     function($httpProvider) {
+//         $httpProvider.defaults.withCredentials = true;
+//     }
+// ])
+
 .controller("ApplicationController", ["$http", "$scope", function($http, $scope){
 	var app = this;
 	this.username = "";
-	$http.get("http://localhost:9292/access")
+	// $http.get("http://localhost:9292/access",{ withCredentials: true})
+  $http.get("http://localhost:9292/access")
 		.success(function(data){
 			app.username = data;
 		}).error(function(){
@@ -44,7 +54,7 @@ config(['$routeProvider',
 		return (this.username != "") && (this.username != undefined);
 	};
 	this.logout = function(){
-		$http.get("http://localhost:9292/logout")
+		$http.post("http://localhost:9292/logout")
 			.success(function(data){
 				app.username = undefined;
 			});
