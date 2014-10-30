@@ -16,16 +16,9 @@ module PlastApp
     configure do
       enable :cross_origin
       enable :sessions
-      # use Rack::Session::Pool
       set :session_secret, "My session secret"
     end  
    
-    # set :allow_origin, 'http://localhost:8000'
-    # set :allow_methods, [:get, :post, :options]
-    # set :allow_credentials, true
-    # set :max_age, "1728000"
-    # set :expose_headers, ['Content-Type']
-
     Dir.glob('./config/*.rb').each {|file| require file}
     Dir.glob('./models/*.rb').each {|file| require file}
     
@@ -57,13 +50,10 @@ module PlastApp
       if session[:id]
         puts "session second is #{session[:id]}"
         user = User.find(session[:id])
-        # user = User.find(2)
         role = Role.find(user.role_id)
         base = Permission.where("#{role.name} = #{role.id}").select("tabs").to_json
         puts "base is: #{base}"
         return base
-      # else
-      #   return [401, "unauthorized"]
       end  
     end
 
@@ -73,8 +63,6 @@ module PlastApp
       user = User.authenticate(data['username'], data['password'])
       if !user.nil?
         session[:id] = user.id
-        # puts "Your ID is #{session[:id]}"
-        # puts "session[:id] => ", session[:id]
         return [200, user.username]
       else
         return [401, "unauthorized"]
@@ -98,22 +86,7 @@ module PlastApp
     end
     
     post '/logout' do
-      # puts " logout begin"
-      # session.each {|key, value| puts "#{key} is #{value}" }
-      
-      # puts " end for"
-      # puts session[:id]
-      # puts " end body"
-      # d = request.body
-      # d = d.each {|key, value| puts "#{key} is #{value}" }
-      # puts "d", d
-      
-      # puts " end cook"
-      # d = request.cookies
-      # d = d.each {|key, value| puts "#{key} is #{value}" }
-      # puts "d", d
       session.clear
-      # puts " logout end"
       return [200, "ok"]
     end
   
