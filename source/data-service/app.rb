@@ -60,8 +60,7 @@ module PlastApp
       data = JSON.parse request.body.read
       user = User.authenticate(data['username'], data['password'])
       if !user.nil?
-           session[:user_id] = user.id
-        end
+        session[:user_id] = user.id
         return [200, user.username]
       end
         return [401, "unauthorized"]
@@ -111,4 +110,4 @@ module PlastApp
     end
 
   end
-end
+end  
