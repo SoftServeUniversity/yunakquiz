@@ -28,17 +28,24 @@ class Quiz < ActiveRecord::Base
     if quiz.nil?
       return {'error' => "Quiz not found"}
     else  
-    	qJSON = quiz.to_json(:include => [:questions => {:include => :answers}] )
-      return  qJSON
+      quiz.to_json(:include => [
+        {:questions => {:include => :answers}},
+        {:category => {:include=> {:category =>{:only => :title }},
+         :only=> :title}}
+      ])
     end
   end
-
 
   def self.quizQuery(status='published', query = '')
     statusCode =  Quiz.statuses[status] 
     query = '%'+query[0,20]+'%'
     if statusCode 
-      return Quiz.where("status=? AND title like ?", statusCode, query).as_json
+      quizzes = Quiz.where("status=? AND title like ?", statusCode, query)
+      quizzes.to_json(:include => [
+        {:questions => {:include => :answers}},
+        {:category => {:include=> {:category =>{:only => :title }},
+         :only=> :title}}
+      ])
     end
   end
 

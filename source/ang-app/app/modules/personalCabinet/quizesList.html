@@ -16,8 +16,8 @@
 				<td>
 					<a ng-href="{{quizUrl+quiz.id}}">{{quiz.title}}</a>
 				</td>
-				<td>{{quiz.category_id}}</td>
-				<td>{{quiz.category_id}}</td>
+				<td>{{quiz.category.category.title}}</td>
+				<td>{{quiz.category.title}}</td>
 				<td>
 					<a ng-href="#/admin/assessments/{{quiz.id}}" type="button" class="btn btn-info btn-xs">Редагувати тест</a>
 				</td>

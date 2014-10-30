@@ -79,7 +79,7 @@ module PlastApp
 
     get '/admin/assessments/:status/:page' do
       content_type :json
-      quizzes = Quiz.queryList(params['status'], params['page'] )
+      quizzes = Quiz.queryList(params['status'], params['page'])
       if quizzes
         JSON.pretty_generate(quizzes) 
       else
@@ -93,7 +93,7 @@ module PlastApp
       #check permisions here
       quizzes = Quiz.quizQuery(params['status'],data['title'])
       if quizzes
-        JSON.pretty_generate(quizzes)
+        quizzes
       else
         return [400, 'Error']
       end

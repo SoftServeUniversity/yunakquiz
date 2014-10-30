@@ -2,25 +2,12 @@
 /** Quiz Edit controller  */
 yunakQuizApp.controller('QuizEditCtrl', ['$scope','QuizData', '$routeParams','tags', '$location', function($scope, QuizData, $routeParams, tags, $location) {
 
-	/** MOCK - get categories and subCats object */
-	$scope.subcats =[
-		{id:2,category_id:1,title:"Футбол"},
-		{id:3,category_id:1,title:"Хокей"},
-		{id:5,category_id:4,title:"Історія України"},
-		{id:6,category_id:4,title:"Історія світу"}
-	];
-
-	$scope.cats =[
-		{id:1,category_id:0,title:"Спорт"},
-		{id:4,category_id:0,title:"Історія"}
-	];
-
 	/** get Quiz by ID */
 	QuizData.get($routeParams.quiz_id)
 		.success(function(data, status, headers, config){
 			$scope.quiz = data;
-			$scope.setSubcat();
 			$scope.getComments(data['id']);
+			$scope.getCategories();
 		})
 		.error(function(data){
 			$location.path('/404/');
@@ -30,6 +17,13 @@ yunakQuizApp.controller('QuizEditCtrl', ['$scope','QuizData', '$routeParams','ta
 		QuizData.getComments(quiz_id)
 			.success(function(data, status, headers, config){
 				$scope.comments = data;
+			});
+	};
+
+	$scope.getCategories = function(quiz_id) {
+		QuizData.getCategories()
+			.success(function(data){
+				$scope.categories = data;
 			});
 	};
 			
@@ -47,7 +41,7 @@ yunakQuizApp.controller('QuizEditCtrl', ['$scope','QuizData', '$routeParams','ta
 		};
 	};
 
-	/** set selected subCat to be equal subcat in Quiz */
+	// * set selected subCat to be equal subcat in Quiz 
 	$scope.setSubcat  = function() {
 		for (var i=0; i < $scope.subcats.length; i++){		
 			if ($scope.subcats[i].id == $scope.quiz.category_id){
