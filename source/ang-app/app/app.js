@@ -29,13 +29,6 @@ angular.module('yunakQuiz', [
         	  redirectTo: '/'
       });
   }])
-//enable browser cookies for CORS
-// .config([
-//     '$httpProvider',
-//     function($httpProvider) {
-//         $httpProvider.defaults.withCredentials = true;
-//     }
-// ])
 
 .controller("ApplicationController", ["$http", "$scope", function($http, $scope){
 	var app = this;

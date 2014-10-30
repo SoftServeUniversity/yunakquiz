@@ -4,7 +4,7 @@ module PlastApp
   require 'json'
   require 'rest_client'
   require 'rubygems'
-  require 'json/ext' # required for .to_json
+  require 'json/ext'
   require 'sinatra/cross_origin'
   require 'sinatra/asset_pipeline'
   
@@ -76,7 +76,7 @@ module PlastApp
     post '/register' do
       data = JSON.parse request.body.read
       user = User.new(data)
-      # user.role_id = 1
+      # hardcode for roles. 1-admin, 2 - moder, 3 - user
       user.role_id = 2
       if user.save
         return [200, "ok"]
