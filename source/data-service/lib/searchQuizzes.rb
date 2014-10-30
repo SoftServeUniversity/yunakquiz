@@ -21,19 +21,22 @@ module SearchQuizzes
   def SearchQuizzes.withTags(search_request)
 
     # Initialize SQlite string for search
-    search_string = "SELECT quizzes.*, tag FROM quizzes    \
-      INNER JOIN tags ON quizzes.id = tags.quiz_id WHERE   \
-      category_id IN (?)"
+    search_string = "SELECT GROUP_CONCAT(tag) as tagString, quizzes.* \
+    FROM quizzes INNER JOIN tags \
+    ON quizzes.id = tags.quiz_id WHERE category_id IN (?)"
 
     # Check if it all ok
     if search_request['tags'].length > 0 
-      search_request['tags'].map! {|tag| search_string     \
+      search_request['tags'].map! {|tag| search_string \
         << " AND tag LIKE '%#{tag}%'"}
     else
     end
+
+    search_string = search_string << "GROUP BY quizzes.title;"
      
     # Request to db     
-    result = Quiz.find_by_sql [search_string, search_request['categories_id']]
+    result = Quiz.find_by_sql [search_string, search_request['categories_id']].as_json
+    puts (result.length)
     
     return result.to_json
   end
