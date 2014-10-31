@@ -1,4 +1,4 @@
-<div class="subcat-section" ng-controller="subcatCtrl">
+<div class="subcat-section">
 
 <div class="row">
   <div class="col-xs-12 pageTitleBox bg-primary">
@@ -7,17 +7,8 @@
 </div>
 
 <div class="row">
-	<div class="col-xs-3 col-xs-offset-1">
-	 	<label>
-		    Сортування по
-		    <select  ng-model="sorting" class="form-control subcat-form">
-		        <option value=""></option>
-		        <option value="updated_at">Даті</option>
-		        <option value="title">Алфавіту</option>
-		    </select>
-	  	</label>
-	</div>
-	<div class="col-xs-3 col-xs-offset-4"> 
+	<div class="col-xs-6 col-xs-offset-3"> 
+
 		<form>
 		  <input type="text" placeholder="Пошук" ng-model="searchTags" class="form-control subcat-form" />
 		    <button class="btn btn-default" ng-click="check(searchData)">
@@ -27,16 +18,18 @@
 	</div>
 </div>
 
-<div ng-repeat="quiz in searchResults| filter: quiz |orderBy: sorting" class="row">
+<div ng-repeat="quiz in searchResults|orderBy:'title'" class="row">
 	<div class="col-xs-6 col-xs-offset-3">
 	   	<div class="content">
-	   		<h3 class="text-center"><a href="#/assessments/{{quiz.id}}">{{quiz.title}}</a></h3>
+	   		<h3 class="text-center quizTitle"><a href="#/assessments/{{quiz.id}}">{{quiz.title}}</a></h3>
 	    	<p>{{quiz.description}}</p><br>
 		 	<span ng-repeat="tag in quiz.tags"><a>{{tag.tag}}</a></span>
 	  	</div>
 	</div>
 </div>
+
 <div class="row" ng-hide="searchResults">
-<div class="error-message"> Sorry, no matches found for {{searchTags}}</div>
+	<div class="error-message"> Sorry, no matches found for {{searchTags}}</div>
 </div>
+
 </div>

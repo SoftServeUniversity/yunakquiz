@@ -8,7 +8,7 @@
     <div class="input-group col-xs-3">
         <input  type="search" class="form-control" placeholder="Пошук" ng-model="searchTags">
         <span class="input-group-btn">
-            <button class="btn btn-info" type="button">пошук</button>
+            <button class="btn btn-info" ng-click="check(searchData)"type="button">пошук</button>
         </span>                    
     </div> 
 </div>
@@ -19,19 +19,19 @@
         </a>
         <div ng-repeat="subCat in subCategories">
             <a ng-if="subCat.category_id === parCat.id" class="list-group-item col-xs-offset-1" 
-            ng-click="addRemClassActiveSingleCat(subCat.id, parCat.id)" ng-class="{search_subcat_select: selectedCategories[subCat.id]}">{{subCat.title}}
+            ng-click="addRemClassActiveSingleCat(subCat.id)" ng-class="{search_subcat_select: selectedCategories[subCat.id]}">{{subCat.title}}
             </a>
         </div>
     </div>
 </div>
 <div class= "col-xs-8">
-<div ng-repeat="quiz in searchResults" >
-    <div class="search-result col-xs-offset-1 well">
-        <div class="content">
-            <h3 class="text-center">{{quiz.title}}</h3>
-            <p class="text-justify">{{quiz.description}}</p><br>
-            <span ng-repeat="tag in quiz.tags"><a>{{tag.tag}} | </a></span>
+    <div ng-repeat="quiz in searchResults" >
+        <div class="search-result col-xs-offset-1 well">
+            <div class="content">
+                <h3 class="text-center">{{quiz.title}}</h3>
+                <p class="text-justify">{{quiz.description}}</p><br>
+                <span ng-repeat="tag in quiz.tags"><a>{{tag.tag}} | </a></span>
+            </div>
         </div>
     </div>
-</div>
 </div>

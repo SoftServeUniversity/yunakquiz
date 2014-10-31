@@ -1,25 +1,16 @@
-<div class="container">
-	<br> 
-	<br> 
-	<br> 
-	<div class="col-md-3 col-md-offset-1" ng-repeat="parCat in parCategories">
-		<div class="row"> 
-			<div class="col-md-12 "> 
-				<div class="col-md-10 ">
-					<span class="rectangle"><a ng-href="#parentcat-page/{{parCat.id}}">{{parCat.title}}</a></span>
-					<div class="triangle-topright"></div>
-					<div class="row categories-container">
-						<ul class="list-unstyled  col-sm-offset-1 ">
-							<li>
-								<span class="quote-author"> Тестів:  {{testsCount(parCat.id)}} </span>
-							</li>
-							<li ng-if="parCat.id==subCat.category_id" ng-repeat="subCat in subCategories">
-								<a ng-href="#subcategory/{{subCat.id}}">{{subCat.title}}</a>
-							</li>
-						</ul> 
-					</div>
-				</div> 
-			</div>
-		</div>
-	</div>
+<div class="col-sm-3 col-sm-offset-1" ng-repeat="parCat in parCategories">
+  <div class="col-sm-12"> 
+    <span class="rectangle"><a ng-href="#parentcat-page/{{parCat.id}}">{{parCat.title}}</a></span>
+    <div class="triangle-topright"></div>
+    <div class="row categories-container">
+      <ul class="list-unstyled col-sm-offset-1">
+        <li>
+          <span class="quote-author">Тестів:  {{quizzesCount[parCat.id]}} </span>
+        </li>
+        <li ng-repeat="subCat in subCategories[parCat.id]">
+          <a ng-href="#subcategory/{{subCat.id}}">{{subCat.title}}</a>
+        </li>
+      </ul> 
+    </div>
+  </div>
 </div>

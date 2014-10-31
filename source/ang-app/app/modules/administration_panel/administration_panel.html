@@ -1,0 +1,27 @@
+<div class="row">
+  <div class="col-md-12 pageTitleBox bg-primary">
+    <div class="center-block"><h3 class="pageTitle">Адміністративна панель</h3></div>
+  </div>
+</div>
+<section>
+  <ul class="nav nav-tabs admin-panel-tabs">  
+    <li ng-class="{active:isSelected('userTab')}">
+      <a href="#administration-panel/userTab" >Користувачі</a>
+    </li>
+    <li ng-class="{active:isSelected('blacklistTab')}">
+      <a href="#administration-panel/blacklistTab" >Чорний список</a>
+    </li>
+    <li ng-class="{active:isSelected('administrationTab')}">
+      <a href="#administration-panel/administrationTab" >Адміністрація</a>
+    </li>
+    <li ng-class="{active:isSelected('quizzescategoriesTab')}">
+      <a href="#administration-panel/quizzescategoriesTab" >Категорії тестів</a>
+    </li>
+    <li ng-class="{active:isSelected('aboutusTab')}">
+      <a href="#administration-panel/aboutusTab" >Про нас</a>
+    </li>
+    <li ng-class="{active:isSelected('faqTab')}">
+      <a href="#administration-panel/faqTab" >Часті питання</a>
+    </li>
+  </ul>
+</section>

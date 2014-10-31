@@ -4,18 +4,15 @@
 	var  app = angular.module('yunakQuiz.guestSearch', ['ngRoute','yunakQuiz.subcategory','yunakQuiz.categoriesContainer']);
 
 		app.config(['$routeProvider',
-      		function($routeProvider) {
-            $routeProvider.
-            	when('/guest-search', {
-              	templateUrl: './modules/guest-search/guest-search-page.html',
-                controller: 'SearchCtrl'
-            })
+      function($routeProvider) {
+        $routeProvider.
+         	when('/guest-search', {
+           	templateUrl: './modules/guest-search/guest-search-page.html',
+            controller: 'SearchCtrl'
+          })
       	}
     ]);      
 
-//==============================================================================
-    
-    //Ctrl for guest-search-page
     app.controller('SearchCtrl', 
       ['$scope', '$http', 'searchTag', '$timeout', 'catsById', function ($scope, $http, searchTag, $timeout, catsById) {
         
@@ -51,21 +48,13 @@
             };
         };
         // Getting all parent categories
-        catsById.get('parcat' ,function(data){
+        catsById.get('parcat').success(function(data){
           $scope.parCategories = data;
         });
         // Getting all sub categories
-        catsById.get('subcat' ,function(data){
+        catsById.get('subcat').success(function(data){
           $scope.subCategories = data;
         });
-        // wach function for live search
-        $scope.$watch('searchTags', function (val) {
-          if (searchTimeout) $timeout.cancel(searchTimeout);
-            searchTimeout = $timeout(function() {
-              $scope.check($scope.searchData);
-            }, 1000);   
-        });
-        // Check if minimum 3 chars in search request and adding categories to request
         $scope.check =  function (searchData) {
           if($scope.searchTags.length >= 3){
             searchData = {categories_id:[]}
@@ -82,4 +71,3 @@
         };
     }]);
  })();
-

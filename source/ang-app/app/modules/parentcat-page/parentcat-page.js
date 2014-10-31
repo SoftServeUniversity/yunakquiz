@@ -13,7 +13,7 @@
   app.factory("getSubCatByCatId", ['$http', function ($http) {
     return { 
       get : function(id, callback) {
-        $http.get('http://localhost:9292/categories/subcat/'  + id).success(function(data){
+        $http.get('http://localhost:9292/categories/subcat/' + id).success(function(data){
         callback(data);
         });
       }
@@ -26,13 +26,13 @@
     $scope.subCategories = {};
     var current_id =  $routeParams.par_id;
 
-    catsById.get(current_id ,function(data){
+    catsById.get(current_id).success(function(data){
           $scope.parCategory = data;
         });
     getSubCatByCatId.get(current_id ,function(data){
           $scope.subCategories = data;
         });
-      quizesById.get(0, function(data){
+      quizesById.get(0).success(function(data){
             $scope.quizzes = data;
           });          
         

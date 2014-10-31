@@ -110,12 +110,7 @@ module PlastApp
     get '/categories/:id' do
       content_type :json
       #if id = 'parcat' then return all par cat ,id ='subcat' then return all subcats,id='all' then return all categories
-      GetAllCat.getCategories(params['id'])
-    end
-
-    get '/categories/parent/:id' do
-      content_type :json
-      Category.where("id=?", params['id']).to_json
+      PlastApp::GetAllCat.getCategories(params['id'])
     end
 
     get '/categories/subcat/:id' do
@@ -126,17 +121,17 @@ module PlastApp
     get '/quizzes/:category_id' do
       content_type :json
       # this function is part of module SerchQuizzes ,returns quizzes with passed category_id or if 0 passed returns all quizzes
-      SearchQuizzes.withCatId(params['category_id']).to_json 
+      PlastApp::SearchQuizzes.withCatId(params['category_id']).to_json 
     end  
 
     post '/search' do
       content_type :json
     search_request = JSON.parse(request.body.read) 
-#this function is part of module SerchQuizzes as parameter gets object {category_id: ['1','2',..'n'] , tags:['teg1','teg2',..'n']}
-#if category_id is not passed then search in all subcategories
-    SearchQuizzes.withTags(search_request) 
+    #this function is part of module SerchQuizzes as parameter gets object {category_id: ['1','2',..'n'] , tags:['teg1','teg2',..'n']}
+    #if category_id is not passed then search in all subcategories
+    PlastApp::SearchQuizzes.withTags(search_request) 
     end
-    
+
     get '/subcat_quiz/:id' do
       content_type :json
       match_quizzes=Quiz.where("category_id=?",params[:id]).order('updated_at').reverse_order.limit(3).select(['id','category_id','title','description','updated_at']).as_json
@@ -146,19 +141,14 @@ module PlastApp
         match_quizzes.to_json
     end
 
-    post '/user' do
-      data = JSON.parse request.body.read
-      user = User.new(data)
-      if user.save
-        return [200, "ok"]
-      else
-        return [400, user.errors.messages.to_json]
-      end
-    end
-
     get '/contacts' do
       content_type :json
       Contact.select(['id','role','phone','address','mail']).to_json
+    end
+
+    get '/about_us' do
+      content_type :json
+      Staticinfo.select(['id','about_us','updated_at']).to_json
     end
 
     get '/admin/assessments/:status' do
