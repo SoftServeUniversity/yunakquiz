@@ -3,9 +3,15 @@
 /* http://docs.angularjs.org/guide/dev_guide.e2e-testing */
 
 describe('Signup page', function() {
+    var ptor =  protractor.getInstance();
+    var mockModule = require('../mocked-backend.js');
+
+
   beforeEach(function() {
       browser.get('http://localhost:8000/#/auth/signup');
+      ptor.addMockModule('httpBackendMock', mockModule.httpBackendMock);
     });
+
   it('should redirect to the Main page when we click cancel botton', function() {
       element(by.css('[ng-click="reg.cancel()"]')).click();
       expect(browser.getLocationAbsUrl()).toMatch("/");
@@ -43,13 +49,18 @@ describe('Signup page', function() {
         expect(element(by.css('[name=birthday]+div')).getText()).toBe("Please input your birthday");
     });
 
-    // it('should display error message when you enter invalid email', function() {
-    //     element(by.css('[name=email]')).sendKeys("ewrrg@fgfgf");
-    //     element(by.css('[name=username]')).sendKeys("Inokentiy");
-    //     ment(by.css('[name=password]')).sendKeys("12345678");
-    //     element(by.css('[name=password_confirmation]')).sendKeys("12345678");
-    //     expect(element(by.css('[name=email]+div')).getText()).toBe("That is not a valid email. Please input a valid email.");
-    // });
+    it('should display error message when Username has already been taken', function() {
+        var captcha = element(by.binding('reg.captcha')).getText()
+        element(by.css('[name=email]')).sendKeys("ewrrg@fgfgf");
+        element(by.css('[name=username]')).sendKeys("Inokentiy");
+        element(by.css('[name=password]')).sendKeys("12345678");[]
+        element(by.css('[name=password_confirmation]')).sendKeys("12345678");
+        element(by.css('[name=birthday]')).sendKeys("10082014");
+        element(by.model('reg.enteredCaptcha')).sendKeys(captcha);
+        element(by.buttonText('Реєстрація')).click();
+        expect(element(by.css('[name=username]+div')).getText()).toBe("Username has already been taken");
+        //browser.sleep(50000);
+    });
 
   });
 
