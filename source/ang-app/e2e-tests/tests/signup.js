@@ -3,13 +3,23 @@
 /* http://docs.angularjs.org/guide/dev_guide.e2e-testing */
 
 describe('Signup page', function() {
+    var httpBackendMock = function() {
+        angular.module('httpBackendMock', ['yunakQuiz', 'ngMockE2E']).run(function($httpBackend) {
+         $httpBackend.whenPOST("http://localhost:9292/register", {username: 'Inokentiy', password: '12345678', password_confirmation: '12345678', email: 'ewrrg@fgfgf', birthday: '2014-10-08'})
+         .respond([400, {"username":"has already been taken"}]);
+         $httpBackend.whenGET(/modules\/\w+.*/).passThrough();
+         $httpBackend.whenGET(/^\w+.*/).passThrough();
+        // $httpBackend.whenGET(/localhost:8000\/\w+.*/).passThrough();
+        });
+    };
     var ptor =  protractor.getInstance();
-    var mockModule = require('../mocked-backend.js');
+    //var mockModule = require('../mocked-backend.js');
+    ptor.addMockModule('httpBackendMock', httpBackendMock);
 
 
   beforeEach(function() {
       browser.get('http://localhost:8000/#/auth/signup');
-      ptor.addMockModule('httpBackendMock', mockModule.httpBackendMock);
+      //ptor.addMockModule('httpBackendMock', mockModule.httpBackendMock);
     });
 
   it('should redirect to the Main page when we click cancel botton', function() {
@@ -58,8 +68,9 @@ describe('Signup page', function() {
         element(by.css('[name=birthday]')).sendKeys("10082014");
         element(by.model('reg.enteredCaptcha')).sendKeys(captcha);
         element(by.buttonText('Реєстрація')).click();
+        browser.sleep(50000);
         expect(element(by.css('[name=username]+div')).getText()).toBe("Username has already been taken");
-        //browser.sleep(50000);
+        b
     });
 
   });
