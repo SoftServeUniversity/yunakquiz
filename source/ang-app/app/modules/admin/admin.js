@@ -75,11 +75,13 @@ angular.module('yunakQuiz.admin', ['ngRoute'])
 			for (j; j < alen; j++) {
 				for (i; i < tlen; i++) {
 					if(givenTabs[i].name == userAccess[j]){
-						result.push(givenTabs[i].temp);
+						// result.push(givenTabs[i].temp);
+						result.push([givenTabs[i].name, givenTabs[i].temp, givenTabs[i].caption]);
 					}			
 				};
 				i = 0;
 			};
+			alert(result);
 		})
 		.error(function(data){
 			alert('data is lost');
@@ -90,6 +92,5 @@ angular.module('yunakQuiz.admin', ['ngRoute'])
 .controller("AdminCtrl", ["$location", "$scope", "$http", 'getTabTemplates', function($location, $scope, $http, getTabTemplates){
 	
 	$scope.results = getTabTemplates;
-
 }
 ])
