@@ -25,6 +25,11 @@ angular.module('yunakQuiz.admin', ['ngRoute'])
      caption: 	'Admin Tab # 3'
 	},
 
+	{name : 	'admin4',
+	 temp : 	'.modules/admin/admin-4.html',
+     caption: 	'Admin Tab Mumber Four'
+	},
+
 	{name : 	'moder1',
 	 temp : 	'.modules/admin/moder-1.html',
      caption: 	'Moderator Tab Number One'
@@ -48,43 +53,43 @@ angular.module('yunakQuiz.admin', ['ngRoute'])
 	{name : 	'comm2',
 	 temp : 	'.modules/admin/comm-2.html',
 	 caption: 	'SOMETHING ELSE IS HERE'
+	},
+
+	{name : 	'comm3',
+	 temp : 	'.modules/admin/comm-3.html',
+	 caption: 	'EXTREMELY DIFFERENT LAYS HERE'
 	}
 ])
 
-.factory('AccessTabs', ["$location", "$http", 'tabs', function($location, $http, tabs) {
+.factory('getTabTemplates', ["$location", "$http", 'tabs', function($location, $http, tabs) {
     
-	return{
-		get: function(){
-			return $http.get("http://localhost:9292/admin")
-		}
-	}
-
-}])
-
-.controller("AdminCtrl", ["$location", "$scope", "$http", 'tabs', 'AccessTabs', function($location, $scope, $http, tabs, AccessTabs){
-	
-	AccessTabs.get()
+	var result = [];
+	$http.get("http://localhost:9292/admin")
 		.success(function(data){
-			var result = [];
 			var givenTabs = tabs;
 			var userAccess = data;
 			var i=0;
 			var j=0;
-			
 			var tlen = givenTabs.length;
 			var alen = userAccess.length;
 			for (j; j < alen; j++) {
 				for (i; i < tlen; i++) {
-  					if(givenTabs[i].name == userAccess[j]){
-  						result.push(givenTabs[i].temp);
-  					}			
-  				};
-  				i = 0;
-  			};
-  			$scope.results = result;
-  		})
+					if(givenTabs[i].name == userAccess[j]){
+						result.push(givenTabs[i].temp);
+					}			
+				};
+				i = 0;
+			};
+		})
 		.error(function(data){
 			alert('data is lost');
 		})
+	return result;
+}])
+
+.controller("AdminCtrl", ["$location", "$scope", "$http", 'getTabTemplates', function($location, $scope, $http, getTabTemplates){
+	
+	$scope.results = getTabTemplates;
+
 }
 ])
