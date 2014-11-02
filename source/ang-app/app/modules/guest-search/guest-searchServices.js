@@ -1,6 +1,5 @@
 'use strict';
 
-(function (){
 	guestSearch.factory('guestSearchFactory', ['$http', function($http){
 
 		return {
@@ -8,6 +7,4 @@
 				return $http.get('http://localhost:9292/guest-search');
 			}
 		};
-
 	}]);
-})();
