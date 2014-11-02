@@ -4,26 +4,14 @@ angular.module('yunakQuiz.personalCabinet', ['ngRoute', 'flow'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider
-  			.when('/personal_cabinet/published', {
-	    		templateUrl: 'modules/personalCabinet/published.html',
-	    		controller: 'PublishedCtrl'
-  			})
-  			.when('/personal_cabinet/unfinished', {
-	    		templateUrl: 'modules/personalCabinet/unfinished.html',
-	    		controller: 'UnfinishedCtrl'
-  			})
-  			.when('/personal_cabinet/unapproved', {
-	    		templateUrl: 'modules/personalCabinet/unapproved.html',
-	    		controller: 'UnapprovedCtrl'
-  			})
-  			.when('/personal_cabinet/created', {
-	    		templateUrl: 'modules/personalCabinet/created.html',
-	    		controller: 'CreatedCtrl'
-  			})
   			.when('/personal_cabinet/profile', {
 	    		templateUrl: 'modules/personalCabinet/profile.html',
 	    		controller: 'ProfileController',
 	    		controllerAs: 'profile'
+  			})
+  			.when('/personal_cabinet/:status', {
+	   			templateUrl: 'modules/personalCabinet/quizzestabs.html',
+	    		controller: 'QuizzesTabsCtrl'
   			});
 }])
 
@@ -42,8 +30,31 @@ angular.module('yunakQuiz.personalCabinet', ['ngRoute', 'flow'])
 
 }])
 
-.controller('CreatedCtrl', [function() {
+.controller('QuizzesTabsCtrl', ['$scope', '$routeParams', 'QuizData', function($scope, $routeParams, QuizData) {
+	
+	$scope.activeTab = $routeParams.status;
+	$scope.quizUrl = "http://localhost:8000/#/assessments/";
+	$scope.quizEditUrl = "http://localhost:8000/#/admin/assessments/";
 
+	
+	$scope.getQuizess = function(){
+		QuizData.getAll($scope.activeTab)
+			.success(function(data, status, headers, config){
+				$scope.quizzes = data;
+			})
+			.error(function(data){
+				$location.path('/404/');
+			});
+	};
+	 
+
+	$scope.deleteQuiz = function(quiz_id) {
+		if (confirm("Ви точно бажаєти видалити тест №"+quiz_id)) {
+			QuizData.deleteQuiz(quiz_id)
+				.success(function(data){
+					$scope.getQuizess();
+				});
+		}
+	};
+	$scope.getQuizess();
 }]);
-
-

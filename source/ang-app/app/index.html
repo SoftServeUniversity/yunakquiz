@@ -12,9 +12,10 @@
   <link rel="stylesheet" href="bower_components/html5-boilerplate/css/normalize.css">
   <link rel="stylesheet" href="bower_components/html5-boilerplate/css/main.css">
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+  <link href="bower_components/angular-xeditable/dist/css/xeditable.css" rel="stylesheet">
   <link rel="stylesheet" href="app.css"/>
-  <script src="bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="bower_components/ng-tags-input/ng-tags-input.css">
+    <script src="bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"></script>
 </head>
 <body>
   <ul class="menu">
@@ -27,9 +28,9 @@
   <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
   <![endif]-->
-
-  <div ng-view></div>
-
+  <div class="container">
+    <div ng-view></div>
+  </div>
   <div>App version: v<span app-version></span></div>
 
   <!-- In production use:
@@ -42,11 +43,15 @@
   <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   <script src="bower_components/flow.js/dist/flow.min.js"></script>
   <script src="bower_components/ng-flow/dist/ng-flow-standalone.min.js"></script>
+  <script src="bower_components/ng-tags-input/ng-tags-input.js"></script>
   <script src="app.js"></script>
   <script src="modules/measures/measures.js"></script>
   <script src="modules/assessments/assessments.js"></script>
   <script src="modules/assessments/services.js"></script>
-  <script src="modules/assessments/controllers.js"></script>
+  <script src="modules/assessments/QuizCtrl.js"></script>
+  <script src="modules/assessments/AssessmentsResultCtrl.js"></script>
+  <script src="modules/assessments/QuizEditCtrl.js"></script>
+  <script src="modules/assessments/QuizCreateCtrl.js"></script>
   <script src="modules/users/users.js"></script>
   <script src="modules/sessions/sessions.js"></script>
   <script src="modules/personalCabinet/personalCabinet.js"></script>
