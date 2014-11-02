@@ -124,14 +124,6 @@ module PlastApp
       PlastApp::SearchQuizzes.withCatId(params['category_id']).to_json 
     end  
 
-    post '/search' do
-      content_type :json
-    search_request = JSON.parse(request.body.read) 
-    #this function is part of module SerchQuizzes as parameter gets object {category_id: ['1','2',..'n'] , tags:['teg1','teg2',..'n']}
-    #if category_id is not passed then search in all subcategories
-    PlastApp::SearchQuizzes.withTags(search_request) 
-    end
-
     get '/subcat_quiz/:id' do
       content_type :json
       match_quizzes=Quiz.where("category_id=?",params[:id]).order('updated_at').reverse_order.limit(3).select(['id','category_id','title','description','updated_at']).as_json
@@ -159,6 +151,24 @@ module PlastApp
       else
         return [400, "Not found "+params['status']]
       end
+    end
+
+    # For all categories
+    get '/guest-search' do
+      content_type :json
+      Category.select('id, category_id, title').to_json
+    end 
+     
+    options '/*' do 
+      '*'           
+    end
+
+    post '/search' do
+      content_type :json
+      search_request = JSON.parse(request.body.read) 
+      # This function is part of module SerchQuizzes as parameter 
+      # Gets object {category_id: ['1','2',..'n'] , tags:['teg1','teg2',..'n']}
+      SearchQuizzes.withTags(search_request) 
     end
     
     post '/user' do

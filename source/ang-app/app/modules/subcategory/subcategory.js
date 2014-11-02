@@ -10,6 +10,7 @@
         })
       }
     ]);
+    
     app.controller("subcatCtrl", 
       ['$scope', '$http', '$routeParams', 'searchTag', 'catsById',  
       function ($scope, $http, $routeParams, searchTag, catsById) {
@@ -51,4 +52,3 @@
       };
     }]);
 })();
-
