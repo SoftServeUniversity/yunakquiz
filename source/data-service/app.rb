@@ -59,12 +59,12 @@ module PlastApp
       end    
     end
 
-    post '/login' do
+    post '/access' do
       data = JSON.parse request.body.read
       user = User.authenticate(data['username'], data['password'])
       if !user.nil?
         session[:user_id] = user.id
-        return [200, user.username]
+        return [200, user.attributes.to_json]
       end
         return [401, "unauthorized"]
     end
@@ -96,7 +96,7 @@ module PlastApp
       end
     end
 
-    get '/logout' do
+    delete '/access' do
       session.clear
       return [200, "ok"]
     end  
@@ -158,6 +158,16 @@ module PlastApp
         JSON.pretty_generate(quizzes) 
       else
         return [400, "Not found "+params['status']]
+      end
+    end
+    
+    post '/user' do
+      data = JSON.parse request.body.read
+      user = User.new(data)
+      if user.save
+        return [200, "ok"]
+      else
+        return [400, user.errors.messages.to_json]
       end
     end
 
