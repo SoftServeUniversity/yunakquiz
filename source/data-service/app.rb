@@ -44,15 +44,7 @@ module PlastApp
       end  
     end
 
-
-# @json = Array.new
-# nearby_sales.each do |sale|
-#   @json << sale.locations.to_gmaps4rails
-# end
-# @json.to_json
-
     get '/admin' do
-
       if session[:id]
         user = User.find(session[:id])
         list = Array.new 
@@ -86,7 +78,7 @@ module PlastApp
     post '/register' do
       data = JSON.parse request.body.read
       user = User.new(data)
-      # hardcode for roles. 1-admin, 2 - moder, 3 - user
+      # hardcode for roles. 1-admin, 2 - moder, 3 - user, 12 - admin+moder role
       user.role_id = 12
       if user.save
         return [200, "ok"]
