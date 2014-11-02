@@ -21,17 +21,18 @@ module SearchQuizzes
   def SearchQuizzes.withTags(search_request)
 
     # Initialize SQlite string for search
-    search_string = "SELECT GROUP_CONCAT(tag) as tagString, quizzes.* \
-    FROM quizzes INNER JOIN tags \
-    ON quizzes.id = tags.quiz_id WHERE category_id IN (?)"
+    search_string = "SELECT GROUP_CONCAT(tag, \' \') as tagString, quizzes.* \
+    FROM quizzes INNER JOIN tags ON quizzes.id = tags.quiz_id \
+    WHERE category_id IN (?) GROUP BY quizzes.title HAVING tagString LIKE \'%"\
+     << search_request['tags'][0] << "%\'"
 
     # Adding % to tegs for db request
     search_request['tags'].map! {|tag| search_string \
-    << " AND tag LIKE '%#{tag}%'"}
+    << " AND tagString LIKE \'%#{tag}%\'"}
 
     # Adding end of db request string
     search_string = search_string \
-    << "GROUP BY quizzes.title ORDER BY title;"
+    << "ORDER BY title;"
 
     # Main Request to db 
     # Using string that was generated
@@ -41,7 +42,5 @@ module SearchQuizzes
     return search_result.to_json
 
   end
-
-  
 
 end
