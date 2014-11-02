@@ -55,7 +55,6 @@ angular.module('yunakQuiz.admin', ['ngRoute'])
     
 	return{
 		get: function(){
-			// return $http.get("http://localhost:9292/admin",{ withCredentials: true})		
 			return $http.get("http://localhost:9292/admin")
 		}
 	}

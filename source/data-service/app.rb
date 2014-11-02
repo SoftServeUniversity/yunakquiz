@@ -46,13 +46,10 @@ module PlastApp
 
     get '/admin' do
 
-      puts "session first is #{session[:id]}"
       if session[:id]
-        puts "session second is #{session[:id]}"
         user = User.find(session[:id])
         role = Role.find(user.role_id)
         base = Permission.where("#{role.name} = #{role.id}").select("tabs").to_json
-        puts "base is: #{base}"
         return base
       end  
     end
