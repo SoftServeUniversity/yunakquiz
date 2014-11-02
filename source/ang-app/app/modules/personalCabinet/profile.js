@@ -1,10 +1,19 @@
+(function(){
 angular.module('yunakQuiz.personalCabinet')
 .config(["flowFactoryProvider", function(flowFactoryProvider) {
   flowFactoryProvider.defaults = {
     target: 'http://localhost:9292/avatar',
     permanentErrors: [404, 500, 501],
+    testChunks: false
   };
 }])
+.factory('userService', ['$resource',
+        function($resource) {
+            return $resource('/user', null,
+            {
+                'update': { method:'PUT' }
+            }); 
+    }])
 .controller("ProfileController", ["userService", function(userService){
     this.user = {};
     var profile = this; 
@@ -52,3 +61,4 @@ angular.module('yunakQuiz.personalCabinet')
       this.$flow.upload();
     };
 }]);
+})();
