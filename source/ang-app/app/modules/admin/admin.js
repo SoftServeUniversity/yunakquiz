@@ -66,16 +66,16 @@ angular.module('yunakQuiz.admin', ['ngRoute'])
 	AccessTabs.get()
 		.success(function(data){
 			var result = [];
-			$scope.got = data;
 			var givenTabs = tabs;
 			var userAccess = data;
 			var i=0;
 			var j=0;
+			
 			var tlen = givenTabs.length;
 			var alen = userAccess.length;
 			for (j; j < alen; j++) {
 				for (i; i < tlen; i++) {
-  					if(givenTabs[i].name == userAccess[j].tabs){
+  					if(givenTabs[i].name == userAccess[j]){
   						result.push(givenTabs[i].temp);
   					}			
   				};

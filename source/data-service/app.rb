@@ -44,13 +44,26 @@ module PlastApp
       end  
     end
 
+
+# @json = Array.new
+# nearby_sales.each do |sale|
+#   @json << sale.locations.to_gmaps4rails
+# end
+# @json.to_json
+
     get '/admin' do
 
       if session[:id]
         user = User.find(session[:id])
-        role = Role.find(user.role_id)
-        base = Permission.where("#{role.name} = #{role.id}").select("tabs").to_json
-        return base
+        list = Array.new 
+        roles = user.role_id.to_s        
+        roles.each_char { |value|
+          role = Role.find(value)
+          list.concat(Permission.where("#{role.name} = #{role.id}").pluck("tabs"))
+        }
+        list.uniq!
+        rezz = list.to_json
+        return rezz
       end  
     end
 
@@ -74,7 +87,7 @@ module PlastApp
       data = JSON.parse request.body.read
       user = User.new(data)
       # hardcode for roles. 1-admin, 2 - moder, 3 - user
-      user.role_id = 2
+      user.role_id = 12
       if user.save
         return [200, "ok"]
       else
