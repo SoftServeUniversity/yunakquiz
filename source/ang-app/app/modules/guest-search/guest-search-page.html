@@ -1,100 +1,89 @@
                                 <!--Header-->
-
 <div class="row">
 	<div class="col-xs-12 pageTitleBox bg-primary">
-        <h3 class="pageTitle ">Гостьовий пошук</h3>
-    </div>
+    <h3 class="pageTitle ">Гостьовий пошук</h3>
+  </div>
 </div> 
 
                             <!--End of header-->
 
-
-<div class="row">
-    <div class="col-xs-12">
-        <br />
-    </div>
-</div>
-
-
-
 <div class="container">
-
                         <!--Here go category selection-->
 
-    <div class="well col-xs-3">
+  <div class="well col-xs-3">
 
 
-        <div ng-repeat="parCat in allCats | filter: {category_id: '0'}">
+    <div ng-repeat="parCat in allCats | filter: {category_id: '0'}">
             
-            <a  class="list-group-item"
-                ng-init="parCat.search=false"
-                ng-click="selectSubCat(allCats, parCat)"
-                ng-class="{active: parCat.search}"> 
-                {{parCat.title}} 
-            </a>
+      <a  class="list-group-item"
+          ng-init="parCat.search=false"
+          ng-click="selectSubCat(allCats, parCat)"
+          ng-class="{active: parCat.search}"> 
+          {{parCat.title}} 
+      </a>
 
-            <div ng-repeat="subCat in allCats"> 
+      <div ng-repeat="subCat in allCats"> 
 
-                <a  ng-if="subCat.category_id === parCat.id"
-                    class="list-group-item col-xs-offset-1"
-                    ng-init="subCat.search=false" 
-                    ng-class="{search_subcat_select: subCat.search}"
-                    ng-click="subCat.search = !subCat.search">
-                    {{subCat.title}}
-                    </a>
-            </div>
-        </div>
-        <br />
-        <button class="btn btn-info btn-block" 
-                ng-click="searchData(allCats, searchRequest.tags)">
-                Застосувати фільтр
-        </button>
+        <a  ng-if="subCat.category_id === parCat.id"
+            class="list-group-item col-xs-offset-1"
+            ng-init="subCat.search=false" 
+            ng-class="{search_subcat_select: subCat.search}"
+            ng-click="subCat.search = !subCat.search">
+            {{subCat.title}}
+        </a>
+      </div>
     </div>
+
+    <button class="btn btn-info btn-block"
+            style="margin-top: 15px;" 
+            ng-click="searchData(allCats, searchRequest.tags)">
+            Застосувати фільтр
+    </button>
+
+  </div>
     
                     <!--End of category selection-->
 
                         <!--Tags input block-->
 
-    <div class="input-group col-xs-offset-4">
-        <div class="col-xs-10">
-        <tags-input 
-                    type="text" 
-                    class="bootstrap" 
-                    placeholder="введіть шось для пошуку..." 
-                    ng-model="tags" 
-                    add-on-space="true"
-                    min-length="1">
-        </tags-input>
-        <span class="input-group-btn btn-block">
-            <button class="btn btn-primary" 
-                    type="button" 
-                    ng-click="searchData(allCats, searchRequest.tags)">
-                    Пошук
-            </button>
-        </span>  
-        </div>                  
-    </div>
-
-    <div class="col-xs-9">
-        <br />
-    </div>
-
+  <div class="input-group col-xs-offset-4">
+    <div  class="col-xs-10"
+          style="margin-left: -15px;
+          width: 664px;">
+      <tags-input type="text" 
+                  class="bootstrap" 
+                  placeholder="введіть шось для пошуку..." 
+                  ng-model="tags" 
+                  add-on-space="true"
+                  min-length="1">
+      </tags-input>
+      <span class="input-group-btn btn-block">
+        <button class="btn btn-primary" 
+                type="button" 
+                ng-click="searchData(allCats, searchRequest.tags)"
+                style="" >
+                Пошук
+        </button>
+      </span>  
+    </div>                  
+  </div>
 
                     <!--End of tags input block-->
 
                     <!--Results of search engine-->
 
-    <div class= "col-xs-offset-4">
-        <div ng-repeat="quiz in searchResults" >
-            <div class="col-xs-10 search-result well">
-                <div class="content">
-                    <h3 class="text-center">{{quiz.title}}</h3>
-                    <p class="text-justify">{{quiz.description}}</p><br>
-                    <span class=""><a><small>{{quiz.tagString}}</small></a></span>
-                </div>
-            </div>
+  <div  class= "col-xs-offset-4"
+        style="margin-top: 15px;">
+    <div ng-repeat="quiz in searchResults" >
+      <div class="col-xs-10 search-result well">
+        <div class="content">
+          <h3 class="text-center"><a style="text-decoration: none;" href="">{{quiz.title}}</a></h3>
+          <p class="text-justify">{{quiz.description}}</p><br>
+          <div class="text-center"><span ng-repeat="tag in quiz.allTags"><a ng-click="addTag(tag)"><small> {{tag}} </small></a></span></div>
         </div>
+      </div>
     </div>
+  </div>
 
                         <!--End of Results-->
 </div>
