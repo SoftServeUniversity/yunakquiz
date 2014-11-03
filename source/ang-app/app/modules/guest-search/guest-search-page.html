@@ -7,12 +7,6 @@
 
                             <!--End of header-->
 
-<div class="row">
-  <div class="col-xs-12">
-    <br />
-  </div>
-</div>
-
 <div class="container">
                         <!--Here go category selection-->
 
@@ -39,9 +33,9 @@
         </a>
       </div>
     </div>
-    <br />
 
-    <button class="btn btn-info btn-block" 
+    <button class="btn btn-info btn-block"
+            style="margin-top: 15px;" 
             ng-click="searchData(allCats, searchRequest.tags)">
             Застосувати фільтр
     </button>
@@ -53,7 +47,9 @@
                         <!--Tags input block-->
 
   <div class="input-group col-xs-offset-4">
-    <div class="col-xs-10">
+    <div  class="col-xs-10"
+          style="margin-left: -15px;
+          width: 664px;">
       <tags-input type="text" 
                   class="bootstrap" 
                   placeholder="введіть шось для пошуку..." 
@@ -64,7 +60,8 @@
       <span class="input-group-btn btn-block">
         <button class="btn btn-primary" 
                 type="button" 
-                ng-click="searchData(allCats, searchRequest.tags)">
+                ng-click="searchData(allCats, searchRequest.tags)"
+                style="" >
                 Пошук
         </button>
       </span>  
@@ -72,14 +69,15 @@
   </div>
 
   <div class="col-xs-9">
-    <br />
+    <span></span>
   </div>
 
                     <!--End of tags input block-->
 
                     <!--Results of search engine-->
 
-  <div class= "col-xs-offset-4">
+  <div  class= "col-xs-offset-4"
+        style="margin-top: 15px;">
     <div ng-repeat="quiz in searchResults" >
       <div class="col-xs-10 search-result well">
         <div class="content">
