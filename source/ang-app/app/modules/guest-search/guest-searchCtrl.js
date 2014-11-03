@@ -63,13 +63,29 @@ guestSearch.controller('SearchCtrl', ['$scope', '$http',
     // Main request to server for search
     // If it empty show error
     searchTag.request($scope.searchRequest, function(data){
-      $scope.searchResults = data;
-
-      if ($scope.searchResults.length === 0){
+      if (data.length === 0){
+        $scope.searchResults = {};
         $scope.searchResults[0] = {title: 'Нічого не знайдено'};
+      } else {
+        $scope.searchResults = guestSearchFactory.tagsToArray(data);
       };
 
     });
+
+  };
+
+  // Adding tags from results container 
+  // To input search and check if same 
+  // Tags are in tag array
+  $scope.addTag = function(tag) {
+
+    // Avoid duplication in tags 
+    for (var i = 0 ; $scope.tags.length > i ; i++){
+      if ($scope.tags[0].text === tag){}
+    };
+  
+    var text = {text: tag}
+    $scope.tags.push(text); 
 
   };
 
