@@ -111,7 +111,7 @@
 /* end assessment styles */
 
 /* Guest search styles */
-.search-result{
+.search-result {
   border: solid 2px transparent;
   padding: 0 19px;
   cursor: pointer;
@@ -119,6 +119,12 @@
   -webkit-transition: all .8s linear 0.1s;
   -o-transition: all .2s linear 0.1s;
   transition: all .2s linear 0.1s;
+}
+
+.search-result:hover {   
+border: solid 2px rgb(221, 219, 219);    
+  box-shadow: 0 3px 6px rgba(0, 0, 0, .6);   
+  border-radius: 5px;    
 }
 
 }
