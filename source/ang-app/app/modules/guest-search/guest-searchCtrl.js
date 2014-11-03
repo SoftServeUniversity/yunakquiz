@@ -62,6 +62,7 @@ guestSearch.controller('SearchCtrl', ['$scope', '$http',
           
     // Main request to server for search
     // If it empty show error
+    // See subcategory.js for more information
     searchTag.request($scope.searchRequest, function(data){
       if (data.length === 0){
         $scope.searchResults = {};
