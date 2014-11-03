@@ -5,11 +5,22 @@
 describe('Signup page', function() {
     var httpBackendMock = function() {
         angular.module('httpBackendMock', ['yunakQuiz', 'ngMockE2E']).run(function($httpBackend) {
-         $httpBackend.whenPOST("http://localhost:9292/register", {username: 'Inokentiy', password: '12345678', password_confirmation: '12345678', email: 'ewrrg@fgfgf', birthday: '2014-10-08'})
-         .respond([400, {"username":"has already been taken"}]);
-         $httpBackend.whenGET(/modules\/\w+.*/).passThrough();
+         var user = {username: 'Inokentiy', password: '12345678', password_confirmation: '12345678', email: 'ewrrg@fgfgf', birthday: '2014-10-08'};
+         var userok = {username: 'Igoryan', password: '12345678', password_confirmation: '12345678', email: 'ewrrg@fgfgf', birthday: '2014-10-08'};
+         // $httpBackend.whenPOST("http://localhost:9292/register")
+          $httpBackend.whenPOST('http://localhost:9292/register', user).respond(function(method, url, data, headers) {
+            console.log('Received these data:', method, url, data, headers);
+            return [400, {"username":"has already been taken"}, {}];
+          });
+
+          $httpBackend.whenPOST('http://localhost:9292/register', userok).respond(function(method, url, data, headers) {
+            console.log('Hohoho lucky motherfucker', method, url, data, headers);
+            return [200, "ok", {}];
+          });
+         // .respond([400, {"username":"has already been taken"}]);
+         // $httpBackend.whenGET(/modules\/\w+.*/).passThrough();
          $httpBackend.whenGET(/^\w+.*/).passThrough();
-        // $httpBackend.whenGET(/localhost:8000\/\w+.*/).passThrough();
+         //$httpBackend.whenGET().passThrough()
         });
     };
     var ptor =  protractor.getInstance();
@@ -68,9 +79,21 @@ describe('Signup page', function() {
         element(by.css('[name=birthday]')).sendKeys("10082014");
         element(by.model('reg.enteredCaptcha')).sendKeys(captcha);
         element(by.buttonText('Реєстрація')).click();
-        browser.sleep(50000);
+        //ptor.sleep(50000);
         expect(element(by.css('[name=username]+div')).getText()).toBe("Username has already been taken");
-        b
+    });
+
+        it('should display error message when Username has already been taken', function() {
+        var captcha = element(by.binding('reg.captcha')).getText()
+        element(by.css('[name=email]')).sendKeys("ewrrg@fgfgf");
+        element(by.css('[name=username]')).sendKeys("Igoryan");
+        element(by.css('[name=password]')).sendKeys("12345678");[]
+        element(by.css('[name=password_confirmation]')).sendKeys("12345678");
+        element(by.css('[name=birthday]')).sendKeys("10082014");
+        element(by.model('reg.enteredCaptcha')).sendKeys(captcha);
+        element(by.buttonText('Реєстрація')).click();
+        ptor.sleep(50000);
+        expect(element(by.css('[name=username]+div')).getText()).toBe("Username has already been taken");
     });
 
   });
