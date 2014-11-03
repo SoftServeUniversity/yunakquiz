@@ -27,44 +27,66 @@ var yunakQuizApp = angular.module('yunakQuiz.personalCabinet', ['ngRoute', 'ui.b
             lastText: '≫'
         })
 
-.controller('PersonalCabinetCtrl', ['$scope','QuizData', '$routeParams','$http','$location', function($scope, QuizData, $routeParams, $http, $location) {
+.controller('PersonalCabinetCtrl', ['$scope','QuizData', '$routeParams','$http','$location','$modal', function($scope, QuizData, $routeParams, $http, $location,$modal) {
   
-  $scope.totalItems = 100;
-  $scope.currentPage = 1;
-  $scope.itemsPerPage= 10;
-
   $scope.tab = $routeParams.state || "published";
-  $scope.search={};
-  $scope.quizUrl = '#/assessments/';
 
-  // $scope.getAll = function(){
-  //   QuizData.getAll($scope.tab).success(function(data) {
-  //       $scope.quizes = data;
-  //   });
-  // };
-
-  $scope.pageChanged = function() {
-    QuizData.getAll($scope.tab, $scope.currentPage).success(function(data, status, headers, config) {
-        $scope.quizzes = data;
-        $scope.totalItems = headers('Pagination-Total-Items');
-    });
+  $scope.outputData={
+    currentPage: 1,
+    itemsPerPage: 10,
+    searchData:''
   };
 
-  $scope.quizSearch = function(){
-    QuizData.getSearch($scope.tab,$scope.search).success(function(data) {
-        console.log(data);
-        $scope.quizzes = data;
+  $scope.inputData={};
+
+  $scope.quizUrl = '#/assessments/';
+
+  $scope.updateData = function(data){
+    $scope.quizzes = data.quizzes;
+    $scope.inputData = data.queryData;
+  }
+
+  $scope.searchQuery = function(){
+    $scope.outputData.currentPage = 1;
+    $scope.queryList();
+  };
+
+  $scope.queryList = function() {
+    QuizData.queryList($scope.tab, $scope.outputData).success(function(data, status, headers, config) {
+        $scope.updateData(data);        
     });
   };
 
   $scope.deleteQuiz= function(quizId){
-    QuizData.delete(quizId).success(function(data) {
-      $scope.pageChanged();
-  });
+    var modalDelete = $modal.open({
+      templateUrl: 'modules/personalCabinet/modalDelete.html',
+      controller: 'ModalDeleteCtrl',
+      size: 'sm'
+    });
+
+    // modalInstance.result.then(function (selectedItem) {
+    //   $scope.selected = selectedItem;
+    // }, function () {
+    //   $log.info('Modal dismissed at: ' + new Date());
+    // });
+
+  //   QuizData.delete(quizId).success(function(data) {
+  //     $scope.searchQuery();
+  // });
   };
 
   
-  $scope.pageChanged();
+  $scope.queryList();
+}])
+.controller('ModalDeleteCtrl', ['$scope','$modalInstance', function($scope, $modalInstance) {
+  $scope.ok = function () {
+    $modalInstance.close();
+  };
+
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+  };
+
 }])
 
 .controller('PersonalCabinetProfileCtrl', ['$scope', '$routeParams','$http', function($scope, $routeParams, $http) {

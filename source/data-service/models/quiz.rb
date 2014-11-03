@@ -28,40 +28,34 @@ class Quiz < ActiveRecord::Base
     if quiz.nil?
       return {'error' => "Quiz not found"}
     else  
-      quiz.to_json(:include => [
-        {:questions => {:include => :answers}},
-        {:category => {:include=> {:category =>{:only => :title }},
-         :only=> :title}}
-      ])
+      quiz.to_json(:include => {:questions => {:include => :answers}})
     end
   end
 
-  def self.quizQuery(status='published', query = '')
+  def self.quizQuery(status='published', query = '', page=0, per_page = 10)
+    page = page.to_i - 1
     statusCode =  Quiz.statuses[status] 
     query = '%'+query[0,20]+'%'
     if statusCode 
-      quizzes = Quiz.where("status=? AND title like ?", statusCode, query)
-      quizzes.to_json(:include => [
-        {:questions => {:include => :answers}},
-        {:category => {:include=> {:category =>{:only => :title }},
+      quizzes = Quiz.where("status=? AND title like ?", statusCode, query).offset(page*per_page.to_i).limit(per_page)
+      quizzes = quizzes.as_json(:include => 
+        {:category => {:include=> {:category =>{:only => :title}},
          :only=> :title}}
-      ])
+        )
+      resultData = {
+        'quizzes' => quizzes,
+        'queryData' => {
+          'totalItems' => queryCount(status,query)
+        }
+      }
+      resultData
     end
   end
 
-  def self.queryList(status="published", page=1, per_page = 10)
-    page = page.to_i - 1
+  def self.queryCount(status="published",query)
     statusCode =  Quiz.statuses[status] 
     if statusCode
-      return Quiz.where(status: statusCode).offset(page*per_page.to_i).limit(per_page).as_json
-
-    end
-  end
-
-  def self.queryCount(status="published")
-    statusCode =  Quiz.statuses[status] 
-    if statusCode
-      return Quiz.where(status: statusCode).count().to_s
+      return Quiz.where("status=? AND title like ?", statusCode, query).count()
     end
   end
 

@@ -15,13 +15,16 @@ yunakQuizApp.factory('QuizData', ['$http', '$location', function($http, $locatio
             return $http.post('http://localhost:9292/admin/assessments', quiz)
           },
 
-      getAll: function(state, page){
-            page = page || 0;
-            return $http.get('http://localhost:9292/admin/assessments/'+state+'/'+page ) 
+      getList: function(state){
+            return $http.get('http://localhost:9292/admin/assessments/'+state) 
           },
 
-      getSearch: function(state,searchData){
-            return $http.post('http://localhost:9292/admin/assessments/'+state, searchData) 
+      getCat: function(){
+            return $http.get('http://localhost:9292/categories') 
+          },
+
+      queryList: function(state, queryData){
+            return $http.post('http://localhost:9292/admin/assessments/'+state, queryData) 
           },
 
       delete: function(id){

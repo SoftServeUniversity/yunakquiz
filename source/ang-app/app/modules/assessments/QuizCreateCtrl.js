@@ -2,30 +2,18 @@
 /** Quiz Create controller  */
 yunakQuizApp.controller('QuizCreateCtrl', ['$scope','QuizData','tags', '$location', function($scope, QuizData,tags, $location) {
 
-	/** MOCK - get categories and subCats object */
-	$scope.categories =[
-	{id:1,category_id:0,title:"Спорт"},
-	{id:4,category_id:0,title:"Історія"}
-	];
-	$scope.sub1 = [
-		{id:2,category_id:1,title:"Футбол"},
-		{id:3,category_id:1,title:"Хокей"}
-	];
-	$scope.sub2 = [
-		{id:5,category_id:4,title:"Історія України"},
-		{id:6,category_id:4,title:"Історія світу"}
-	];
 	 $scope.loadTags = function(query) {
 	    return tags.load();
 	};
 
-	$scope.getSubcats = function() {
-		if($scope.selectedCat.id ==1){
-			$scope.subcats = $scope.sub1;
-		} else {$scope.subcats = $scope.sub2;}
+	$scope.getCat = function(){
+		QuizData.getCat().success(function(data, status, headers, config) {
+        	$scope.categories=data;        
+    	});
 	};
-	$scope.setSubcat=function(){
-		$scope.quiz.category_id = $scope.selectedSubcat.id;
+
+	$scope.clearSubcat = function(){
+		$scope.selectedSubcat='';
 	};
 
 	$scope.init = function() {
@@ -33,7 +21,7 @@ yunakQuizApp.controller('QuizCreateCtrl', ['$scope','QuizData','tags', '$locatio
 		$scope.quiz = {};
 		$scope.quiz.questions = [];
 		$scope.addQuestion();
-
+		$scope.getCat();
 	};
 
 	$scope.addAnswer = function(question) {
@@ -88,17 +76,6 @@ yunakQuizApp.controller('QuizCreateCtrl', ['$scope','QuizData','tags', '$locatio
 		$scope.sendQuiz("review");
 	};
 
-	/** show status message */
-	$scope.showMessage = function(message,msgClass){
-		window.scrollTo(0,0);
-		$scope.sendMessage =message;
-		$scope.sendMessageClass = msgClass;
-		setTimeout(function () {
-        	$scope.$apply(function () {
-            	delete $scope.sendMessage;
-        	});
-    	}, 2000);
-	};
 
 	/** Redirect to result-page if quiz is valid  */
 	$scope.sendQuiz = function(state){
@@ -109,16 +86,11 @@ yunakQuizApp.controller('QuizCreateCtrl', ['$scope','QuizData','tags', '$locatio
 			
 			QuizData.create($scope.quiz)
 				.success(function(data, status, headers, config) {
-					if(state=="draft"){
-						$scope.showMessage('Ваш тест збережено','alert-success');
-					}
-					else {
-						$scope.showMessage('Ваш тест відправлено на модерацію','alert-warning');
-						$location.path('/admin/personalCabinet/review');
-					};
+						$location.path('/admin/personalCabinet/'+state);
 				})
-	            .error( function(data, status, headers, config) { 
-					$scope.showMessage('Ваш тест не збережено','alert-danger');
+	            .error(function(data, status, headers, config) {
+	            	window.scrollTo(0,0);
+					$scope.errorMsg = 'Ваш тест не збережено';
 	            });
 		};
 	};

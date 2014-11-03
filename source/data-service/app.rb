@@ -75,14 +75,16 @@ module PlastApp
       {response: "Assessment #{params['id']} has been deleted"}.to_json
     end
 
-    
-
-    get '/admin/assessments/:status/:page' do
+    get '/categories' do
       content_type :json
-      quizzes = Quiz.queryList(params['status'], params['page'])
+      JSON.pretty_generate(Category.catList)
+    end  
+
+    get '/admin/assessments/:status' do
+      content_type :json
+      quizzes = Quiz.quizQuery(params['status'])
       if quizzes
-        response.headers['Pagination-Total-Items'] = Quiz.queryCount(params['status'])
-        JSON.pretty_generate(quizzes) 
+        JSON.pretty_generate(quizzes)
       else
         return [400, "Not found "+params['status']]
       end
@@ -92,9 +94,9 @@ module PlastApp
       content_type :json
       data = JSON.parse(request.body.read)
       #check permisions here
-      quizzes = Quiz.quizQuery(params['status'],data['title'])
+      quizzes = Quiz.quizQuery(params['status'],data['searchData'],data['currentPage'],data['itemsPerPage'])
       if quizzes
-        quizzes
+        JSON.pretty_generate(quizzes)
       else
         return [400, 'Error']
       end
