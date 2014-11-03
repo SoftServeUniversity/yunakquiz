@@ -50,8 +50,10 @@ guestSearch.controller('SearchCtrl', ['$scope', '$http',
       };
     };
 
+    // Adding all tags to request
+    // and all tags to lower case 
     for (var i = 0 ; $scope.tags.length > i ; i++){
-      $scope.searchRequest.tags.push($scope.tags[i].text);
+      $scope.searchRequest.tags.push($scope.tags[i].text.toLowerCase());
     };
 
     // Check if there were some tags

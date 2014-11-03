@@ -52,6 +52,7 @@ ActiveRecord::Schema.define(version: 20141027113651) do
     t.integer  "category_id"
     t.string   "title"
     t.text     "description"
+    t.integer  "status",      default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
