@@ -80,13 +80,20 @@ guestSearch.controller('SearchCtrl', ['$scope', '$http',
   $scope.addTag = function(tag) {
 
     // Avoid duplication in tags 
-    for (var i = 0 ; $scope.tags.length > i ; i++){
-      if ($scope.tags[0].text === tag){}
+    // And if it founds it writes 
+    // in var duplicateFound
+    for (var i = 0 ; $scope.tags.length > i ; i++) {
+      if ($scope.tags[0].text === tag) {
+        var duplicateFound = true;
+      }; 
     };
-  
-    var text = {text: tag}
-    $scope.tags.push(text); 
 
+    if (!duplicateFound) {
+      var text = {text: tag}
+      $scope.tags.push(text);
+      // Set variable to false to avoid errors
+      var duplicateFound = false;
+    };
   };
 
 }]);
