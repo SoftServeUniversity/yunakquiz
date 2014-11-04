@@ -2,7 +2,7 @@
 
 /* https://github.com/angular/protractor/blob/master/docs/toc.md */
 
-describe('e2e test for quiz creation page', function() {
+xdescribe('e2e test for quiz creation page', function() {
 	
 	var ptor =  protractor.getInstance();
  	var mockModule = require('../http_backend_quiz.js');
