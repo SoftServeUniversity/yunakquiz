@@ -33,9 +33,7 @@ yunakQuizApp.factory('QuizData', ['$http', '$location', function($http, $locatio
 
       getComments: function(id){
             return $http.get('http://localhost:9292/admin/assessments/'+id+'/comments')
-          }, 
-
-      quiz:{}
+          }
     }
   }
 ]);

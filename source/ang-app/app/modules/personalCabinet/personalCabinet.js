@@ -1,4 +1,4 @@
-var yunakQuizApp = angular.module('yunakQuiz.personalCabinet', ['ngRoute', 'ui.bootstrap'])
+var yunakQuizApp = angular.module('yunakQuiz.personalCabinet', ['ngRoute', 'ui.bootstrap', 'reCAPTCHA'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider
@@ -15,7 +15,6 @@ var yunakQuizApp = angular.module('yunakQuiz.personalCabinet', ['ngRoute', 'ui.b
     controller: 'PersonalCabinetCtrl'
   })   
 }])
-
  .constant('paginationConfig', {
             boundaryLinks: true,
             directionLinks: true,

@@ -81,21 +81,54 @@
 }
 
 /* assessment styles */
-.quiz textarea{resize:both;}
-.quizMarginTop{margin-top:20px;}
-.questionField{position:relative;}
-.closeButton{position:absolute;top:5px; right:5px; cursor:pointer;}
-.assessmentQuestion>li{margin-top:10px;}
-.quizBtnFix{position:relative;top:0; width:40px; cursor:pointer;}
-.markCorrectAnswerBtn{opacity:0.4;}
-.quizCorrectAnswer{background:#99E6AC;opacity:1;}
-.quizDeleteAnswer{background:#F69999;}
-.assessmentAnswer>li{cursor:pointer;}
+.quizMarginTop{
+  margin-top:20px;
+}
+.questionField{
+  position:relative;
+}
+.closeButton{
+  position:absolute;
+  top:5px; 
+  right:5px;
+   cursor:pointer;
+ }
+.assessmentQuestion>li{
+  margin-top:10px;
+}
+.quizBtnFix{
+  position:relative;
+  top:0;
+   width:40px;
+    cursor:pointer;
+  }
+.markCorrectAnswerBtn{
+  opacity:0.4;
+}
+.quizCorrectAnswer{
+  background:#99E6AC;
+  opacity:1;
+}
+.quizDeleteAnswer{
+  background:#F69999;
+}
+.assessmentAnswer>li{
+  cursor:pointer;
+}
 .assessment-title{
-  background:#428bca; 
-  line-height:50px;
+  background:#428bca;
   color:#fff; 
+  line-height:50px;
   margin:0 0 20px 0;
+}
+.nav-tabs.nav-justified>li.persCabActive>a{
+  background:#31b0d5;
+  color:#fff;
+  border-color:#31b0d5;
+}
+.nav-tabs.nav-justified>li.persCabActive>a:hover{
+  border-color:#31b0d5;
+  cursor:default;
 }
 .quiz .ng-dirty.ng-invalid{
   border-color: #a94442;

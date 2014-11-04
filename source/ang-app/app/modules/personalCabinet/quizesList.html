@@ -1,7 +1,7 @@
 <div ng-include="'modules/personalCabinet/personalCabinetHeader.html'"></div>
 <table class="table table-hover">
 	<thead>
-		<tr class="info">
+		<tr>
 			<th>№</th>
 			<th class="col-md-6">Назва тесту</th>
 			<th class="col-md-2 text-center">Категорія тесту</th>
@@ -14,7 +14,8 @@
 		<tr ng-repeat="quiz in quizzes">
 			<td>{{outputData.itemsPerPage*(outputData.currentPage-1)+$index+1}}</td>
 			<td>
-				<a ng-href="{{quizUrl+quiz.id}}">{{quiz.title}}</a>
+				<a ng-if="tab=='published'" ng-href="{{quizUrl+quiz.id}}">{{quiz.title}}</a>
+				<span ng-if="tab!='published'">{{quiz.title}}</span>
 			</td>
 			<td class="text-center">{{quiz.category.category.title}}</td>
 			<td class="text-center">{{quiz.category.title}}</td>
