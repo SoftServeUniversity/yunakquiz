@@ -1,0 +1,80 @@
+<div class="quiz row">
+	<h3 class="text-center assessment-title">Створення нового тесту</h3>
+	<div ng-if="errorMsg" ng-bind="errorMsg" class="alert col-sm-12 text-center alert-danger">
+	</div>
+	<form name="quizCreateForm" novalidate>
+		<div class="col-lg-8 col-lg-offset-2 jumbotron">
+			<div class="row">
+				<label class="col-lg-4 control-label text-right">Введіть назву тесту</label>
+				<div class="col-lg-8 ">
+					<input ng-model="quiz.title" class="form-control" type="text" required />
+				</div>
+			</div>
+		
+			<div class="row quizMarginTop">
+				<label class="col-lg-4 control-label text-right">Введіть опис тесту</label>
+				<div class="col-lg-8">
+					<textarea ng-model="quiz.description" class="form-control"  type="text" required></textarea>
+				</div>
+			</div>
+			<div class="row quizMarginTop">
+				<label class="col-lg-4 control-label text-right">Додайте теги до тесту</label>
+				<div class="col-lg-8">
+					<tags-input ng-model="quiz.tags" display-property="tag" add-from-autocomplete-only="true" placeholder="Додайте теги">
+						<auto-complete source="loadTags($query)" min-length="1" load-on-focus="true"></auto-complete>
+					</tags-input>
+				</div>
+			</div>
+		
+			<div class="row quizMarginTop">
+				<label class="col-lg-4 control-label text-right">Оберіть категорію</label>
+				<div class="col-lg-8">
+					<select ng-change="clearSubcat()" ng-model="selectedCat" ng-options="category.title for category in categories" class="form-control" required>
+						<option ng-hide="selectedCat" value="">Оберіть категорію</option>
+					</select>
+			   	</div>
+			</div>
+		   
+		   	<div class="row quizMarginTop">
+				<label class="col-lg-4 control-label text-right">Оберіть Підкатегорію</label>
+				<div class="col-lg-8">
+					<select ng-model="selectedSubcat" ng-options="subcat.title for subcat in selectedCat.categories" class="form-control" required>
+						<option ng-hide="selectedSubcat" value="">Оберіть Підкатегорію</option>
+					</select>
+				</div>
+			</div>
+				
+		</div>
+		<div ng-repeat="question in quiz.questions" class="col-sm-12 well questionField">
+			
+			<input ng-model="question.title" class="form-control" placeholder="Введіть текст запитання" type="text" required />
+					
+			<textarea ng-model="question.description" class="form-control quizMarginTop" placeholder="Введіть пояснення до запитання" type="text" required>
+			</textarea>
+					
+			<div ng-repeat="answer in question.answers" class="input-group quizMarginTop col-md-11 col-xs-12 col-md-offset-1">
+			    <span ng-click="setCorrectAnswer(question,answer)" class="input-group-addon glyphicon quizBtnFix glyphicon-ok markCorrectAnswerBtn" ng-class="{'quizCorrectAnswer':answer.correct}">
+			    </span>
+			    <input ng-model="answer.title" type="text" class="form-control" placeholder="Введіть відповідь" type="text" required />
+			    <span  ng-if="question.answers.length>2" ng-click="deleteAnswer($index,question)" class="btn input-group-addon glyphicon glyphicon-remove quizDeleteAnswer quizBtnFix">
+			    </span>
+			</div>
+			<div ng-show="question.invalid" class="quizMarginTop col-md-11 col-md-offset-1 text-danger">* Позначте хоча б одну правильну відповідь</div>
+			<button ng-click="addAnswer(question)" class="btn btn-info quizMarginTop"><span class="glyphicon glyphicon-plus"></span> Додати відповідь</button>
+			<div ng-if="quiz.questions.length>1" ng-click="deleteQuestion($index)" class="closeButton glyphicon glyphicon-remove"></div>
+		</div>
+		<div class=" col-sm-12">
+			<button ng-click="addQuestion()" class="btn btn-info"><span class="glyphicon glyphicon-plus"></span> Додати питання</button>
+		</div>
+		<div class=" col-sm-12 quizMarginTop">
+			<button ng-click="saveQuiz()" ng-disabled="quizCreateForm.$invalid" class="btn btn-warning">Зберегти чорновик</button>
+			<button ng-click="reviewQuiz()" ng-disabled="quizCreateForm.$invalid" class="btn btn-success">Відправити на модерацію</button>  
+			
+		<p>
+	  		Showing of 'interpolate' filter:
+	  		{{ 'Current version is v%VERSION%.' | interpolate }}
+		</p>
+		</div>
+	</form>
+</div>
+	
