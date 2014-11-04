@@ -4,6 +4,7 @@
 angular.module('yunakQuiz', [
   'ngRoute',
   'ngTagsInput',
+  'ui.bootstrap',
   'yunakQuiz.measures', 
   'yunakQuiz.assessments', 
   'yunakQuiz.users', 
