@@ -3,11 +3,11 @@
 	<thead>
 		<tr class="info">
 			<th>№</th>
-			<th>Назва тесту</th>
-			<th>Категорія тесту</th>
-			<th>Підкатегорія тесту</th>
-			<th></th>
-			<th></th>
+			<th class="col-md-6">Назва тесту</th>
+			<th class="col-md-2 text-center">Категорія тесту</th>
+			<th class="col-md-2 text-center">Підкатегорія тесту</th>
+			<th class="col-md-1"></th>
+			<th class="col-md-1"></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -16,8 +16,8 @@
 			<td>
 				<a ng-href="{{quizUrl+quiz.id}}">{{quiz.title}}</a>
 			</td>
-			<td>{{quiz.category.category.title}}</td>
-			<td>{{quiz.category.title}}</td>
+			<td class="text-center">{{quiz.category.category.title}}</td>
+			<td class="text-center">{{quiz.category.title}}</td>
 			<td>
 				<a ng-href="#/admin/assessments/{{quiz.id}}" type="button" class="btn btn-info btn-xs">Редагувати тест</a>
 			</td>
@@ -28,7 +28,7 @@
 	</tbody>
 </table>
 
-<div ng-hide="inputData.totalItems<=outputData.itemsPerPage" class="row text-center">
+<div ng-show="inputData.totalItems>outputData.itemsPerPage" class="row text-center">
 		<pagination total-items="inputData.totalItems" ng-model="outputData.currentPage" ng-change="queryList()"  items-per-page="outputData.itemsPerPage" class="pagination" ></pagination>
 	<div class="pagination pull-right">
 		<select ng-change="searchQuery()" ng-model="outputData.itemsPerPage" class="form-control">
