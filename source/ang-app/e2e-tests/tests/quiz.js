@@ -1,6 +1,6 @@
 'use strict';
 
-describe('quiz', function() {
+xdescribe('quiz', function() {
 	var ptor =  protractor.getInstance();
  	var mockModule = require('../http_backend_quiz.js');
  	ptor.addMockModule('httpBackendMock', mockModule.httpBackendMock);

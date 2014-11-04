@@ -2,7 +2,7 @@
 
 /* https://github.com/angular/protractor/blob/master/docs/toc.md */
 
-describe('QuizEdit', function() {
+xdescribe('QuizEdit', function() {
 	var ptor =  protractor.getInstance();
  	var mockModule = require('../http_backend_quiz.js');
  	// ptor.addMockModule('httpBackendMock', mockModule.httpBackendMock);
