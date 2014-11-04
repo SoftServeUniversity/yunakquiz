@@ -63,24 +63,30 @@ var yunakQuizApp = angular.module('yunakQuiz.personalCabinet', ['ngRoute', 'ui.b
       controller: 'ModalDeleteCtrl',
       size: 'sm'
     });
-
-    // modalInstance.result.then(function (selectedItem) {
-    //   $scope.selected = selectedItem;
-    // }, function () {
-    //   $log.info('Modal dismissed at: ' + new Date());
-    // });
-
-  //   QuizData.delete(quizId).success(function(data) {
-  //     $scope.searchQuery();
-  // });
+    modalDelete.result.then(function () {
+      QuizData.delete(quizId).success(function(data) {
+        $scope.searchQuery();
+      });
+    });
   };
 
   
   $scope.queryList();
 }])
 .controller('ModalDeleteCtrl', ['$scope','$modalInstance', function($scope, $modalInstance) {
+  
+  $scope.clearMsg = function(){
+    if($scope.errorMsg) $scope.deleteConfirm = "";
+    $scope.errorMsg ="";
+  };
+
   $scope.ok = function () {
-    $modalInstance.close();
+    var password = 1911;
+    if($scope.deleteConfirm == password){
+      $scope.clearMsg();
+      $modalInstance.close();
+    }
+    else{$scope.errorMsg = "Невірний пароль!"}
   };
 
   $scope.cancel = function () {
@@ -94,3 +100,4 @@ var yunakQuizApp = angular.module('yunakQuiz.personalCabinet', ['ngRoute', 'ui.b
   $scope.tab = 'profile';
 
 }]);
+
