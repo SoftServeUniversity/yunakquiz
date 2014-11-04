@@ -43,6 +43,7 @@ xdescribe('Login Model Window', function() {
   describe('Functionality of MLW', function() {
 
     beforeEach(function() {
+      ptor.addMockModule('httpBackendMock', httpBackendMock);
       browser.get('http://localhost:8000/');
       element(by.css('.login-header-menu')).click();
       browser.sleep(1000);
