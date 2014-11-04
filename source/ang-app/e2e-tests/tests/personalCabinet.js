@@ -41,7 +41,7 @@ describe('PersonalCabinet', function() {
 		});
 
 		it('should show draft tab activeted ', function() {
-			var tab = element.all(by.css('ul.nav li.active'))
+			var tab = element.all(by.css('ul.nav li.persCabActive'))
 			expect(tab.getText()).toMatch(/Створені/); 
 			
 
@@ -53,7 +53,6 @@ describe('PersonalCabinet', function() {
 		});
 
 		it('should show n Quizzess', function() {
-			browser.pause();
 			expect(element.all(by.repeater('quiz in quizzes')).count()).toBe(13);
 		});
 
