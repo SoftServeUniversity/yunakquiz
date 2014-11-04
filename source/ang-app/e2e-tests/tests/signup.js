@@ -2,7 +2,7 @@
 
 /* http://docs.angularjs.org/guide/dev_guide.e2e-testing */
 
-describe('Signup page', function() {
+xdescribe('Signup page', function() {
     var httpBackendMock = function() {
         angular.module('httpBackendMock', ['yunakQuiz', 'ngMockE2E']).run(function($httpBackend) {
           var userInokentiy = {username: 'Inokentiy', password: '12345678', password_confirmation: '12345678', email: 'ewrrg@fgfgf.com', birthday: '2014-10-08'};
@@ -92,7 +92,7 @@ describe('Signup page', function() {
       element(by.css('[name=birthday]')).sendKeys("10082014");
       element(by.model('reg.enteredCaptcha')).sendKeys(captcha);
       element(by.buttonText('Реєстрація')).click();
-      ptor.sleep(50000);
+      //ptor.sleep(50000);
       expect(browser.getLocationAbsUrl()).toMatch("/");
     });
 
