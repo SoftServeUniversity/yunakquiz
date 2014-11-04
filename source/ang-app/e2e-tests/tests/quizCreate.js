@@ -2,7 +2,16 @@
 
 /* https://github.com/angular/protractor/blob/master/docs/toc.md */
 
-xdescribe('e2e test for quiz creation page', function() {
+describe('e2e test for quiz creation page', function() {
+	
+	var ptor =  protractor.getInstance();
+ 	var mockModule = require('../http_backend_quiz.js');
+ 	// ptor.addMockModule('httpBackendMock', mockModule.httpBackendMock);
+	
+	beforeEach(function() {
+    	ptor.addMockModule('httpBackendMock', mockModule.httpBackendMock);  
+ 	});
+
 
 	describe('quiz titles', function() {
 		beforeEach(function() {
@@ -177,8 +186,7 @@ xdescribe('e2e test for quiz creation page', function() {
 
 	    	element(by.buttonText('Зберегти чорновик')).click();
 
-	    	expect(element(by.binding('sendMessage')).getText())
-	    	.toBe('Ваш тест збережено');
+	    	expect(browser.getCurrentUrl()).toEqual("http://localhost:8000/#/admin/personalCabinet/draft")
 	    });
 
 	    it('should mark the correct answer in second question', function() {
@@ -193,10 +201,12 @@ xdescribe('e2e test for quiz creation page', function() {
 	    	questions.get(2).all(by.repeater('answer in question.answers'))
 	    	.get(1).element(by.css('.markCorrectAnswerBtn')).click();
 
-	    	element(by.buttonText('Відправити на модерацію')).click();
+	    	element(by.buttonText('Відправити на модерацію')).click().then(function(){
+	    		expect(browser.getCurrentUrl()).toEqual("http://localhost:8000/#/admin/personalCabinet/review");
+	    	});
 
-	    	expect(element(by.binding('sendMessage')).getText())
-	    	.toBe('Ваш тест відправлено на модерацію');
+	    	
+
 	    });
 
 	});

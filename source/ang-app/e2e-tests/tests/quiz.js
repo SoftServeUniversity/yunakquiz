@@ -1,6 +1,6 @@
 'use strict';
 
-xdescribe('quiz', function() {
+describe('quiz', function() {
 	var ptor =  protractor.getInstance();
  	var mockModule = require('../http_backend_quiz.js');
  	ptor.addMockModule('httpBackendMock', mockModule.httpBackendMock);
@@ -26,11 +26,6 @@ xdescribe('quiz', function() {
 			var breadcrumbs = element(by.css('.quiz .breadcrumb'));
 			expect(breadcrumbs.all(by.css('a')).get(1).getAttribute('href')).
 				toMatch('http://localhost:8000/#');
-		});
-
-		it('should show quiz description', function() {
-			expect(element.all(by.binding('quiz.description')).getText()).
-				toMatch('Детальний опис тесту');
 		});
 
 		it('should show that quiz with three questions', function() {

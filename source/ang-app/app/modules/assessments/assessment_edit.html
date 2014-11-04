@@ -16,8 +16,8 @@
 					<textarea ng-model="quiz.description" class="form-control"  type="text" required></textarea>
 				</div>
 			
-				<label class="col-lg-5 control-label quizMarginTop text-right">Теги до тесту</label>
-				<div class="col-lg-7 quizMarginTop ">
+				<label class="col-md-5 control-label quizMarginTop text-right">Теги до тесту</label>
+				<div class="col-md-7 quizMarginTop ">
 					<tags-input ng-model="quiz.tags" display-property="tag" placeholder="Додайте теги" add-from-autocomplete-only="true">
 						<auto-complete source="loadTags($query)" min-length="1" load-on-focus="true"></auto-complete>
 					</tags-input>
