@@ -23,9 +23,6 @@ module PlastApp
         enable :sessions
     end
 
-    options '/*' do
-    end
-    
     get '/' do
         erb :index
     end
@@ -90,7 +87,8 @@ module PlastApp
       content_type :json
       quiz = Quiz.queryQ(params['id'])
       if quiz['id']
-        JSON.pretty_generate(quiz) 
+        quiz
+        # JSON.pretty_generate(quiz) 
       else
         return [400, quiz.to_json]
       end
@@ -143,11 +141,17 @@ module PlastApp
       Staticinfo.select(['id','about_us','updated_at']).to_json
     end
 
+    get '/categories' do
+      content_type :json
+      JSON.pretty_generate(Category.catList)
+    end  
+
     get '/admin/assessments/:status' do
       content_type :json
-      quizzes = Quiz.queryList(params['status'])
+      quizzes = Quiz.quizQuery(params['status'])
       if quizzes
-        JSON.pretty_generate(quizzes) 
+        JSON.pretty_generate(quizzes)
+
       else
         return [400, "Not found "+params['status']]
       end
@@ -178,6 +182,18 @@ module PlastApp
         return [200, "ok"]
       else
         return [400, user.errors.messages.to_json]
+      end
+    end
+
+    post '/admin/assessments/:status' do
+      content_type :json
+      data = JSON.parse(request.body.read)
+      #check permisions here
+      quizzes = Quiz.quizQuery(params['status'],data['searchData'],data['currentPage'],data['itemsPerPage'])
+      if quizzes
+        JSON.pretty_generate(quizzes)
+      else
+        return [400, 'Error']
       end
     end
 

@@ -9,10 +9,17 @@ var yunakQuizApp = angular.module('yunakQuiz.assessments', ['ngRoute'])
     controller: 'QuizCtrl',
     })
 
-  	.when('/assessments/:quiz_id/result', {
+    .when('/assessments/:quiz_id/result', {
     templateUrl: 'modules/assessments/assessment_result.html',
     controller: 'AssessmentsResultCtrl'
   })
-  ;
+    .when('/admin/assessments/create', {
+    templateUrl: 'modules/assessments/assessment_create.html',
+    controller: 'QuizCreateCtrl'
+  })
+    .when('/admin/assessments/:quiz_id/', {
+    templateUrl: 'modules/assessments/assessment_edit.html',
+    controller: 'QuizEditCtrl'
+  });
    
 }]);

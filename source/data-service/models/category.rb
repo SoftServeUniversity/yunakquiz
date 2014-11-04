@@ -52,4 +52,9 @@ class Category < ActiveRecord::Base
       end
     end
   end
+
+  def self.catList()
+    Category.where(:category_id => 0).as_json(:include => {:categories => {:include => :categories}}) 
+  end
+
 end

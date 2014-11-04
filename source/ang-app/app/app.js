@@ -8,6 +8,7 @@ angular.module('yunakQuiz', [
   'yunakQuiz.measures', 
   'yunakQuiz.assessments', 
   'yunakQuiz.users', 
+  'yunakQuiz.personalCabinet',
   'yunakQuiz.sessions',
   'yunakQuiz.version',
   'yunakQuiz.headerMenu',
@@ -24,14 +25,17 @@ angular.module('yunakQuiz', [
   'yunakQuiz.faqTab',
   'yunakQuiz.quizzescategoriesTab',
   'yunakQuiz.userTab'
-]).config(['$routeProvider',
-      function($routeProvider) {
-        $routeProvider.
-            when('/', {
-            templateUrl: 'modules/partials/home-page-greetings.html',
-            }).
-            otherwise({
-            redirectTo: '/'
+])
+.config(['$routeProvider',
+ 	function($routeProvider) {
+ 		$routeProvider
+      .when('/', {
+     		templateUrl: 'modules/partials/home-page-greetings.html',
+     	})
+      .otherwise({
+     	  redirectTo: '/'
       });
-  }]);
+  }
+]);
+
 

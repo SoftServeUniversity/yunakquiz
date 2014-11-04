@@ -48,7 +48,7 @@ module PlastApp
       # If there no search results 
       # Just return empty array
       if search_result.length == 0
-        return search_result.to_json
+        return {result: search_result, length: 0}.to_json
       else
       end
 
