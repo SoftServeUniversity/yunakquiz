@@ -2,7 +2,7 @@
 
 //Ctrl for guest search page
 guestSearch.controller('SearchCtrl', ['$scope', '$http', 
-  'searchTag', 'guestSearchFactory', 
+  'searchTag', 'guestSearchFactory',  
   function ($scope, $http, searchTag, guestSearchFactory) {
         
   // Variable initalization 
@@ -61,15 +61,27 @@ guestSearch.controller('SearchCtrl', ['$scope', '$http',
     if ($scope.searchRequest.tags.length === 0){
       $scope.searchRequest.tags = ['_']; // It takes all words 
     };
-          
+
+    $scope.searchRequest.currentPage = 0;
+
     // Main request to server for search
     // If it empty show error
     searchTag.request($scope.searchRequest, function(data){
-      if (data.length === 0){
+      if (data.result.length === 0){
+        
         $scope.searchResults = {};
         $scope.searchResults[0] = {title: 'Нічого не знайдено'};
+        
+        // Reset paginating 
+        $scope.currentPage = 1;
+        $scope.totalItems = 0;
+
       } else {
-        $scope.searchResults = guestSearchFactory.tagsToArray(data);
+        $scope.searchResults = guestSearchFactory.tagsToArray(data.result);
+
+        // Length of paginating 
+        $scope.totalItems = data.length;
+        $scope.currentPage = 1;
       };
 
     });
@@ -96,6 +108,26 @@ guestSearch.controller('SearchCtrl', ['$scope', '$http',
       // Set variable to false to avoid errors
       var duplicateFound = false;
     };
+  };
+
+  // Pagination part
+  // Init pagination part 
+  $scope.totalItems = 0;
+  $scope.currentPage = 1;
+
+  // Function that called when page in pagination is 
+  // Changed 
+  $scope.pageChanged = function() {
+
+    // Giving info on what page we are now 
+    $scope.searchRequest.currentPage = ($scope.currentPage-1);
+
+    // And request to server 
+    searchTag.request($scope.searchRequest, function(data){
+
+      $scope.searchResults = guestSearchFactory.tagsToArray(data.result);
+
+    });
   };
 
 }]);

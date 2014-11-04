@@ -1,6 +1,6 @@
 'use strict';
 
-var  guestSearch = angular.module('yunakQuiz.guestSearch', ['ngRoute',
+var  guestSearch = angular.module('yunakQuiz.guestSearch', ['ngRoute', 'ui.bootstrap',
   'yunakQuiz.subcategory', 'ngTagsInput']);
 
 guestSearch.config(['$routeProvider',function($routeProvider) {
