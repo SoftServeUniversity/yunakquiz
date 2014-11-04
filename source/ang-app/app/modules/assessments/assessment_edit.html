@@ -71,12 +71,15 @@
 			</div>
 		</form>
 	</div>
-	<div class="col-md-4" ng-show="comments.length">
-	 	<div class="text-center">
-			<h3>Коментарі модератора</h3>
+
+	<div class="col-md-4" >
+		<div class="panel panel-default">
+		  	<div class="panel-heading text-uppercase text-center"><strong>Коментарі модератора</strong>
+		  		<span class="badge pull-right">{{comments.length}}</span>
+		  	</div>
+		  	<ul class="list-group">
+		    	<li ng-bind="comment.text" ng-repeat="comment in comments" class="list-group-item"></li>
+		    </ul>
 		</div>
-		<div ng-repeat="comment in comments">
-			<p ng-bind="comment.text"></p>
-		</div>	
 	</div>
 </div>
