@@ -8,7 +8,8 @@
   })
   .when('/admin/personalCabinet/profile', {
     templateUrl: 'modules/personalCabinet/profile.html',
-    controller: 'PersonalCabinetProfileCtrl'
+    controller: 'ProfileController',
+    controllerAs: 'profile'
   })
   .when('/admin/personalCabinet/:state', {
     templateUrl: 'modules/personalCabinet/quizesList.html',
