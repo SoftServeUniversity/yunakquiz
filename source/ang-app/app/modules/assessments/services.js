@@ -4,10 +4,9 @@
 yunakQuizApp.factory('QuizData', ['$http', '$location', function($http, $location){
     return{
       get: function(id){
-        return $http.get('http://localhost:9292/assessments/'+id )
-      },
-      save: function(quiz){
-     
+            return $http.get('http://localhost:9292/assessments/'+id )
+          },
+
       update: function(quiz){
             return $http.put("http://localhost:9292/admin/assessments/"+quiz.id, quiz);
           },

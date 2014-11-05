@@ -16,7 +16,7 @@
     "fontawesome": "~4.2.0",
     "textAngular": "~1.3.0",
     "ng-tags-input": "2.1.1",
-    "ng-flow": "2.x.x"
+    "ng-flow": "2.x.x",
     "angular-bootstrap":"latest"
   }
 }

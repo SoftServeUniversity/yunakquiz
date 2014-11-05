@@ -26,6 +26,7 @@ angular.module('yunakQuiz', [
   'yunakQuiz.faqTab',
   'yunakQuiz.quizzescategoriesTab',
   'yunakQuiz.userTab',
+  'yunakQuiz.personalCabinet'
 ])
 .config(['$routeProvider', '$httpProvider',     
   function($routeProvider, $httpProvider) {

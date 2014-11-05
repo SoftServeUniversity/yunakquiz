@@ -1,4 +1,4 @@
- var yunakQuizApp = angular.module('yunakQuiz.personalCabinet', ['ngRoute', 'ui.bootstrap'])
+ var yunakQuizApp = angular.module('yunakQuiz.personalCabinet', ['ngRoute', 'ui.bootstrap', 'flow'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider
