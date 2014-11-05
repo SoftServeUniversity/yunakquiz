@@ -194,3 +194,50 @@ box-shadow: 0px 0px 21px 0px rgba(0,0,0,0.75);
   font-size:20px;
 }
 /*end of styles in subcategory*/
+
+/*faq page*/
+.FAQ_Page a {
+  color: #005229;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.FAQ_Page a:visited {
+    background-color: white;
+}
+
+.FAQ_Page p {
+  font-size: 15px;
+}
+
+.FAQ_Page .col-center {
+  float: none;
+  margin: 0 auto;
+}
+/*eo faq page*/
+
+/* faq page for admin */
+.FAQ_AdminPage a {
+  color: #005229;
+  text-decoration: none;
+  font-size: 17px;
+  margin: 0 0 10px 0;
+}
+
+.FAQ_AdminPage a:visited {
+    background-color: white;
+}
+
+.FAQ_AdminPage p {
+  font-size: 15px;
+}
+
+.FAQ_AdminPage .col-center {
+  float: none;
+  margin: 0 auto;
+}
+
+/*.FAQ_AdminPage p {
+ margin: 50px; 
+}*/
+/*eo faq page for admin*/

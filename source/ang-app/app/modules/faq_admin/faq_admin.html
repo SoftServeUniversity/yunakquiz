@@ -1,0 +1,13 @@
+<div class="row">
+   	<div class="col-xs-12 pageTitleBox bg-primary">
+  		<div class="center-block"><h3 class="pageTitle"> Часті Питання На Правах Адміна </h3></div>
+    </div>
+</div> 
+
+<div class="FAQ_AdminPage">
+	<p ng-repeat="Question in Questions" editable-text="Question" ng-model="Question.faq_question">
+		{{$index+1}}. {{Question.faq_question}} 
+	    <br/> 
+		{{Question.faq_answer}}
+	</p>	
+</div>

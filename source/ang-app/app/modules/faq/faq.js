@@ -11,18 +11,20 @@
    		}
  	]);
 
- 	app.controller('faqCtrl', ['$scope', '$http','$filter', function ($scope, $http, $filter) {
+ 	app.controller('faqCtrl', ['$scope', '$http', function ($scope, $http) {
 
-    $scope.Questions = [
-      {"quest": "How to turn on the computer?", "ans": "Push the big button on your system block"},
-      {"quest": "Where I can find a test of football?", "ans": "On the main page in category Sport"},
-      {"quest": "How much are answers evalueted?", "ans": "In 100%"}
-    ];
+    $http.get('http://localhost:9292/faq').success(function(data){
+      $scope.Questions = data;
 
-    $scope.ClickFunc = function(){
+      for (var i = $scope.Questions.length - 1; i >= 0; i--) {
+        $scope.Questions[i].visible = false;
+      };
+    });
 
+    $scope.showAnswer = function(index){
+      $scope.Questions[index].visible = !$scope.Questions[index].visible;
     };
           
-  	}])
+  }])
 
 })();

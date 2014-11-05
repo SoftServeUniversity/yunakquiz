@@ -40,7 +40,7 @@ module PlastApp
       {response: "Updated to #{params['id']} assessment"}.to_json
     end
 
-     get '/assessments/:id' do
+    get '/assessments/:id' do
       content_type :json
 
       myObj = {
@@ -87,10 +87,10 @@ module PlastApp
 
     post '/search' do
       content_type :json
-    search_request = JSON.parse(request.body.read) 
+      search_request = JSON.parse(request.body.read) 
 #this function is part of module SerchQuizzes as parameter gets object {category_id: ['1','2',..'n'] , tags:['teg1','teg2',..'n']}
 #if category_id is not passed then search in all subcategories
-    SearchQuizzes.withTags(search_request) 
+      SearchQuizzes.withTags(search_request) 
     end
     get '/subcat_quiz/:id' do
       content_type :json
@@ -103,6 +103,11 @@ module PlastApp
     get '/contacts' do
       content_type :json
       Contact.select(['id','role','phone','address','mail']).to_json
+    end
+
+    get '/faq' do
+      content_type :json
+      Faq.select(['id', 'faq_question', 'faq_answer']).to_json
     end
 
 end

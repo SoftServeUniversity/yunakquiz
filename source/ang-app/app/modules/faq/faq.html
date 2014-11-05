@@ -4,15 +4,15 @@
     </div>
 </div> 
 
-<h3> Questions :</h3>
-
 <div class="FAQ_Page">
-	<div>
-		<ol>
-			<li ng-repeat="Question in Questions"  ng-show="Question.ans">
-				{{Question.quest}} <br/>
-				<span ng-hide="">{{Question.ans}}</span>
-			</li>
-		</ol>
+	<div class="col-md-6 col-center">
+		<span ng-repeat="Question in Questions">
+			<a href="" ng-click="showAnswer($index)">
+				{{$index+1}}. {{Question.faq_question}}
+			</a> <br/> 
+			<p id="Question{{$index+1}}" ng-show="Question.visible">
+				{{Question.faq_answer}}
+			</p>
+		</span>
 	</div>
 </div>
