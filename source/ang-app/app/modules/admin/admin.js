@@ -81,7 +81,6 @@ angular.module('yunakQuiz.admin', ['ngRoute'])
 				};
 				i = 0;
 			};
-			alert(result);
 		})
 		.error(function(data){
 			alert('data is lost');

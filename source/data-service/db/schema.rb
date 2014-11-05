@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141027145727) do
+ActiveRecord::Schema.define(version: 20141105160537) do
 
   create_table "Role", force: true do |t|
     t.string "name"
@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(version: 20141027145727) do
     t.integer "admin"
     t.integer "moder"
     t.integer "user"
+    t.integer "superadmin"
   end
 
   create_table "questions", force: true do |t|

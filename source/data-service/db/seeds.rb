@@ -20,14 +20,15 @@ Answer.create(question_id: 3, title: "Дадуть в голову", correct: fa
 Role.create(name: 'admin')
 Role.create(name: 'moder')
 Role.create(name: 'user')
+Role.create(name: 'superadmin')
 
-Permission.create(tabs: 'admin1', admin: '1')
-Permission.create(tabs: 'admin2', admin: '1')
-Permission.create(tabs: 'admin3', admin: '1')
+Permission.create(tabs: 'admin1', admin: '1', superadmin: '4')
+Permission.create(tabs: 'admin2', admin: '1', superadmin: '4')
+Permission.create(tabs: 'admin3', admin: '1', superadmin: '4')
 
-Permission.create(tabs: 'moder1', moder: '2')
-Permission.create(tabs: 'moder2', moder: '2')
-Permission.create(tabs: 'moder3', moder: '2')
+Permission.create(tabs: 'moder1', moder: '2', superadmin: '4')
+Permission.create(tabs: 'moder2', moder: '2', superadmin: '4')
+Permission.create(tabs: 'moder3', moder: '2', superadmin: '4')
 
-Permission.create(tabs: 'comm1', admin: '1', moder: '2', user: '3')
-Permission.create(tabs: 'comm2', admin: '1', moder: '2', user: '3')
+Permission.create(tabs: 'comm1', admin: '1', moder: '2', user: '3', superadmin: '4')
+Permission.create(tabs: 'comm2', admin: '1', moder: '2', user: '3', superadmin: '4')

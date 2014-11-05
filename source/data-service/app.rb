@@ -47,20 +47,13 @@ module PlastApp
     get '/admin' do
       if session[:id]
         user = User.find(session[:id])
-        list = Array.new 
-        roles = user.role_id.to_s        
-        roles.each_char { |value|
-          role = Role.find(value)
-          list.concat(Permission.where("#{role.name} = #{role.id}").pluck("tabs"))
-        }
-        list.uniq!
-        rezz = list.to_json
-        return rezz
+        role = Role.find(user.role_id)
+        base = Permission.where("#{role.name} = #{role.id}").pluck("tabs").to_json
+        return base
       end  
     end
 
     post '/login' do
-
       data = JSON.parse request.body.read
       user = User.authenticate(data['username'], data['password'])
       if !user.nil?
@@ -78,8 +71,8 @@ module PlastApp
     post '/register' do
       data = JSON.parse request.body.read
       user = User.new(data)
-      # hardcode for roles. 1-admin, 2 - moder, 3 - user, 12 - admin+moder role
-      user.role_id = 12
+      # ardcode for roles. 1-admin, 2 - moder, 3 - user, 4 - superadmin (admin+moder) role
+      user.role_id = 4
       if user.save
         return [200, "ok"]
       else
