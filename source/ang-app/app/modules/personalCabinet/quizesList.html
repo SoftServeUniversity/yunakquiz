@@ -1,0 +1,42 @@
+<div ng-include="'modules/personalCabinet/personalCabinetHeader.html'"></div>
+<table class="table table-hover">
+	<thead>
+		<tr>
+			<th>№</th>
+			<th class="col-md-6">Назва тесту</th>
+			<th class="col-md-2 text-center">Категорія тесту</th>
+			<th class="col-md-2 text-center">Підкатегорія тесту</th>
+			<th class="col-md-1"></th>
+			<th class="col-md-1"></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="quiz in quizzes">
+			<td>{{outputData.itemsPerPage*(outputData.currentPage-1)+$index+1}}</td>
+			<td>
+				<a ng-if="tab=='published'" ng-href="{{quizUrl+quiz.id}}">{{quiz.title}}</a>
+				<span ng-if="tab!='published'">{{quiz.title}}</span>
+			</td>
+			<td class="text-center">{{quiz.category.category.title}}</td>
+			<td class="text-center">{{quiz.category.title}}</td>
+			<td>
+				<a ng-href="#/admin/assessments/{{quiz.id}}" type="button" class="btn btn-info btn-xs">Редагувати тест</a>
+			</td>
+			<td>
+				<a ng-click="deleteQuiz(quiz.id)" type="button" class="btn btn-danger btn-xs">Видалити тест</a>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<div ng-show="inputData.totalItems>outputData.itemsPerPage" class="row text-center">
+		<pagination total-items="inputData.totalItems" ng-model="outputData.currentPage" ng-change="queryList()"  items-per-page="outputData.itemsPerPage" class="pagination" ></pagination>
+	<div class="pagination pull-right">
+		<select ng-change="searchQuery()" ng-model="outputData.itemsPerPage" class="form-control">
+		  <option value="10" >10</option>
+		  <option value="25" >25</option>
+		  <option value="50" >50</option>
+		  <option value="{{inputData.totalItems}}">Всі</option>
+		</select>
+	</div>
+</div>

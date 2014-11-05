@@ -7,26 +7,38 @@ yunakQuizApp.factory('QuizData', ['$http', '$location', function($http, $locatio
         return $http.get('http://localhost:9292/assessments/'+id )
       },
       save: function(quiz){
-        if (quiz.id) { 
-          return $http.put("http://localhost:9292/admin/assessments/"+quiz.id, quiz);
-        }
-        else { 
-          return $http.post('http://localhost:9292/admin/assessments', quiz)
-        }
-      },
+     
+      update: function(quiz){
+            return $http.put("http://localhost:9292/admin/assessments/"+quiz.id, quiz);
+          },
+          
+      create: function(quiz){       
+            return $http.post('http://localhost:9292/admin/assessments', quiz)
+          },
+
+      getList: function(state){
+            return $http.get('http://localhost:9292/admin/assessments/'+state) 
+          },
+
+      getCat: function(){
+            return $http.get('http://localhost:9292/categories') 
+          },
+
+      queryList: function(state, queryData){
+            return $http.post('http://localhost:9292/admin/assessments/'+state, queryData) 
+          },
+
+      delete: function(id){
+            return $http.delete('http://localhost:9292/admin/assessments/'+id ) 
+          },
+
       getComments: function(id){
-        return $http.get('http://localhost:9292/admin/assessments/'+id+'/comments')
-      },
-      getAll: function(status){
-        return $http.get('http://localhost:9292/admin/assessments/'+status )
-      },
-      deleteQuiz: function(quiz_id){
-        return $http.delete("http://localhost:9292/admin/assessments/"+quiz_id);
-      }, 
-      quiz:{}
+            return $http.get('http://localhost:9292/admin/assessments/'+id+'/comments')
+          }
     }
   }
 ]);
+
 
 yunakQuizApp.service('tags', function($q) {
   var tags = [
@@ -48,5 +60,3 @@ yunakQuizApp.service('tags', function($q) {
     return deferred.promise;
   };
 });
-
-

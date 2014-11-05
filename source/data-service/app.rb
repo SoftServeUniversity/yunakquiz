@@ -123,7 +123,8 @@ module PlastApp
       content_type :json
       quiz = Quiz.queryQ(params['id'])
       if quiz['id']
-        JSON.pretty_generate(quiz) 
+        quiz
+        # JSON.pretty_generate(quiz) 
       else
         return [400, quiz.to_json]
       end
@@ -176,11 +177,16 @@ module PlastApp
       Staticinfo.select(['id','about_us','updated_at']).to_json
     end
 
+    get '/categories' do
+      content_type :json
+      JSON.pretty_generate(Category.catList)
+    end  
+
     get '/admin/assessments/:status' do
       content_type :json
-      quizzes = Quiz.queryList(params['status'])
+      quizzes = Quiz.quizQuery(params['status'])
       if quizzes
-        JSON.pretty_generate(quizzes) 
+        JSON.pretty_generate(quizzes)
       else
         return [400, "Not found "+params['status']]
       end
@@ -219,6 +225,39 @@ module PlastApp
       end
       return [400, 'bad request']
       end
+
+    post '/admin/assessments/:status' do
+      content_type :json
+      data = JSON.parse(request.body.read)
+      #check permisions here
+      quizzes = Quiz.quizQuery(params['status'],data['searchData'],data['currentPage'],data['itemsPerPage'])
+      if quizzes
+        JSON.pretty_generate(quizzes)
+      else
+        return [400, 'Error']
+      end
+    end
+
+    put '/admin/category/:action' do
+      content_type :json
+      data = JSON.parse(request.body.read)
+      newCat = Category.query(data, params['action'])
+      if newCat
+        return [200, newCat.to_json]
+      else
+        return [400, {'error' => "operation failed"}.to_json]
+      end    
+    end
+
+    delete '/admin/category/delete/:id' do
+      content_type :json
+      newCategory = Category.delCat(params['id'])
+      if newCat
+        return [200, newCategory.to_json]
+      else
+        return [400, {'error' => "operation failed"}.to_json]
+      end    
+    end
 
   end
 end  

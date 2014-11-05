@@ -1,6 +1,6 @@
 <div class="quiz row">
 <h3 class="text-center assessment-title">Редагування тесту</h3>
-<div ng-show="sendMessage" class="alert col-sm-12 text-center" ng-class="sendMessageClass">{{sendMessage}}</div>
+	<div ng-if="errorMsg" ng-bind="errorMsg" class="alert col-sm-12 text-center alert-danger"></div>
 	<div class="col-md-8">
 		<form name="quizEditForm" novalidate>
 			<div class="col-md-12 jumbotron">
@@ -16,8 +16,8 @@
 					<textarea ng-model="quiz.description" class="form-control"  type="text" required></textarea>
 				</div>
 			
-				<label class="col-lg-5 control-label quizMarginTop text-right">Теги до тесту</label>
-				<div class="col-lg-7 quizMarginTop ">
+				<label class="col-md-5 control-label quizMarginTop text-right">Теги до тесту</label>
+				<div class="col-md-7 quizMarginTop ">
 					<tags-input ng-model="quiz.tags" display-property="tag" placeholder="Додайте теги" add-from-autocomplete-only="true">
 						<auto-complete source="loadTags($query)" min-length="1" load-on-focus="true"></auto-complete>
 					</tags-input>
@@ -25,14 +25,15 @@
 			
 				<label class="col-md-5 control-label quizMarginTop  text-right">Категорія</label>
 				<div class="col-md-7 quizMarginTop ">
-					<select ng-change="" ng-model="selectedCat" ng-options="category.title for category in cats" class="form-control" required>
+					<select ng-change="clearSubcat()" ng-model="selectedCat" ng-options="category.title for category in categories" class="form-control" required>
 					</select>
 			   	</div>
 			   
 			   
 				<label class="col-md-5 control-label quizMarginTop  text-right">Підкатегорія</label>
 				<div class="col-md-7 quizMarginTop ">
-					<select ng-model="selectedSubcat" ng-options="subcat.title for subcat in subcats |filter:{category_id:selectedCat.id}" class="form-control" required>
+					<select ng-model="selectedSubcat" ng-options="subcat.title for subcat in selectedCat.categories track by subcat.id" class="form-control" required>
+						<option ng-hide="selectedSubcat" value="">Оберіть Підкатегорію</option>
 					</select>
 				</div>	
 			</div>
@@ -70,12 +71,15 @@
 			</div>
 		</form>
 	</div>
-	<div class="col-md-4" ng-show="comments.length">
-	 	<div class="text-center">
-			<h3>Коментарі модератора</h3>
+
+	<div class="col-md-4" >
+		<div class="panel panel-default">
+		  	<div class="panel-heading text-uppercase text-center"><strong>Коментарі модератора</strong>
+		  		<span class="badge pull-right">{{comments.length}}</span>
+		  	</div>
+		  	<ul class="list-group">
+		    	<li ng-bind="comment.text" ng-repeat="comment in comments" class="list-group-item"></li>
+		    </ul>
 		</div>
-		<div ng-repeat="comment in comments">
-			<p ng-bind="comment.text"></p>
-		</div>	
 	</div>
 </div>

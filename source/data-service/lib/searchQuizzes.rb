@@ -1,4 +1,5 @@
 module PlastApp
+  
   module SearchQuizzes
   	
     def SearchQuizzes.withCatId(categories_id)
@@ -22,17 +23,18 @@ module PlastApp
     def SearchQuizzes.withTags(search_request)
 
       # Initialize SQlite string for search
-      search_string = "SELECT GROUP_CONCAT(tag, \' \') as tagString, quizzes.* \
-      FROM quizzes INNER JOIN tags ON quizzes.id = tags.quiz_id \
-      WHERE category_id IN (?) GROUP BY quizzes.title HAVING tagString LIKE \'%"\
-       << search_request['tags'][0] << "%\'"
+      search_string = "SELECT GROUP_CONCAT(tag, \' \') as allTags, quizzes.*\
+      FROM quizzes JOIN quizzes_tags ON quizzes_tags.quiz_id = quizzes.id \
+      JOIN tags ON quizzes_tags.tag_id = tags.id WHERE category_id IN (?) \
+      GROUP BY quizzes.title HAVING allTags LIKE \"%"\
+       << search_request['tags'][0] << "%\""
 
       # Removing first element from array
       search_request['tags'].shift 
 
       # Adding % to tegs for db request
       search_request['tags'].map! {|tag| search_string \
-      << " AND tagString LIKE \'%#{tag}%\'"}
+      << " AND allTags LIKE \"%#{tag}%\""}
 
       # Adding end of db request string
       search_string = search_string \
@@ -43,10 +45,24 @@ module PlastApp
       search_result = Quiz.find_by_sql [search_string, \
       search_request['categories_id']]
 
-      return search_result.to_json
+      # If there no search results 
+      # Just return empty array
+      if search_result.length == 0
+        return {result: search_result, length: 0}.to_json
+      else
+      end
+
+      # Count for paginating
+      length = search_result.length
+
+      # Must be CHANGED TO 10
+      # Delete all unneeded results
+      search_result = search_result.slice! (search_request['currentPage']*3), 3
+
+      return {result: search_result, length: length}.to_json
 
     end
 
   end
-  
-end
+
+end 

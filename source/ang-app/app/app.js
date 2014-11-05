@@ -5,9 +5,11 @@ angular.module('yunakQuiz', [
   'ngRoute',
   'ngResource',
   'ngTagsInput',
+  'ui.bootstrap',
   'yunakQuiz.measures', 
   'yunakQuiz.assessments', 
   'yunakQuiz.users', 
+  'yunakQuiz.personalCabinet',
   'yunakQuiz.sessions',
   'yunakQuiz.version',
   'yunakQuiz.headerMenu',
@@ -24,16 +26,15 @@ angular.module('yunakQuiz', [
   'yunakQuiz.faqTab',
   'yunakQuiz.quizzescategoriesTab',
   'yunakQuiz.userTab',
-  'yunakQuiz.personalCabinet'
 ])
 .config(['$routeProvider', '$httpProvider',     
-      function($routeProvider, $httpProvider) {
-            $httpProvider.defaults.withCredentials = true;
-        $routeProvider.
-              when('/', {
-                templateUrl: 'modules/partials/home-page-greetings.html',
-              }).
-              otherwise({
-              redirectTo: '/'
+  function($routeProvider, $httpProvider) {
+    $httpProvider.defaults.withCredentials = true;
+    $routeProvider.
+      when('/', {
+        templateUrl: 'modules/partials/home-page-greetings.html',
+      }).
+      otherwise({
+        redirectTo: '/'
       });
 }]);

@@ -2,29 +2,27 @@
 /** Quiz Edit controller  */
 yunakQuizApp.controller('QuizEditCtrl', ['$scope','QuizData', '$routeParams','tags', '$location', function($scope, QuizData, $routeParams, tags, $location) {
 
-	/** MOCK - get categories and subCats object */
-	$scope.subcats =[
-		{id:2,category_id:1,title:"Футбол"},
-		{id:3,category_id:1,title:"Хокей"},
-		{id:5,category_id:4,title:"Історія України"},
-		{id:6,category_id:4,title:"Історія світу"}
-	];
-
-	$scope.cats =[
-		{id:1,category_id:0,title:"Спорт"},
-		{id:4,category_id:0,title:"Історія"}
-	];
-
 	/** get Quiz by ID */
-	QuizData.get($routeParams.quiz_id)
-		.success(function(data, status, headers, config){
-			$scope.quiz = data;
-			$scope.setSubcat();
-			$scope.getComments(data['id']);
-		})
-		.error(function(data){
-			$location.path('/404/');
-		});
+	$scope.init = function(){
+		QuizData.get($routeParams.quiz_id)
+			.success(function(data, status, headers, config){
+				$scope.quiz = data;
+				$scope.getComments(data['id']);
+				$scope.getCat();
+				
+				// $scope.setCat();
+			})
+			.error(function(data){
+				$location.path('/404/');
+			});
+		}
+
+	$scope.getCat = function(){
+		QuizData.getCat().success(function(data, status, headers, config) {
+        	$scope.categories=data;      
+        	$scope.selectCat();  
+    	});
+	};
 
 	$scope.getComments = function(quiz_id) {
 		QuizData.getComments(quiz_id)
@@ -32,30 +30,33 @@ yunakQuizApp.controller('QuizEditCtrl', ['$scope','QuizData', '$routeParams','ta
 				$scope.comments = data;
 			});
 	};
-			
+
+	$scope.selectCat = function(){
+		for (var i=0; i < $scope.categories.length; i++){		
+			if ($scope.selectSubcat($scope.categories[i].categories)){
+				$scope.selectedCat = $scope.categories[i];
+			}
+		};
+	}
+
+	$scope.selectSubcat = function(subCatsArray){
+		for (var i=0; i < subCatsArray.length; i++){		
+			if (subCatsArray[i].id == $scope.quiz.category_id){
+				$scope.selectedSubcat = subCatsArray[i];
+				return true;
+			};
+		};
+	};
+
+	$scope.clearSubcat = function(){
+		$scope.selectedSubcat='';
+	};
+
 	/** get all tags from backend*/
 	$scope.loadTags = function(query) {
 	    return tags.load();
 	};
 
-	/** set parent category according selected subCat*/
-	$scope.setCat = function(){
-		for (var i=0; i < $scope.cats.length; i++){		
-			if ($scope.cats[i].id == $scope.selectedSubcat.category_id){
-				$scope.selectedCat = $scope.cats[i];
-			};
-		};
-	};
-
-	/** set selected subCat to be equal subcat in Quiz */
-	$scope.setSubcat  = function() {
-		for (var i=0; i < $scope.subcats.length; i++){		
-			if ($scope.subcats[i].id == $scope.quiz.category_id){
-				$scope.selectedSubcat = $scope.subcats[i] ;
-				$scope.setCat();
-			};
-		};
-	};
 
 	/** add empty answer*/
 	$scope.addAnswer = function(question) {
@@ -115,18 +116,6 @@ yunakQuizApp.controller('QuizEditCtrl', ['$scope','QuizData', '$routeParams','ta
 		}
 	};
 
-	/** show status message */
-	$scope.showMessage = function(message,msgClass){
-		window.scrollTo(0,0);
-		$scope.sendMessage =message;
-		$scope.sendMessageClass = msgClass;
-		setTimeout(function () {
-        	$scope.$apply(function () {
-            	delete $scope.sendMessage;
-        	});
-    	}, 2000);
-	};
-
 	/** save draft Quiz */
 	$scope.saveQuiz=function(){
 		$scope.sendQuiz("draft");
@@ -142,21 +131,19 @@ yunakQuizApp.controller('QuizEditCtrl', ['$scope','QuizData', '$routeParams','ta
 		$scope.quiz.category_id = $scope.selectedSubcat.id;
 		$scope.validateQuiz();
 		if(!$scope.quiz.invalid){
-			$scope.quiz.status = status;
+			$scope.quiz.status = state;
 			
-			QuizData.save($scope.quiz)
+			QuizData.update($scope.quiz)
 				.success(function(data, status, headers, config) {
-					if($scope.quiz.status=="draft"){
-						$scope.showMessage('Ваш тест збережено','alert-success');
-					}
-					else {
-						$scope.showMessage('Ваш тест відправлено на модерацію','alert-warning');
-					};
+						$location.path('/admin/personalCabinet/'+state);
 				})
-	            .error( function(data, status, headers, config) { 
-					$scope.showMessage('Ваш тест не збережено','alert-danger');
+	            .error(function(data, status, headers, config) {
+	            	window.scrollTo(0,0);
+					$scope.errorMsg = 'Ваш тест не збережено';
 	            });
 		};
 	};
+
+	$scope.init();
 
 }]);
