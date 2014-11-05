@@ -3,6 +3,7 @@
 // Declare app level module which depends on views, and components
 angular.module('yunakQuiz', [
   'ngRoute',
+  'ngResource',
   'ngTagsInput',
   'yunakQuiz.measures', 
   'yunakQuiz.assessments', 
@@ -22,15 +23,17 @@ angular.module('yunakQuiz', [
   'yunakQuiz.blacklistTab',
   'yunakQuiz.faqTab',
   'yunakQuiz.quizzescategoriesTab',
-  'yunakQuiz.userTab'
-]).config(['$routeProvider',
-      function($routeProvider) {
+  'yunakQuiz.userTab',
+  'yunakQuiz.personalCabinet'
+])
+.config(['$routeProvider', '$httpProvider',     
+      function($routeProvider, $httpProvider) {
+            $httpProvider.defaults.withCredentials = true;
         $routeProvider.
-            when('/', {
-            templateUrl: 'modules/partials/home-page-greetings.html',
-            }).
-            otherwise({
-            redirectTo: '/'
+              when('/', {
+                templateUrl: 'modules/partials/home-page-greetings.html',
+              }).
+              otherwise({
+              redirectTo: '/'
       });
-  }]);
-
+}]);

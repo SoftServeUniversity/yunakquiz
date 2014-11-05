@@ -15,7 +15,12 @@
                 
       $scope.$on("user_logged_in", function(event, data){
         app.user = data;
+        $scope.$broadcast("user_updated", data);
       });
+      
+      $scope.$on("user_deleted", function(event, data){
+        app.user = data;
+      }); 
       this.userLoggedIn = function(){
         return !!this.user.username;
       };

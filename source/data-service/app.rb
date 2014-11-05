@@ -8,21 +8,30 @@ module PlastApp
   require 'json/ext' # required for .to_json
   require 'sinatra/cross_origin'
   require 'sinatra/asset_pipeline'
+  require 'securerandom'
 
   class YunakQuiz < Sinatra::Base
     register Sinatra::AssetPipeline
     register Sinatra::ActiveRecordExtension
     register Sinatra::CrossOrigin
-
+    
+    use Rack::Session::Cookie
+   
     Dir.glob('./config/*.rb').each {|file| require file}
     Dir.glob('./models/*.rb').each {|file| require file}
     Dir.glob('./lib/*.rb').each {|file| require file}
-
-
-    configure do
-        enable :sessions
+    
+    helpers do
+      def filtered_user(user)
+        filter = %w(id username first_name last_name email birthday plast_level plast_region plast_hovel picture)
+        if user.methods.include?(:attributes)
+          return user.attributes.delete_if{|key, value| !filter.include? key.to_s} 
+        else
+          return user.delete_if{|key, value| !filter.include? key.to_s}
+        end  
+      end
     end
-
+    
     options '/*' do
     end
     
@@ -30,13 +39,37 @@ module PlastApp
         erb :index
     end
     
+    get '/session' do
+      session.inspect
+    end
+    
     get '/access' do
-      	if session[:user_id]
-        	user = User.find(session[:user_id])
-        	return [200, user.username]
-    	  end
-      		return [401, "unauthorized"]
-    end  		
+      if session[:user_id]
+        user = User.find(session[:user_id])
+        return [200, filtered_user(user).to_json]
+      end
+      return [401, "unauthorized"]
+    end	
+
+    put '/user' do
+      data = JSON.parse request.body.read
+      data = filtered_user(data)
+      user = User.find(session[:user_id])
+      data.each{|key, value| user.send("#{key}=", value)}
+      if user.save
+        return [200, 'ok']
+      else
+        return [400, 'bad request']
+      end
+    end
+
+    post '/avatar' do
+      tempfile = params[:file][:tempfile]
+      filename = params[:file][:filename]
+      saved_name = "#{SecureRandom.hex(5)}#{File.extname(filename)}"
+      FileUtils.copy(tempfile.path, "public/img/#{saved_name}")
+      return [200, saved_name]
+    end  
 
     get '/assessments' do
       content_type :json
@@ -64,7 +97,7 @@ module PlastApp
       user = User.authenticate(data['username'], data['password'])
       if !user.nil?
         session[:user_id] = user.id
-        return [200, user.attributes.to_json]
+        return [200, filtered_user(user).to_json]
       end
         return [401, "unauthorized"]
     end
@@ -159,10 +192,6 @@ module PlastApp
       Category.select('id, category_id, title').to_json
     end 
      
-    options '/*' do 
-      '*'           
-    end
-
     post '/search' do
       content_type :json
       search_request = JSON.parse(request.body.read) 
@@ -180,6 +209,16 @@ module PlastApp
         return [400, user.errors.messages.to_json]
       end
     end
+    
+    delete '/user' do
+      data = params
+      user = User.authenticate(data['username'], data['password'])
+      if !user.nil?
+        user.destroy
+        return [200, 'ok']
+      end
+      return [400, 'bad request']
+      end
 
   end
 end  

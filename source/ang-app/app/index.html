@@ -13,8 +13,8 @@
   <link rel="stylesheet" href="bower_components/html5-boilerplate/css/main.css">
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
-  <link rel="stylesheet" href="bower_components/ng-tags-input/ng-tags-input.min.css"/>
   <link rel="stylesheet" href="bower_components/ng-tags-input/ng-tags-input.bootstrap.min.css"/>
+  <link rel="stylesheet" href="bower_components/ng-tags-input/ng-tags-input.min.css">
   <link rel="stylesheet" href="app.css"/>
   <link rel='stylesheet' href='/bower_components/textAngular/src/textAngular.css'>
   <link rel='stylesheet' href='/bower_components/fontawesome/css/font-awesome.min.css'>
@@ -46,7 +46,8 @@
   <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
   <![endif]-->
-
+ 
+ 
   <!-- In production use:
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
   -->
@@ -57,6 +58,8 @@
   <script src="bower_components/jquery/dist/jquery.min.js"></script>
   <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   <script src="bower_components/ng-tags-input/ng-tags-input.min.js"></script>
+  <script src="bower_components/flow.js/dist/flow.min.js"></script>
+  <script src="bower_components/ng-flow/dist/ng-flow-standalone.min.js"></script>
   <script src="app.js"></script>
   <script src="ApplicationController.js"></script>
   <script src="modules/measures/measures.js"></script>
@@ -71,7 +74,6 @@
   <script src="modules/assessments/assessments.js"></script>
   <script src="modules/subcategory/subcategory.js"></script>
   <script src="modules/assessments/services.js"></script>
-  <script src="modules/assessments/controllers.js"></script>
   <script src="modules/administration_panel/administration_panel.js"></script>
   <script src="modules/administration_panel/about_us_tab.js"></script>
   <script src="modules/administration_panel/administration_tab.js"></script>
@@ -79,10 +81,16 @@
   <script src="modules/administration_panel/faq_tab.js"></script>
   <script src="modules/administration_panel/quizzes_categories_tab.js"></script>
   <script src="modules/administration_panel/user_tab.js"></script>
+  <script src="modules/assessments/QuizCtrl.js"></script>
+  <script src="modules/assessments/AssessmentsResultCtrl.js"></script>
+  <script src="modules/assessments/QuizEditCtrl.js"></script>
+  <script src="modules/assessments/QuizCreateCtrl.js"></script>
   <script src="modules/users/users.js"></script>
   <script src="modules/users/services.js"></script>
   <script src="modules/sessions/sessions.js"></script>
   <script src="modules/sessions/services.js"></script>
+  <script src="modules/personalCabinet/personalCabinet.js"></script>
+  <script src="modules/personalCabinet/profile.js"></script>
   <script src="components/version/version.js"></script>
   <script src="components/version/version-directive.js"></script>
   <script src="components/version/interpolate-filter.js"></script>
