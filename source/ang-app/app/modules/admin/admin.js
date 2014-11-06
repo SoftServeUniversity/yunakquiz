@@ -82,9 +82,8 @@ angular.module('yunakQuiz.admin', ['ngRoute'])
 					};
 					i = 0;
 				};
-			alert('this is success: ' + result);	
+			// alert('this is success: ' + result);	
 			})
-
 			.error(function(data){
 				alert('data is lost');
 			})
@@ -104,7 +103,7 @@ angular.module('yunakQuiz.admin', ['ngRoute'])
 	// if (asd.length > 0)
 	if (asd.length > 0)
 		$scope.results = getTabTemplates.permission();
-	else
-		$location.path( "/404" );
+	// else
+	// 	$location.path( "/404" );
 }
 ])
