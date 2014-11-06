@@ -90,5 +90,11 @@
       return $resource('http://localhost:9292/user', null,
         {'update': { method:'PUT' }
       }); 
-  }]);  
+  }])
+  
+  .factory('accessService', ['$resource', function($resource) {
+      return $resource('http://localhost:9292/access');
+    }]);  
+  
+  
 })();  
