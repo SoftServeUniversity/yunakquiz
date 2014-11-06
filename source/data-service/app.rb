@@ -55,11 +55,31 @@ module PlastApp
       [{id: 1, name: 'assessment 1'}, {id: 2, name: 'assessment 2'}].to_json
     end
     
-    get '/admin/assessments/:id/comments' do
+    get '/admin/assessments/comments/:id' do
       content_type :json
       Comment.get(params['id']).to_json
     end 
 
+    put '/admin/assessments/comments' do
+      content_type :json
+      data = JSON.parse(request.body.read)
+      comments = Comment.updateC(data)
+      if comments
+        return [200, {status: 'ok'}.to_json]
+      else
+        return [400, 'neOk']
+      end
+    end 
+
+    delete '/admin/assessments/comments/:id' do
+      content_type :json
+      comments = Comment.deleteC(params['id'])
+      if comments
+        return [200, {status: 'ok'}.to_json]
+      else
+        return [400, 'neOk']
+      end
+    end
 
     put '/admin/assessments/:id' do
       content_type :json
@@ -88,7 +108,8 @@ module PlastApp
       content_type :json
       quiz = Quiz.queryQ(params['id'])
       if quiz['id']
-        JSON.pretty_generate(quiz) 
+        quiz
+        # JSON.pretty_generate(quiz) 
       else
         return [400, quiz.to_json]
       end
@@ -100,15 +121,40 @@ module PlastApp
       {response: "Assessment #{params['id']} has been deleted"}.to_json
     end
 
+    #Guest Search query
+     get '/guest-search' do
+      content_type :json
+      Category.select('id, category_id, title').to_json
+    end 
+    #End of Guest Search
+    
+    get '/categories' do
+      content_type :json
+      JSON.pretty_generate(Category.catList)
+    end  
+
     get '/admin/assessments/:status' do
       content_type :json
-      quizzes = Quiz.queryList(params['status'])
+      quizzes = Quiz.quizQuery(params['status'])
       if quizzes
-        JSON.pretty_generate(quizzes) 
+        JSON.pretty_generate(quizzes)
+
       else
         return [400, "Not found "+params['status']]
       end
-            
     end
+
+    post '/admin/assessments/:status' do
+      content_type :json
+      data = JSON.parse(request.body.read)
+      #check permisions here
+      quizzes = Quiz.quizQuery(params['status'],data['searchData'],data['currentPage'],data['itemsPerPage'])
+      if quizzes
+        JSON.pretty_generate(quizzes)
+      else
+        return [400, 'Error']
+      end
+    end
+
   end
 end

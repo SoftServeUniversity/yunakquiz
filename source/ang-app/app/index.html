@@ -15,30 +15,42 @@
   <link href="bower_components/angular-xeditable/dist/css/xeditable.css" rel="stylesheet">
   <link rel="stylesheet" href="app.css"/>
   <link rel="stylesheet" type="text/css" href="bower_components/ng-tags-input/ng-tags-input.css">
-    <script src="bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"></script>
+  <script src="bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"></script>
 </head>
 <body>
-  <ul class="menu">
-    <li><a href="#/measures">Measures</a></li>
-    <li><a href="#/assessments/1">Pass an assessment</a></li>
-    <li><a href="#/auth/signup">Sign up</a></li>
-    <li><a href="#/auth/login">Login User</a></li>
-  </ul>
+  <div class="inner-wraper container ">
+    <header-menu></header-menu> 
+    <div ng-view></div>
+  </div>
+  <footer class="footer-menu-container">
+    <nav class="footer-menu">
+      <ul >
+        <li>
+          <a href="#">Головна</a> |
+        </li>
+        <li>
+          <a href="#about-us">Про Нас</a> |
+        </li>
+        <li>
+          <a href="#contacts">Контакти</a>
+        </li>
+      </ul>
+    </nav>
+    <p>Copyright@ Softserve 2014 <div>App version: v<span app-version></span></div></p>
+  </footer>  
 
   <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
   <![endif]-->
-  <div class="container">
-    <div ng-view></div>
-  </div>
-  <div>App version: v<span app-version></span></div>
-
   <!-- In production use:
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
   -->
   <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-mocks/angular-mocks.js"></script>
   <script src="bower_components/angular-route/angular-route.js"></script>
   <script src="bower_components/angular-resource/angular-resource.js"></script>
+  <script src="bower_components/angular-bootstrap/ui-bootstrap.js"></script>
+  <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
   <script src="bower_components/jquery/dist/jquery.min.js"></script>
   <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   <script src="bower_components/flow.js/dist/flow.min.js"></script>
@@ -46,12 +58,21 @@
   <script src="bower_components/ng-tags-input/ng-tags-input.js"></script>
   <script src="app.js"></script>
   <script src="modules/measures/measures.js"></script>
+  <script src="modules/header-menu/header-menu.js"></script>
+  <script src="modules/guest-search/guest-search.js"></script>
+  <script src="modules/partials/staticPartialsRoutes.js"></script>
+  <script src="modules/statistics/statistics.js"></script>
+  <script src="modules/categories-container/categories-container.js"></script>
+  <script src="modules/subcategory/subcategory.js"></script>
   <script src="modules/assessments/assessments.js"></script>
   <script src="modules/assessments/services.js"></script>
   <script src="modules/assessments/QuizCtrl.js"></script>
   <script src="modules/assessments/AssessmentsResultCtrl.js"></script>
   <script src="modules/assessments/QuizEditCtrl.js"></script>
   <script src="modules/assessments/QuizCreateCtrl.js"></script>
+  <script src="modules/personalCabinet/personalCabinet.js"></script>
+  <script src="modules/moderationCabinet/moderationCabinet.js"></script>
+  <script src="modules/moderationCabinet/ReviewCtrl.js"></script>
   <script src="modules/users/users.js"></script>
   <script src="modules/sessions/sessions.js"></script>
   <script src="modules/personalCabinet/personalCabinet.js"></script>
