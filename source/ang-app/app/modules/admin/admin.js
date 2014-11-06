@@ -82,13 +82,14 @@ angular.module('yunakQuiz.admin', ['ngRoute'])
 					};
 					i = 0;
 				};
+				alert("this is factory: " + result);	
+				return result;
 			// alert('this is success: ' + result);	
 			})
 			.error(function(data){
 				alert('data is lost');
 			})
-			alert("this is factory: " + result);	
-			return result;
+			
 		}
 	}
  
