@@ -1,7 +1,6 @@
 class CreateQuizzesTable < ActiveRecord::Migration
 	def change
 		create_table :quizzes do |table|
-			table.integer :category_id
 			table.belongs_to :category
 			table.belongs_to :user
 			table.string :title

@@ -2,6 +2,7 @@ require 'digest/sha2'
 require 'protected_attributes'
 
 class User < ActiveRecord::Base
+  has_many :quizzes
   attr_protected :hashed_password, :salt
   attr_accessor :password
   
