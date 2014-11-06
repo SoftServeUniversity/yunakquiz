@@ -17,17 +17,32 @@
 
  	app.controller('faqAdminCtrl', ['$scope', '$http', function ($scope, $http) {
 
-     $http.get('http://localhost:9292/faq').success(function(data){
-       $scope.Questions = data;
+    $http.get('http://localhost:9292/faq').success(function(data){
+      $scope.Questions = data;
+      $scope.editorEnabled = false;
 
-      for (var i = $scope.Questions.length - 1; i >= 0; i--) {
-        $scope.Questions[i].visible = false;
+      $scope.enableEditor = function(index){
+        $scope.editorEnabled = true;
+        $scope.editableQuestion = $scope.Questions;
       };
-     });
 
-    $scope.showAnswer = function(index){
-      $scope.Questions[index].visible = !$scope.Questions[index].visible;
-    };
+      $scope.disableEditor = function(){
+        $scope.editorEnabled = false;
+      };
+
+      $scope.save = function(){
+        $scope.Questions = $scope.editableQuestion;
+        $scope.disableEditor();
+      };
+
+      // for (var i = $scope.Questions.length - 1; i >= 0; i--) {
+      //   $scope.Questions[i].visible = false;
+      // };
+    });
+
+    // $scope.showAnswer = function(index){
+    //   $scope.Questions[index].visible = !$scope.Questions[index].visible;
+    // };
           
    }])
 

@@ -217,16 +217,15 @@ box-shadow: 0px 0px 21px 0px rgba(0,0,0,0.75);
 /*eo faq page*/
 
 /* faq page for admin */
-.FAQ_AdminPage a {
+/*.FAQ_AdminPage a {
   color: #005229;
   text-decoration: none;
   font-size: 17px;
-  margin: 0 0 10px 0;
 }
 
 .FAQ_AdminPage a:visited {
     background-color: white;
-}
+}*/
 
 .FAQ_AdminPage p {
   font-size: 15px;

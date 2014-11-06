@@ -5,9 +5,16 @@
 </div> 
 
 <div class="FAQ_AdminPage">
-	<p ng-repeat="Question in Questions" editable-text="Question" ng-model="Question.faq_question">
+	<p ng-repeat="Question in Questions">
 		{{$index+1}}. {{Question.faq_question}} 
+		<button ng-click="enableEditor($index)">Edit</button>	
 	    <br/> 
-		{{Question.faq_answer}}
+		{{Question.faq_answer}}			
+		
+		<div ng-show="editorEnabled">
+			 <input ng-model="editableQuestion" ng-show="editorEnabled">
+			 <button ng-click="save()">Save</button>
+			 <button ng-click="disableEditor()">Cancel</button>
+		</div>
 	</p>	
 </div>
