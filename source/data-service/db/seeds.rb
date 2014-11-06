@@ -18,6 +18,16 @@ moderRole = Role.create(name: 'moder')
 superadminRole = Role.create(name: 'superadmin')
 # quiz1.user = moder
 
+admin = User.create(username: "admin123", hashed_password:"1515cb08baef6dd8ec5abc9df507580b2f54d1437fb1a6b887ea2e3134302981",
+salt: "03b09c792bdf1d5b11800292031fce4e56121730700bdc96761a8b347158fc3a", email: "admin@gmail.com")      
+
+user = User.create(username: "user123", hashed_password:"79339bf3660f7748886b79d9ab4dc75bfffc51a4abba4aaca7fb44c7db336f8d",
+salt: "8a002f794bf4fb85333af6ae77eccab208239f114973b0d6cedfb8859160f0f4", email: "user@gmail.com")
+
+moder = User.create(username: "moder123", hashed_password:"79339bf3660f7748886b79d9ab4dc75bfffc51a4abba4aaca7fb44c7db336f8d",
+salt: "8a002f794bf4fb85333af6ae77eccab208239f114973b0d6cedfb8859160f0f4", email: "moder@gmail.com")
+
+
 Permission.create(tabs: 'admin1', admin: '1', superadmin: '4')
 Permission.create(tabs: 'admin2', admin: '1', superadmin: '4')
 Permission.create(tabs: 'admin3', admin: '1', superadmin: '4')
