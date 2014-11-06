@@ -1,5 +1,5 @@
 <div class="quiz row">
-<h3 class="text-center assessment-title">Редагування тесту</h3>
+<h3 class="text-center assessment-title">Перевірка тесту</h3>
 	<div ng-if="errorMsg" ng-bind="errorMsg" class="alert col-sm-12 text-center alert-danger"></div>
 	<div class="col-md-8">
 		<form name="quizEditForm" novalidate>
@@ -61,8 +61,8 @@
 			</div>
 
 			<div class=" col-sm-12 quizMarginTop">
-				<button ng-click="saveQuiz()" ng-disabled="quizEditForm.$invalid" class="btn btn-warning">Зберегти  чорновик</button>
-				<button ng-click="reviewQuiz()" ng-disabled="quizEditForm.$invalid" class="btn btn-success">Відправити на модерацію</button> 
+				<button ng-click="enhanceQuiz()" ng-disabled="quizEditForm.$invalid" class="btn btn-warning">Відправити на доопрацювання</button>
+				<button ng-click="publishQuiz()" ng-disabled="quizEditForm.$invalid" class="btn btn-success">Опублікувати</button> 
 
 			<p>
 		  		Showing of 'interpolate' filter:
@@ -75,11 +75,19 @@
 	<div class="col-md-4" >
 		<div class="panel panel-default">
 		  	<div class="panel-heading text-uppercase text-center"><strong>Коментарі модератора</strong>
-		  		<span class="badge pull-right">{{comments.length}}</span>
+		  		<span ng-bind="comments.length" class="badge pull-right"></span>
 		  	</div>
 		  	<ul class="list-group">
-		    	<li ng-bind="comment.text" ng-repeat="comment in comments" class="list-group-item"></li>
+		    	<li ng-repeat="comment in comments" class="list-group-item">
+		    		<button ng-if="!comment.id" type="button" ng-click="deleteComment($index)" class="close pull-right"><span aria-hidden="true">&times;</span></button>
+		    		{{comment.text}}
+		    		<div ng-if="comment.created_at" class="text-right"><i class="small"><span class="glyphicon glyphicon-time"></span>&nbsp;&nbsp;{{comment.created_at| date:"dd/mm/yy HH:mm"}}</i></div>
+		    	</li>
 		    </ul>
 		</div>
+			<textarea class="form-control" ng-model="comment" rows="6" placeholder="Введіть коментар..."></textarea>
+			<div class="quizMarginTop">
+				<button ng-click="addComment()" ng-disabled="!comment.length" class="btn btn-success">Додати коментар</button>
+			</div>
 	</div>
 </div>

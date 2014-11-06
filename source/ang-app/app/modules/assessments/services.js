@@ -32,7 +32,15 @@ yunakQuizApp.factory('QuizData', ['$http', '$location', function($http, $locatio
           },
 
       getComments: function(id){
-            return $http.get('http://localhost:9292/admin/assessments/'+id+'/comments')
+            return $http.get('http://localhost:9292/admin/assessments/comments/'+id)
+          },
+
+      updateComments: function(comments){
+            return $http.put('http://localhost:9292/admin/assessments/comments', comments)
+          },
+
+      deleteComments: function(id){
+            return $http.delete('http://localhost:9292/admin/assessments/comments/'+id)
           },
     }
   }

@@ -30,10 +30,31 @@ module PlastApp
       [{id: 1, name: 'assessment 1'}, {id: 2, name: 'assessment 2'}].to_json
     end
     
-    get '/admin/assessments/:id/comments' do
+    get '/admin/assessments/comments/:id' do
       content_type :json
       Comment.get(params['id']).to_json
     end 
+
+    put '/admin/assessments/comments' do
+      content_type :json
+      data = JSON.parse(request.body.read)
+      comments = Comment.updateC(data)
+      if comments
+        return [200, {status: 'ok'}.to_json]
+      else
+        return [400, 'neOk']
+      end
+    end 
+
+    delete '/admin/assessments/comments/:id' do
+      content_type :json
+      comments = Comment.deleteC(params['id'])
+      if comments
+        return [200, {status: 'ok'}.to_json]
+      else
+        return [400, 'neOk']
+      end
+    end
 
     put '/admin/assessments/:id' do
       content_type :json

@@ -9,8 +9,6 @@ yunakQuizApp.controller('ReviewCtrl', ['$scope','QuizData', '$routeParams','tags
         $scope.quiz = data;
         $scope.getComments(data['id']);
         $scope.getCat();
-        
-        // $scope.setCat();
       })
       .error(function(data){
         $location.path('/404/');
@@ -90,36 +88,54 @@ yunakQuizApp.controller('ReviewCtrl', ['$scope','QuizData', '$routeParams','tags
     }
   };
 
+  $scope.deleteComment=function(index){
+    $scope.comments.splice(index,1);
+  };
 
+  $scope.addComment=function(){
+    $scope.comments.push({'text':$scope.comment,'quiz_id':$scope.quiz.id});
+    $scope.comment='';
+  };
 
   /** save draft Quiz */
-  $scope.saveQuiz=function(){
-    $scope.sendQuiz("draft");
+  $scope.enhanceQuiz=function(){
+    $scope.sendQuiz("enhance");
   };
 
   /** save Quiz for review */
-  $scope.reviewQuiz=function(){
-    $scope.sendQuiz("review");
+  $scope.publishQuiz=function(){
+    $scope.sendQuiz("published");
   };
 
   /** send Quiz to backend  */
   $scope.sendQuiz = function(state){
     $scope.quiz.category_id = $scope.selectedSubcat.id;
-        $scope.quiz.status = state;
+    $scope.quiz.status = state;
         
-      if(!QuizValidation($scope.quiz.questions)){
+    if(!QuizValidation($scope.quiz.questions)){
         
-        QuizData.update($scope.quiz)
-          .success(function(data, status, headers, config) {
-              $location.path('/admin/personalCabinet/'+state);
-          })
-                .error(function(data, status, headers, config) {
-                  window.scrollTo(0,0);
+      QuizData.update($scope.quiz)
+        .success(function(data, status, headers, config) {
+            $scope.sendComments($scope.quiz.status);
+        })
+        .error(function() {
+            window.scrollTo(0,0);
             $scope.errorMsg = 'Ваш тест не збережено';
-                });
-      }
+        })
+    }
   };
-
+  $scope.sendComments = function(state){
+   var service = (state=="published") ? QuizData.deleteComments($scope.quiz.id) : QuizData.updateComments($scope.comments);
+    service
+      .success(function(data, status, headers, config) {
+        $location.path('/admin/moderationCabinet/');
+      })
+      .error(function() {
+        window.scrollTo(0,0);
+        $scope.errorMsg = 'Ваш тест не збережено';
+      })
+  };
+    
   $scope.init();
 
 }]);
