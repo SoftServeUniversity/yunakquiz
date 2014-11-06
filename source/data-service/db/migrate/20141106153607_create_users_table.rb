@@ -12,6 +12,7 @@ class CreateUsersTable < ActiveRecord::Migration
       table.string "plast_region"
       table.string "plast_level"
       table.string "picture"
+      table.integer "role_id"
       table.timestamps
     end 
   end
