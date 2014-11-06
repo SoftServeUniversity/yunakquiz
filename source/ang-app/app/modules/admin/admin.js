@@ -70,6 +70,7 @@ angular.module('yunakQuiz.admin', ['ngRoute'])
 			.success(function(data){
 				var givenTabs = tabs;
 				var userAccess = data;
+				console.log(data + "tabs from server");
 				var i=0;
 				var j=0;
 				var tlen = givenTabs.length;
@@ -82,13 +83,16 @@ angular.module('yunakQuiz.admin', ['ngRoute'])
 					};
 					i = 0;
 				};
+				console.log(result + "result tubs");
+				//return result;
 			// alert('this is success: ' + result);	
 			})
 			.error(function(data){
 				alert('data is lost');
-			})
-			alert("this is factory: " + result);	
-			return result;
+			});
+			console.log(result + "result tubs inside permission method");
+			//alert("this is factory: " + result);	
+			//return result;
 		}
 	}
  
@@ -98,12 +102,12 @@ angular.module('yunakQuiz.admin', ['ngRoute'])
 }])
 
 .controller("AdminCtrl", ["$location", "$scope", "$http", 'getTabTemplates', function($location, $scope, $http, getTabTemplates){
-	var asd = getTabTemplates.permission();
-	alert("this is asd: " + asd);
+	$scope.asd = getTabTemplates.permission();
+	//alert("this is asd: " + $scope.asd);
 	// if (asd.length > 0)
-	if (asd.length > 0)
-		$scope.results = getTabTemplates.permission();
+	// if ($scope.asd.length > 0) {
+	// 	$scope.results = getTabTemplates.permission();
+	// }
 	// else
 	// 	$location.path( "/404" );
-}
-])
+}]);
