@@ -1,6 +1,11 @@
 .idea
 .sass-cache
 *.log
+<<<<<<< HEAD
 *~
 .project
 
+=======
+.sqlite3
+schema.rb
+>>>>>>> e5fc1713164625bf8b5ed28bbe0aae1503aacf7e

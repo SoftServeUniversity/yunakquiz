@@ -6,6 +6,9 @@ class CreateCategoriesTable < ActiveRecord::Migration
   			table.belongs_to :category 
   			table.timestamps
   		end
+<<<<<<< HEAD
 
+=======
+>>>>>>> e5fc1713164625bf8b5ed28bbe0aae1503aacf7e
 	end
 end

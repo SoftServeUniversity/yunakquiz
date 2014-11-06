@@ -1,39 +1,11 @@
-<div class="subcat-section" ng-controller="subcategoryController">
-
 <div class="row">
   <div class="col-xs-12 pageTitleBox bg-primary">
     <div class="center-block"><h3 class="pageTitle">Пошук тестів у підкатегоріях</h3></div>
   </div>
 </div>
 
-<div class="row">
-	<div class="col-xs-3 col-xs-offset-1">
-	 	<label>
-		    Сортування по
-		    <select  ng-model="sorting" class="form-control subcat-form">
-		        <option value="date">Даті</option>
-		        <option value="name">Алфавіту</option>
-		    </select>
-	  	</label>
-	</div>
-	<div class="col-xs-3 col-xs-offset-4"> 
-		<label>
-		  <input type="text" placeholder="Пошук" ng-model="searchItem.tags" class="form-control subcat-form"/>
-		    <button class="btn btn-default">
-		        <i class="glyphicon glyphicon-search"></i>
-		    </button>
-		</label>
-	</div>
-</div>
-
-<div ng-repeat="itemTest in testBase| filter: searchItem | orderBy:sorting" class="row">
-	<div class="col-xs-6 col-xs-offset-3">
-	   	<div class="content">
-	   		<h3 class="text-center">{{itemTest.name}}</h3>
-	    	<p>{{itemTest.description}}</p><br>
-	    	<span ng-repeat="tagging in itemTest.tags"><a href="#">{{tagging}}|</a></span>
-	  	</div>
-	</div>
-</div>
-
-</div>
+<p>This is place for subcategories, content will be added in next pull request</p>
+<p>
+  Showing of 'interpolate' filter:
+  {{ 'Current version is v%VERSION%.' | interpolate }}
+</p>

@@ -1,53 +1,31 @@
 /* app css stylesheet */
 /*styles used in homepage*/
-.outer-wraper{
-  width: 100%;
-  height: 100%;
-}
 .inner-wraper{
   margin-left: auto;
   margin-right: auto;
 }
-.header-menu-container{
-  position: relative;
-  padding: 10px;
-}
 .page-header h4{
   font-size: 1.9em;
+  text-align: center;
 }
 .header-navmenu {
-  margin-left: 10%;
+  margin-left: 15%;
 }
-.header-navmenu ul  {
-  text-decoration: none;
- }
 .header-navmenu li {
   list-style: none;
   display: inline-block;
-  margin-left: 15px;
-  margin-right: 15px;
+  margin-left: 20px; 
+  margin-right: 20px;
 }
 .header-navmenu li a {
   font-size: 1.5em;
   color: #5bc0de;
 }
-
 .header-navmenu li a:hover  {
   text-decoration: none;
   color: #0490ba;
  }
-a:active, a:focus {
-  background-color: #eee;
-  text-decoration: none;
-  outline: 0;
-}
-.login-header-menu{
-  position:absolute;
-  right:5px;
-  top:10px;
-}
 .footer-menu-container{
-  font-size: 0.8em;
   margin-left: auto;
   margin-right: auto;
   width: 100%;
@@ -72,7 +50,8 @@ a:active, a:focus {
 .about-test-quotation{
   border-left: 2px solid #ccc; 
   margin-left: 20px; 
-  padding-left: 10px
+  padding-left: 10px;
+  margin-top: 20px;
 }
 .quiz-description{
   font: 18px italic arial;     
@@ -87,6 +66,9 @@ a:active, a:focus {
   margin-top: 15px;
   text-align: center;
 }
+.greetings-container{
+  margin-bottom: 50px;
+}
 .quote-author {
   color:#a5a1a1;
 }
@@ -97,6 +79,7 @@ a:active, a:focus {
   position: relative;
   min-height: 100%;
 }
+<<<<<<< HEAD
 /*eof of styles in homepage*/
 
 /*Category container*/
@@ -128,6 +111,8 @@ a:active, a:focus {
   margin-left: 14px;
   z-index: 1;
 }
+=======
+>>>>>>> e5fc1713164625bf8b5ed28bbe0aae1503aacf7e
 
 /* eof Category container*/
 
@@ -156,4 +141,7 @@ a:active, a:focus {
 	border-radius: 7px 7px 0px 0px;
 }
 /* end assessment styles */
+<<<<<<< HEAD
 
+=======
+>>>>>>> e5fc1713164625bf8b5ed28bbe0aae1503aacf7e
