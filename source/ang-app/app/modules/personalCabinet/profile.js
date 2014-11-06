@@ -7,18 +7,26 @@ angular.module('yunakQuiz.personalCabinet')
     testChunks: false
   };
 }])
-.factory('userService', ['$resource',
-        function($resource) {
-            return $resource('/user', null,
-            {
-                'update': { method:'PUT' }
-            }); 
-    }])
-.controller("ProfileController", ["userService", function(userService){
+.controller("ProfileController", ["userService", "$scope", "$timeout", "$location", 
+  function(userService, $scope, $timeout, $location){
     this.user = {};
     var profile = this; 
     this.previousUser = {};
     this.editable = false;
+    
+    this.getRandom = function(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    };
+    this.captcha = this.getRandom(100, 999);
+    
+    $scope.$on("user_updated", function(event, data){
+        profile.user = data;
+    });
+     
+    this.copyAppUser = function(user){
+        angular.copy(user, this.user);
+        this.user.birthday = new Date(this.user.birthday);
+    };
     
     this.edit = function(){
       this.editable = true;
@@ -37,7 +45,7 @@ angular.module('yunakQuiz.personalCabinet')
         }, 
         function(response, status, headers, config){
           console.log("Fail");
-      });
+        });
       this.editable = false;
     };
     
@@ -60,5 +68,29 @@ angular.module('yunakQuiz.personalCabinet')
       });
       this.$flow.upload();
     };
-}]);
+    
+    this.deleteUser = function(){
+      if ((this.captcha == this.enteredCaptcha) && (this.captcha != "") && (this.user.password != "")){
+        userService.remove(this.user, 
+          function(data){
+            console.log("user has been deleted"); 
+              $("#deleteProfile").modal("hide");
+                $timeout(function(){ 
+                  $location.path("/");
+                }, 400);
+                $scope.$emit("user_deleted", data);
+          }, 
+          function(response, status, headers, config){
+            console.log("mistake");
+          });
+      };
+    };
+     
+}])
+.directive("deleteUserProfile", function(){
+  return {
+    restrict: "E",
+    templateUrl: "modules/personalCabinet/deleteProfileModal.html"
+  };
+});
 })();

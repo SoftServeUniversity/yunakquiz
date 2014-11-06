@@ -44,7 +44,7 @@ module PlastApp
         tempfile = params[:file][:tempfile]
         filename = params[:file][:filename]
         saved_name = "#{user.username}#{File.extname(filename)}"
-        FileUtils.copy(tempfile.path, "public/img/ava/#{saved_name}")
+        FileUtils.copy(tempfile.path, "public/avatar/#{saved_name}")
         return [200, saved_name]
       end
       return [401, "unauthorized"]
