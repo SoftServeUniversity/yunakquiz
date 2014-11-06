@@ -15,6 +15,17 @@ module PlastApp
 
     Dir.glob('./config/*.rb').each {|file| require file}
     Dir.glob('./models/*.rb').each {|file| require file}
+    
+    helpers do
+      def filtered_user(user)
+        filter = %w(id username first_name last_name email birthday plast_level plast_region plast_hovel picture)
+        if user.methods.include?(:attributes)
+          return user.attributes.delete_if{|key, value| !filter.include? key.to_s} 
+        else
+          return user.delete_if{|key, value| !filter.include? key.to_s}
+        end  
+      end
+    end
 
     configure do
         enable :sessions
@@ -28,12 +39,12 @@ module PlastApp
     end
     
     get '/access' do
-      	if session[:user_id]
-        	user = User.find(session[:user_id])
-        	return [200, user.username]
-    	  end
-      		return [401, "unauthorized"]
-    end  		
+      if session[:user_id]
+        user = User.find(session[:user_id])
+        return [200, filtered_user(user).to_json]
+      end
+      return [401, "unauthorized"]
+    end 	
 
     get '/assessments' do
       content_type :json
@@ -56,12 +67,12 @@ module PlastApp
       end    
     end
 
-    post '/login' do
+    post '/access' do
       data = JSON.parse request.body.read
       user = User.authenticate(data['username'], data['password'])
       if !user.nil?
         session[:user_id] = user.id
-        return [200, user.username]
+        return [200, filtered_user(user).to_json]
       end
         return [401, "unauthorized"]
     end
@@ -88,10 +99,10 @@ module PlastApp
       end
     end
 
-    get '/logout' do
+    delete '/access' do
       session.clear
       return [200, "ok"]
-    end  
+    end   
 
     delete '/admin/assessments/:id' do
       content_type :json
