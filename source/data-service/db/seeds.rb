@@ -127,3 +127,7 @@ quiz11 = subcat5.quizzes.create(category_id: 5,status:"published", title: "Те�
 quiz11.tags << tag29 = Tag.create(tag: "ооп")
 quiz11.tags << tag30 = Tag.create(tag: "поліморфізм")
 quiz11.tags << tag31 = Tag.create(tag: "програмування")
+
+Contact.create(id: 1, role: "Адміністратор", phone: "+38 032 244-44-44", mail: "someone@somemail.com", address:"79000, Fedkovycha Str. 60A, building 1")
+Contact.create(id: 2, role: "Модератор", phone: "+38 032 244-44-44", mail: "someone@somemail.com", address:"79000, Fedkovycha Str. 60A, building 1")
+Contact.create(id: 3, role: "Ще хтось", phone: "+38 032 244-44-44", mail: "someone@somemail.com", address:"79000, Fedkovycha Str. 60A, building 1")
