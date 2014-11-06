@@ -1,4 +1,4 @@
-angular.module('yunakQuiz.moderationCabinet', ['ngRoute', 'ui.bootstrap'])
+angular.module('yunakQuiz.moderationCabinet', [])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider
@@ -6,10 +6,15 @@ angular.module('yunakQuiz.moderationCabinet', ['ngRoute', 'ui.bootstrap'])
     templateUrl: 'modules/moderationCabinet/moderationCabinet.html',
     controller: 'ModerationCabinetCtrl'
   })
+  .when('/admin/moderationCabinet/review/:quiz_id', {
+    templateUrl: 'modules/moderationCabinet/review.html',
+    controller: 'ReviewCtrl'
+  })  
   .when('/admin/moderationCabinet/:state', {
     templateUrl: 'modules/moderationCabinet/moderationCabinet.html',
     controller: 'ModerationCabinetCtrl'
-  })   
+  })
+ 
 }])
 
 .controller('ModerationCabinetCtrl', ['$scope','QuizData', '$routeParams','$http','$location','$modal', function($scope, QuizData, $routeParams, $http, $location,$modal) {

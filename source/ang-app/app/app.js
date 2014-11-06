@@ -2,6 +2,7 @@
 
 // Declare app level module which depends on views, and components
 angular.module('yunakQuiz', [
+  'ui.bootstrap',
   'ngRoute',
   'yunakQuiz.measures',
   'yunakQuiz.assessments',
@@ -28,6 +29,17 @@ angular.module('yunakQuiz', [
      	  redirectTo: '/'
       });
   }
-]);
+])
+.constant('paginationConfig', {
+  boundaryLinks: true,
+  directionLinks: true,
+  maxSize : 10,
+  rotate: false,
+  firstText: '≪',
+  previousText: '<',
+  nextText: '>',
+  lastText: '≫'
+});
+
 
 

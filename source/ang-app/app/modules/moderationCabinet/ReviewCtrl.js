@@ -1,6 +1,6 @@
 'use strict';
 /** Quiz Edit controller  */
-yunakQuizApp.controller('QuizEditCtrl', ['$scope','QuizData', '$routeParams','tags', '$location','QuizValidation', function($scope, QuizData, $routeParams, tags, $location, QuizValidation) {
+yunakQuizApp.controller('ReviewCtrl', ['$scope','QuizData', '$routeParams','tags', '$location','QuizValidation', function($scope, QuizData, $routeParams, tags, $location, QuizValidation) {
 
   /** get Quiz by ID */
   $scope.init = function(){

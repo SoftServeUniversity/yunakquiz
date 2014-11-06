@@ -1,4 +1,4 @@
-angular.module('yunakQuiz.personalCabinet', ['ngRoute', 'ui.bootstrap'])
+angular.module('yunakQuiz.personalCabinet', [])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider
@@ -15,16 +15,6 @@ angular.module('yunakQuiz.personalCabinet', ['ngRoute', 'ui.bootstrap'])
     controller: 'PersonalCabinetCtrl'
   })   
 }])
- .constant('paginationConfig', {
-            boundaryLinks: true,
-            directionLinks: true,
-            maxSize : 10,
-            rotate: false,
-            firstText: '≪',
-            previousText: '<',
-            nextText: '>',
-            lastText: '≫'
-        })
 
 .controller('PersonalCabinetCtrl', ['$scope','QuizData', '$routeParams','$http','$location','$modal', function($scope, QuizData, $routeParams, $http, $location,$modal) {
   
