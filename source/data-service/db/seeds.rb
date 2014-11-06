@@ -12,10 +12,24 @@ cat3 = Category.create(category_id: 0, title: "Програмування")
 subcat5 = cat3.create(title: "Основи ООП")
 subcat6 = cat3.create(title: "Основи Java")
 
-# admin = 
-# user = 
-# moder = 
+adminRole = Role.create(name: 'admin')
+userRole =  Role.create(name: 'user')
+moderRole = Role.create(name: 'moder')
+superadminRole = Role.create(name: 'superadmin')
 # quiz1.user = moder
+
+Permission.create(tabs: 'admin1', admin: '1', superadmin: '4')
+Permission.create(tabs: 'admin2', admin: '1', superadmin: '4')
+Permission.create(tabs: 'admin3', admin: '1', superadmin: '4')
+
+Permission.create(tabs: 'moder1', moder: '2', superadmin: '4')
+Permission.create(tabs: 'moder2', moder: '2', superadmin: '4')
+Permission.create(tabs: 'moder3', moder: '2', superadmin: '4')
+
+Permission.create(tabs: 'comm1', admin: '1', moder: '2', user: '3', superadmin: '4')
+Permission.create(tabs: 'comm2', admin: '1', moder: '2', user: '3', superadmin: '4')
+
+
 
 quiz1 = subcat1.quizzes.create(status:"published", title: "Тест на знання правил футболу", description: "Детальний опис тесту")
 question1 = quiz1.questions.create(title: "Скільки гравців в команді?", description: "Згідно правил на полі знаходиться 11 гравців однієї команди")
