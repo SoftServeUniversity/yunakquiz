@@ -138,3 +138,9 @@ quiz2.tags << tag5
 # Quiz.create(category_id: 2,status:"draft", title: "18Тест на знання правил футболу", description: "Детальний опис тесту")
 # Quiz.create(category_id: 2,status:"published", title: "19Тест на знання правил футболу", description: "Детальний опис тесту")
 # Quiz.create(category_id: 2,status:"draft", title: "20Тест на знання правил футболу", description: "Детальний опис тесту")
+
+Faq.create(faq_question: "Як створити свій тест?", faq_answer: "Для цього потрібно зареєструватись")
+Faq.create(faq_question: "Де можна знайти інформацію про сайт?", faq_answer: "В нижньому меню, яке називається Про Нас")
+Faq.create(faq_question: "За якою шкалою оцінюється пройдений тест?", faq_answer: "100% - всі відповіді вірні, 67% - 2 відповіді з 3 правильні, 33% - 1 лише відповідь првильна, 0% - всі відповіді не правильні")
+Faq.create(faq_question: "Де можна знайти тест на знання правил хокею?", faq_answer: "В підкатегорії Хокей, яка знаходиться в категорії Спорт")
+Faq.create(faq_question: "Чи можна для пошук вибрати якусь конкретну підкатегорію?", faq_answer: "Так, звичайно.")
