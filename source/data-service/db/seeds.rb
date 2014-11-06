@@ -1,16 +1,16 @@
 #encoding: utf-8 
 
 cat1 = Category.create(category_id: 0, title: "Спорт")
-subcat1 = cat1.create(title: "Футбол")
-subcat2 = cat1.create(title: "Хокей")
+subcat1 = cat1.categories.create(title: "Футбол")
+subcat2 = cat1.categories.create(title: "Хокей")
 
 cat2 = Category.create(category_id: 0, title: "Історія")
-subcat3 = cat2.create(title: "Історія України")
-subcat4 = cat2.create(title: "Історія світу")
+subcat3 = cat2.categories.create(title: "Історія України")
+subcat4 = cat2.categories.create(title: "Історія світу")
 
 cat3 = Category.create(category_id: 0, title: "Програмування")
-subcat5 = cat3.create(title: "Основи ООП")
-subcat6 = cat3.create(title: "Основи Java")
+subcat5 = cat3.categories.create(title: "Основи ООП")
+subcat6 = cat3.categories.create(title: "Основи Java")
 
 adminRole = Role.create(name: 'admin')
 userRole =  Role.create(name: 'user')
