@@ -33,8 +33,6 @@ Permission.create(tabs: 'moder3', moder: '2', superadmin: '4')
 Permission.create(tabs: 'comm1', admin: '1', moder: '2', user: '3', superadmin: '4')
 Permission.create(tabs: 'comm2', admin: '1', moder: '2', user: '3', superadmin: '4')
 
-
-
 quiz1 = subcat1.quizzes.create(status:"published", title: "Тест на знання правил футболу", description: "Детальний опис тесту")
 question1_1 = quiz1.questions.create(title: "Скільки гравців в команді?", description: "Згідно правил на полі знаходиться 11 гравців однієї команди")
 question1_1.answers.create(title: "11", correct: true)
@@ -49,10 +47,8 @@ question1_3.answers.create( title: "Порушенння правил", correct:
 question1_3.answers.create( title: "Штрафний удар", correct: true)
 question1_3.answers.create( title: "Дадуть пиріжок", correct: false)
 question1_3.answers.create(title: "Дадуть в голову", correct: false)
-quiz1.comments.create(text: "Дуже гарний тест")
-quiz1.comments.create(text: "Потрібно додати питання із декількома правильними відповідями")
 
-quiz2 = subcat1.quizzes.create(status:"published", title: "Тест на знання історії України", description: "Детальний опис тесту")
+quiz2 = subcat3.quizzes.create(status:"enhance", title: "Тест на знання історії України", description: "Детальний опис тесту")
 question2_1 = quiz2.questions.create(title: "У 1223 р. на Київську Русь напали орди", description: "")
 question2_1.answers.create(title: "печенігів", correct: false)
 question2_1.answers.create( title: "половців", correct: false)
@@ -68,18 +64,54 @@ question2_3.answers.create( title: "М.Грушевський", correct: true)
 question2_3.answers.create(title: "Ленін", correct: false)
 quiz2.comments.create(text: "Потрібно додати більше питань")
 
+quiz3 = subcat4.quizzes.create(status:"published", title: "Друга світова війна", description: "Детальний опис тесту")
+question3_1 = quiz3.questions.create(title: "У якому році почалась Друга Світова Війна?", description: "Друга світова війна почалась з нападу Третього Рейху на Польщу 9-го вересня 1939р року")
+question3_1.answers.create(title: "1941р.", correct: false)
+question3_1.answers.create( title: "1939р.", correct: true)
+question3_1.answers.create( title: "1911р.", correct: false)
+question3_1.answers.create( title: "ШТО?", correct: false)
+question3_2 = quiz3.questions.create(title: "Як називався план нападу Третього Рейху на СРСР?", description: "План Барбаросса передбачував військовий напад на СРСР з повним розгромом Радянської армії")
+question3_2.answers.create( title: "Вайс", correct: false)
+question3_2.answers.create( title: "Рот", correct: false)
+question3_2.answers.create( title: "Барбаросса", correct: true)
+question3_3 = quiz3.questions.create(title: "У якому році завершилась Друга Світова Війна?", description: "")
+question3_3.answers.create( title: "1950р.", correct: false)
+question3_3.answers.create( title: "1981р.", correct: false)
+question3_3.answers.create( title: "1945р.", correct: true)
+question3_3.answers.create(title: "1944р.", correct: false)
 
+quiz4 = subcat6.quizzes.create(status:"review", title: "Історія Java", description: "Детальний опис тесту")
+question4_1 = quiz4.questions.create(title: "Якою компанією випущена мова Java?", description: "Java випущена компанією Sun Microsystems у 1995 році як основний компонент платформи Java.")
+question4_1.answers.create(title: "Sun Microsystems", correct: true)
+question4_1.answers.create( title: "Motorolla", correct: false)
+question4_1.answers.create( title: "Google", correct: false)
+question4_2 = quiz4.questions.create(title: "Звідки мова Java отримала свою назву?", description: "Названа на честь марки кави Java, яка, в свою чергу, отримала найменування однойменного острова")
+question4_2.answers.create( title: "Назва була вигадана першим розробником", correct: false)
+question4_2.answers.create( title: "Запозичення з іншої мови", correct: false)
+question4_2.answers.create( title: "Марка кави", correct: true)
+question4_3 = quiz4.questions.create(title: "Хто започаткував розробку мови Java?", description: "Розробку проекту започаткував Джеймс Ґослінґ, сам проект мав назву «Green»(Зелений)")
+question4_3.answers.create( title: "Фред Лонг", correct: false)
+question4_3.answers.create( title: "Джеймс Ґослінґ", correct: true)
+question4_3.answers.create( title: "Кей Хорстманн", correct: false)
+quiz4.comments.create(text: "Дуже гарний тест")
+quiz4.comments.create(text: "Потрібно додати питання із декількома правильними відповідями")
 
-# Quiz.create(category_id: 2,status:"draft", title: "Тест на знання правил футболу", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
-# Quiz.create(category_id: 5,status:"draft", title: "Тест на знання історії України", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
-# Quiz.create(category_id: 6,status:"draft", title: "Тест на знання історії світу", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
-# Quiz.create(category_id: 6,status:"draft", title: "Тест на знання другої світової війни", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
-# Quiz.create(category_id: 6,status:"draft", title: "Тест на знання першої світової війни", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
-# Quiz.create(category_id: 3,status:"draft", title: "Тест на знання правил хокею", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
-# Quiz.create(category_id: 2,status:"draft", title: "Тест на знання видатних футболістів", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
-# Quiz.create(category_id: 6,status:"draft", title: "Тест на знання війни в Вєтнамі", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
-# Quiz.create(category_id: 5,status:"draft", title: "Тест на знання Украйни в часи незалежності", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
-# Quiz.create(category_id: 5,status:"draft", title: "Тест на знання революції гідності 2014 року", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
+quiz5 = subcat6.quizzes.create(status:"draft", title: "Базові знання Java", description: "Детальний опис тесту")
+question5_1 = quiz5.questions.create(title: "Який з вказаних типів не є простим?", description: "Простими типами в Java є : boolean, byte, char, short, int, long, float, double.")
+question5_1.answers.create(title: "int", correct: false)
+question5_1.answers.create( title: "double", correct: false)
+question5_1.answers.create( title: "word", correct: true)
+question5_1.answers.create( title: "boolean", correct: false)
+question5_1.answers.create( title: "char", correct: false)
+question5_2 = quiz5.questions.create(title: "Який оператор відповідає за імпортування зовнішніх пакетів в Java?", description: "За імпортування зовнішніх пакетів в Java відповідає оператор import")
+question5_2.answers.create( title: "include", correct: true)
+question5_2.answers.create( title: "import", correct: false)
+question5_2.answers.create( title: "require", correct: false)
+question5_3 = quiz5.questions.create(title: "Як оголосити масив типу int в Java?", description: "int my_array[] або int[] my_array")
+question5_3.answers.create( title: "int my_array[]", correct: true)
+question5_3.answers.create( title: "int[] my_array", correct: true)
+question5_3.answers.create( title: "var array = new Array", correct: false)
+quiz5.comments.create(text: "Потрібно детальніше описати правильну відповідь у питанні про масиви")
 
 
 tag1 = Tag.create(tag: "футбол")
@@ -87,6 +119,9 @@ tag2 = Tag.create(tag: "спорт")
 tag3 = Tag.create(tag: "м'яч")
 tag4 = Tag.create(tag: "Україна")
 tag5 = Tag.create(tag: "історія")
+tag7 = Tag.create(tag: "програмування")
+tag8 = Tag.create(tag: "java")
+tag9 = Tag.create(tag: "масиви")
 Tag.create(tag: "батьківщина")
 Tag.create(tag: "світ")
 Tag.create(tag: "історія")
@@ -94,7 +129,6 @@ Tag.create(tag: "всьо")
 Tag.create(tag: "Гітлер")
 Tag.create(tag: "Сталін")
 Tag.create(tag: "голодомор")
-Tag.create(tag: "друга_світова")
 Tag.create(tag: "перша_світова")
 Tag.create(tag: "війна")
 Tag.create(tag: "Німеччина")
@@ -118,7 +152,14 @@ quiz1.tags << tag1
 quiz1.tags << tag2
 quiz1.tags << tag3
 quiz2.tags << tag4
-quiz2.tags << tag5
+quiz3.tags << tag5
+quiz3.tags << tag6
+quiz4.tags << tag5
+quiz4.tags << tag7
+quiz4.tags << tag8
+quiz5.tags << tag7
+quiz5.tags << tag8
+quiz5.tags << tag9
 
 
 # Quiz.create(category_id: 2,status:"draft", title: "4Тест на знання правил футболу", description: "Детальний опис тесту")
