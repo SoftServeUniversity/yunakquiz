@@ -9,6 +9,7 @@ angular.module('yunakQuiz', [
   'yunakQuiz.sessions',
   'yunakQuiz.version',
   'yunakQuiz.headerMenu',
+  // 'yunakQuiz.error',
   // 'yunakQuiz.guestSearch',
   // 'yunakQuiz.statistics',
   // 'yunakQuiz.staticPartialsRoute',
@@ -25,6 +26,11 @@ angular.module('yunakQuiz', [
       		  when('/', {
         		templateUrl: 'modules/partials/home-page-greetings.html',
       		  }).
+
+            when('/404', {
+            templateUrl: 'modules/404/404.html',
+            }).
+
       		  otherwise({
         	  redirectTo: '/'
       });
