@@ -6,6 +6,7 @@ angular.module('yunakQuiz', [
   'yunakQuiz.measures',
   'yunakQuiz.assessments',
   'yunakQuiz.personalCabinet',
+  'yunakQuiz.moderationCabinet',
   'yunakQuiz.users',
   'yunakQuiz.sessions',
   'yunakQuiz.version',

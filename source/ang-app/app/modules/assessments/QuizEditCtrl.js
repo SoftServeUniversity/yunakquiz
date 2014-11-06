@@ -1,6 +1,6 @@
 'use strict';
 /** Quiz Edit controller  */
-yunakQuizApp.controller('QuizEditCtrl', ['$scope','QuizData', '$routeParams','tags', '$location', function($scope, QuizData, $routeParams, tags, $location) {
+yunakQuizApp.controller('QuizEditCtrl', ['$scope','QuizData', '$routeParams','tags', '$location','QuizValidation', function($scope, QuizData, $routeParams, tags, $location, QuizValidation) {
 
 	/** get Quiz by ID */
 	$scope.init = function(){
@@ -74,32 +74,6 @@ yunakQuizApp.controller('QuizEditCtrl', ['$scope','QuizData', '$routeParams','ta
 		answer.correct = !answer.correct;
 	};
 
-	/** check all questions to be valid */
-	$scope.validateQuiz = function(){
-		var questions = $scope.quiz.questions;
-		$scope.quiz.invalid = false;
-		for(var i = 0; i < questions.length;i++){
-			if(!questions[i].toDelete){
-				$scope.validateQuestion(questions[i]);
-				if(questions[i].invalid){
-					$scope.quiz.invalid = true;
-				};
-			};
-		};
-	};
-
-	/** check question to be valid */
-	$scope.validateQuestion = function(question){
-		var answers = question.answers;
-		question.invalid = true;
-		for(var i = 0; i < answers.length;i++){
-			
-			if (answers[i].correct && !answers[i].toDelete) {
-				question.invalid =  false;
-			};
-		};
-	};
-
 	/** add empty question */
 	$scope.addQuestion = function(){
 		$scope.addQuestionDisabled = true;
@@ -129,19 +103,18 @@ yunakQuizApp.controller('QuizEditCtrl', ['$scope','QuizData', '$routeParams','ta
 	/** send Quiz to backend  */
 	$scope.sendQuiz = function(state){
 		$scope.quiz.category_id = $scope.selectedSubcat.id;
-		$scope.validateQuiz();
-		if(!$scope.quiz.invalid){
-			$scope.quiz.status = state;
-			
-			QuizData.update($scope.quiz)
-				.success(function(data, status, headers, config) {
-						$location.path('/admin/personalCabinet/'+state);
-				})
-	            .error(function(data, status, headers, config) {
-	            	window.scrollTo(0,0);
-					$scope.errorMsg = 'Ваш тест не збережено';
-	            });
-		};
+			if(!QuizValidation($scope.quiz.questions)){
+				$scope.quiz.status = state;
+				
+				QuizData.update($scope.quiz)
+					.success(function(data, status, headers, config) {
+							$location.path('/admin/personalCabinet/'+state);
+					})
+		            .error(function(data, status, headers, config) {
+		            	window.scrollTo(0,0);
+						$scope.errorMsg = 'Ваш тест не збережено';
+		            });
+			}
 	};
 
 	$scope.init();

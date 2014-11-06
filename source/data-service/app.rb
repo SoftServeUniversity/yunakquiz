@@ -75,6 +75,13 @@ module PlastApp
       {response: "Assessment #{params['id']} has been deleted"}.to_json
     end
 
+    #Guest Search query
+     get '/guest-search' do
+      content_type :json
+      Category.select('id, category_id, title').to_json
+    end 
+    #End of Guest Search
+    
     get '/categories' do
       content_type :json
       JSON.pretty_generate(Category.catList)

@@ -33,8 +33,38 @@ yunakQuizApp.factory('QuizData', ['$http', '$location', function($http, $locatio
 
       getComments: function(id){
             return $http.get('http://localhost:9292/admin/assessments/'+id+'/comments')
-          }
+          },
     }
+  }
+])
+.factory('QuizValidation', [function(){
+
+  /** check all questions to be valid */
+  var validateQuiz = function(questions){
+    var invalid = false;
+    for(var i = 0; i < questions.length;i++){
+      if(!questions[i].toDelete){
+        validateQuestion(questions[i]);
+        if(questions[i].invalid){
+          invalid = true;
+        };
+      };
+    };
+    return invalid;
+  };
+
+  /** check question to be valid */
+  function validateQuestion (question){
+    var answers = question.answers;
+    question.invalid = true;
+    for(var i = 0; i < answers.length;i++){
+      
+      if (answers[i].correct && !answers[i].toDelete) {
+        question.invalid =  false;
+      };
+    };
+  };
+  return validateQuiz;
   }
 ]);
 

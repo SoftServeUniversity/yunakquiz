@@ -121,12 +121,12 @@
   line-height:50px;
   margin:0 0 20px 0;
 }
-.nav-tabs.nav-justified>li.persCabActive>a{
+.nav-tabs>li.persCabActive>a{
   background:#31b0d5;
   color:#fff;
   border-color:#31b0d5;
 }
-.nav-tabs.nav-justified>li.persCabActive>a:hover{
+.nav-tabs>li.persCabActive>a:hover{
   border-color:#31b0d5;
   cursor:default;
 }
@@ -139,8 +139,5 @@
 .assessmentAnswerUncorrect {
   background:rgb(255,0,0);
 }
-<<<<<<< HEAD
-/* end assessment styles */
-=======
 
->>>>>>> AssessmentsEdit
+/* end assessment styles */

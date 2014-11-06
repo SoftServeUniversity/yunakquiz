@@ -1,7 +1,7 @@
 'use strict';
 /** Quiz controller  */
 yunakQuizApp.controller('QuizCtrl', ['$scope','QuizData', '$routeParams', '$location', function($scope,QuizData, $routeParams, $location) {
-
+	
 	/** get quiz by _id from QuizData service  */
 	QuizData.get($routeParams.quiz_id)
 		.success(function(data, status, headers, config){
