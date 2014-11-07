@@ -47,7 +47,7 @@ angular.module('yunakQuiz.admin', ['ngRoute'])
 
 	// ,{name : 	'comm1',
 	//  temp : 	'.modules/admin/comm-1.html',
- // 	 caption: 	'ANYTHING CAN BE HERE'
+    // 	 caption: 	'ANYTHING CAN BE HERE'
 	// },
 
 	// {name : 	'comm2',
@@ -61,48 +61,61 @@ angular.module('yunakQuiz.admin', ['ngRoute'])
 	// }
 ])
 
-.factory('getTabTemplates', ["$location", "$http", 'tabs', function($location, $http, tabs) {
-    
-	return {
-	    permission: function() {
-	    	var result = [];
-			$http.get("http://localhost:9292/admin")
-			.success(function(data){
-				var givenTabs = tabs;
-				var userAccess = data;
-				console.log(data + "tabs from server");
-				var i=0;
-				var j=0;
-				var tlen = givenTabs.length;
-				var alen = userAccess.length;
-				for (j; j < alen; j++) {
-					for (i; i < tlen; i++) {
-						if(givenTabs[i].name == userAccess[j]){
-							result.push([givenTabs[i].name, givenTabs[i].temp, givenTabs[i].caption]);
-						}			
-					};
-					i = 0;
-				};
-				console.log(result + "result tubs");
-				//return result;
-			// alert('this is success: ' + result);	
-			})
-			.error(function(data){
-				alert('data is lost');
-			});
-			console.log(result + "result tubs inside permission method");
-			//alert("this is factory: " + result);	
-			//return result;
-		}
-	}
- 
-    // if (result.length == 0)
-	// $location.path( "/404" );
-	// alert("this is result: " + result);
+.factory('getBackEnd', ["$location", "$http", "tabs", function($location, $http, tabs) {
+	var obj = {};
+
+	var myPromise = $http.get("http://localhost:9292/admin");
+  		
+	myPromise.then(function(response) {
+    	// console.log(response.data);
+    	var result = [];
+		var givenTabs = tabs;
+		var userAccess = response.data;
+		
+		var i=0;
+		var j=0;
+		var tlen = givenTabs.length;
+		var alen = userAccess.length;
+		for (j; j < alen; j++) {
+			for (i; i < tlen; i++) {
+				if(givenTabs[i].name == userAccess[j]){
+					result.push([givenTabs[i].name, givenTabs[i].temp, givenTabs[i].caption]);
+				}
+			};
+			i = 0;
+		};
+    	// myObj = {'data': response.data};
+    	myObj = {'data': result};
+    	//alert("response: " + response.data);
+	});
+    console.log(obj);
+   	var myObj = {
+   		promise : myPromise,
+   		'data' : {}
+   	}
+   	return myObj;
+
 }])
 
-.controller("AdminCtrl", ["$location", "$scope", "$http", 'getTabTemplates', function($location, $scope, $http, getTabTemplates){
-	$scope.asd = getTabTemplates.permission();
+.factory('getTabTemplates', ["$location", "$http", "tabs", "getBackEnd", function($location, $http, tabs, getBackEnd) {
+    getBackEnd.promise.then()
+
+	console.log("SRART getBackEnd: ");
+	console.log((getBackEnd).data + "");
+	console.log("END getBackEnd: ");
+	
+	//return result;
+	console.log(result + " result tubs inside permission method");
+	alert("this is factory: " + result);	
+	return result;
+	
+}])
+
+.controller("AdminCtrl", ["$location", "$scope", "$http", 'getBackEnd', function($location, $scope, $http, getBackEnd){
+	// $scope.results = getTabTemplates;
+	getBackEnd.promise.then(function(){
+		$scope.results = getBackEnd;
+	});
 	//alert("this is asd: " + $scope.asd);
 	// if (asd.length > 0)
 	// if ($scope.asd.length > 0) {
