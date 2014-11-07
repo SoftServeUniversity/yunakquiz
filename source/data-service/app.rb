@@ -16,7 +16,6 @@ module PlastApp
 
     Dir.glob('./config/*.rb').each {|file| require file}
     Dir.glob('./models/*.rb').each {|file| require file}
-    Dir.glob('./lib/*.rb').each {|file| require file}
 
 
     get '/' do
