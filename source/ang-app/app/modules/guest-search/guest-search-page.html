@@ -39,31 +39,29 @@
       </button>
 
     </div>
-      
                       <!--End of category selection-->
 
                           <!--Tags input block-->
 
     <div class="col-xs-7">
-      <div class="input-group">
-        <tags-input type="text" 
-                    class="bootstrap" 
-                    placeholder="введіть шось для пошуку..." 
-                    ng-model="tags" 
-                    add-on-space="true"
-                    min-length="1"
-                    add-on-comma="false">
-        </tags-input>
-        <span class="input-group-btn btn-block">
-          <button class="btn btn-primary" 
-                  type="button" 
-                  ng-click="searchData(allCats, searchRequest.tags)">
-                  Пошук
-          </button>
-        </span>  
-      </div>                  
-    
-
+      <form ng-submit="searchData(allCats, searchRequest.tags)"> 
+        <div class="input-group">
+          <tags-input type="text" 
+                      class="bootstrap" 
+                      placeholder="введіть шось для пошуку..." 
+                      ng-model="tags" 
+                      add-on-space="true"
+                      min-length="1"
+                      add-on-comma="false"
+                      add-on-enter="false">
+          </tags-input>
+          <span class="input-group-btn btn-block">
+            <input  type="submit" 
+                    class="btn btn-primary" 
+                    value="Пошук"/>
+          </span>  
+        </div>                  
+      </form>
                       <!--End of tags input block-->
 
                             <!--Error block-->
@@ -73,7 +71,6 @@
 
                       <!--Results of search engine-->
 
-    
       <div ng-repeat="quiz in searchResults" >
         <div class="guestSearchMarginTop search-result well">
           <div class="content">
@@ -85,7 +82,6 @@
       </div>
     </div>
   </div>
-
                           <!--End of Results-->
   
                           <!--Pagination part-->
@@ -106,6 +102,5 @@
       </pagination>
     </div>
   </div>
-  
                         <!--End of pagination-->
 </div>
