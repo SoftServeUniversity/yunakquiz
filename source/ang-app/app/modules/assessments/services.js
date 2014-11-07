@@ -2,45 +2,46 @@
 
 /** Connection to back-end for quiz  */
 yunakQuizApp.factory('QuizData', ['$http', '$location', function($http, $location){
+  var back_url = 'http://localhost:9292';
     return{
       get: function(id){
-            return $http.get('http://localhost:9292/assessments/'+id )
+            return $http.get(back_url+'/assessments/'+id )
+          },
+
+      create: function(quiz){       
+            return $http.post(back_url+'/assessments', quiz)
           },
 
       update: function(quiz){
-            return $http.put("http://localhost:9292/admin/assessments/"+quiz.id, quiz);
-          },
-          
-      create: function(quiz){       
-            return $http.post('http://localhost:9292/admin/assessments', quiz)
-          },
-
-      getList: function(state){
-            return $http.get('http://localhost:9292/admin/assessments/'+state) 
-          },
-
-      getCat: function(){
-            return $http.get('http://localhost:9292/categories') 
-          },
-
-      queryList: function(state, queryData){
-            return $http.post('http://localhost:9292/admin/assessments/'+state, queryData) 
+            return $http.put(back_url+'/assessments', quiz);
           },
 
       delete: function(id){
-            return $http.delete('http://localhost:9292/admin/assessments/'+id ) 
+            return $http.delete(back_url+'/assessments/'+id ) 
+          },
+
+      queryList: function(state, queryData){
+            return $http.post(back_url+'/assessments/'+state, queryData) 
+          },
+
+      getCat: function(){
+            return $http.get(back_url+'/categories') 
+          },
+
+      getBreadcrumbs: function(catId){
+            return $http.get(back_url+'/breadcrumbs/'+catId) 
           },
 
       getComments: function(id){
-            return $http.get('http://localhost:9292/admin/assessments/comments/'+id)
+            return $http.get(back_url+'/assessments/'+id+'/comments')
           },
 
       updateComments: function(comments){
-            return $http.put('http://localhost:9292/admin/assessments/comments', comments)
+            return $http.put(back_url+'/assessments/comments', comments)
           },
 
       deleteComments: function(id){
-            return $http.delete('http://localhost:9292/admin/assessments/comments/'+id)
+            return $http.delete(back_url+'/assessments/'+id+'/comments')
           },
     }
   }

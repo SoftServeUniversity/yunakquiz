@@ -11,7 +11,7 @@ var yunakQuizApp = angular.module('yunakQuiz.assessments', [])
 
     .when('/assessments/:quiz_id/result', {
     templateUrl: 'modules/assessments/assessment_result.html',
-    controller: 'AssessmentsResultCtrl'
+    controller: 'QuizResultCtrl'
   })
     .when('/admin/assessments/create', {
     templateUrl: 'modules/assessments/assessment_create.html',

@@ -1,14 +1,14 @@
 'use strict';
-/** AssessmentResult controller  */
-yunakQuizApp.controller('AssessmentsResultCtrl', ['$scope','QuizData', '$routeParams', '$location', function($scope, QuizData, $routeParams, $location) {
+/** QuizResult controller  */
+yunakQuizApp.controller('QuizResultCtrl', ['$scope','QuizData', '$routeParams', '$location', function($scope, QuizData, $routeParams, $location) {
 
 	/** get quiz object with picked answers   */
-	$scope.assessment = QuizData.quiz;
+	$scope.quiz = QuizData.quiz;
 
 	/** Check all questions in quiz */
 	$scope.checkQuestions = function (){
-		for (var i=0; i<$scope.assessment.questions.length; i++){
-			$scope.assessment.questions[i].nice = $scope.checkAnswer($scope.assessment.questions[i]);
+		for (var i=0; i<$scope.quiz.questions.length; i++){
+			$scope.quiz.questions[i].nice = $scope.checkAnswer($scope.quiz.questions[i]);
 		}
 	}
 
@@ -30,7 +30,7 @@ yunakQuizApp.controller('AssessmentsResultCtrl', ['$scope','QuizData', '$routePa
 
 	/** count quiz score */
 	$scope.correctAnswerCounter = function(){
-		var questions = $scope.assessment.questions;
+		var questions = $scope.quiz.questions;
 		var counter = 0;
 		for (var i=0;i<questions.length; i++){
 			if (questions[i].nice) {counter++}
@@ -45,8 +45,9 @@ yunakQuizApp.controller('AssessmentsResultCtrl', ['$scope','QuizData', '$routePa
 	$scope.redirectToAssessment = function(){
 		$location.path('/assessments/'+$routeParams.quiz_id);	
 	};
+	
 	/** check questions and count score if we have quiz object  */
-	if ($scope.assessment.questions){
+	if ($scope.quiz){
 		$scope.checkQuestions();
 		$scope.counter = $scope.correctAnswerCounter();
 	}	

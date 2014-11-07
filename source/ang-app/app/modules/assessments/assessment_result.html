@@ -1,11 +1,7 @@
 <div class="quiz">
-<h3  ng-bind="assessment.title" class="text-center assessment-title"></h3>
+<h3  ng-bind="quiz.title" class="text-center assessment-title"></h3>
 
-<ol class="breadcrumb">
-  <li><a href="#">{{quiz.category.category.title}}</a></li>
-  <li><a href="#">{{quiz.category.title}}</a></li>
-  <li class="active">{{assessment.title}}</li>
-</ol>
+<div ng-include="'modules/assessments/breadCrumbs.html'"></div>
 
 <div>
 	<h3 class="text-center">Твій вислід: <span>{{counter}}</span> зі <span>100</span> балів!</h3>
@@ -15,7 +11,7 @@
 	</div>
 </div>
 <ul class="list-group assessmentQuestion">
-	<li ng-repeat="question in assessment.questions"  
+	<li ng-repeat="question in quiz.questions"  
 	ng-class="{'list-group-item-success': question.nice,'list-group-item-danger': !question.nice}" class="list-group-item"> 
 		<h5>{{$index+1}}. {{question.title}}</h5>
 		<h5>Ваша відповідь:</h5>

@@ -25,111 +25,97 @@ module PlastApp
     options '/*' do
     end
 
-    get '/assessments' do
-      content_type :json
-      [{id: 1, name: 'assessment 1'}, {id: 2, name: 'assessment 2'}].to_json
-    end
-    
-    get '/admin/assessments/comments/:id' do
-      content_type :json
-      Comment.get(params['id']).to_json
-    end 
-
-    put '/admin/assessments/comments' do
-      content_type :json
-      data = JSON.parse(request.body.read)
-      comments = Comment.updateC(data)
-      if comments
-        return [200, {status: 'ok'}.to_json]
-      else
-        return [400, 'neOk']
-      end
-    end 
-
-    delete '/admin/assessments/comments/:id' do
-      content_type :json
-      comments = Comment.deleteC(params['id'])
-      if comments
-        return [200, {status: 'ok'}.to_json]
-      else
-        return [400, 'neOk']
-      end
-    end
-
-    put '/admin/assessments/:id' do
-      content_type :json
-      data = JSON.parse(request.body.read)
-      quiz = Quiz.updateQ(data)
-      if quiz
-        return [200, quiz.id.to_json]
-      else
-        return [400, quiz.errors.messages.to_json]
-      end    
-    end
-
-    post '/admin/assessments' do
-      content_type :json
-      data = JSON.parse(request.body.read)
-      #check permisions here
-      quiz = Quiz.createQ(data)
-      if quiz
-        return [200, quiz.id.to_json]
-      else
-        return [400, quiz.errors.messages.to_json]
-      end
-    end
-
-    get '/assessments/:id' do
-      content_type :json
-      quiz = Quiz.queryQ(params['id'])
-      if quiz['id']
-        quiz
-        # JSON.pretty_generate(quiz) 
-      else
-        return [400, quiz.to_json]
-      end
-    end
-
-    delete '/admin/assessments/:id' do
-      content_type :json
-      Quiz.deleteQ(params['id'])
-      {response: "Assessment #{params['id']} has been deleted"}.to_json
-    end
-
-    #Guest Search query
-     get '/guest-search' do
-      content_type :json
-      Category.select('id, category_id, title').to_json
-    end 
-    #End of Guest Search
-    
     get '/categories' do
       content_type :json
       JSON.pretty_generate(Category.catList)
     end  
 
-    get '/admin/assessments/:status' do
-      content_type :json
-      quizzes = Quiz.quizQuery(params['status'])
-      if quizzes
-        JSON.pretty_generate(quizzes)
 
+  ## Assessments block starts here!
+
+    def response_helper data,msg
+      if data
+        return [200, data.to_json]
       else
-        return [400, "Not found "+params['status']]
+        return [400, msg.to_json]
       end
+    end 
+
+    ## Assessment resource!!
+    get '/assessments/:id' do
+      content_type :json
+      @quiz = Quiz.get_by_id(params['id'])
+
+      response_helper @quiz, ["Quiz #{params['id']} not found!"]
     end
 
-    post '/admin/assessments/:status' do
+    post '/assessments' do
+      content_type :json
+      data = JSON.parse(request.body.read)
+      @quiz = Quiz.create_quiz(data)
+
+      response_helper @quiz, "Quiz not created!"
+    end
+
+
+    put '/assessments' do
+      content_type :json
+      data = JSON.parse(request.body.read)
+      @quiz = Quiz.update_quiz(data) unless data['id'].nil?
+      
+      response_helper @quiz, "Quiz not found!"
+    end    
+
+    delete '/assessments/:id' do
+      content_type :json
+      @quiz = Quiz.delete_quiz(params['id'])
+      
+      response_helper @quiz, "Quiz not deleted!"
+    end
+    ## end of Assessment resource.
+
+    get '/breadcrumbs/:cat_id' do
+      content_type :json
+      @breadcrumbs = Category.get_breadcrumds(params['cat_id'])
+
+      response_helper @breadcrumbs, ["Quiz #{params['id']} not found!"]
+    end
+
+    post '/assessments/:status' do
       content_type :json
       data = JSON.parse(request.body.read)
       #check permisions here
-      quizzes = Quiz.quizQuery(params['status'],data['searchData'],data['currentPage'],data['itemsPerPage'])
-      if quizzes
-        JSON.pretty_generate(quizzes)
-      else
-        return [400, 'Error']
-      end
+      @quizzes = Quiz.quiz_query(params['status'],data['searchData'],data['currentPage'],data['itemsPerPage'])
+      
+      response_helper @quizzes, "Quiz not deleted!"
     end
+    
+    ##Assessment comments section
+    get '/assessments/:id/comments' do
+      content_type :json
+      @comment = Comment.get_by_quiz(params['id'])
+
+      response_helper @comment, ["Comments #{params['id']} not found!"]
+    end 
+
+    put '/assessments/comments' do
+      content_type :json
+      data = JSON.parse(request.body.read)
+      @comments = Comment.update_comments(data)
+
+      response_helper @comments, ["comments not updated"]
+    end 
+
+    delete '/assessments/:id/comments' do
+      content_type :json
+      @comments = Comment.delete_comments(params['id'])
+
+      response_helper @comments, ["Comments not deleted!"]
+    end
+    ## end of Assessment comments section
+
+  ## Assessments block ends here!
+
 
   end
 

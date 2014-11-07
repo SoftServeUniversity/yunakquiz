@@ -4,7 +4,7 @@ angular.module('yunakQuiz.personalCabinet', [])
   $routeProvider
   .when('/admin/personalCabinet', {
     templateUrl: 'modules/personalCabinet/quizesList.html',
-    controller: 'PersonalCabinetCtrl'
+    controller: 'CabinetCtrl'
   })
   .when('/admin/personalCabinet/profile', {
     templateUrl: 'modules/personalCabinet/profile.html',
@@ -12,11 +12,11 @@ angular.module('yunakQuiz.personalCabinet', [])
   })
   .when('/admin/personalCabinet/:state', {
     templateUrl: 'modules/personalCabinet/quizesList.html',
-    controller: 'PersonalCabinetCtrl'
+    controller: 'CabinetCtrl'
   })   
 }])
 
-.controller('PersonalCabinetCtrl', ['$scope','QuizData', '$routeParams','$http','$location','$modal', function($scope, QuizData, $routeParams, $http, $location,$modal) {
+.controller('CabinetCtrl', ['$scope','QuizData', '$routeParams','$http','$location','$modal', function($scope, QuizData, $routeParams, $http, $location,$modal) {
   
   $scope.tab = $routeParams.state || "published";
 
@@ -26,14 +26,8 @@ angular.module('yunakQuiz.personalCabinet', [])
     searchData:''
   };
 
-  $scope.inputData={};
-
   $scope.quizUrl = '#/assessments/';
 
-  $scope.updateData = function(data){
-    $scope.quizzes = data.quizzes;
-    $scope.inputData = data.queryData;
-  }
 
   $scope.searchQuery = function(){
     $scope.outputData.currentPage = 1;
@@ -44,6 +38,11 @@ angular.module('yunakQuiz.personalCabinet', [])
     QuizData.queryList($scope.tab, $scope.outputData).success(function(data, status, headers, config) {
         $scope.updateData(data);        
     });
+  };
+
+  $scope.updateData = function(data){
+    $scope.quizzes = data.quizzes;
+    $scope.totalItems = data.totalItems;
   };
 
   $scope.deleteQuiz= function(quizId){
@@ -58,9 +57,9 @@ angular.module('yunakQuiz.personalCabinet', [])
       });
     });
   };
-
   
-  $scope.queryList();
+  $scope.searchQuery();
+
 }])
 .controller('ModalDeleteCtrl', ['$scope','$modalInstance', function($scope, $modalInstance) {
   

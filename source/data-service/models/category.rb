@@ -7,5 +7,8 @@ class Category < ActiveRecord::Base
     Category.where(:category_id => 0).as_json(:include => {:categories => {:include => :categories}}) 
   end
 
+    def self.get_breadcrumds(cat_id)
+    Category.find_by(id: cat_id).as_json(:include => :category)
+  end
 
 end

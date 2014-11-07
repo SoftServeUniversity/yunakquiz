@@ -6,10 +6,22 @@ yunakQuizApp.controller('QuizCtrl', ['$scope','QuizData', '$routeParams', '$loca
   QuizData.get($routeParams.quiz_id)
     .success(function(data, status, headers, config){
       $scope.quiz = data;
+      $scope.getCats();
     })
     .error(function(data){
       $location.path('/404/');
     });
+
+  $scope.getCats = function(){
+    QuizData.getBreadcrumbs($scope.quiz.category_id)
+      .success(function(data, status, headers, config){
+        $scope.quiz.subCat = data;
+        $scope.quiz.cat = data.category;
+      })
+      .error(function(data){
+        $location.path('/404/');
+      });
+  };
         
   /** mark checked answers, and call validate function  */
   $scope.checkAnswer = function(answer,question){
