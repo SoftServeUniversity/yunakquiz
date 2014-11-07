@@ -47,7 +47,7 @@ angular.module('yunakQuiz.admin', ['ngRoute'])
 
 	// ,{name : 	'comm1',
 	//  temp : 	'.modules/admin/comm-1.html',
- // 	 caption: 	'ANYTHING CAN BE HERE'
+ 	// 	 caption: 	'ANYTHING CAN BE HERE'
 	// },
 
 	// {name : 	'comm2',
@@ -61,46 +61,46 @@ angular.module('yunakQuiz.admin', ['ngRoute'])
 	// }
 ])
 
-.factory('getTabTemplates', ["$location", "$http", "tabs", function($location, $http, tabs) {
+.factory('getTabTemplates', ["$location", "$http", "tabs", "$q", function($location, $http, tabs, $q) {
     
-	var result = [];
-	return {
-		tabs: function(){
-			$http.get("http://localhost:9292/admin")
-			.success(function(data){
-				var givenTabs = tabs;
-				var userAccess = data;
-				var i=0;
-				var j=0;
-				var tlen = givenTabs.length;
-				var alen = userAccess.length;
-				for (j; j < alen; j++) {
-					for (i; i < tlen; i++) {
-						if(givenTabs[i].name == userAccess[j]) {
-							result.push([givenTabs[i].name, givenTabs[i].temp, givenTabs[i].caption]);
-						}			
+    return {
+    	getResponse: function(){
+    		var defer = $q.defer();
+    		var result = [];
+    		$http.get("http://localhost:9292/admin")
+    			.success(function(data){
+	    			var givenTabs = tabs;
+					var userAccess = data;
+					var i=0;
+					var j=0;
+					var tlen = givenTabs.length;
+					var alen = userAccess.length;
+					for (j; j < alen; j++) {
+						for (i; i < tlen; i++) {
+							if(givenTabs[i].name == userAccess[j]) {
+								result.push([givenTabs[i].name, givenTabs[i].temp, givenTabs[i].caption]);
+							}			
+						};
+						i = 0;
 					};
-					i = 0;
-				};
-				return result;
-			})
-			.error(function(data){
-				alert('data is lost');
-			})
-			// return result;
-		}
-	};	
+    				defer.resolve(result);
+    			});
+    		return defer.promise;			
+    	}
+    }
 
 }])
 
 .controller("AdminCtrl", ["$location", "$scope", "$http", 'getTabTemplates', function($location, $scope, $http, getTabTemplates){
-	var asd = getTabTemplates.tabs();
-	alert("this is factory: " + getTabTemplates.tabs());
-	alert("this is asd: " + asd);
-	// if (asd.length > 0)
-	if (asd.length > 0)
-		$scope.results = getTabTemplates.tabs();
-	// else
-	// 	$location.path( "/404" );
+	
+    getTabTemplates.getResponse().then(function(asd){
+    	console.log(asd);
+    	if (asd.length > 0)
+    		$scope.results = asd;
+    	else		
+    		$location.path( "/404" );
+			// console.log("redirect needed");
+    });
+
 }
 ])
