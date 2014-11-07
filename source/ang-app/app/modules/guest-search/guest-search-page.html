@@ -1,17 +1,15 @@
-<div ng-controller="SearchCtrl">
+<div ng-controller="SearchCtrl" class="container-fluid">
                                   <!--Header-->
   <div class="row">
   	<div class="col-xs-12 pageTitleBox bg-primary">
       <h3 class="pageTitle ">Гостьовий пошук</h3>
     </div>
   </div> 
-
                               <!--End of header-->
 
-  <div class="container">
                           <!--Here go category selection-->
-
-    <div class="well col-xs-3">
+  <div class="row">  
+    <div class="well col-xs-offset-1 col-xs-3">
 
 
       <div ng-repeat="parCat in allCats | filter: {category_id: '0'}">
@@ -47,10 +45,8 @@
 
                           <!--Tags input block-->
 
-    <div class="input-group col-xs-offset-4">
-      <div  class="col-xs-10"
-            style="margin-left: -15px;
-            width: 664px;">
+    <div class="col-xs-7">
+      <div class="input-group" style="margin-bottom: 12px;">
         <tags-input type="text" 
                     class="bootstrap" 
                     placeholder="введіть шось для пошуку..." 
@@ -62,8 +58,7 @@
         <span class="input-group-btn btn-block">
           <button class="btn btn-primary" 
                   type="button" 
-                  ng-click="searchData(allCats, searchRequest.tags)"
-                  style="" >
+                  ng-click="searchData(allCats, searchRequest.tags)">
                   Пошук
           </button>
         </span>  
@@ -72,32 +67,36 @@
 
                       <!--End of tags input block-->
 
+                            <!--Error block-->
+    <div class="col-xs-7 alert alert-warning" style="margin-left: 15px; width: 55.6%;" ng-show="searchError==1">Нічого не знайдено...</div>
+    <div class="col-xs-7 alert alert-warning" style="margin-left: 15px; width: 55.6%;" ng-show="searchError==2">Шось пішло не так...</div>
+                            <!--End of error block-->
+
                       <!--Results of search engine-->
 
-    <div  class= "col-xs-offset-4"
-          style="margin-top: 15px;">
+    <div  class="col-xs-7">
       <div ng-repeat="quiz in searchResults" >
-        <div class="col-xs-10 search-result well">
+        <div class="search-result well">
           <div class="content">
             <h3 class="text-center"><a style="text-decoration: none;" href="">{{quiz.title}}</a></h3>
             <p class="text-justify">{{quiz.description}}</p><br>
-            <div class="text-center"><span ng-repeat="tag in quiz.allTags"><a ng-click="addTag(tag)"><small> {{tag}} </small></a></span></div>
+            <div class="text-center"><span class="text-primary">|</span><span ng-repeat="tag in quiz.allTags"><a ng-click="addTag(tag)"><small> {{tag}} </small></a><span class="text-primary">|</span></span></div>
           </div>
         </div>
       </div>
     </div>
-
-                          <!--End of Results-->
   </div>
 
+                          <!--End of Results-->
+  
                           <!--Pagination part-->
-  <div class="row"> 
-    <div class="text-center">
+  <div class="row col-xs-offset-4 col-xs-7"> 
+    <div class="text-center" ng-show="totalItems > 10">
       <pagination boundary-links="true" 
                   total-items="totalItems" 
                   ng-model="currentPage" 
                   class="pagination-sm"
-                  items-per-page="3" 
+                  items-per-page="10" 
                   max-size="10"
                   previous-text="Назад" 
                   next-text="Уперед" 
@@ -108,5 +107,6 @@
       </pagination>
     </div>
   </div>
+  
                         <!--End of pagination-->
 </div>
