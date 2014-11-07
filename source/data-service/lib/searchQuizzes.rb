@@ -85,23 +85,32 @@ module PlastApp
         search_request['currentPage'].is_a?(Fixnum)
         
         # Check if categories_id are fixnum
-        search_request['categories_id'].each { |cat_id| 
-          if !cat_id.is_a?(Fixnum)
-            return [400, "Bad Request"]
-          else
-          end
-        }
-        
-        # Check if tags in array are string 
-        search_request['tags'].each { |tag| 
-          if !tag.is_a?(String)
-            return [400, "Bad Request"]
-          else
-          end
-        }
+        # ,and if there something in it
+        if search_request['categories_id'].length > 0 
+          search_request['categories_id'].each { |cat_id| 
+            if !cat_id.is_a?(Fixnum)
+              return [400, "Bad Request"]
+            else
+            end
+          }
+        else
+          return [400, "Bad Request"] 
+        end 
+
+        # Check if tags in array are string
+        # ,and if there something in it
+        if search_request['tags'].length > 0
+          search_request['tags'].each { |tag| 
+            if !tag.is_a?(String)
+              return [400, "Bad Request"]
+            else
+            end
+          }
+        else
+          return [400, "Bad Request"]
+        end
 
       else
-        # Must return to front-end
         return [400, "Bad Request"]
       end
 
