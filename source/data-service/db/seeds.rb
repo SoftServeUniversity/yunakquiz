@@ -17,10 +17,12 @@ userRole =  Role.create(name: 'user')
 moderRole = Role.create(name: 'moder')
 superadminRole = Role.create(name: 'superadmin')
 
-user = User.create(username: "user123", password: "12345678", password_confirmation: "12345678", email: "user@mail.com", birthday: "2000-12-31T22:00:00.000Z")
-admin = User.create(username: "admin123", password: "12345678", password_confirmation: "12345678", email: "admin@mail.com", birthday: "2000-12-31T22:00:00.000Z")
-moder = User.create(username: "moder123", password: "12345678", password_confirmation: "12345678", email: "moder@mail.com", birthday: "2000-12-31T22:00:00.000Z")
-superadmin = User.create(username: "super123", password: "12345678", password_confirmation: "12345678", email: "super@mail.com", birthday: "2000-12-31T22:00:00.000Z")
+user = userRole.users.create(username: "user123", password: "12345678", password_confirmation: "12345678", email: "user@mail.com", birthday: "2000-12-31T22:00:00.000Z")
+admin = adminRole.users.create(username: "admin123", password: "12345678", password_confirmation: "12345678", email: "admin@mail.com", birthday: "2000-12-31T22:00:00.000Z")
+moder = moderRole.users.create(username: "moder123", password: "12345678", password_confirmation: "12345678", email: "moder@mail.com", birthday: "2000-12-31T22:00:00.000Z")
+superadmin = superadminRole.users.create(username: "super123", password: "12345678", password_confirmation: "12345678", email: "super@mail.com", birthday: "2000-12-31T22:00:00.000Z")
+
+
 
 Permission.create(tabs: 'admin1', admin: '1', superadmin: '4')
 Permission.create(tabs: 'admin2', admin: '1', superadmin: '4')
