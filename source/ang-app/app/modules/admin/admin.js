@@ -61,6 +61,7 @@ angular.module('yunakQuiz.admin', ['ngRoute'])
 	// }
 ])
 
+<<<<<<< HEAD
 .factory('getBackEnd', ["$location", "$http", "tabs", function($location, $http, tabs) {
 	var obj = {};
 
@@ -121,6 +122,47 @@ angular.module('yunakQuiz.admin', ['ngRoute'])
 	// if ($scope.asd.length > 0) {
 	// 	$scope.results = getTabTemplates.permission();
 	// }
+=======
+.factory('getTabTemplates', ["$location", "$http", "tabs", function($location, $http, tabs) {
+    
+	var result = [];
+	return {
+		tabs: function(){
+			$http.get("http://localhost:9292/admin")
+			.success(function(data){
+				var givenTabs = tabs;
+				var userAccess = data;
+				var i=0;
+				var j=0;
+				var tlen = givenTabs.length;
+				var alen = userAccess.length;
+				for (j; j < alen; j++) {
+					for (i; i < tlen; i++) {
+						if(givenTabs[i].name == userAccess[j]) {
+							result.push([givenTabs[i].name, givenTabs[i].temp, givenTabs[i].caption]);
+						}			
+					};
+					i = 0;
+				};
+				return result;
+			})
+			.error(function(data){
+				alert('data is lost');
+			})
+			// return result;
+		}
+	};	
+
+}])
+
+.controller("AdminCtrl", ["$location", "$scope", "$http", 'getTabTemplates', function($location, $scope, $http, getTabTemplates){
+	var asd = getTabTemplates.tabs();
+	alert("this is factory: " + getTabTemplates.tabs());
+	alert("this is asd: " + asd);
+	// if (asd.length > 0)
+	if (asd.length > 0)
+		$scope.results = getTabTemplates.tabs();
+>>>>>>> dbeb2241500cfb88387be529aa7c81744627eaa6
 	// else
 	// 	$location.path( "/404" );
 }]);
