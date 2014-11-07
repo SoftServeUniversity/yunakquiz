@@ -31,8 +31,9 @@ module PlastApp
 
       # Initialize SQlite string for search
       search_string = "SELECT GROUP_CONCAT(tag, \' \') as allTags, quizzes.*\
-      FROM quizzes JOIN quizzes_tags ON quizzes_tags.quiz_id = quizzes.id \
-      JOIN tags ON quizzes_tags.tag_id = tags.id WHERE category_id IN (?) \
+      FROM quizzes JOIN quizzes_tags ON quizzes_tags.quiz_id = quizzes.id\
+      JOIN tags ON quizzes_tags.tag_id = tags.id WHERE category_id IN (?)\
+      AND status IN (?)\
       GROUP BY quizzes.title HAVING allTags LIKE \"%"\
        << search_request[:tags][0] << "%\""
 
@@ -53,7 +54,7 @@ module PlastApp
       # Main Request to db 
       # Using string that was generated
       search_result = Quiz.find_by_sql [search_string, \
-      search_request[:categories_id]]
+      search_request[:categories_id], search_request[:status]]
 
       # If there no search results 
       # Just return empty array
@@ -62,7 +63,7 @@ module PlastApp
       else
       end
 
-      # Count for paginating
+      # Count length of search result for paginating
       length = search_result.length
 
       # Delete all unneeded results
@@ -115,19 +116,25 @@ module PlastApp
       end
 
       # Returns checked keys, if status are nilclass
-      # don't return him, and if status are num 
-      # then make an request
+      # then add special keys, if not then check what
+      # in and if all ok adding special keys
       if search_request['status'].is_a?(NilClass)
+
+        search_request['status'] = [1,3]
 
         return {tags: search_request['tags'], \
           currentPage: search_request['currentPage'], \
-          categories_id: search_request['categories_id']}
+          categories_id: search_request['categories_id'],\
+          status: search_request['status']}
 
       else
 
         # Check if search_request['status'] is 
         # a fixnum if not return error
+        # MUST BE ADDED SOME KEY !!!!!!!!!!!!
         if search_request['status'].is_a?(Fixnum)
+
+          search_request['status'] = [0,1,2,3]
 
           return {tags: search_request['tags'], \
           currentPage: search_request['currentPage'], \
@@ -139,7 +146,6 @@ module PlastApp
         end
 
       end
-
 
     end 
 
