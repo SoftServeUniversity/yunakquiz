@@ -2,7 +2,7 @@
                                   <!--Header-->
   <div class="row">
   	<div class="col-xs-12 pageTitleBox bg-primary">
-      <h3 class="pageTitle ">Гостьовий пошук</h3>
+      <h3 class="pageTitle" role="banner">Гостьовий пошук</h3>
     </div>
   </div> 
                               <!--End of header-->
@@ -33,8 +33,7 @@
         </div>
       </div>
 
-      <button class="btn btn-info btn-block"
-              style="margin-top: 15px;" 
+      <button class="guestSearchMarginTop btn btn-info btn-block" 
               ng-click="searchData(allCats, searchRequest.tags)">
               Застосувати фільтр
       </button>
@@ -46,7 +45,7 @@
                           <!--Tags input block-->
 
     <div class="col-xs-7">
-      <div class="input-group" style="margin-bottom: 12px;">
+      <div class="input-group">
         <tags-input type="text" 
                     class="bootstrap" 
                     placeholder="введіть шось для пошуку..." 
@@ -63,22 +62,22 @@
           </button>
         </span>  
       </div>                  
-    </div>
+    
 
                       <!--End of tags input block-->
 
                             <!--Error block-->
-    <div class="col-xs-7 alert alert-warning" style="margin-left: 15px; width: 55.6%;" ng-show="searchError==1">Нічого не знайдено...</div>
-    <div class="col-xs-7 alert alert-warning" style="margin-left: 15px; width: 55.6%;" ng-show="searchError==2">Шось пішло не так...</div>
+    <div class="guestSearchMarginTop alert alert-warning" ng-show="searchError==1">Нічого не знайдено...</div>
+    <div class="guestSearchMarginTop alert alert-warning" ng-show="searchError==2">Шось пішло не так...</div>
                             <!--End of error block-->
 
                       <!--Results of search engine-->
 
-    <div  class="col-xs-7">
+    
       <div ng-repeat="quiz in searchResults" >
-        <div class="search-result well">
+        <div class="guestSearchMarginTop search-result well">
           <div class="content">
-            <h3 class="text-center"><a style="text-decoration: none;" href="">{{quiz.title}}</a></h3>
+            <h3 class="text-center"><a class="guestSearchNoDecoration" ng-href="http://localhost:8000/#/assessments/{{quiz.id}}">{{quiz.title}}</a></h3>
             <p class="text-justify">{{quiz.description}}</p><br>
             <div class="text-center"><span class="text-primary">|</span><span ng-repeat="tag in quiz.allTags"><a ng-click="addTag(tag)"><small> {{tag}} </small></a><span class="text-primary">|</span></span></div>
           </div>

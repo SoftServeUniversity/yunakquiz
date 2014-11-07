@@ -93,7 +93,7 @@
   list-style-type:lower-alpha;
 }
 
-.assessmentQuestionInvalid{
+.assessmentQuestionInvalid {
   background:rgb(255,0,0);
 }
 
@@ -122,12 +122,20 @@
 }
 
 .search-result:hover {   
-border: solid 2px rgb(221, 219, 219);    
+  border: solid 2px rgb(221, 219, 219);    
   box-shadow: 0 3px 6px rgba(0, 0, 0, .6);   
   border-radius: 5px;    
 }
 
 .search_subcat_select {
-    background: #E9E5E5;
+  background: #E9E5E5;
+}
+
+div .guestSearchNoDecoration {
+  text-decoration: none;
+}
+
+.guestSearchMarginTop {
+  margin-top: 15px;
 }
 /* End of guest search styles */
