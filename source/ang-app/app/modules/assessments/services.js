@@ -98,5 +98,3 @@ yunakQuizApp.service('tags', function($q) {
     return deferred.promise;
   };
 });
-
-

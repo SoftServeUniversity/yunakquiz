@@ -13,6 +13,7 @@
     "angular-resource": "1.2.x",
     "html5-boilerplate": "~4.3.0",
     "bootstrap": "3.2.x",
+    "ng-flow": "2.x.x",
     "ng-tags-input":"2.0.x",
     "angular-bootstrap":"latest",
     "fontawesome": "~4.2.0",

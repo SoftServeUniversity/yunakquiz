@@ -1,4 +1,4 @@
-angular.module('yunakQuiz.personalCabinet', [])
+angular.module('yunakQuiz.personalCabinet', ['ngRoute', 'flow'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider
@@ -8,7 +8,8 @@ angular.module('yunakQuiz.personalCabinet', [])
   })
   .when('/admin/personalCabinet/profile', {
     templateUrl: 'modules/personalCabinet/profile.html',
-    controller: 'PersonalCabinetProfileCtrl'
+    controller: 'ProfileController',
+    controllerAs: 'profile'
   })
   .when('/admin/personalCabinet/:state', {
     templateUrl: 'modules/personalCabinet/quizesList.html',
@@ -81,11 +82,4 @@ angular.module('yunakQuiz.personalCabinet', [])
     $modalInstance.dismiss('cancel');
   };
 
-}])
-
-.controller('PersonalCabinetProfileCtrl', ['$scope', '$routeParams','$http', function($scope, $routeParams, $http) {
-
-  $scope.tab = 'profile';
-
 }]);
-

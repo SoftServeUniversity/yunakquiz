@@ -29,15 +29,16 @@ angular.module('yunakQuiz', [
   'yunakQuiz.parentCatPage',
   'yunakQuiz.faqPage'
 ])
-.config(['$routeProvider',
-  function($routeProvider) {
-    $routeProvider
-      .when('/', {
+.config(['$routeProvider', '$httpProvider',     
+  function($routeProvider, $httpProvider) {
+    $httpProvider.defaults.withCredentials = true;
+    $routeProvider.
+      when('/', {
         templateUrl: 'modules/partials/home-page-greetings.html',
-      })
-      .otherwise({
+      }).
+      otherwise({
         redirectTo: '/'
-      })
+      });
 }])
 .constant('paginationConfig', {
   boundaryLinks: true,

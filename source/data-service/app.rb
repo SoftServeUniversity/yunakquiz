@@ -13,6 +13,8 @@ module PlastApp
     register Sinatra::AssetPipeline
     register Sinatra::ActiveRecordExtension
     register Sinatra::CrossOrigin
+    
+    use Rack::Session::Cookie
 
     Dir.glob('./config/*.rb').each {|file| require file}
     Dir.glob('./models/*.rb').each {|file| require file}
@@ -246,7 +248,42 @@ module PlastApp
         return [400, user.errors.messages.to_json]
       end
     end
+    
+    put '/user' do
+      data = JSON.parse request.body.read
+      filter = %w(first_name last_name email birthday plast_level plast_region plast_hovel picture)
+      data.delete_if{|key, value| !filter.include? key}
+      user = User.find(session[:user_id])
+      data.each{|key, value| user.send("#{key}=", value)}
+      if user.save
+        return [200, 'ok']
+      else
+        return [400, 'bad request']
+      end
+    end
 
+    post '/avatar' do
+      if session[:user_id]
+        user = User.find(session[:user_id])
+        tempfile = params[:file][:tempfile]
+        filename = params[:file][:filename]
+        saved_name = "#{user.username}#{File.extname(filename)}"
+        FileUtils.copy(tempfile.path, "public/avatar/#{saved_name}")
+        return [200, saved_name]
+      end
+      return [401, "unauthorized"]
+    end  
+    
+    delete '/user' do
+      data = params
+      user = User.authenticate(data['username'], data['password'])
+      if !user.nil?
+        user.destroy
+        return [200, 'ok']
+      end
+      return [400, 'bad request']
+    end
+    
     post '/saveQuestion' do
       content_type :json
       save_Question = JSON.parse(request.body.read)
