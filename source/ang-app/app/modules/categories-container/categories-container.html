@@ -1,14 +1,14 @@
-<div class="col-sm-3 col-sm-offset-1" ng-repeat="parCat in parCategories">
+<div class="col-sm-3 col-sm-offset-1 " ng-repeat="parCat in parCategories | limitTo:3">
   <div class="col-sm-12"> 
-    <span class="rectangle"><a ng-href="#parentcat-page/{{parCat.id}}">{{parCat.title}}</a></span>
+    <span class="rectangle"><a ng-href="#parentcat-page/{{parCat.id}}">{{parCat.title | limitStringTo:true:13}}</a></span>
     <div class="triangle-topright"></div>
     <div class="row categories-container">
       <ul class="list-unstyled col-sm-offset-1">
         <li>
           <span class="quote-author">Тестів:  {{quizzesCount[parCat.id]}} </span>
         </li>
-        <li ng-repeat="subCat in subCategories[parCat.id]">
-          <a ng-href="#subcategory/{{subCat.id}}">{{subCat.title}}</a>
+        <li ng-repeat="subCat in subCategories[parCat.id] | limitTo:3">
+          <a ng-href="#subcategory/{{subCat.id}}">{{subCat.title | limitStringTo:true:13}}</a>
         </li>
       </ul> 
     </div>

@@ -9,53 +9,102 @@ module PlastApp
 
   require 'sinatra/asset_pipeline'
 
-  
   class YunakQuiz < Sinatra::Base
     register Sinatra::AssetPipeline
-
     register Sinatra::ActiveRecordExtension
     register Sinatra::CrossOrigin
+
     Dir.glob('./config/*.rb').each {|file| require file}
     Dir.glob('./models/*.rb').each {|file| require file}
     Dir.glob('./lib/*.rb').each {|file| require file}    
 
+
     get '/' do
         erb :index
+    end
+
+    options '/*' do
     end
 
     get '/assessments' do
       content_type :json
       [{id: 1, name: 'assessment 1'}, {id: 2, name: 'assessment 2'}].to_json
     end
-
-    put '/assessments' do
+    
+    get '/admin/assessments/:id/comments' do
       content_type :json
-      {response: 'Added an assessment'}.to_json
+      Comment.get(params['id']).to_json
+    end 
+
+    put '/admin/assessments/:id' do
+      content_type :json
+      data = JSON.parse(request.body.read)
+      quiz = Quiz.updateQ(data)
+      if quiz
+        return [200, quiz.id.to_json]
+      else
+        return [400, quiz.errors.messages.to_json]
+      end    
     end
 
-    post '/assessments/:id' do
-      cross_origin
+    post '/admin/assessments' do
       content_type :json
-      {response: "Updated to #{params['id']} assessment"}.to_json
+      data = JSON.parse(request.body.read)
+      #check permisions here
+      quiz = Quiz.createQ(data)
+      if quiz
+        return [200, quiz.id.to_json]
+      else
+        return [400, quiz.errors.messages.to_json]
+      end
     end
 
-    delete '/assessments/:id' do
+    get '/assessments/:id' do
       content_type :json
+      quiz = Quiz.queryQ(params['id'])
+      if quiz['id']
+        JSON.pretty_generate(quiz) 
+      else
+        return [400, quiz.to_json]
+      end
+    end
+
+    delete '/admin/assessments/:id' do
+      content_type :json
+      Quiz.deleteQ(params['id'])
       {response: "Assessment #{params['id']} has been deleted"}.to_json
     end
 
-    get '/categories/:id' do
+    get '/admin/assessments/:status' do
       content_type :json
-      #if id = 'parcat' then return all par cat ,id ='subcat' then return all subcats,id='all' then return all categories
-      PlastApp::GetAllCat.getCategories(params['id'])
+      quizzes = Quiz.queryList(params['status'])
+      if quizzes
+        JSON.pretty_generate(quizzes) 
+      else
+        return [400, "Not found "+params['status']]
+      end
     end
 
-    get '/quizzes/:category_id' do
-      content_type :json
-      # this function is part of module SerchQuizzes ,returns quizzes with passed category_id or if 0 passed returns all quizzes
-      PlastApp::SearchQuizzes.withCatId(params['category_id']).to_json 
+    get '/categories/parent' do
+      Category.getParentCategories()
     end
 
+    get '/categories/subcats' do
+      Category.getAllSubCategories()
+    end
+
+    get '/categories/all' do
+      Category.getAllCategories()
+    end
+
+    get '/categories/category/:id' do
+      Category.getCategoryById(params['id'])  
+    end
+
+    get '/categories/subcat/:id' do
+      Category.getSubCatByParCatId(params['id'])
+    end
+    
   end
 
 end
