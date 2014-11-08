@@ -13,30 +13,37 @@
   <link rel="stylesheet" href="bower_components/html5-boilerplate/css/main.css">
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+  <!-- <link rel="stylesheet" href="bower_components/angular_xeditable/dist/css/xeditable.css"> -->
   <link rel="stylesheet" href="app.css"/>
   <script src="bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"></script>
+  <link href="bower_components/angular-xeditable/dist/css/xeditable.css" rel="stylesheet">
 </head>
 <body>
-  <div class="inner-wraper container ">
-    <header-menu></header-menu> 
-    <div ng-view></div>
+  <div class="outer-wraper container">
+    <div class="inner-wraper container ">
+      <header-menu></header-menu> 
+      <div ng-view></div>
+    </div>
+    <footer class="footer-menu-container container">
+      <nav class="footer-menu">
+        <ul >
+          <li>
+            <a href="#">Головна</a> &nbsp;|
+          </li>
+          <li>
+            <a href="#about-us">Про Нас</a> &nbsp;|
+          </li>
+          <li>
+            <a href="#contacts">Контакти</a> &nbsp;|
+          </li>
+          <li>
+            <a href="#faq">FAQ</a> 
+          </li>
+         </ul>
+      </nav>
+      <p>Copyright@ Softserve 2014 <div>App version: v<span app-version></span></div></p>
+    </footer>  
   </div>
-  <footer class="footer-menu-container">
-    <nav class="footer-menu">
-      <ul >
-        <li>
-          <a href="#">Головна</a> |
-        </li>
-        <li>
-          <a href="#about-us">Про Нас</a> |
-        </li>
-        <li>
-          <a href="#contacts">Контакти</a>
-        </li>
-      </ul>
-    </nav>
-    <p>Copyright@ Softserve 2014 <div>App version: v<span app-version></span></div></p>
-  </footer>  
 
   <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
@@ -48,6 +55,7 @@
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
   -->
   <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-mocks/angular-mocks.js"></script>
   <script src="bower_components/angular-route/angular-route.js"></script>
   <script src="bower_components/jquery/dist/jquery.min.js"></script>
   <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -58,14 +66,16 @@
   <script src="modules/partials/staticPartialsRoutes.js"></script>
   <script src="modules/statistics/statistics.js"></script>
   <script src="modules/categories-container/categories-container.js"></script>
+  <script src="modules/parentcat-page/parentcat-page.js"></script>
   <script src="modules/subcategory/subcategory.js"></script>
   <script src="modules/assessments/assessments.js"></script>
-  <script src="modules/assessments/services.js"></script>
-  <script src="modules/assessments/controllers.js"></script>
   <script src="modules/users/users.js"></script>
   <script src="modules/sessions/sessions.js"></script>
   <script src="components/version/version.js"></script>
   <script src="components/version/version-directive.js"></script>
   <script src="components/version/interpolate-filter.js"></script>
+  <script src="modules/faq/faq.js"></script>
+  <script src="modules/faq_admin/faq_admin.js"></script>
+  <script src="bower_components/angular-xeditable/dist/js/xeditable.js"></script>
 </body>
 </html>

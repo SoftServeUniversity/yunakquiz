@@ -13,7 +13,10 @@ angular.module('yunakQuiz', [
   'yunakQuiz.statistics',
   'yunakQuiz.staticPartialsRoute',
   'yunakQuiz.categoriesContainer',
-  'yunakQuiz.subcategory'
+  'yunakQuiz.parentCatPage',
+  'yunakQuiz.subcategory',
+  'yunakQuiz.faqAdmin',
+  'yunakQuiz.faqPage'
 ]).config(['$routeProvider',
   	  function($routeProvider) {
     		$routeProvider.
@@ -24,3 +27,4 @@ angular.module('yunakQuiz', [
         	  redirectTo: '/'
       });
   }]);
+
