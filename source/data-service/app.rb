@@ -199,5 +199,10 @@ module PlastApp
         return [400, {'error' => "operation failed"}.to_json]
       end    
     end
+
+    get '/faq' do
+      content_type :json
+      Faq.select(['id', 'faq_question', 'faq_answer']).to_json
+    end
   end
 end
