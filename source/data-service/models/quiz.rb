@@ -48,7 +48,7 @@ class Quiz < ActiveRecord::Base
   def self.queryListAll(status="published")
     statusCode =  Quiz.statuses[status] 
     if statusCode
-      return Quiz.where(status: statusCode).select('id','category_id').as_json
+      return Quiz.where(status: statusCode).as_json
     end
   end
 

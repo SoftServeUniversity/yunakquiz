@@ -25,6 +25,7 @@ angular.module('yunakQuiz', [
   'yunakQuiz.categoriesContainer',
   'yunakQuiz.subcategory',
   'ngTagsInput',
+  'yunakQuiz.parentCatPage'
 ])
 .config(['$routeProvider',
  	function($routeProvider) {
