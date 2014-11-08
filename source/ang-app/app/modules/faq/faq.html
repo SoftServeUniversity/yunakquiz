@@ -1,0 +1,18 @@
+<div class="row">
+   	<div class="col-xs-12 pageTitleBox bg-primary">
+  		<div class="center-block"><h3 class="pageTitle"> Часті Питання </h3></div>
+    </div>
+</div> 
+
+<div class="FAQ_Page">
+	<div class="col-md-6 col-center">
+		<span ng-repeat="Question in Questions">
+			<a href="" ng-click="showAnswer($index)">
+				{{$index+1}}. {{Question.faq_question}}
+			</a> <br/> 
+			<p id="Question{{$index+1}}" ng-show="Question.visible">
+				{{Question.faq_answer}}
+			</p>
+		</span>
+	</div>
+</div>

@@ -209,6 +209,11 @@ module PlastApp
       end    
     end
     
+    get '/faq' do
+      content_type :json
+      Faq.select(['id', 'faq_question', 'faq_answer']).to_json
+    end
+    
     get '/access' do
       if session[:user_id]
         user = User.find(session[:user_id])
@@ -227,11 +232,10 @@ module PlastApp
         return [401, "unauthorized"]
     end
     
-     delete '/access' do
+    delete '/access' do
       session.clear
       return [200, "ok"]
     end 
       
   end
 end
-

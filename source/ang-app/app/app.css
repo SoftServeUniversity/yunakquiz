@@ -35,7 +35,7 @@
   text-align: center;
 }
 .footer-menu {
-  width:  202px;
+  width:  232px;
   height: 20px;
   margin: 10px auto 0px;
 }
@@ -261,8 +261,6 @@ color: white;
 }
 /*eof adm-pan categories edit*/
 
-/* end assessment styles */
-
 /*styles for login */
 .modal-header {
 	background-color: #eae8e8;
@@ -277,3 +275,24 @@ color: white;
 	min-width: 22%;
 }
 /* end styles for login */
+
+/*faq page*/
+.FAQ_Page a {
+  color: #005229;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.FAQ_Page a:visited {
+    background-color: white;
+}
+
+.FAQ_Page p {
+  font-size: 15px;
+}
+
+.FAQ_Page .col-center {
+  float: none;
+  margin: 0 auto;
+}
+/*eo faq page*/
