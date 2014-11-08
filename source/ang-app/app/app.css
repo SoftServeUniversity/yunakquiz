@@ -367,3 +367,12 @@ box-shadow: 0px 0px 21px 0px rgba(0,0,0,0.75);
 .profile-container {
 	margin-top: 20px;
 }
+/* Guest search styles */
+div .guestSearchNoDecoration {
+  text-decoration: none;
+}
+
+.guestSearchMarginTop {
+  margin-top: 15px;
+}
+/* End of guest search styles */
