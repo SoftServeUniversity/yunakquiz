@@ -236,6 +236,16 @@ module PlastApp
       session.clear
       return [200, "ok"]
     end
+    
+    post '/user' do
+      data = JSON.parse request.body.read
+      user = User.new(data)
+      if user.save
+        return [200, "ok"]
+      else
+        return [400, user.errors.messages.to_json]
+      end
+    end
 
     post '/saveQuestion' do
       content_type :json
