@@ -1,5 +1,8 @@
 (function (){
-  var  app = angular.module('yunakQuiz.administrationPanel' ,['ngRoute']);
+  var  app = angular.module('yunakQuiz.administrationPanel',
+    ['ngRoute','yunakQuiz.aboutusTab', 'yunakQuiz.administrationTab',
+    'yunakQuiz.blacklistTab', 'yunakQuiz.faqTab', 'yunakQuiz.quizzescategoriesTab',
+     'yunakQuiz.userTab']);
 
     app.directive('adminPanel', function(){
       return {
