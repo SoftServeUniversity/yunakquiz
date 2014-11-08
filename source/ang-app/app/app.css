@@ -197,3 +197,17 @@ color: white;
  border-color:#269abc;
 }
 /*eof admin panel styles*/
+
+/*contacts page*/
+.categories-container .contacts{
+  padding-bottom: 20px;
+}
+.contact-us{
+  margin-left: 15%;
+  margin-right: 15%;
+  background: #f5f5f5;
+}
+.contact-us h4{
+  color:#5bc0de;
+}
+/*eof contacts page*/

@@ -162,5 +162,11 @@ module PlastApp
         return [400, "Not found "+params['status']]
       end
     end   
+
+    get '/contacts' do
+      content_type :json
+      Contact.select(['id','role','phone','address','mail']).to_json
+    end
+
   end
 end

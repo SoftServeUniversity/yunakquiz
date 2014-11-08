@@ -47,6 +47,3 @@ angular.module('yunakQuiz', [
   nextText: '>',
   lastText: '≫'
 });
-
-
-
