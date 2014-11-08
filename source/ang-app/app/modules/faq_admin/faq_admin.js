@@ -17,22 +17,35 @@
     editableOptions.theme = 'bs3';
   });
 
- 	app.controller('faqAdminCtrl', ['$scope', '$http', function ($scope, $http) {
+  app.factory("getQuestions", ['$http', function ($http) {
+    return { 
+      get : function() {
+        return $http.get('http://localhost:9292/faq');
+      },
 
-    $http.get('http://localhost:9292/faq').success(function(data){
+      post : function(data){
+        return $http.post('http://localhost:9292/saveQuestion', data);
+      },
+
+      delete : function(index){
+        return $http.delete('http://localhost:9292/deleteQuestion/' + index);
+      }
+    }
+  }]);
+
+ 	app.controller('faqAdminCtrl', ['$scope', '$http', 'getQuestions', function ($scope, $http, getQuestions) {
+
+    getQuestions.get().success(function(data){
       $scope.Questions = data;
 
       $scope.saveQuestion = function(data, id) {
-      //  console.log(data);
         angular.extend(data, {id: id});
-        return $http.post('http://localhost:9292/saveQuestion', data);
+        getQuestions.post(data);        
       };
 
        $scope.removeQuestion = function(index) {
-        // angular.extend(data, {id: index});
-        $http.delete('http://localhost:9292/deleteQuestion/' + index).success(function(data1){
+        getQuestions.delete(index).success(function(data1){
           $scope.Questions = data1;
-
         });
       };      
 
@@ -48,5 +61,4 @@
     });
 
    }])
-
 })();

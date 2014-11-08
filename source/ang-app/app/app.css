@@ -217,34 +217,19 @@ box-shadow: 0px 0px 21px 0px rgba(0,0,0,0.75);
 /*eo faq page*/
 
 /* faq page for admin */
-/*.FAQ_Page input.editable-input.form-control.input-sm.ng-pristine.ng-valid {
-  width: 400px !important;
-}*/
-
-.FAQ_Page .editable-wrap .editable-controls>input,.editable-wrap .editable-controls>textarea {
-  width: 400px !important;
+.form-control {
+  width: 400px;
 }
 
-/*.FAQ_AdminPage a {
-  color: #005229;
-  text-decoration: none;
-  font-size: 17px;
+.FAQ_Page .tableStyle {
+  font-weight: bold;
 }
 
-.FAQ_AdminPage a:visited {
-    background-color: white;
-}*/
-
-/*.FAQ_AdminPage p {
-  font-size: 15px;
+td#qaColSt {
+  width: 65%;
 }
 
-.FAQ_AdminPage .col-center {
-  float: none;
-  margin: 0 auto;
-}*/
-
-/*.FAQ_AdminPage p {
- margin: 50px; 
-}*/
+td#eColSt{
+  width: 15%;
+}
 /*eo faq page for admin*/
