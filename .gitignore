@@ -1,5 +1,5 @@
 .idea
 .sass-cache
 *.log
-.sqlite3
+YunakQuiz.sqlite3
 schema.rb
