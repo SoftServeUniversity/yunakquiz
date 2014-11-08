@@ -1,3 +1,5 @@
 .idea
 .sass-cache
 *.log
+.sqlite3
+schema.rb
