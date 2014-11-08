@@ -1,5 +1,5 @@
 (function (){
-  var  app = angular.module('yunakQuiz.staticPartialsRoute' ,['ngRoute']);
+  var  app = angular.module('yunakQuiz.staticPartialsRoute' ,['ngRoute','yunakQuiz.aboutusTab']);
 
     app.config(['$routeProvider',
       function($routeProvider) {
@@ -12,12 +12,11 @@
     ]);
 
     app.controller('aboutUs', 
-      ['$scope', '$http', '$sce', function ($scope, $http, $sce) {
+      ['$scope', '$http', '$sce', 'aboutUsReadUpdate', function ($scope, $http, $sce, aboutUsReadUpdate) {
         $scope.about_Us = '';
 
-        $http.get('http://localhost:9292/about_us').success(function(data){
+        aboutUsReadUpdate.read().success(function(data){
           $scope.about_Us = $sce.trustAsHtml(data[0].about_us);
         });    
     }])
 })(); 
-
