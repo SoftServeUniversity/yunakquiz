@@ -114,6 +114,12 @@ module PlastApp
     end
     ## end of Assessment comments section
 
+    get '/tags/:query' do
+      content_type :json
+      query = '%'+params['query'][0,20]+'%'
+      Tag.select(:tag, :id).where("tag like ?", query).to_json
+    end
+
   ## Assessments block ends here!
 
 

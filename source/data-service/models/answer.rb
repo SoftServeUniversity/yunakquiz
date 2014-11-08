@@ -1,5 +1,5 @@
 class Answer < ActiveRecord::Base
-  belongs_to :question, -> { includes :quiz}
+  belongs_to :question
 
   def self.updateQ (answers, question)
     answers.each do |a|

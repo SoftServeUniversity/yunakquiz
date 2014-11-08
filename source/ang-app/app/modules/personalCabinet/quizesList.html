@@ -1,5 +1,6 @@
 <div ng-include="'modules/personalCabinet/personalCabinetHeader.html'"></div>
-<table class="table table-hover">
+<h4 ng-show="!totalItems" class="text-center quizMarginTop">В даній вкладці немає тестів</h4>
+<table ng-show="totalItems" class="table table-hover">
 	<thead>
 		<tr>
 			<th>№</th>

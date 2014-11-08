@@ -9,8 +9,6 @@ yunakQuizApp.controller('QuizEditCtrl', ['$scope','QuizData', '$routeParams','ta
         $scope.quiz = data;
         $scope.getComments(data['id']);
         $scope.getCat();
-        
-        // $scope.setCat();
       })
       .error(function(data){
         $location.path('/404/');
@@ -54,9 +52,8 @@ yunakQuizApp.controller('QuizEditCtrl', ['$scope','QuizData', '$routeParams','ta
 
   /** get all tags from backend*/
   $scope.loadTags = function(query) {
-      return tags.load();
+      return QuizData.getTags(query);
   };
-
 
   /** add empty answer*/
   $scope.addAnswer = function(question) {
