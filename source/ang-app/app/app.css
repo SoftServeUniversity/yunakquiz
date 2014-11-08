@@ -58,7 +58,7 @@
   color: #9b9a9a;
 }
 .pageTitleBox {
-  height: 50px;
+  line-height: 50px;
   margin-bottom: 20px;
 }
 .pageTitle {
@@ -141,3 +141,14 @@
 }
 
 /* end assessment styles */
+
+/*admin panel aboutUs tab*/
+.about-us-read-btn{
+margin-right: 5px;
+}
+.aboutUsMsg{
+ margin-right: 15px;
+ line-height: 30px;
+ font-weight: bold; 
+}
+/*eof admin panel aboutUs tab*/

@@ -116,10 +116,19 @@ module PlastApp
 
   ## Assessments block ends here!
 
-
     get '/about_us' do
       content_type :json
       Staticinfo.select(['id','about_us','updated_at']).to_json
     end  
+
+    put '/about_us' do
+       data = request.body.read
+       status = Staticinfo.updateInfo(data)
+       if status
+        return [200, {'Success' => "operation success"}.to_json]
+       else
+         return [400, {'error' => "operation failed"}.to_json]
+       end    
+    end
   end
 end
