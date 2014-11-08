@@ -152,3 +152,37 @@ margin-right: 5px;
  font-weight: bold; 
 }
 /*eof admin panel aboutUs tab*/
+
+/*Category Container*/
+.triangle-topright {
+  width: 0;
+  height: 0;
+  border-top: 15px solid rgb(6,106,255);
+  border-left: 15px solid transparent;
+}
+.rectangle {
+  color:white;
+  position: relative;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 2px;
+  display: block;
+  width: 120px;
+  height: 23px;
+  overflow: hidden;
+  background: rgb(74,147,255);
+  text-align: center;
+  z-index: 2;
+}
+.rectangle a {
+color: white;
+}
+.categories-container{
+  border: 1px solid #ccc;
+  padding: 18px 20px 0px;
+  margin-bottom: 30px;
+  margin-top: -25px;
+  margin-left: 14px;
+  z-index: 1;
+}
+/* eof Category container*/

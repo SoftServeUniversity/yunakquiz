@@ -79,4 +79,7 @@ class Category < ActiveRecord::Base
     end
   end
 
+  def self.getSubCatByParCatId(id)
+    return Category.where("category_id=?", id).select(['id','category_id','title']).to_json
+  end
 end
