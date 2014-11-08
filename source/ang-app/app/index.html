@@ -17,20 +17,32 @@
   <script src="bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"></script>
 </head>
 <body>
-  <ul class="menu">
-    <li><a href="#/measures">Measures</a></li>
-    <li><a href="#/assessments/1">Pass an assessment</a></li>
-    <li><a href="#/auth/signup">Sign up</a></li>
-    <li><a href="#/auth/login">Login User</a></li>
-  </ul>
+  <div class="inner-wraper container ">
+    <header-menu></header-menu> 
+    <div ng-view></div>
+  </div>
+  <footer class="footer-menu-container">
+    <nav class="footer-menu">
+      <ul >
+        <li>
+          <a href="#">Головна</a> |
+        </li>
+        <li>
+          <a href="#about-us">Про Нас</a> |
+        </li>
+        <li>
+          <a href="#contacts">Контакти</a>
+        </li>
+      </ul>
+    </nav>
+    <p>Copyright@ Softserve 2014 <div>App version: v<span app-version></span></div></p>
+  </footer>  
 
   <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
   <![endif]-->
 
-  <div ng-view></div>
-
-  <div>App version: v<span app-version></span></div>
+  
 
   <!-- In production use:
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
@@ -41,6 +53,12 @@
   <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   <script src="app.js"></script>
   <script src="modules/measures/measures.js"></script>
+  <script src="modules/header-menu/header-menu.js"></script>
+  <script src="modules/guest-search/guest-search.js"></script>
+  <script src="modules/partials/staticPartialsRoutes.js"></script>
+  <script src="modules/statistics/statistics.js"></script>
+  <script src="modules/categories-container/categories-container.js"></script>
+  <script src="modules/subcategory/subcategory.js"></script>
   <script src="modules/assessments/assessments.js"></script>
   <script src="modules/administration_panel/administration_panel.js"></script>
   <script src="modules/administration_panel/about_us_tab.js"></script>
