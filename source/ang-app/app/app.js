@@ -13,7 +13,8 @@ angular.module('yunakQuiz', [
   'yunakQuiz.statistics',
   'yunakQuiz.staticPartialsRoute',
   'yunakQuiz.categoriesContainer',
-  'yunakQuiz.subcategory'
+  'yunakQuiz.subcategory',
+  'yunakQuiz.quizzescategoriesTab'
 ]).config(['$routeProvider',
   	  function($routeProvider) {
     		$routeProvider.

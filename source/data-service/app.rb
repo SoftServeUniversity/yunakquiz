@@ -84,6 +84,36 @@ module PlastApp
       end
     end
 
-  end
+    put '/admin/category/create' do
+      content_type :json
+      data = JSON.parse(request.body.read)
+      newCat = Category.createCat(data)
+      if newCat
+        return [200, newCat.to_json]
+      else
+        return [400, {'error' => "operation failed"}.to_json]
+      end    
+    end
 
+    put '/admin/category/update' do
+      content_type :json
+      data = JSON.parse(request.body.read)
+      newCat = Category.updateCat(data)
+      if newCat
+        return [200, newCat.to_json]
+      else
+        return [400, {'error' => "operation failed"}.to_json]
+      end    
+    end
+
+    delete '/admin/category/delete/:id' do
+      content_type :json
+      catToDel = Category.delCat(params['id'])
+      if catToDel
+        return [200, catToDel.to_json]
+      else
+        return [400, {'error' => "operation failed"}.to_json]
+      end    
+    end
+  end
 end
