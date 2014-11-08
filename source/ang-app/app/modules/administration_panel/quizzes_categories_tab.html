@@ -107,11 +107,11 @@
           </div>
         </div>
         <div class="modal-footer">
-          <div class="dropdown">
-            <button class="btn btn-danger dropdown-toggle pull-left" type="button" id="dropdownSubCatsEdit" data-toggle="dropdown">Підкатегорії
+          <div class="btn-group pull-left" dropdown is-open="modalEditdropDown.isopen">
+            <button type="button" class="btn btn-danger dropdown-toggle" ng-disabled="disabled" id="dropdownSubCatsEdit">Підкатегорії
               <span class="caret"></span>
             </button>
-            <ul class="dropdown-menu admin-pan-dropDown" aria-labelledby="dropdownSubCatsEdit">
+            <ul class="dropdown-menu" role="menu">
               <li ng-repeat="subCat in subCategories"><a>{{subCat.title}}</a></li>
             </ul>
           </div>
@@ -156,11 +156,11 @@
           </div>
         </div>
         <div class="modal-footer">
-          <div class="dropdown">
-            <button class="btn btn-danger dropdown-toggle pull-left" type="button" id="dropdownSubCats" data-toggle="dropdown">Підкатегорії
+          <div class="btn-group pull-left" dropdown is-open="modalDeldropDown.isopen">
+            <button type="button" class="btn btn-danger dropdown-toggle" ng-disabled="disabled" id="dropdownSubCats">Підкатегорії
               <span class="caret"></span>
             </button>
-            <ul class="dropdown-menu admin-pan-dropDown" aria-labelledby="dropdownSubCats">
+            <ul class="dropdown-menu" role="menu">
               <li ng-repeat="subCat in subCategories"><a>{{subCat.title}}</a></li>
             </ul>
           </div>
