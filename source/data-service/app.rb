@@ -84,6 +84,15 @@ module PlastApp
       end
     end
 
+    put '/about_us' do
+       data = request.body.read
+       status = Staticinfo.updateInfo(data)
+       if status
+        return [200, {'Success' => "operation success"}.to_json]
+       else
+         return [400, {'error' => "operation failed"}.to_json]
+       end    
+    end
+    
   end
-
 end
