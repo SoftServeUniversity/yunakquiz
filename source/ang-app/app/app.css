@@ -281,3 +281,21 @@ color: white;
   margin: 0 auto;
 }
 /*eo faq page*/
+
+/* faq page for admin */
+.form-control {
+  width: 400px;
+}
+
+.FAQ_Page .tableStyle {
+  font-weight: bold;
+}
+
+td#qaColSt {
+  width: 65%;
+}
+
+td#eColSt{
+  width: 15%;
+}
+/*eo faq page for admin*/

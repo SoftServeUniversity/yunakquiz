@@ -1,4 +1,34 @@
 <admin-panel></admin-panel>
-<div class="panel">
-<h1>FAQ goes here</h1>
+  <div class="panel">
+    <div class="FAQ_AdminPage">
+      <table class="table table-bordered table-hover table-condensed">
+        <tr class="tableStyle">
+          <td id="qaColSt">Questions & Answers</td>
+          <td id="eColSt">Edit</td>
+        </tr>
+        <tr ng-repeat="Question in Questions">
+          <td>
+            <span class="inputClass" editable-text="Question.faq_question" e-name="Question" e-form="rowform">{{$index+1}}. {{Question.faq_question || 'Введіть питання'}} 
+            </span></br>
+            <span editable-textarea="Question.faq_answer" e-name="Answer" e-form="rowform">{{Question.faq_answer || 'Введіть відповідь'}}
+            </span> 
+          </td>
+
+      <td style="white-space: nowrap">
+        <form editable-form name="rowform" onbeforesave="saveQuestion($data, Question.id)" ng-show="rowform.$visible" class="form-buttons form-inline" shown="inserted == Question">
+          <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary">Save
+          </button>
+          <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" class="btn btn-default">Cancel
+          </button>
+        </form>
+
+        <div class="buttons" ng-show="!rowform.$visible">
+          <button class="btn btn-primary" ng-click="rowform.$show()">Edit</button>
+          <button class="btn btn-danger" ng-click="removeQuestion(Question.id)">Del</button>
+        </div>      
+      </td>
+    </tr>
+    </table>
+    <button class="btn btn-default" ng-click="addQuestion()"> Add Question </button>  
+  </div>
 </div>

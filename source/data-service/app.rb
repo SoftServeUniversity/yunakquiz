@@ -204,5 +204,28 @@ module PlastApp
       content_type :json
       Faq.select(['id', 'faq_question', 'faq_answer']).to_json
     end
+    
+    post '/saveQuestion' do
+      content_type :json
+      save_Question = JSON.parse(request.body.read)
+
+      if(Faq.where('id=?', save_Question['id']).length == 0)
+        Faq.create(id:save_Question['id'], faq_question:save_Question['Question'], faq_answer:save_Question['Answer'])
+      end
+      
+      curfaq = Faq.where('id=?', save_Question['id'])
+      curfaq[0].faq_answer = save_Question['Answer']
+      curfaq[0].faq_question = save_Question['Question']
+      curfaq[0].save()
+    end
+
+    delete '/deleteQuestion/:id' do
+      content_type :json
+      # getQuestion = JSON.parse(request.body.read)
+      Faq.find(params['id']).delete()
+      [200, {'success' => "success"}.to_json]
+
+      Faq.select(['id', 'faq_question', 'faq_answer']).to_json
+    end
   end
 end
