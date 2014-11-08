@@ -24,7 +24,7 @@
     app.factory("quizesById", ['$http', function ($http) {
       return { 
         get : function() {
-          return $http.get('http://localhost:9292/admin/assessments/published')
+          return $http.get('http://localhost:9292/admin/assessments/all/published')
         },
        }
     }]);

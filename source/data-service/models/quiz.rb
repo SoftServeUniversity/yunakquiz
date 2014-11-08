@@ -45,5 +45,11 @@ class Quiz < ActiveRecord::Base
     Quiz.where("status=? AND title like ?", statusCode, query).count()
   end
 
+  def self.queryListAll(status="published")
+    statusCode =  Quiz.statuses[status] 
+    if statusCode
+      return Quiz.where(status: statusCode).select('id','category_id').as_json
+    end
+  end
 
 end

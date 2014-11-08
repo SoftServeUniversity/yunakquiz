@@ -152,5 +152,15 @@ module PlastApp
          return [400, {'error' => "operation failed"}.to_json]
        end    
     end
+
+    get '/admin/assessments/all/:status' do
+      content_type :json
+      quizzes = Quiz.queryListAll(params['status'])
+      if quizzes
+        JSON.pretty_generate(quizzes) 
+      else
+        return [400, "Not found "+params['status']]
+      end
+    end   
   end
 end
