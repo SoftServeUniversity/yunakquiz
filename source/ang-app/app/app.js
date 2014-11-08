@@ -9,12 +9,6 @@ angular.module('yunakQuiz', [
   'yunakQuiz.sessions',
   'yunakQuiz.version',
   'yunakQuiz.administrationPanel',
-  'yunakQuiz.aboutusTab',
-  'yunakQuiz.administrationTab',
-  'yunakQuiz.blacklistTab',
-  'yunakQuiz.faqTab',
-  'yunakQuiz.quizzescategoriesTab',
-  'yunakQuiz.userTab'
   'yunakQuiz.headerMenu',
   'yunakQuiz.guestSearch',
   'yunakQuiz.statistics',
