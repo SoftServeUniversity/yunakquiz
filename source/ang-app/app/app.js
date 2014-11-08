@@ -4,6 +4,7 @@
 angular.module('yunakQuiz', [
   'ui.bootstrap',
   'ngRoute',
+  'ngResource',
   'yunakQuiz.measures',
   'yunakQuiz.assessments',
   'yunakQuiz.personalCabinet',
@@ -29,13 +30,13 @@ angular.module('yunakQuiz', [
   'yunakQuiz.faqPage'
 ])
 .config(['$routeProvider',
- 	function($routeProvider) {
- 		$routeProvider
+  function($routeProvider) {
+    $routeProvider
       .when('/', {
-     		templateUrl: 'modules/partials/home-page-greetings.html',
-     	})
+        templateUrl: 'modules/partials/home-page-greetings.html',
+      })
       .otherwise({
-     	  redirectTo: '/'
+        redirectTo: '/'
       })
 }])
 .constant('paginationConfig', {

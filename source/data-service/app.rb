@@ -1,13 +1,12 @@
 # encoding: UTF-8
 module PlastApp
   require 'sinatra'
+  require 'sinatra/activerecord'
   require 'json'
   require 'rest_client'
   require 'rubygems'
-  require 'sinatra/activerecord'
   require 'json/ext' # required for .to_json
   require 'sinatra/cross_origin'
-
   require 'sinatra/asset_pipeline'
 
   class YunakQuiz < Sinatra::Base
@@ -18,15 +17,25 @@ module PlastApp
     Dir.glob('./config/*.rb').each {|file| require file}
     Dir.glob('./models/*.rb').each {|file| require file}
     Dir.glob('./lib/*.rb').each {|file| require file}    
-
-
-    get '/' do
-        erb :index
+    
+    helpers do
+      def filtered_user(user)
+        filter = %w(id username first_name last_name email birthday plast_level plast_region plast_hovel picture)
+        if user.methods.include?(:attributes)
+          return user.attributes.delete_if{|key, value| !filter.include? key.to_s} 
+        else
+          return user.delete_if{|key, value| !filter.include? key.to_s}
+        end  
+      end
     end
 
     options '/*' do
     end
-
+    
+    get '/' do
+        erb :index
+    end
+    
     get '/categories' do
       content_type :json
       JSON.pretty_generate(Category.catList)
@@ -199,12 +208,35 @@ module PlastApp
         return [400, {'error' => "operation failed"}.to_json]
       end    
     end
-
+    
     get '/faq' do
       content_type :json
       Faq.select(['id', 'faq_question', 'faq_answer']).to_json
     end
     
+    get '/access' do
+      if session[:user_id]
+        user = User.find(session[:user_id])
+        return [200, filtered_user(user).to_json]
+      end
+      return [401, "unauthorized"]
+    end 
+    
+    post '/access' do
+      data = JSON.parse request.body.read
+      user = User.authenticate(data['username'], data['password'])
+      if !user.nil?
+        session[:user_id] = user.id
+        return [200, filtered_user(user).to_json]
+      end
+        return [401, "unauthorized"]
+    end
+    
+    delete '/access' do
+      session.clear
+      return [200, "ok"]
+    end
+
     post '/saveQuestion' do
       content_type :json
       save_Question = JSON.parse(request.body.read)
@@ -227,5 +259,6 @@ module PlastApp
 
       Faq.select(['id', 'faq_question', 'faq_answer']).to_json
     end
+
   end
 end

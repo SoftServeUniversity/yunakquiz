@@ -1,3 +1,7 @@
 .idea
 .sass-cache
 *.log
+*~
+*.project
+*.sqlite3
+
