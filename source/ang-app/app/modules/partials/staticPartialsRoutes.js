@@ -1,5 +1,5 @@
 (function (){
-  var  app = angular.module('yunakQuiz.staticPartialsRoute' ,['ngRoute']);
+  var  app = angular.module('yunakQuiz.staticPartialsRoute' ,['ngRoute','yunakQuiz.aboutusTab']);
 
     app.config(['$routeProvider',
       function($routeProvider) {
@@ -11,12 +11,17 @@
       }
     ]);
 
+    app.factory("contactsRead", ['$http', function ($http) {
+      return $http.get('http://localhost:9292/contacts')
+    }]);
+
     app.controller('contacts', 
-      ['$scope', '$http', function ($scope, $http) {
+      ['$scope', '$http', 'contactsRead', function ($scope, $http, contactsRead) {
         $scope.contacts = {};
 
-        $http.get('http://localhost:9292/contacts').success(function(data){
+        contactsRead.success(function(data){
           $scope.contacts = data;
         });    
     }])
 })(); 
+    
