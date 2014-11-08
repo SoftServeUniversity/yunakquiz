@@ -211,3 +211,52 @@ color: white;
   color:#5bc0de;
 }
 /*eof contacts page*/
+
+/*adm-pan categories edit*/
+.admin-pan-category-add-input{
+  margin: 0px 0px 5px 0px;
+}
+.admin-pan-category-add-btn{
+  margin: 0px 15px 0px 0px;
+  position: absolute;
+  top:5px;
+  right: 5px;
+}
+.category-add-modal{
+  width:500px;
+}
+.admin-pan-category-add-head{
+  margin: 0px 0px 0px 0px;
+  position: relative;
+  font-weight: bold;
+  height: 40px;
+  padding-left: 45px;
+}
+.admin-pan-category-add-input .ng-invalid.ng-dirty{
+  border-color: #fa787e;
+}
+.admin-pan-category-add-input .ng-valid.ng-dirty{
+  border-color: #78fa89;
+}
+.invalid{
+  border-color: #fa787e;
+}
+.admin-pan-category-add-captcha-rnd{
+  line-height: 30px;
+}
+.admin-pan-category-add-input .form-control {
+  font-weight: bold;
+}
+.admin-pan-category-del-msg,
+.admin-pan-category-del-err-msg,
+.admin-pan-category-edit-err-msg,
+.admin-pan-category-create-err-msg{
+  color:#c12e2a;
+  text-align: center;
+  font-weight: bold;
+}
+.admin-pan-dropDown{
+  position: absolute;
+  top:35px;
+}
+/*eof adm-pan categories edit*/

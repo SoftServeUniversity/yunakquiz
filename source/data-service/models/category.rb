@@ -82,4 +82,16 @@ class Category < ActiveRecord::Base
   def self.getSubCatByParCatId(id)
     return Category.where("category_id=?", id).select(['id','category_id','title']).to_json
   end
+
+  # def self.query(data, action)
+  # 	if action == 'create'
+  # 	  newCat = Category.createCat(data)
+  # 	  return newCat
+  # 	else
+  #     if action == 'update'
+  #       newCat = Category.updateCat(data)
+  # 	    return newCat
+  #     end
+  #   end
+  # end
 end

@@ -25,7 +25,6 @@ angular.module('yunakQuiz', [
   'yunakQuiz.categoriesContainer',
   'yunakQuiz.subcategory',
   'ngTagsInput',
-  'yunakQuiz.aboutusTab',
 ])
 .config(['$routeProvider',
  	function($routeProvider) {
@@ -35,7 +34,7 @@ angular.module('yunakQuiz', [
      	})
       .otherwise({
      	  redirectTo: '/'
-      });
+      })
 }])
 .constant('paginationConfig', {
   boundaryLinks: true,
