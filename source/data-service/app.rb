@@ -1,3 +1,4 @@
+# encoding: UTF-8
 module PlastApp
   require 'sinatra'
   require 'json'

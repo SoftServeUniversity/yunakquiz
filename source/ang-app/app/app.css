@@ -186,3 +186,14 @@ color: white;
   z-index: 1;
 }
 /* eof Category container*/
+
+/*admin panel styles*/
+.admin-panel-tabs>li>a{
+  font-weight: bold;
+}
+.admin-panel-tabs>li.active>a{
+ background-color:#31b0d5;
+ color:#fff;
+ border-color:#269abc;
+}
+/*eof admin panel styles*/
