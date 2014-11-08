@@ -217,6 +217,14 @@ box-shadow: 0px 0px 21px 0px rgba(0,0,0,0.75);
 /*eo faq page*/
 
 /* faq page for admin */
+/*.FAQ_Page input.editable-input.form-control.input-sm.ng-pristine.ng-valid {
+  width: 400px !important;
+}*/
+
+.FAQ_Page .editable-wrap .editable-controls>input,.editable-wrap .editable-controls>textarea {
+  width: 400px !important;
+}
+
 /*.FAQ_AdminPage a {
   color: #005229;
   text-decoration: none;
@@ -227,14 +235,14 @@ box-shadow: 0px 0px 21px 0px rgba(0,0,0,0.75);
     background-color: white;
 }*/
 
-.FAQ_AdminPage p {
+/*.FAQ_AdminPage p {
   font-size: 15px;
 }
 
 .FAQ_AdminPage .col-center {
   float: none;
   margin: 0 auto;
-}
+}*/
 
 /*.FAQ_AdminPage p {
  margin: 50px; 

@@ -11,39 +11,42 @@
    		}
  	]);
 
-  // app.run(function(editableOptions) {
-  //   editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
-  // });
+  app.run(function(editableOptions, editableThemes) {
+    editableThemes.bs3.inputClass = 'input-sm';
+    editableThemes.bs3.buttonsClass = 'btn-sm';
+    editableOptions.theme = 'bs3';
+  });
 
  	app.controller('faqAdminCtrl', ['$scope', '$http', function ($scope, $http) {
 
     $http.get('http://localhost:9292/faq').success(function(data){
       $scope.Questions = data;
-      $scope.editorEnabled = false;
 
-      $scope.enableEditor = function(index){
-        $scope.editorEnabled = true;
-        $scope.editableQuestion = $scope.Questions;
+      $scope.saveQuestion = function(data, id) {
+      //  console.log(data);
+        angular.extend(data, {id: id});
+        return $http.post('http://localhost:9292/saveQuestion', data);
       };
 
-      $scope.disableEditor = function(){
-        $scope.editorEnabled = false;
+       $scope.removeQuestion = function(index) {
+        // angular.extend(data, {id: index});
+        $http.delete('http://localhost:9292/deleteQuestion/' + index).success(function(data1){
+          $scope.Questions = data1;
+
+        });
+      };      
+
+      $scope.addQuestion = function() {
+        $scope.inserted = {
+          id: $scope.Questions.length+1,
+          faq_question: '',
+          faq_answer: ''
+        };
+        $scope.Questions.push($scope.inserted);
       };
 
-      $scope.save = function(){
-        $scope.Questions = $scope.editableQuestion;
-        $scope.disableEditor();
-      };
-
-      // for (var i = $scope.Questions.length - 1; i >= 0; i--) {
-      //   $scope.Questions[i].visible = false;
-      // };
     });
 
-    // $scope.showAnswer = function(index){
-    //   $scope.Questions[index].visible = !$scope.Questions[index].visible;
-    // };
-          
    }])
 
 })();
