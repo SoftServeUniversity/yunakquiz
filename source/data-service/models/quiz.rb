@@ -8,13 +8,13 @@ class Quiz < ActiveRecord::Base
 
   
   def self.get_by_id(id)
-    Quiz.find_by(id: id).as_json(:include => [{:questions => {:include => :answers}},:tags])
+    Quiz.find_by(id: id).as_json(:include => [{:questions => {:include => :answers}},{:tags=> {:only => [:id, :tag]}}])
   end
 
   def self.create_quiz(data)
     category = Category.find(data['category_id'])
     quiz = category.quizzes.create(title: data['title'],description: data['description'], status: data['status'])
-    Tag.insert(data['tags'], quiz)
+    Tag.insert_tags(data['tags'], quiz)
     Question.createQ(data['questions'], quiz)
     quiz[:id]
   end
@@ -22,8 +22,8 @@ class Quiz < ActiveRecord::Base
   def self.update_quiz(data)
     quiz = Quiz.find(data['id'])
     quiz.update(title: data['title'], description: data['description'], category_id: data['category_id'], status: data['status'])
-    Tag.update(data['tags'], quiz)
-    Question.updateQ(data['questions'], quiz)
+    Tag.update_tags(data['tags'], quiz)
+    Question.update_questions(data['questions'], quiz)
     return quiz
   end
 

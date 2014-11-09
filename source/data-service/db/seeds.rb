@@ -18,6 +18,8 @@ moderRole = Role.create(name: 'moder')
 superadminRole = Role.create(name: 'superadmin')
 
 user = User.create(username: "user123", password: "12345678", password_confirmation: "12345678", email: "user@mail.com", birthday: "2000-12-31T22:00:00.000Z")
+author1 = User.create(username: "Ivan", password: "12345678", password_confirmation: "12345678", email: "user@mail.com", birthday: "2000-12-31T22:00:00.000Z")
+author2 = User.create(username: "Valera", password: "12345678", password_confirmation: "12345678", email: "user@mail.com", birthday: "2000-12-31T22:00:00.000Z")
 admin = User.create(username: "admin123", password: "12345678", password_confirmation: "12345678", email: "admin@mail.com", birthday: "2000-12-31T22:00:00.000Z")
 moder = User.create(username: "moder123", password: "12345678", password_confirmation: "12345678", email: "moder@mail.com", birthday: "2000-12-31T22:00:00.000Z")
 superadmin = User.create(username: "super123", password: "12345678", password_confirmation: "12345678", email: "super@mail.com", birthday: "2000-12-31T22:00:00.000Z")
@@ -123,31 +125,6 @@ tag6 = Tag.create(tag: "світ")
 tag7 = Tag.create(tag: "програмування")
 tag8 = Tag.create(tag: "java")
 tag9 = Tag.create(tag: "масиви")
-Tag.create(tag: "батьківщина")
-Tag.create(tag: "світ")
-Tag.create(tag: "історія")
-Tag.create(tag: "всьо")
-Tag.create(tag: "Гітлер")
-Tag.create(tag: "Сталін")
-Tag.create(tag: "голодомор")
-Tag.create(tag: "перша_світова")
-Tag.create(tag: "війна")
-Tag.create(tag: "Німеччина")
-Tag.create(tag: "хокей")
-Tag.create(tag: "лід")
-Tag.create(tag: "клюшка")
-Tag.create(tag: "Рональдо")
-Tag.create(tag: "Блохін")
-Tag.create(tag: "Шевченко")
-Tag.create(tag: "Вєтнам")
-Tag.create(tag: "гвинтокрил")
-Tag.create(tag: "напалм")
-Tag.create(tag: "1991")
-Tag.create(tag: "Україна")
-Tag.create(tag: "незалежність")
-Tag.create(tag: "Революція")
-Tag.create(tag: "Україна")
-Tag.create(tag: "Яник")
 
 quiz1.tags << tag1
 quiz1.tags << tag2
@@ -162,62 +139,61 @@ quiz5.tags << tag7
 quiz5.tags << tag8
 quiz5.tags << tag9
 
+quiz6 = subcat4.quizzes.create(category_id: 6,status: "published", title: "Тест на знання історії світу", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
+quiz6.tags << tag6
+quiz6.tags << tag5
+quiz6.tags << tag10 = Tag.create(tag: "всьо")
+
+quiz7 = subcat4.quizzes.create(category_id: 6,status:"published", title: "Тест на знання другої світової війни", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
+quiz7.tags << tag11 = Tag.create(tag: "гітлер")
+quiz7.tags << tag12 = Tag.create(tag: "сталін")
+quiz7.tags << tag13 = Tag.create(tag: "голодомор")
+quiz7.tags << tag14 = Tag.create(tag: "друга_світова")
+
+quiz8 = subcat4.quizzes.create(category_id: 6,status:"published", title: "Тест на знання першої світової війни", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
+quiz8.tags << tag15 = Tag.create(tag: "перша_світова")
+quiz8.tags << tag16 = Tag.create(tag: "війна")
+quiz8.tags << tag17 = Tag.create(tag: "німеччина")
+
+quiz9 = subcat2.quizzes.create(category_id: 3,status:"published", title: "Тест на знання правил хокею", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
+quiz9.tags << tag18 = Tag.create(tag: "хокей")
+quiz9.tags << tag19 = Tag.create(tag: "лід")
+quiz9.tags << tag20 = Tag.create(tag: "клюшка")
+
+quiz10 = subcat1.quizzes.create(category_id: 2,status:"published", title: "Тест на знання видатних футболістів", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
+quiz10.tags << tag21 = Tag.create(tag: "рональдо")
+quiz10.tags << tag22 = Tag.create(tag: "блохін")
+quiz10.tags << tag23 = Tag.create(tag: "шевченко")
+
+quiz11 = subcat4.quizzes.create(category_id: 6,status:"published", title: "Тест на знання війни в Вєтнамі", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
+quiz11.tags << tag24 = Tag.create(tag: "вєтнам")
+quiz11.tags << tag25 = Tag.create(tag: "гвинтокрил")
+quiz11.tags << tag26 = Tag.create(tag: "напалм")
+
+quiz12 = subcat3.quizzes.create(category_id: 5,status:"published", title: "Тест на знання революції гідності 2014 року", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
+quiz12.tags << tag27 = Tag.create(tag: "революція")
+quiz12.tags << tag4
+quiz12.tags << tag28 = Tag.create(tag: "яник")
+
+quiz13 = subcat3.quizzes.create(category_id: 5,status:"published", title: "Тест на знання Украйни в часи незалежності", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
+quiz13.tags << tag29 = Tag.create(tag: "1991")
+quiz13.tags << tag4
+quiz13.tags << tag30 = Tag.create(tag: "незалежність")
+quiz13.tags << tag31 = Tag.create(tag: "батьківщина")
+
+quiz14 = subcat5.quizzes.create(category_id: 5,status:"published", title: "Тест на знання Поліморфізму", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
+quiz14.tags << tag32 = Tag.create(tag: "ооп")
+quiz14.tags << tag33 = Tag.create(tag: "поліморфізм")
+quiz14.tags << tag34 = Tag.create(tag: "програмування")
+
 Faq.create(faq_question: "Як створити свій тест?", faq_answer: "Для цього потрібно зареєструватись")
 Faq.create(faq_question: "Де можна знайти інформацію про сайт?", faq_answer: "В нижньому меню, яке називається Про Нас")
 Faq.create(faq_question: "За якою шкалою оцінюється пройдений тест?", faq_answer: "100% - всі відповіді вірні, 67% - 2 відповіді з 3 правильні, 33% - 1 лише відповідь првильна, 0% - всі відповіді не правильні")
 Faq.create(faq_question: "Де можна знайти тест на знання правил хокею?", faq_answer: "В підкатегорії Хокей, яка знаходиться в категорії Спорт")
 Faq.create(faq_question: "Чи можна для пошук вибрати якусь конкретну підкатегорію?", faq_answer: "Так, звичайно.")
 
-quiz3 = subcat4.quizzes.create(category_id: 6,status: "published", title: "Тест на знання історії світу", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
-quiz3.tags << tag6
-quiz3.tags << tag5
-quiz3.tags << tag7 = Tag.create(tag: "всьо")
-
-quiz4 = subcat4.quizzes.create(category_id: 6,status:"published", title: "Тест на знання другої світової війни", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
-quiz4.tags << tag8 = Tag.create(tag: "гітлер")
-quiz4.tags << tag9 = Tag.create(tag: "сталін")
-quiz4.tags << tag10 = Tag.create(tag: "голодомор")
-quiz4.tags << tag11 = Tag.create(tag: "друга_світова")
-
-quiz5 = subcat4.quizzes.create(category_id: 6,status:"published", title: "Тест на знання першої світової війни", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
-quiz5.tags << tag12 = Tag.create(tag: "перша_світова")
-quiz5.tags << tag13 = Tag.create(tag: "війна")
-quiz5.tags << tag14 = Tag.create(tag: "німеччина")
-
-quiz6 = subcat2.quizzes.create(category_id: 3,status:"published", title: "Тест на знання правил хокею", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
-quiz6.tags << tag15 = Tag.create(tag: "хокей")
-quiz6.tags << tag16 = Tag.create(tag: "лід")
-quiz6.tags << tag17 = Tag.create(tag: "клюшка")
-
-quiz7 = subcat1.quizzes.create(category_id: 2,status:"published", title: "Тест на знання видатних футболістів", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
-quiz7.tags << tag18 = Tag.create(tag: "рональдо")
-quiz7.tags << tag19 = Tag.create(tag: "блохін")
-quiz7.tags << tag20 = Tag.create(tag: "шевченко")
-
-quiz8 = subcat4.quizzes.create(category_id: 6,status:"published", title: "Тест на знання війни в Вєтнамі", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
-quiz8.tags << tag21 = Tag.create(tag: "вєтнам")
-quiz8.tags << tag22 = Tag.create(tag: "гвинтокрил")
-quiz8.tags << tag23 = Tag.create(tag: "напалм")
-
-quiz9 = subcat3.quizzes.create(category_id: 5,status:"published", title: "Тест на знання революції гідності 2014 року", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
-quiz9.tags << tag24 = Tag.create(tag: "революція")
-quiz9.tags << tag4
-quiz9.tags << tag25 = Tag.create(tag: "яник")
-
-quiz10 = subcat3.quizzes.create(category_id: 5,status:"published", title: "Тест на знання Украйни в часи незалежності", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
-quiz10.tags << tag26 = Tag.create(tag: "1991")
-quiz10.tags << tag4
-quiz10.tags << tag27 = Tag.create(tag: "незалежність")
-quiz10.tags << tag28 = Tag.create(tag: "батьківщина")
-
-quiz11 = subcat5.quizzes.create(category_id: 5,status:"published", title: "Тест на знання Поліморфізму", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
-quiz11.tags << tag29 = Tag.create(tag: "ооп")
-quiz11.tags << tag30 = Tag.create(tag: "поліморфізм")
-quiz11.tags << tag31 = Tag.create(tag: "програмування")
-
 Contact.create(id: 1, role: "Адміністратор", phone: "+38 032 244-44-44", mail: "someone@somemail.com", address:"79000, Fedkovycha Str. 60A, building 1")
 Contact.create(id: 2, role: "Модератор", phone: "+38 032 244-44-44", mail: "someone@somemail.com", address:"79000, Fedkovycha Str. 60A, building 1")
 Contact.create(id: 3, role: "Ще хтось", phone: "+38 032 244-44-44", mail: "someone@somemail.com", address:"79000, Fedkovycha Str. 60A, building 1")
 about ='<p>&#10;Пласт – українська скаутська організація. <a href="http://www.plast.org.ua/about/goal/">Метою Пласту</a> є сприяти всебічному, патріотичному вихованню та самовихованню української молоді на засадах християнської моралі. Будучи неполітичною і позаконфесійною організацією, Пласт виховує молодь на свідомих, відповідальних і повновартісних громадян місцевої, національної та світової спільноти, провідників суспільства.&#10;</p><p>&#10;Пласт <a href="http://www.plast.org.ua/history/">був створений</a> у 1911 році, невдовзі після заснування скаутського руху Робертом Бейден-Пауелом в 1907 р., а вже 12 квітня 1912 року у Львові пластуни склали першу Пластову присягу. Серед засновників організації були д-р. Олександр Тисовський, Петро Франко (син Івана Франка) та Іван Чмола. В основі назви &#34;Пласт&#34; лежить відповідник англійського Scout (розвідник), взятий за прикладом пластунів - козаків-розвідників.&#10;</p><div style="float: right;">&#10;<img alt="Герб Пласту - тризуб, переплетений із трилистою лілеєю" src="http://www.plast.org.ua/images/site/lelia.gif" height="180" vspace="5" width="142"/><br/>&#10;<div style="text-align: center;">&#10;<span>Герб Пласту</span>&#10;</div>&#10;</div><p>&#10;<a href="http://www.plast.org.ua/about/ideology/emblem/">Гербом Пласту</a> є трилиста квітка лілії - символ скаутського руху (відомий як Fleur-de-lis) - та тризуб, сплетені в одну гармонійну цілісність.&#10;</p><p>&#10;Для досягнення виховних цілей Пласт застосовує <a href="http://www.plast.org.ua/about/method/method/">власну унікальну методу виховання</a>, основні принципи якої полягають у добровільності членства в організації, вихованні і навчанні через гру та працю, поступовій програмі занять і випробувань, гуртковій системі самоорганізації, заохоченні ініціативи і самоврядування, пізнанні природи і житті серед природи, підтримці спеціальних зацікавлень і здібностей дітей та молоді.&#10;</p><p>&#10;На відміну від більшості скаутських організацій світу, де членство завершується із досягненням 25-ліття, членство в Пласті є пожиттєвим. Умовний віковий поділ передбачає <a href="http://www.plast.org.ua/about/method/agegroups/">4 вікові категорії</a>: новаки (6-12 років), юнаки (12-18 років), старші пластуни (18-35 років) та пластуні-сеніори (від 35 років). Виховна та адміністративна праця в Пласті здійснюється старшими пластунами та пластунами-сеніорами виключно на волонтерських засадах.&#10;</p><p>&#10;Пласт в Україні об\'єднує близько 6 тисяч членів різного віку і таким чином є найбільшою скаутською організацією України. На сьогодні 121 осередок Пласту діє у 22 областях України, Автономній республіці Крим, Києві і Севастополі. Пласт активно співпрацює з органами державної влади та громадськими організаціями, реалізуючи різноманітні соціальні та виховні програми.&#10;</p><p>&#10;Протягом року Пласт в Україні проводить понад 100 виховних таборів різної спеціалізації: спортивні, морські, з повітроплавання, мистецькі, лижні, альпіністичні, археологічні, кінні, екологічні тощо. У таборах пластуни практично закріплюють знання і уміння, здобуті впродовж року на щотижневих заняттях. Серед найбільших заходів, котрі щороку проводяться Пластом на всеукраїнському рівні - інтелектуально-мистецький змаг Орликіада, фестиваль творчості День пластуна, спортивний змаг Спартакіада, <a href="http://www.vvm.plast.org.ua">передача Вифлеємського вогню</a> місцевим громадам, змагання з пішого мандрівництва &#34;Стежками героїв&#34; та &#34;Осінній рейд&#34;. На місцевому рівні осередками Пласту постійно реалізується безліч акцій соціально-культурного та виховного спрямування.&#10;</p><p>&#10;Окрім України, Пласт офіційно існує у восьми країнах світу: Австралії, Аргентині, Великобританії, Канаді, Німеччині, Польщі, Словаччині та США. Пластові організації із усіх дев\'яти країн об\'єднані в <a href="http://www.plastscouting.org/">Конференцію українських пластових організацій</a>, на чолі світового пластового руху стоїть <a href="http://www.plast.org.ua/history/nachalni/info/">Начальний пластун</a>.&#10;</p>' 
 Staticinfo.create(id: 1,about_us: about)
-
