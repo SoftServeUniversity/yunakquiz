@@ -57,13 +57,9 @@
   font: 18px italic arial;     
   color: #9b9a9a;
 }
-.pageTitleBox {
+.pageTitle{
   line-height: 50px;
   margin-bottom: 20px;
-}
-.pageTitle {
-  margin-bottom: 15px;
-  margin-top: 15px;
   text-align: center;
 }
 .greetings-container{
