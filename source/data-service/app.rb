@@ -8,13 +8,15 @@ module PlastApp
   require 'json/ext' # required for .to_json
   require 'sinatra/cross_origin'
   require 'sinatra/asset_pipeline'
+  require 'securerandom'
 
   class YunakQuiz < Sinatra::Base
     register Sinatra::AssetPipeline
     register Sinatra::ActiveRecordExtension
     register Sinatra::CrossOrigin
     
-    use Rack::Session::Cookie
+    use Rack::Session::Cookie, 
+      :secret => 'cca369ff55af5ceefc50939498d93f5905272422baf5d86dd0c4271e2e68a9ba'
 
     Dir.glob('./config/*.rb').each {|file| require file}
     Dir.glob('./models/*.rb').each {|file| require file}
@@ -263,15 +265,11 @@ module PlastApp
     end
 
     post '/avatar' do
-      if session[:user_id]
-        user = User.find(session[:user_id])
-        tempfile = params[:file][:tempfile]
-        filename = params[:file][:filename]
-        saved_name = "#{user.username}#{File.extname(filename)}"
-        FileUtils.copy(tempfile.path, "public/avatar/#{saved_name}")
-        return [200, saved_name]
-      end
-      return [401, "unauthorized"]
+      tempfile = params[:file][:tempfile]
+      filename = params[:file][:filename]
+      saved_name = "#{SecureRandom.hex(5)}#{File.extname(filename)}"
+      FileUtils.copy(tempfile.path, "public/avatar/#{saved_name}")
+      return [200, saved_name]
     end  
     
     delete '/user' do
