@@ -3,7 +3,7 @@
 
 	<div class="col-md-3">
 	<!--Search module -->
-	      <div ng-repeat="parCat in allCats | filter: {category_id: '0'}">
+	    <div ng-repeat="parCat in allCats | filter: {category_id: '0'}">
 	              
 	        <a  class="list-group-item"
 	            ng-init="parCat.search=false"
@@ -22,7 +22,7 @@
 	              {{subCat.title}}
 	          </a>
 	        </div>
-	      </div>
+	    </div>
 
 	      <button class="btn btn-info btn-block"
 	              style="margin-top: 15px;" 
@@ -61,12 +61,13 @@
 				<a href="#/admin/moderationCabinet/enhance">На доопрацюванні</a>
 			</li>
 		</ul>
-		<table class="table table-hover">
+		<h4 ng-show="!totalItems" class="text-center quizMarginTop">В даній вкладці немає тестів</h4>
+		<table ng-show="totalItems" class="table table-hover">
 			<thead>
 				<tr>
 					<th>№</th>
-					<th class="col-md-6">Назва тесту</th>
-					<th class="col-md-2">Автор тесту</th>
+					<th class="col-md-5">Назва тесту</th>
+					<th class="col-md-3 text-center">Автор тесту</th>
 					<th class="col-md-2"></th>
 					<th class="col-md-2"></th>
 				</tr>
@@ -78,7 +79,7 @@
 						<a ng-if="tab=='published'" ng-href="{{quizUrl+quiz.id}}">{{quiz.title}}</a>
 						<span ng-if="tab!='published'">{{quiz.title}}</span>
 					</td>
-					<td class="text-center">{{quiz.author}}</td>
+					<td class="text-center">{{quiz.user.username}}</td>
 					<td>
 						<a ng-href="#/admin/moderationCabinet/review/{{quiz.id}}" type="button" class="btn btn-info btn-xs">Перевірити тест</a>
 					</td>
@@ -88,14 +89,14 @@
 				</tr>
 			</tbody>
 		</table>
-		<div ng-show="inputData.totalItems>outputData.itemsPerPage" class="row text-center">
-			<pagination total-items="inputData.totalItems" ng-model="outputData.currentPage" ng-change="queryList()"  items-per-page="outputData.itemsPerPage" class="pagination" ></pagination>
+		<div ng-show="totalItems>outputData.itemsPerPage" class="row text-center">
+			<pagination total-items="totalItems" ng-model="outputData.currentPage" ng-change="queryList()"  items-per-page="outputData.itemsPerPage" class="pagination" ></pagination>
 			<div class="pagination pull-right">
 				<select ng-change="searchQuery()" ng-model="outputData.itemsPerPage" class="form-control">
 				  <option value="10" >10</option>
 				  <option value="25" >25</option>
 				  <option value="50" >50</option>
-				  <option value="{{inputData.totalItems}}">Всі</option>
+				  <option value="{{totalItems}}">Всі</option>
 				</select>
 			</div>
 		</div>
