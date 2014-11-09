@@ -34,6 +34,11 @@ angular.module('yunakQuiz.personalCabinet', [])
     $scope.queryList();
   };
 
+  $scope.clearInput = function() {
+    $scope.outputData.searchData='';
+    $scope.searchQuery();
+  };
+
   $scope.queryList = function() {
     QuizData.queryList($scope.tab, $scope.outputData).success(function(data, status, headers, config) {
         $scope.updateData(data);        

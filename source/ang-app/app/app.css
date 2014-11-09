@@ -139,5 +139,10 @@
 .assessmentAnswerUncorrect {
   background:rgb(255,0,0);
 }
+.clearSearchInput{
+  position:absolute;
+  right:60px;
+  top:6px; 
+  z-index:2;}
 
 /* end assessment styles */
