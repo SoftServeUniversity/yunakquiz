@@ -375,4 +375,35 @@ div .guestSearchNoDecoration {
 .guestSearchMarginTop {
   margin-top: 15px;
 }
+
+tags-input .tags .tag-item {
+color: #fff;
+background: #428bca;
+border: 1px solid #357ebd;
+border-radius: 4px;
+}
+
+tags-input .tags .tag-item.selected {
+color: #fff;
+background: #d9534f;
+border: 1px solid #d43f3a;
+}
+
+tags-input .tags {
+-moz-appearance: none;
+-webkit-appearance: none;
+border: 1px solid #ccc;
+border-radius: 4px;
+-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+-moz-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+-webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+-moz-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+
+.input-group tags-input:not(:last-child) .tags {
+border-top-right-radius: 0;
+border-bottom-right-radius: 0;
+}
 /* End of guest search styles */
