@@ -129,6 +129,12 @@ module PlastApp
     end
     ## end of Assessment comments section
 
+    get '/tags/:query' do
+      content_type :json
+      query = '%'+params['query'][0,20]+'%'
+      Tag.select(:tag, :id).where("tag like ?", query).to_json
+    end
+
   ## Assessments block ends here!
 
     get '/about_us' do
@@ -303,6 +309,22 @@ module PlastApp
       [200, {'success' => "success"}.to_json]
 
       Faq.select(['id', 'faq_question', 'faq_answer']).to_json
+    end
+
+    # For all categories
+    get '/guest-search' do
+      content_type :json
+      Category.select('id, category_id, title').to_json
+    end 
+
+    post '/search' do
+      content_type :json
+      search_request = JSON.parse(request.body.read) 
+
+      # This function is part of module SerchQuizzes
+      # checkout /models/searchQuizzes.rb for details
+      SearchQuizzes.withTags(search_request) 
+
     end
 
   end
