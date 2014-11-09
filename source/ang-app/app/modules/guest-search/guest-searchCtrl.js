@@ -16,18 +16,7 @@ guestSearch.controller('SearchCtrl', ['$scope', '$http',
   $scope.totalItems = 0;
   $scope.currentPage = 1;
 
-  // Select parCat and set subCat according to
-  // parCat state
-  $scope.selectSubCat = function(allCats, parCat) {
-
-    parCat.search = !parCat.search;
-
-    for (var i = 0 ; allCats.length > i ; i++){
-      if (allCats[i].category_id == parCat.id) {
-        allCats[i].search = parCat.search;
-      };
-    };
-  };
+  
         
   // Reciving all Categories from server in one 
   // array 
@@ -41,7 +30,6 @@ guestSearch.controller('SearchCtrl', ['$scope', '$http',
   // Make search request 
   // and checks recived data
   $scope.searchData = function(allCats, searchRequest) {
-
     // Clean searchRequest variable
     $scope.searchRequest = {categories_id:[], tags:[]};
 
