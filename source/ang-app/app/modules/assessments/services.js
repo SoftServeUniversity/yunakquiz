@@ -43,6 +43,10 @@ yunakQuizApp.factory('QuizData', ['$http', '$location', function($http, $locatio
       deleteComments: function(id){
             return $http.delete(back_url+'/assessments/'+id+'/comments')
           },
+
+      getTags: function(query){
+            return $http.get(back_url+'/tags/'+query)
+          },
     }
   }
 ])

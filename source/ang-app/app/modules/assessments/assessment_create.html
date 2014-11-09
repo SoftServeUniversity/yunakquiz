@@ -20,8 +20,8 @@
 			<div class="row quizMarginTop">
 				<label class="col-lg-4 control-label text-right">Додайте теги до тесту</label>
 				<div class="col-lg-8">
-					<tags-input ng-model="quiz.tags" display-property="tag" add-from-autocomplete-only="true" placeholder="Додайте теги">
-						<auto-complete source="loadTags($query)" min-length="1" load-on-focus="true"></auto-complete>
+					<tags-input ng-model="quiz.tags" add-on-comma="false" add-on-space="true" display-property="tag" placeholder="Додайте теги">
+						<auto-complete source="loadTags($query)"></auto-complete>
 					</tags-input>
 				</div>
 			</div>

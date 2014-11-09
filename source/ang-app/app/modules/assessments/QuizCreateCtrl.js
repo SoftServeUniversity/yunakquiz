@@ -2,8 +2,12 @@
 /** Quiz Create controller  */
 yunakQuizApp.controller('QuizCreateCtrl', ['$scope','QuizData','tags', '$location','QuizValidation', function($scope, QuizData,tags, $location, QuizValidation) {
 
-   $scope.loadTags = function(query) {
-      return tags.load();
+  // QuizData.getTags().success(function(data, status, headers, config) {
+  //   $scope.tags=data;        
+  // });
+
+  $scope.loadTags = function(query) {
+      return QuizData.getTags(query)
   };
 
   $scope.getCat = function(){
