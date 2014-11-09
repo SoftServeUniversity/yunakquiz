@@ -89,18 +89,13 @@ module PlastApp
       content_type :json
       Category.select('id, category_id, title').to_json
     end 
-     
-    options '/*' do 
-      '*'           
-    end
 
     post '/search' do
       content_type :json
       search_request = JSON.parse(request.body.read) 
 
-      # This function is part of module SerchQuizzes as parameter 
-      # Gets object {category_id: ['1','2',..'n'] , tags:['teg1','teg2',..'n']}
-      # If category_id is not passed then search in all subcategories
+      # This function is part of module SerchQuizzes
+      # checkout /models/searchQuizzes.rb for details
       SearchQuizzes.withTags(search_request) 
 
     end

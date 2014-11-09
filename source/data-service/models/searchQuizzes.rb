@@ -120,7 +120,7 @@ module PlastApp
       # in and if all ok adding special keys
       if search_request['status'].is_a?(NilClass)
 
-        search_request['status'] = [1,3]
+        search_request['status'] = [3]
 
         return {tags: search_request['tags'], \
           currentPage: search_request['currentPage'], \
