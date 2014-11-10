@@ -4,7 +4,7 @@
 describe('category page', function(){
 
 	var ptor =  protractor.getInstance();
- 	var mockModule = require('./mocked-backend.js');
+ 	var mockModule = require('./categoryBackend.js');
 
  	var category1 = [{"id": 1, "category_id": 0, "title": "Cпорт"}];
 	var category3 = [{"id": 3, "category_id": 0, "title": "Комп'ютери"}];
