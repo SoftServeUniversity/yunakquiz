@@ -26,7 +26,7 @@
       function ($scope, $http, aboutUsReadUpdate,$timeout) {
         $scope.tab = 'aboutusTab';
         $scope.content = '';
-        $scope.msg='';
+        $scope.msg = '';
 
         $scope.readData = function(param){
 
