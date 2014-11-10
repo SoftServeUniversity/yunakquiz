@@ -117,7 +117,7 @@ guestSearch.controller('SearchCtrl', ['$scope', '$http',
     // And if it founds it writes 
     // in var duplicateFound
     for (var i = 0 ; $scope.tags.length > i ; i++) {
-      if ($scope.tags[0].text === tag) {
+      if ($scope.tags[i].text === tag) {
         var duplicateFound = true;
       }; 
     };
