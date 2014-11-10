@@ -84,6 +84,10 @@ module PlastApp
       end
     end
 
+    get '/last_quizzes/:id' do
+      Quiz.lastQuizzes(params['id'])
+    end
+
   end
 
 end
