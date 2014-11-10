@@ -2,7 +2,7 @@
 
 /* https://github.com/angular/protractor/blob/master/docs/toc.md */
 
-xdescribe('QuizEdit', function() {
+describe('QuizEdit', function() {
 	var ptor =  protractor.getInstance();
  	var mockModule = require('../http_backend_quiz.js');
  	// ptor.addMockModule('httpBackendMock', mockModule.httpBackendMock);
@@ -47,10 +47,12 @@ xdescribe('QuizEdit', function() {
 		  var options = select.all(by.tagName('option'))
 		  expect(options.count()).toBe(3);
 	    });
-
+	    
 	    it('should have Quiz comment', function() {
+	      browser.pause();
 	      expect(element.all(by.binding('comment.text')).count()).toBe(2);
 	    });
+	    
 
 	});
 

@@ -1,6 +1,6 @@
 'use strict';
 
-xdescribe('quiz', function() {
+describe('quiz', function() {
 	var ptor =  protractor.getInstance();
  	var mockModule = require('../http_backend_quiz.js');
  	ptor.addMockModule('httpBackendMock', mockModule.httpBackendMock);
@@ -69,7 +69,7 @@ xdescribe('quiz', function() {
 		});
 
 		it('should show quiz result page heading with current quiz title in it', function() {
-			expect(element.all(by.binding('assessment.title')).getText()).
+			expect(element.all(by.binding('quiz.title')).getText()).
 				toMatch('Тест на знання правил футболу');
 		});
 
@@ -89,20 +89,20 @@ xdescribe('quiz', function() {
 		});
 
 		it('should show question content with corresponding number', function() {
-			var questions = element.all(by.repeater('question in assessment.questions'));
+			var questions = element.all(by.repeater('question in quiz.questions'));
 			expect(questions.get(0).all(by.binding('question.title')).getText()).
 				toMatch('1. Скільки гравців в команді?');
 		});
 
 		it('should show that chosen answer in first questions is same as correct answer', function() {
-			var questions = element.all(by.repeater('question in assessment.questions'));
+			var questions = element.all(by.repeater('question in quiz.questions'));
 			var chosenAnswer =  questions.get(0).all(by.css('.list-group .list-group-item')).first().getText();
 			var correctAnswer = questions.get(0).all(by.css('.list-group .list-group-item')).last().getText();
 			expect(chosenAnswer).toMatch(correctAnswer);
 		});
 
 		it('should show question description with explanation in it', function() {
-			var questions = element.all(by.repeater('question in assessment.questions'));
+			var questions = element.all(by.repeater('question in quiz.questions'));
 			expect(questions.get(0).all(by.binding('question.description')).getText()).
 				toMatch('Пояснення: Згідно правил на полі знаходиться 11 гравців однієї команди');
 		});
