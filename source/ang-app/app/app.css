@@ -284,8 +284,13 @@ color: white;
     background-color: white;
 }
 
+.FAQ_Page a:hover{
+  text-decoration: underline;
+}
+
 .FAQ_Page p {
   font-size: 15px;
+  padding: 0 20px;
 }
 
 .FAQ_Page .col-center {
