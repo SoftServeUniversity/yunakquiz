@@ -172,6 +172,18 @@ module PlastApp
        end    
     end
 
+    get '/admin' do
+      if session[:user_id]
+        user = User.find(session[:user_id])
+        role = Role.find(user.role_id)
+        base = Permission.where("#{role.name} = #{role.id}").pluck("tabs").to_json
+        base = Permission.where("#{role.name} = #{role.id}").pluck("tabs").to_json
+        return base
+      end
+      else
+        return [401, "unauthorized"]
+    end
+
     get '/admin/assessments/all/:status' do
       content_type :json
       quizzes = Quiz.queryListAll(params['status'])
