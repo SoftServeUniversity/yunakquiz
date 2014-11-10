@@ -1,9 +1,10 @@
 'use strict'; 
 
 //Ctrl for guest search page
+var  guestSearch = angular.module('yunakQuiz.guestSearch');
 guestSearch.controller('SearchCtrl', ['$scope', '$http', 
-  'guestSearchFactory',  
-  function ($scope, $http, guestSearchFactory) {
+  'guestSearchFactory',  'guestSearchService',
+  function ($scope, $http, guestSearchFactory, guestSearchService) {
         
   // Variable initalization 
   $scope.allCats = [];
@@ -18,46 +19,15 @@ guestSearch.controller('SearchCtrl', ['$scope', '$http',
 
   
         
-  // Reciving all Categories from server in one 
-  // array 
-  guestSearchFactory.getAllCats().success(function(data) {
-    $scope.allCats = data;
-  }).error(function(data) {
-      $scope.searchError = 2;
-    });
-
+  
   // Function that creates searchRequest object and
   // Make search request 
   // and checks recived data
-  $scope.searchData = function(allCats, searchRequest) {
+  $scope.searchData = function() {
     // Clean searchRequest variable
-    $scope.searchRequest = {categories_id:[], tags:[]};
-
-    for (var i = 0 ; allCats.length > i ; i++) {
-      if (allCats[i].search){
-        $scope.searchRequest.categories_id.push(allCats[i].id);
-      };
-    };
-
-    // Check if there were some categories_id 
-    // if not then push all ids from allCats
-    if ($scope.searchRequest.categories_id.length === 0) {
-      for (var i = 0 ; allCats.length > i ; i++) {
-      	$scope.searchRequest.categories_id.push(allCats[i].id);
-      };
-    };
-
-    // Adding all tags to request
-    // and all tags to lower case 
-    for (var i = 0 ; $scope.tags.length > i ; i++) {
-      $scope.searchRequest.tags.push($scope.tags[i].text.toLowerCase());
-    };
-
-    // Check if there were some tags
-    // if not search response all quizzes
-    if ($scope.searchRequest.tags.length === 0) {
-      $scope.searchRequest.tags = ['_']; // It takes all words 
-    };
+    console.log($scope.tags);
+    $scope.searchRequest = guestSearchService($scope.allCats, $scope.tags);
+    console.log($scope.searchRequest);
 
     $scope.searchRequest.currentPage = 0;
 

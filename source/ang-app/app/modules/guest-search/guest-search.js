@@ -13,12 +13,8 @@ guestSearch.config(['$routeProvider',function($routeProvider) {
 guestSearch.directive('guestsearchcat', [ function() {
   return {
     restrict: 'EA',
-    scope: {
-      allCats: '=',	
-      tags: '=',
-      filterFn: '&'
-    },
-    controller: 'gueastSearchController',
+    scope: {allCats: '=',	filterFn: '&' },
+    controller: 'guestSearchCatsController',
     templateUrl: './modules/guest-search/guest-search-cat-tmpl.html',
     replace: true
   }
@@ -27,38 +23,23 @@ guestSearch.directive('guestsearchcat', [ function() {
 guestSearch.directive('guestsearchtag', [ function() {
   return {
     restrict: 'EA',
-    scope: {
-      allCats: '=',	
-      tags: '=',
-      filterFn: '='
-      
-    },
-    controller: 'gueastSearchController',
+    scope: {tags: '=', filterFn: '&' },
+    controller: 'guestSearchTagsController',
     templateUrl: './modules/guest-search/guest-search-tag-tmpl.html',
     replace: true
   }
 }]);
 
-guestSearch.controller('gueastSearchController', ['$scope', 'guestSearchFactory', function($scope, guestSearchFactory){
+guestSearch.controller('guestSearchCatsController', ['$scope', 'guestSearchFactory', function($scope, guestSearchFactory){
 
-	$scope.search = function(){
-		$scope.filterFn();
-	};
+  guestSearchFactory.getAllCats().success(function(data) {
+    $scope.allCats = data;
+  }).error(function(data) {
+      $scope.searchError = 2;
+    });
 
-	$scope.searchTags = function(){
-		console.log("Tag search....", $scope.tags)
-	};
-
-	$scope.filterCats = function(){
-		console.log("Cats filter....", $scope.allCats)
-	};
-
-// Select parCat and set subCat according to
-  // parCat state
   $scope.selectSubCat = function(allCats, parCat) {
-
     parCat.search = !parCat.search;
-
     for (var i = 0 ; allCats.length > i ; i++){
       if (allCats[i].category_id == parCat.id) {
         allCats[i].search = parCat.search;
@@ -66,6 +47,59 @@ guestSearch.controller('gueastSearchController', ['$scope', 'guestSearchFactory'
     };
   };
 
+  $scope.search = function(){
+   $scope.filterFn();
+  };
 
+}]);
 
-}])
+guestSearch.controller('guestSearchTagsController', ['$scope', 'guestSearchFactory', function($scope, guestSearchFactory){
+  
+  $scope.search = function(){
+      $scope.filterFn();
+  };
+
+}]);
+
+guestSearch.factory('guestSearchService', [ function() {
+   var searchRequest = {categories_id:[], tags:[]};
+
+   var formCats = function(allCats){ 
+    searchRequest.categories_id = [];
+    for (var i = 0 ; allCats.length > i ; i++) {
+      if (allCats[i].search){
+        searchRequest.categories_id.push(allCats[i].id);
+      };
+    };
+    if (searchRequest.categories_id.length === 0) {
+      addAllCats(allCats);
+    }
+   };
+
+   var addAllCats = function(allCats){
+      for (var i = 0 ; allCats.length > i ; i++) {
+        searchRequest.categories_id.push(allCats[i].id);
+      };
+   };
+
+   var formTags = function(tags) {
+      searchRequest.tags=[];
+
+      if (tags.length === 0) {
+        searchRequest.tags = ['_']; // It takes all words 
+      }
+      else {  
+        for (var i = 0 ; tags.length > i ; i++) {
+          searchRequest.tags.push(tags[i].text.toLowerCase());
+        };
+      }
+   };
+
+  var formRequest = function(allCats, tags){
+      formCats(allCats);
+      formTags(tags);
+      return searchRequest
+  };
+
+  return formRequest
+}]);

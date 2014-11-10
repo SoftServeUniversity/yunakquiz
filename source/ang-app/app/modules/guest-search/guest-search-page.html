@@ -12,7 +12,7 @@
     <div class="well col-xs-offset-1 col-xs-3">
 
 
-    <guestsearchcat tags="tags" all-cats="allCats" filter-fn="searchData(allCats, searchRequest.tags)" ></guestsearchcat>
+    <guestsearchcat all-cats="allCats" filter-fn="searchData()" ></guestsearchcat>
 
     </div>
                       <!--End of category selection-->
@@ -21,7 +21,7 @@
 
     <div class="col-xs-7">
       
-    <guestsearchtag tags="tags" all-cats="allCats" filter-fn="" ng-submit="searchData(allCats, searchRequest.tags)"></guestsearchtag>
+    <guestsearchtag tags="tags" filter-fn="searchData()"></guestsearchtag>
                  <!--End of tags input block-->
 
                             <!--Error block-->
