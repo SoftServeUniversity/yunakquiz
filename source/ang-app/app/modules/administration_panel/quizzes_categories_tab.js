@@ -186,7 +186,7 @@
 
       function setCurCatEditDlg(category){
         angular.forEach($scope.parCatGrouped, function(cat, key){
-          if(cat.id == category.category_id) {
+          if(cat.id === category.category_id) {
             $scope.subParCatSelect = $scope.parCatGrouped[key];
           }
         })
@@ -250,7 +250,7 @@
       };
 
       function captchaValidate(id){
-        if($scope.captchaInput == $scope.captchaText) {
+        if(parseInt($scope.captchaInput) === $scope.captchaText) {
           return true;
         } else {
           $scope.captchaText = captchaRnd();
