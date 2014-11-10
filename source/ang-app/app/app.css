@@ -295,11 +295,11 @@ color: white;
 /*eo faq page*/
 
 /* faq page for admin */
-.form-control2 {
+.FAQ_AdminPage .form-control {
   width: 400px;
 }
 
-.FAQ_Page .tableStyle {
+.FAQ_AdminPage .tableStyle {
   font-weight: bold;
 }
 
