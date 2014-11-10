@@ -90,14 +90,27 @@ module PlastApp
       Category.select('id, category_id, title').to_json
     end 
 
+    get '/tags/:query' do
+      content_type :json
+      query = '%'+params['query'][0,20]+'%'
+      Tag.select(:tag, :id).where("tag like ?", query).to_json
+    end
+
     post '/search' do
       content_type :json
-      search_request = JSON.parse(request.body.read) 
-
-      # This function is part of module SerchQuizzes
-      # checkout /models/searchQuizzes.rb for details
-      SearchQuizzes.withTags(search_request) 
-
+      data = JSON.parse(request.body.read)
+      if data['tags'].length ===0
+        quizzes = Quiz.joins(:category).where(:categories => { :id => data['categories_id'] })
+        .group('quizzes.id').as_json(:include => :tags)
+      else
+        quizzes = Quiz.joins(:category, :tags).where("categories.id" => data['categories_id'])
+        .group('quizzes.id').where("tags.tag in (?)", data['tags']).as_json(:include => :tags)
+      end
+      if quizzes
+        return [200, quizzes.to_json]
+      else
+        return [400, "neOk"]
+      end
     end
 
   end
