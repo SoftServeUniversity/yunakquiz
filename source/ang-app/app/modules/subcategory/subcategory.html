@@ -1,11 +1,52 @@
-<div class="row">
-  <div class="col-xs-12 pageTitleBox bg-primary">
-    <div class="center-block"><h3 class="pageTitle">Пошук тестів у підкатегоріях</h3></div>
-  </div>
-</div>
+<div class="subcat-section" ng-controller="subcatCtrl">
 
-<p>This is place for subcategories, content will be added in next pull request</p>
-<p>
-  Showing of 'interpolate' filter:
-  {{ 'Current version is v%VERSION%.' | interpolate }}
-</p>
+	<div class="row">
+	  <div class="pageTitleBox bg-primary">
+	    <div class="center-block"><h3 class="pageTitle">Пошук тестів у {{subcategory.title}}</h3></div>
+	  </div>
+	</div>
+
+	<div class="row">
+		<div class="col-xs-6 col-xs-offset-3"> 
+			<form>
+			  <input type="text" placeholder="Пошук" ng-model="searchTags" class="form-control subcat-form">
+			    <button class="btn btn-default" ng-click="check(searchData)">
+			        <i class="glyphicon glyphicon-search"></i>
+			    </button>
+			</form>
+		</div>
+	</div>
+
+	<div ng-repeat="quiz in searchResults|orderBy:'title'" class="row">
+		<div class="col-xs-6 col-xs-offset-3">
+		   	<div class="content">
+		   		<h3 class="text-center quizTitle"><a href="#/assessments/{{quiz.id}}">{{quiz.title}}</a></h3>
+		    	<p class = "quizDescription">{{quiz.description}}</p><br>
+			 	<span ng-repeat="tag in quiz.allTags"><a>{{tag}}</a></span>
+		  	</div>
+		</div>
+	</div>
+
+	<div class="row" ng-hide="searchResults">
+		<div class="error-message"> Sorry, no matches found for {{searchTags}}</div>
+	</div>
+
+	<div class="row col-xs-offset-3 col-xs-6"> 
+	    <div class="text-center" ng-show="totalItems > 3">
+	      	<pagination boundary-links="true" 
+	                  total-items="totalItems" 
+	                  ng-model="currentPage" 
+	                  class="pagination-sm"
+	                  items-per-page="3" 
+	                  max-size="10"
+	                  previous-text="Назад" 
+	                  next-text="Уперед" 
+	                  first-text="&laquo;" 
+	                  last-text="&raquo;"
+	                  ng-change="pageChanged()">
+	      	</pagination>
+	      	<div class="text-center">{{currentPage}}</div>
+	    </div>
+	</div>
+
+</div>
