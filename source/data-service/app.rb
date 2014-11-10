@@ -17,6 +17,14 @@ module PlastApp
     Dir.glob('./config/*.rb').each {|file| require file}
     Dir.glob('./models/*.rb').each {|file| require file}
 
+    def response_helper data,msg
+      if data
+        return [200, data.to_json]
+      else
+        return [400, msg.to_json]
+      end
+    end 
+
 
     get '/' do
         erb :index
@@ -82,6 +90,17 @@ module PlastApp
       else
         return [400, "Not found "+params['status']]
       end
+    end
+
+    post '/admin/users' do
+      content_type :json
+      data = JSON.parse(request.body.read)
+      #check permisions here
+      @users = User.quiz_query(data['status'], data['searchData'],data['currentPage'],data['itemsPerPage'])
+      
+      response_helper @users, "Users not found!"
+      #return "HEllo"
+
     end
 
   end
