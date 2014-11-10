@@ -17,96 +17,102 @@ guestSearch.controller('SearchCtrl', ['$scope', '$http',
   $scope.totalItems = 0;
   $scope.currentPage = 1;
 
-  
-        
-  
-  // Function that creates searchRequest object and
-  // Make search request 
-  // and checks recived data
+      
   $scope.searchData = function() {
     // Clean searchRequest variable
     console.log($scope.tags);
     $scope.searchRequest = guestSearchService($scope.allCats, $scope.tags);
     console.log($scope.searchRequest);
 
-    $scope.searchRequest.currentPage = 0;
+    guestSearchFactory.guestSearch($scope.searchRequest)
+    .success(function(data){
+      $scope.searchResults = data;
+    })
+    .error(function(data) {});
+
+  };
+}]);
+
+    // $scope.searchRequest.currentPage = 0;
+
+
 
     // Main request to server for search
     // If it empty show error
-    guestSearchFactory.guestSearch($scope.searchRequest).success(function(data){
-      if (data.result.length === 0) {
+  //   guestSearchFactory.guestSearch($scope.searchRequest).success(function(data){
+  //     if (data.length === 0) {
         
-        $scope.searchResults = {};
-        // Add error message
-        $scope.searchError = 1;
+  //       $scope.searchResults = {};
+  //       // Add error message
+  //       $scope.searchError = 1;
         
-        // Reset paginating 
-        $scope.currentPage = 1;
-        $scope.totalItems = 0;
+  //       // Reset paginating 
+  //       $scope.currentPage = 1;
+  //       $scope.totalItems = 0;
 
-      } else {
-        $scope.searchResults = guestSearchFactory.tagsToArray(data.result);
+  //     } else {
+  //       $scope.searchResults = guestSearchFactory.tagsToArray(data.result);
 
-        // Delete error message if it was
-        $scope.searchError = 0;
+  //       // Delete error message if it was
+  //       $scope.searchError = 0;
 
-        // Length of paginating 
-        $scope.totalItems = data.length;
-        $scope.currentPage = 1;
-      };
+  //       // Length of paginating 
+  //       $scope.totalItems = data.length;
+  //       $scope.currentPage = 1;
+  //     };
 
-    }).error(function(data) {
+  //   }).error(function(data) {
       
-      $scope.currentPage = 1;
-      $scope.totalItems = 0;
-      $scope.searchResults = {};
+  //     $scope.currentPage = 1;
+  //     $scope.totalItems = 0;
+  //     $scope.searchResults = {};
 
-      // Show error message 
-      $scope.searchError = 2;
-    });
-  };
+  //     // Show error message 
+  //     $scope.searchError = 2;
+  //   });
+  // };
 
   // Adding tags from results container 
   // To input search and check if same 
   // Tags are in tag array
-  $scope.addTag = function(tag) {
+  // $scope.addTag = function(tag) {
 
-    // Avoid duplication in tags 
-    // And if it founds it writes 
-    // in var duplicateFound
-    for (var i = 0 ; $scope.tags.length > i ; i++) {
-      if ($scope.tags[0].text === tag) {
-        var duplicateFound = true;
-      }; 
-    };
+  //   // Avoid duplication in tags 
+  //   // And if it founds it writes 
+  //   // in var duplicateFound
+  //   for (var i = 0 ; $scope.tags.length > i ; i++) {
+  //     if ($scope.tags[0].text === tag) {
+  //       var duplicateFound = true;
+  //     }; 
+  //   };
 
-    if (!duplicateFound) {
-      var text = {text: tag}
-      $scope.tags.push(text);
-      // Set variable to false to avoid errors
-      var duplicateFound = false;
-    };
-  };
+  //   if (!duplicateFound) {
+  //     var text = {text: tag}
+  //     $scope.tags.push(text);
+  //     // Set variable to false to avoid errors
+  //     var duplicateFound = false;
+  //   };
+  // };
 
   // Function that called when page in pagination is 
   // Changed 
-  $scope.pageChanged = function() {
+  // $scope.pageChanged = function() {
 
-    // Giving info on what page we are now 
-    $scope.searchRequest.currentPage = ($scope.currentPage-1);
+  //   // Giving info on what page we are now 
+  //   $scope.searchRequest.currentPage = ($scope.currentPage-1);
 
-    // And request to server 
-    guestSearchFactory.guestSearch($scope.searchRequest).success(function(data){
+  //   // And request to server 
+  //   guestSearchFactory.guestSearch($scope.searchRequest).success(function(data){
 
-      $scope.searchResults = guestSearchFactory.tagsToArray(data.result);
+  //     $scope.searchResults = guestSearchFactory.tagsToArray(data.result);
 
-    }).error(function(data){
-      $scope.searchResults = {};
-      $scope.currentPage = 1;
-      $scope.totalItems = 0;
-      // Show error message 
-      $scope.searchError = 2;
-    });
-  };
+  //   }).error(function(data){
+  //     $scope.searchResults = {};
+  //     $scope.currentPage = 1;
+  //     $scope.totalItems = 0;
+  //     // Show error message 
+  //     $scope.searchError = 2;
+  //   });
+  // };
 
-}]);
+

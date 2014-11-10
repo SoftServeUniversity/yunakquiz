@@ -54,7 +54,11 @@ guestSearch.controller('guestSearchCatsController', ['$scope', 'guestSearchFacto
 }]);
 
 guestSearch.controller('guestSearchTagsController', ['$scope', 'guestSearchFactory', function($scope, guestSearchFactory){
-  
+    
+  $scope.loadTags = function(query) {
+    return guestSearchFactory.getTags(query)
+  }; 
+
   $scope.search = function(){
       $scope.filterFn();
   };
@@ -86,11 +90,11 @@ guestSearch.factory('guestSearchService', [ function() {
       searchRequest.tags=[];
 
       if (tags.length === 0) {
-        searchRequest.tags = ['_']; // It takes all words 
+        searchRequest.tags = []; // It takes all words 
       }
       else {  
         for (var i = 0 ; tags.length > i ; i++) {
-          searchRequest.tags.push(tags[i].text.toLowerCase());
+          searchRequest.tags.push(tags[i].tag);
         };
       }
    };

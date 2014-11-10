@@ -20,6 +20,10 @@
             
       guestSearch: function(searchData) {
         return $http.post('http://localhost:9292/search', searchData);
-      } 
+      },
+
+      getTags: function(query){
+            return $http.get('http://localhost:9292/tags/'+query);
+          } 
     };
 }]);

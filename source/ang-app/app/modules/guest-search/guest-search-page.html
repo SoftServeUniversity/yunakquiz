@@ -36,7 +36,7 @@
           <div class="content">
             <h3 class="text-center"><a class="guestSearchNoDecoration" ng-href="//localhost:8000/#/assessments/{{quiz.id}}">{{quiz.title}}</a></h3>
             <p class="text-justify">{{quiz.description}}</p><br>
-            <div class="text-center"><span class="text-primary">|</span><span ng-repeat="tag in quiz.allTags"><a ng-click="addTag(tag)"><small> {{tag}} </small></a><span class="text-primary">|</span></span></div>
+            <div class="text-center"><span class="text-primary">|</span><span ng-repeat="tag in quiz.tags"><a ng-click="addTag(tag)"><small> {{tag.tag}} </small></a><span class="text-primary">|</span></span></div>
           </div>
         </div>
       </div>
