@@ -14,7 +14,36 @@
       }
     ]);
 
-    app.controller('userTab', ['$scope', function ($scope) {
+    app.controller('userTab', ['$scope', '$http', function ($scope, $http) {
+
       $scope.tab = 'userTab';
+
+      $scope.outputData={
+        currentPage: 1,
+        itemsPerPage: 10,
+        searchData:'',
+        status: 'enabled'
+      };
+
+      $scope.searchQuery = function(){
+        $scope.outputData.currentPage = 1;
+        $scope.queryList();
+      };
+
+      $scope.queryList = function() {
+        $http.post('http://localhost:9292/admin/users', $scope.outputData).success(function(data, status, headers, config) {
+            $scope.updateData(data);        
+        });
+      };
+
+      $scope.updateData = function(data){
+        $scope.users = data.users;
+        $scope.totalItems = data.totalItems;
+      };
+
+      $scope.searchQuery();
+
+
+
     }]);
 })();

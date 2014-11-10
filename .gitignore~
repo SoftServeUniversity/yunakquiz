@@ -1,0 +1,10 @@
+.idea
+.sass-cache
+*.log
+*~
+<<<<<<< HEAD
+.project
+=======
+*.project
+>>>>>>> register
+
