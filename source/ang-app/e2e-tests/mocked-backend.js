@@ -36,9 +36,9 @@ exports.httpBackendMock = function() {
 			{"id":3,"role":"Ще хтось","phone":"+38 032 244-44-44","address":"79000, Fedkovycha Str. 60A, building 1","mail":"someone@somemail.com"}];
 		var aboutUsMock = [{"id":1,"about_us":"<h5>ABOUT US WORKS</h5>"}];
 
-    	$httpBackend.whenGET('http://localhost:9292/categories/parcat').respond(parCategoryMock);
-		$httpBackend.whenGET('http://localhost:9292/categories/subcat').respond(subCategoryMock);
-		$httpBackend.whenGET('http://localhost:9292/quizzes/0').respond(quizzesMock);
+    	$httpBackend.whenGET('http://localhost:9292/categories/parent').respond(parCategoryMock);
+		$httpBackend.whenGET('http://localhost:9292/categories/subcats').respond(subCategoryMock);
+		$httpBackend.whenGET('http://localhost:9292/admin/assessments/all/published').respond(quizzesMock);
 		$httpBackend.whenGET('http://localhost:9292/about_us').respond(aboutUsMock);
 		$httpBackend.whenGET('http://localhost:9292/contacts').respond(contactsMock);
 		$httpBackend.whenGET().passThrough();
