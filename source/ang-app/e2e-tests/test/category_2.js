@@ -1,6 +1,5 @@
 'use strict';
 
-
 describe('category page', function(){
 
 	var ptor =  protractor.getInstance();

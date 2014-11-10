@@ -202,12 +202,17 @@ box-shadow: 0px 0px 21px 0px rgba(0,0,0,0.75);
   font-size: 17px;
 }
 
+.FAQ_Page a:hover{
+  text-decoration: underline;
+}
+
 .FAQ_Page a:visited {
     background-color: white;
 }
 
 .FAQ_Page p {
   font-size: 15px;
+  padding: 0 20px;
 }
 
 .FAQ_Page .col-center {
