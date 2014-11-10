@@ -49,6 +49,7 @@ module PlastApp
         user = User.find(session[:id])
         role = Role.find(user.role_id)
         base = Permission.where("#{role.name} = #{role.id}").pluck("tabs").to_json
+        base = Permission.where("#{role.name} = #{role.id}").pluck("tabs").to_json
         return base
       end  
     end

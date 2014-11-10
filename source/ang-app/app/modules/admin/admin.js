@@ -94,7 +94,7 @@ angular.module('yunakQuiz.admin', ['ngRoute'])
 .controller("AdminCtrl", ["$location", "$scope", "$http", 'getTabTemplates', function($location, $scope, $http, getTabTemplates){
 	
     getTabTemplates.getResponse().then(function(asd){
-    	console.log(asd);
+    	// console.log(asd);
     	if (asd.length > 0)
     		$scope.results = asd;
     	else		
