@@ -382,3 +382,42 @@ border-top-right-radius: 0;
 border-bottom-right-radius: 0;
 }
 /* End of guest search styles */
+
+/*styles in subcategory*/
+
+.subcat-section  input.subcat-form {
+  display: inline-block;
+  margin-right: -4px;
+  vertical-align: middle;
+  width: 91%;
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+}
+.subcat-section  input.subcat-form+button {
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+}
+.subcat-section .content {
+  background:#f5f5f5;
+  text-align:center;
+  border-radius: 5px;
+  padding: 10px 20px;
+  margin: 20px 0;
+}
+.subcat-section .content span {padding-right: 5px}
+.subcat-section .content span>a:hover{text-decoration:underline}
+.subcat-section .content:hover {
+-webkit-box-shadow: 0px 0px 21px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 0px 0px 21px 0px rgba(0,0,0,0.75);
+box-shadow: 0px 0px 21px 0px rgba(0,0,0,0.75);
+}
+.error-message{
+  text-align:center;
+  font-size:20px;
+  margin:50px 0;
+}
+.subcat-section span~span:before{
+  content:'|';
+  padding-right: 5px;
+}
+/*end of styles in subcategory*/

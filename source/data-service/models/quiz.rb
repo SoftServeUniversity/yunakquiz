@@ -56,4 +56,12 @@ class Quiz < ActiveRecord::Base
     end
   end
 
+  def self.lastQuizzes (id)
+    quizzes = Quiz.where("category_id = ?",id).order('updated_at').reverse_order.limit(3).as_json
+    quizzes.each_with_index do |value, index|
+      value['allTags'] = Quiz.find(value['id']).tags.select('tag').as_json 
+    end
+    return quizzes.to_json
+  end
+
 end
