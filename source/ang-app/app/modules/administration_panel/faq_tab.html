@@ -14,21 +14,21 @@
             </span> 
           </td>
 
-      <td style="white-space: nowrap">
-        <form editable-form name="rowform" onbeforesave="saveQuestion($data, Question.id)" ng-show="rowform.$visible" class="form-buttons form-inline" shown="inserted == Question">
-          <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary">Save
-          </button>
-          <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" class="btn btn-default">Cancel
-          </button>
-        </form>
+          <td style="white-space: nowrap">
+            <form editable-form name="rowform" onbeforesave="saveQuestion($data, Question.id)" ng-show="rowform.$visible" class="form-buttons form-inline" shown="inserted == Question">
+              <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary">Save
+              </button>
+              <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" class="btn btn-default">Cancel
+              </button>
+            </form>
 
-        <div class="buttons" ng-show="!rowform.$visible">
-          <button class="btn btn-primary" ng-click="rowform.$show()">Edit</button>
-          <button class="btn btn-danger" ng-click="removeQuestion(Question.id)">Del</button>
-        </div>      
-      </td>
-    </tr>
-    </table>
+          <div class="buttons" ng-show="!rowform.$visible">
+            <button class="btn btn-primary" ng-click="rowform.$show()">Edit</button>
+            <button class="btn btn-danger" ng-click="removeQuestion(Question.id)">Del</button>
+          </div>      
+          </td>
+        </tr>
+      </table>
     <button class="btn btn-default" ng-click="addQuestion()"> Add Question </button>  
   </div>
 </div>
