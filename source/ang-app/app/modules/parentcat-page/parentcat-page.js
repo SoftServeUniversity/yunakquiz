@@ -19,6 +19,16 @@
       }
     }
   }]);
+
+  app.filter('charLimit', function(){
+    return function(quizT){
+      if(quizT.length <= 13){
+        return quizT
+      } else{
+        return quizT.substring(0, 13) + '...'
+      }
+    }
+  });
   
  	app.controller('parentCatPage', ['$scope', '$http','$routeParams','$filter', 'quizesById', 'catsById', 'getSubCatByCatId', function ($scope, $http, $routeParams, $filter, quizesById, catsById, getSubCatByCatId) {
     $scope.parCategory = {};
