@@ -34,12 +34,16 @@
     app.controller('faqTab', ['$http', 'getQuestions', '$scope', function ($http, getQuestions, $scope) {
       $scope.tab = 'faqTab';
 
-    getQuestions.get().success(function(data){
-      $scope.Questions = data;
+      $scope.init = function(){
+        getQuestions.get().success(function(data){
+        $scope.Questions = data;
+        }) 
+  };
 
       $scope.saveQuestion = function(data, id) {
-        angular.extend(data, {id: id});
-        getQuestions.post(data);        
+      //  angular.extend(data, {id: id});
+        getQuestions.post(data); 
+        $scope.init();       
       };
 
       $scope.removeQuestion = function(index) {
@@ -50,12 +54,12 @@
 
       $scope.addQuestion = function() {
         $scope.inserted = {
-          id: $scope.Questions.length+1,
           faq_question: '',
           faq_answer: ''
         };
         $scope.Questions.push($scope.inserted);
       };
-    });
+
+       $scope.init(); 
    }])
 })();
