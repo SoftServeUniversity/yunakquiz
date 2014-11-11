@@ -1,11 +1,10 @@
 'use strict';
 
-describe('Guest search page', function(){
+describe('Guest search page', function() {
 
-  var ptor =  protractor.getInstance();
+  var ptor = protractor.getInstance();
   var mockModule = require('../guest-search-mocked-backend.js');
-  ptor.addMockModule('httpBackendMock', mockModule.httpBackendMock);  
-
+  
 
   var category1 = {"id":1,"category_id":0,"title":"Спорт"};
   var subcategory1 = {"id":2,"category_id":1,"title":"Футбол"};
@@ -19,12 +18,13 @@ describe('Guest search page', function(){
   var subcategory5 = {"id":8,"category_id":7,"title":"Основи ООП"};
   var subcategory6 = {"id":9,"category_id":7,"title":"Основи Java"};
 
+  beforeEach(function() {  
+    ptor.addMockModule('httpBackendMock', mockModule.httpBackendMock);
+    browser.get('http://localhost:8000/#/guest-search');
+  });
+
   // Cheking main parts of page like header and url
   describe('checking header on the page and url', function() {
-
-    beforeEach(function(){
-      browser.get('http://localhost:8000/#/guest-search');
-    });
 
     it('i should be on the guest-search page', function(){
       expect(browser.driver.getCurrentUrl()).toMatch("#/guest-search");
@@ -35,25 +35,28 @@ describe('Guest search page', function(){
     });
 
   });
- }); 
 
+  describe('Checking of all categories in category filter', function() {
 
-  /*describe('Checking of all categories in category filter', function(){
-
-    beforeEach(function(){
-      browser.get('http://localhost:8000/#/guest-search');
-    });
-
-      it('should see all categories title in filter part', function(){
-        expect(element(by.css('h3.pageTitle')).getText()).toMatch('Гостьовий пошук');
-      });
-
-      it('should see par-categories', function(){
+      it('i should see par-categories', function(){
         expect(element.all(by.repeater('parCat in allCats')).count()).toEqual(3);
       });
+
+      it('i should see sub-categories', function(){
+        expect(element.all(by.repeater('subCat in allCats')).count()).toEqual(27);
+      });
+
   });
 
-})
+  describe('Checking search input', function() {
+
+      it('i should see two results when send україна', function(){
+        var bas = element(by.model('tags')).sendKeys("україна");
+      });
+
+  });
+
+});
 
 /*
       it('should see sub-categories ', function(){
