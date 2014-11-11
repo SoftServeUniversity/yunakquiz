@@ -1,6 +1,6 @@
 'use strict';
 /** Quiz Create controller  */
-yunakQuizApp.controller('QuizCreateCtrl', ['$scope','QuizData','tags', '$location','QuizValidation', function($scope, QuizData,tags, $location, QuizValidation) {
+yunakQuizApp.controller('QuizCreateCtrl', ['$scope','QuizData', '$location','QuizValidation', function($scope, QuizData, $location, QuizValidation) {
 
   // QuizData.getTags().success(function(data, status, headers, config) {
   //   $scope.tags=data;        

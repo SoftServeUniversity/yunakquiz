@@ -100,8 +100,11 @@ module PlastApp
       content_type :json
       data = JSON.parse(request.body.read)
       #check permisions here
-      @quizzes = Quiz.quiz_query(params['status'],data['searchData'],data['currentPage'],data['itemsPerPage'])
-      
+      if data['categoryFilter'].empty?
+        @quizzes = Quiz.quiz_query(params['status'],data['searchData'],data['currentPage'],data['itemsPerPage'])
+      else
+        @quizzes = Quiz.quiz_query_cat(params['status'],data['categoryFilter'],data['currentPage'],data['itemsPerPage'])
+      end
       response_helper @quizzes, "Quiz not deleted!"
     end
     

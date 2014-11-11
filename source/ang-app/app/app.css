@@ -140,6 +140,15 @@
 .assessmentAnswerUncorrect {
   background:rgb(255,0,0);
 }
+.clearSearchInput{
+  position:absolute;
+  right:60px;
+  top:6px; 
+  z-index:2;
+}
+
+/* end assessment styles */
+
 /* end assessment styles */
 
 /*admin panel aboutUs tab*/
@@ -426,3 +435,4 @@ box-shadow: 0px 0px 21px 0px rgba(0,0,0,0.75);
   margin-top: 20px;
 }
 /*end of user profile styles*/
+
