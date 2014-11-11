@@ -153,7 +153,13 @@
 .about-us-read-btn{
 margin-right: 5px;
 }
+.aboutUsPanel{
+  position: relative;
+}
 .aboutUsMsg{
+ position: absolute;
+ right: 30px;
+ top:-60px;
  margin-right: 15px;
  line-height: 30px;
  font-weight: bold; 
