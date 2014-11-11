@@ -2,7 +2,7 @@
 
 /* https://github.com/angular/protractor/blob/master/docs/toc.md */
 
-describe('e2e test for quiz creation page', function() {
+xdescribe('e2e test for quiz creation page', function() {
 	
 	var ptor =  protractor.getInstance();
  	var mockModule = require('../http_backend_quiz.js');
@@ -185,7 +185,6 @@ describe('e2e test for quiz creation page', function() {
 	    	.get(1).element(by.css('.markCorrectAnswerBtn')).click();
 
 	    	element(by.buttonText('Зберегти чорновик')).click();
-
 	    	expect(browser.getCurrentUrl()).toEqual("http://localhost:8000/#/admin/personalCabinet/draft")
 	    });
 
