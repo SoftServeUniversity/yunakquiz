@@ -264,6 +264,7 @@ module PlastApp
     post '/user' do
       data = JSON.parse request.body.read
       user = User.new(data)
+      user.role_id = 3  #hardcode of user role
       if user.save
         return [200, "ok"]
       else
