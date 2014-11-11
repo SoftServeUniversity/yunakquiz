@@ -178,9 +178,9 @@ module PlastApp
         role = Role.find(user.role_id)
         base = Permission.where("#{role.name} = #{role.id}").pluck("tabs").to_json
         return base
-      end
       else
         return [401, "unauthorized"]
+      end
     end
 
     get '/admin/assessments/all/:status' do
