@@ -32,7 +32,7 @@ describe('AdminPanel', function(){
 		// browser.get('http://localhost:8000/#/administration-panel/');
 
 	    it('should have admin panel title ', function() {
-	    	expect(element(by.css('.pageTitleBox')).getText()).
+	    	expect(element(by.css('.pageTitle')).getText()).
 	        toMatch(adminPanel.title);
 	    });
 	    it('should have tab named "Користувачі"', function() {

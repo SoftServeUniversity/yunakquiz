@@ -14,7 +14,7 @@ describe('faq page', function(){
 		{"id": 6, "faq_question": "питання 6", "faq_answer": "відповідь 6"}
 	];
 
-	var faqTitle = "Часті Питання На Правах Адміна";
+	var faqTitle = "Адміністративна панель";
 
 	beforeEach(function() {
     	ptor.addMockModule('httpBackendMock', mockModule.httpBackendMock);  
@@ -25,7 +25,7 @@ describe('faq page', function(){
 	describe('faq page', function(){
 
 		beforeEach(function(){
-			browser.get('http://localhost:8000/#/faq_admin');
+			browser.get('http://localhost:8000/#/administration-panel/faqTab');
 		});
 
 	    it('should see faq page title', function(){

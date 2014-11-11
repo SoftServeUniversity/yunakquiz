@@ -172,7 +172,7 @@ describe('HomePage', function(){
   });
 
   describe('categoriesContainer', function() {
-    var parCatContainer = element.all(by.css('.rectangle'));
+    var parCatContainer = element.all(by.repeater('parCat in parCategories'));
     
     function parCatItems(elemNumber){
       var parCatContainer = element.all(by.css('.rectangle'));
