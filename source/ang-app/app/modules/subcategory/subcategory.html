@@ -32,20 +32,15 @@
 	</div>
 
 	<div class="row col-xs-offset-3 col-xs-6"> 
-	    <div class="text-center" ng-show="totalItems > 3">
+	    <div class="text-center" ng-show="totalItems > 10">
 	      	<pagination boundary-links="true" 
 	                  total-items="totalItems" 
 	                  ng-model="currentPage" 
 	                  class="pagination-sm"
-	                  items-per-page="3" 
+	                  items-per-page="10" 
 	                  max-size="10"
-	                  previous-text="Назад" 
-	                  next-text="Уперед" 
-	                  first-text="&laquo;" 
-	                  last-text="&raquo;"
 	                  ng-change="pageChanged()">
 	      	</pagination>
-	      	<div class="text-center">{{currentPage}}</div>
 	    </div>
 	</div>
 

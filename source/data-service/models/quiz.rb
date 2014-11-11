@@ -77,7 +77,7 @@ class Quiz < ActiveRecord::Base
 
   def self.lastQuizzes (id)
     statusCode =  Quiz.statuses['published']
-    quizzes = Quiz.where("category_id = ? AND status = ?",id ,statusCode).order('updated_at').reverse_order.limit(3).as_json
+    quizzes = Quiz.where("category_id = ? AND status = ?",id ,statusCode).order('updated_at').reverse_order.limit(10).as_json
     quizzes.each_with_index do |value, index|
       value['allTags'] = Quiz.find(value['id']).tags.select('tag').as_json 
     end
