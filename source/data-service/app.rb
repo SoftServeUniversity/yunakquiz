@@ -14,6 +14,9 @@ module PlastApp
     register Sinatra::ActiveRecordExtension
     register Sinatra::CrossOrigin
 
+    use Rack::Session::Cookie, 
+      :secret => 'cca369ff55af5ceefc50939498d93f5905272422baf5d86dd0c4271e2e68a9ba'
+
     Dir.glob('./config/*.rb').each {|file| require file}
     Dir.glob('./models/*.rb').each {|file| require file}
 
@@ -99,12 +102,13 @@ module PlastApp
     end
 
     delete '/admin/users:id' do
-      content_type :json
-      @user = User.delete_user(params['id'])
-      
-      response_helper @user, "User not deleted!"
+      user = User.find(params['id'])
+      if !user.nil?
+        user.destroy
+        return [200, 'ok']
+      end
+      return [400, 'bad request']
     end
 
-  end
-
+    end
 end

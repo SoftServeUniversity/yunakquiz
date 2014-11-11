@@ -69,7 +69,7 @@ class User < ActiveRecord::Base
 
   def self.delete_user(id)
     user = User.find_by(id: id)
-    user.deleted! if user
+    user.delete! if user
   end
   
 end

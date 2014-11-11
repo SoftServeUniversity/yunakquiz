@@ -16,13 +16,14 @@ angular.module('yunakQuiz', [
   'yunakQuiz.staticPartialsRoute',
   'yunakQuiz.categoriesContainer',
   'yunakQuiz.subcategory'
-]).config(['$routeProvider',
-  	  function($routeProvider) {
-    		$routeProvider.
-      		  when('/', {
-        		templateUrl: 'modules/partials/home-page-greetings.html',
-      		  }).
-      		  otherwise({
-        	  redirectTo: '/'
+]).config(['$routeProvider', '$httpProvider',     
+  function($routeProvider, $httpProvider) {
+    $httpProvider.defaults.withCredentials = true;
+    $routeProvider.
+      when('/', {
+        templateUrl: 'modules/partials/home-page-greetings.html',
+      }).
+      otherwise({
+        redirectTo: '/'
       });
-  }]);
+}]);
