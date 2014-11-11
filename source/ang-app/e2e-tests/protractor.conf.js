@@ -5,6 +5,7 @@ exports.config = {
     './tests/*.js'
     //'./tests/signup.js'
     //'./tests/login.js'
+    //'./tests/guest-search-test.js'
 
 
   ],
