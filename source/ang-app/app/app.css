@@ -149,8 +149,6 @@
 
 /* end assessment styles */
 
-/* end assessment styles */
-
 /*admin panel aboutUs tab*/
 .about-us-read-btn{
 margin-right: 5px;
@@ -435,4 +433,9 @@ box-shadow: 0px 0px 21px 0px rgba(0,0,0,0.75);
   margin-top: 20px;
 }
 /*end of user profile styles*/
+/*registration page*/
+.regform .ng-invalid.ng-dirty{
+  border-color:red;
+}
+/*end of registration page*/
 

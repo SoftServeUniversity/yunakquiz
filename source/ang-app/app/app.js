@@ -31,6 +31,9 @@ angular.module('yunakQuiz', [
       when('/', {
         templateUrl: 'modules/partials/home-page-greetings.html',
       }).
+      when('/404', {
+        templateUrl: 'modules/404/404.html',
+      }).
       otherwise({
         redirectTo: '/'
       });

@@ -58,6 +58,9 @@ angular.module('yunakQuiz.permission', ['ngRoute'])
             i = 0;
           };
             defer.resolve(result);
+          }).error(function(data){
+            result = data;
+            defer.resolve(result);
           });
       return defer.promise;     
     }
