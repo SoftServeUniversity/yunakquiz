@@ -1,5 +1,5 @@
 (function (){
-  var  app = angular.module('yunakQuiz.faqTab' ,['ngRoute', 'xeditable']);
+  var  app = angular.module('yunakQuiz.faqTab' ,['ngRoute', 'xeditable', 'yunakQuiz.permission']);
 
     app.config(['$routeProvider',
       function($routeProvider) {
@@ -31,12 +31,19 @@
       }
     }
   }]);
-    app.controller('faqTab', ['$http', 'getQuestions', '$scope', function ($http, getQuestions, $scope) {
-      $scope.tab = 'faqTab';
+    app.controller('faqTab', ['$http', 'getQuestions', '$scope', 'getAccess', '$location', function ($http, getQuestions, $scope, getAccess, $location) {
+      $scope.tab = 'Часті запитання';
 
-    getQuestions.get().success(function(data){
-      $scope.Questions = data;
-
+      getAccess($scope.tab).then(function(data){
+        if(data) {
+          getQuestions.get().success(function(data){
+            $scope.Questions = data;
+          });
+        } else {
+        $location.path( "/404" );
+        };
+      });
+    
       $scope.saveQuestion = function(data, id) {
         angular.extend(data, {id: id});
         getQuestions.post(data);        
@@ -56,6 +63,5 @@
         };
         $scope.Questions.push($scope.inserted);
       };
-    });
    }])
 })();

@@ -1,5 +1,5 @@
 (function (){
-  var  app = angular.module('yunakQuiz.userTab' ,['ngRoute']);
+  var  app = angular.module('yunakQuiz.userTab' ,['ngRoute','yunakQuiz.permission']);
 
     app.config(['$routeProvider',
       function($routeProvider) {
@@ -14,7 +14,15 @@
       }
     ]);
 
-    app.controller('userTab', ['$scope', function ($scope) {
-      $scope.tab = 'userTab';
+    app.controller('userTab', ['$scope', 'getAccess', '$location', function ($scope, getAccess, $location) {
+      $scope.tab = 'Користувачі';
+
+      getAccess($scope.tab).then(function(data){
+          if(data) {
+            /*do thomething on access granted*/
+          } else {
+          $location.path( "/404" );
+          };
+      });
     }]);
 })();

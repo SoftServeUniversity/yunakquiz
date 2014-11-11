@@ -1,5 +1,5 @@
 (function (){
-  var  app = angular.module('yunakQuiz.aboutusTab' ,['ngRoute','textAngular']);
+  var  app = angular.module('yunakQuiz.aboutusTab' ,['ngRoute', 'textAngular', 'yunakQuiz.permission']);
 
     app.config(['$routeProvider',
       function($routeProvider) {
@@ -22,11 +22,19 @@
       }
     }]);
 
-    app.controller('aboutusTab', ['$scope', '$http', 'aboutUsReadUpdate', '$timeout',
-      function ($scope, $http, aboutUsReadUpdate,$timeout) {
-        $scope.tab = 'aboutusTab';
+    app.controller('aboutusTab', ['$scope', '$http', 'aboutUsReadUpdate', '$timeout', 'getAccess', '$location',
+      function ($scope, $http, aboutUsReadUpdate, $timeout, getAccess, $location) {
+        $scope.tab = 'Про нас';
         $scope.content = '';
         $scope.msg = '';
+
+        getAccess($scope.tab).then(function(data){
+          if(data) {
+            $scope.readData();
+          } else {
+          $location.path( "/404" );
+          };
+        });
 
         $scope.readData = function(param){
 
@@ -41,7 +49,7 @@
         });
         };
 
-        $scope.readData();
+        
         $scope.updateData = function(){
           aboutUsReadUpdate.update($scope.content).success(function(data){
           actionMsg('#419641',"Зміни збережено");

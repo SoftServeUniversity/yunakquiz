@@ -1,5 +1,5 @@
 (function (){
-  var  app = angular.module('yunakQuiz.blacklistTab' ,['ngRoute']);
+  var  app = angular.module('yunakQuiz.blacklistTab' ,['ngRoute', 'yunakQuiz.permission']);
 
     app.config(['$routeProvider',
       function($routeProvider) {
@@ -11,7 +11,15 @@
       }
     ]);
 
-    app.controller('blacklistTab', ['$scope', function ($scope) {
-      $scope.tab = 'blacklistTab';
+    app.controller('blacklistTab', ['$scope', 'getAccess', '$location', function ($scope, getAccess, $location) {
+      $scope.tab = 'Чорний список';
+
+      getAccess($scope.tab).then(function(data){
+        if(data) {
+          /*do thomething on access granted*/
+        } else {
+          $location.path( "/404" );
+        };
+      });
     }]);
 })();

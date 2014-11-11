@@ -21,7 +21,8 @@ angular.module('yunakQuiz', [
   'yunakQuiz.subcategory',
   'ngTagsInput',
   'yunakQuiz.parentCatPage',
-  'yunakQuiz.faqPage'
+  'yunakQuiz.faqPage',
+  'yunakQuiz.permission'
 ])
 .config(['$routeProvider', '$httpProvider',     
   function($routeProvider, $httpProvider) {

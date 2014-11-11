@@ -1,5 +1,5 @@
 (function (){
-  var  app = angular.module('yunakQuiz.administrationTab' ,['ngRoute']);
+  var  app = angular.module('yunakQuiz.administrationTab' ,['ngRoute','yunakQuiz.permission']);
 
     app.config(['$routeProvider',
       function($routeProvider) {
@@ -11,7 +11,15 @@
       }
     ]);
 
-    app.controller('administrationTab', ['$scope', function ($scope) {
-      $scope.tab = 'administrationTab';
+    app.controller('administrationTab', ['$scope', 'getAccess', '$location', function ($scope, getAccess, $location) {
+      $scope.tab = 'Адміністрація';
+
+      getAccess($scope.tab).then(function(data){
+        if(data) {
+            /*do thomething on access granted*/
+        } else {
+          $location.path( "/404" );
+        };
+      });
     }]);
 })();

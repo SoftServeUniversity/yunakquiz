@@ -1,5 +1,5 @@
 (function (){
-  var  app = angular.module('yunakQuiz.quizzescategoriesTab' ,['ngRoute','yunakQuiz.categoriesContainer']);
+  var  app = angular.module('yunakQuiz.quizzescategoriesTab' ,['ngRoute','yunakQuiz.categoriesContainer','yunakQuiz.permission']);
 
     app.config(['$routeProvider',
       function($routeProvider) {
@@ -100,9 +100,11 @@
     });    
 
     app.controller('quizzescategoriesTab', 
-      ['$http', '$scope','categoriesQuery', 'categoryEdit', 'quizCount', 'addParCatTitle', 'captchaRnd', 'doCatHaveSubCat','getSubCats','getParCats',
-       function ($http, $scope, categoriesQuery, categoryEdit, quizCount, addParCatTitle, captchaRnd, doCatHaveSubCat, getSubCats, getParCats){
-      $scope.tab = 'quizzescategoriesTab';
+      ['$http', '$scope','categoriesQuery', 'categoryEdit', 'quizCount', 'addParCatTitle',
+       'captchaRnd', 'doCatHaveSubCat','getSubCats','getParCats','getTabTemplates', '$location','getAccess',
+       function ($http, $scope, categoriesQuery, categoryEdit, quizCount, addParCatTitle,
+        captchaRnd, doCatHaveSubCat, getSubCats, getParCats, getTabTemplates, $location, getAccess){
+      $scope.tab = 'Категорії тестів';
       $scope.categories = {};
       $scope.currentCategory = {};
       $scope.currentCatToEdit = {};
@@ -113,8 +115,14 @@
       $scope.subCategories = [];
       $scope.captchaInput = '';
       $scope.captchaText = '';
-
-      updateCatPage();
+      
+      getAccess($scope.tab).then(function(data){
+        if(data) {
+        updateCatPage();
+      } else {
+        $location.path( "/404" );
+      }
+      });
 
       $scope.createCategory = function(){
         var request = {id:$scope.subParCatSelect.id, title:$scope.currentCategory.title};

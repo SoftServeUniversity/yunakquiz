@@ -175,7 +175,7 @@ module PlastApp
        end    
     end
 
-    get '/admin' do
+    get '/permission' do
       if session[:user_id]
         user = User.find(session[:user_id])
         role = Role.find(user.role_id)
