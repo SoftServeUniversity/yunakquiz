@@ -1,6 +1,6 @@
 'use strict';
 
-describe('quiz', function() {
+xdescribe('quiz', function() {
 	var ptor =  protractor.getInstance();
  	var mockModule = require('../http_backend_quiz.js');
  	ptor.addMockModule('httpBackendMock', mockModule.httpBackendMock);
@@ -19,13 +19,13 @@ describe('quiz', function() {
 		it('should redirect to categories page when clicked on category in breadcrumbs', function() {
 			var breadcrumbs = element(by.css('.quiz .breadcrumb'));
 			expect(breadcrumbs.all(by.css('a')).get(0).getAttribute('href')).
-				toMatch('http://localhost:8000/#');
+				toMatch('http://localhost:8000/#/parentcat-page/');
 		});
 
 		it('should redirect to categories page when clicked on category in breadcrumbs', function() {
 			var breadcrumbs = element(by.css('.quiz .breadcrumb'));
 			expect(breadcrumbs.all(by.css('a')).get(1).getAttribute('href')).
-				toMatch('http://localhost:8000/#');
+				toMatch('http://localhost:8000/#/subcategory/');
 		});
 
 		it('should show that quiz with three questions', function() {
@@ -42,7 +42,7 @@ describe('quiz', function() {
 		it('should show that after submit button validation failed if none answers were chosen ', function() {
 			element.all(by.buttonText('Пройти тест')).click();
 			expect(browser.getLocationAbsUrl()).
-				toMatch('http://localhost:8000/#/assessments/1');
+				toMatch('/assessments/1');
 		});
 
 		it('should render quiz-result-page if every question has chosen answer', function() {
@@ -52,7 +52,7 @@ describe('quiz', function() {
 			questions.get(2).all(by.repeater('answer in question.answers')).get(2).click();
 			element.all(by.buttonText('Пройти тест')).click();
 			expect(browser.getLocationAbsUrl()).
-				toMatch('http://localhost:8000/#/assessments/1/result');
+				toMatch('/assessments/1/result');
 		});
 
 	});
@@ -110,7 +110,7 @@ describe('quiz', function() {
 		it('should show pass quiz page after pressing pass again button', function() {
 			element.all(by.buttonText('Пройти тест знову')).click();
 			expect(browser.getLocationAbsUrl()).
-				toMatch('http://localhost:8000/#/assessments/1');
+				toMatch('/assessments/1');
 		});
 
 	});

@@ -2,7 +2,7 @@
 
 /* https://github.com/angular/protractor/blob/master/docs/toc.md */
 
-xdescribe('QuizEdit', function() {
+describe('ReviewQuiz', function() {
 	var ptor =  protractor.getInstance();
  	var mockModule = require('../http_backend_quiz.js');
  	// ptor.addMockModule('httpBackendMock', mockModule.httpBackendMock);
@@ -14,12 +14,12 @@ xdescribe('QuizEdit', function() {
 	describe('Header', function() {
 		
 		beforeEach(function() {
-			browser.get('http://localhost:8000/#/admin/assessments/1');
+			browser.get('http://localhost:8000/#/admin/moderationCabinet/review/1');
 		});
 
 	    it('should have page title ', function() {
 	    	expect(element(by.css('.quiz .assessment-title')).getText()).
-	        toMatch(/Редагування тесту/);
+	        toMatch(/Перевірка тесту/);
 	    });
 
 	    it('should have Quiz title', function() {
@@ -60,7 +60,7 @@ xdescribe('QuizEdit', function() {
 	   	var questions;
  		
   		beforeEach(function() {
-			browser.get('http://localhost:8000/#/admin/assessments/1');
+			browser.get('http://localhost:8000/#/admin/moderationCabinet/review/1');
 			questions = element.all(by.repeater('question in quiz.questions'));
 		});
 
@@ -89,7 +89,7 @@ xdescribe('QuizEdit', function() {
   		var questions;
 
 		beforeEach(function() {
-			browser.get('http://localhost:8000/#/admin/assessments/1');
+			browser.get('http://localhost:8000/#/admin/moderationCabinet/review/1');
 			questions = element.all(by.repeater('question in quiz.questions'));
 		});	    
 
@@ -123,50 +123,66 @@ xdescribe('QuizEdit', function() {
       	});
     	
     });
+
+	describe('Adding and deleting new comments', function() {
+
+  		var comments;
+
+		beforeEach(function() {
+			browser.get('http://localhost:8000/#/admin/moderationCabinet/review/1');
+			comments = element.all(by.repeater('comment in comments'));
+		});	    
+
+
+	    it('should add  new comment', function() {
+	    	element(by.model('comment')).sendKeys('new comment');
+	    	element(by.css('[ng-click="addComment()"]')).click();
+	        expect(comments.count()).toBe(3);
+      	});
+
+	    it('should be able to delete question', function() {
+	    	element(by.model('comment')).sendKeys('new comment');
+	    	element(by.css('[ng-click="addComment()"]')).click();
+	        comments.last().element(by.css('[ng-click="deleteComment($index)"]')).click();
+	        expect(comments.count()).toBe(2);
+      	});
+
+    	
+    });
     
     describe('Saving and sending for review', function() {	
 		var questions;
 		var answers;
 
 		beforeEach(function () {
-    		browser.get('http://localhost:8000/#/admin/assessments/1');
+    		browser.get('http://localhost:8000/#/admin/moderationCabinet/review/1');
 	   		questions = element.all(by.repeater('question in quiz.questions'));
 			
 
 
 	    });
     	
-	    it('should be able save valid Quiz', function() {
+	    it('should be able publishe valid Quiz', function() {
 	    	var testMessage = 'test';
 	    	questions.get(0).element(by.css('[ng-click="addAnswer(question)"]')).click();
 			answers = questions.get(0).all(by.repeater('answer in question.answers'));
 			answers.last().element(by.model('answer.title')).sendKeys(testMessage);
-	        element(by.css('[ng-click="saveQuiz()"]')).click().then(function(){
-	    		expect(browser.getCurrentUrl()).toEqual("http://localhost:8000/#/admin/personalCabinet/draft");
+	        element(by.css('[ng-click="publishQuiz()"]')).click().then(function(){
+	    		expect(browser.getCurrentUrl()).toEqual("http://localhost:8000/#/admin/moderationCabinet/published");
 	    	});
       	});
 		
-		it('should be able send for review valid Quiz', function() {
+		it('should be able send for enhance valid Quiz', function() {
 			questions.get(0).element(by.css('[ng-click="addAnswer(question)"]')).click();
 			answers = questions.get(0).all(by.repeater('answer in question.answers'));
 			answers.last().element(by.model('answer.title')).sendKeys('test');	
- 			element(by.css('[ng-click="reviewQuiz()"]')).click().then(function(){
-	    		expect(browser.getCurrentUrl()).toEqual("http://localhost:8000/#/admin/personalCabinet/review");
+ 			element(by.css('[ng-click="enhanceQuiz()"]')).click().then(function(){
+	    		expect(browser.getCurrentUrl()).toEqual("http://localhost:8000/#/admin/moderationCabinet");
 	    	});
 
 	            
 
 	    });
-
-	    it('should be able save Quiz - check by description', function() {
-	        var descMsg = "Детальний опис";
-	        var input = element(by.model('quiz.description'));
-	        input.clear();
-	        input.sendKeys(descMsg);
-			element(by.css('[ng-click="saveQuiz()"]')).click().then(function(){
-	    		expect(browser.getCurrentUrl()).toEqual("http://localhost:8000/#/admin/personalCabinet/draft");
-	    	});
-       	});
 
   	});
 });
