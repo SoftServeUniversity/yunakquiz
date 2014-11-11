@@ -32,7 +32,26 @@ class Quiz < ActiveRecord::Base
     quiz.deleted! if quiz
   end
 
-  def self.quiz_query(status='published', query = '', page=1, per_page = 10)
+  def self.quiz_query_cat(status='published', categories=[], page=1, per_page = 10)
+    page -= 1
+    statusCode =  Quiz.statuses[status] 
+    if statusCode 
+      quizzes = Quiz.joins(:category)
+      .where(:status => statusCode)
+      .where(:categories => { :id => categories })
+      .group('quizzes.id')
+      count = quizzes.as_json.count()
+      quizzes= quizzes.offset(page*per_page.to_i).limit(per_page)
+
+      quizzes = quizzes.as_json(:include =>[
+        {:category => {:include=> {:category =>{:only => :title}},:only=> :title}},
+        {:user => {:only => :username}}
+        ])
+      resultData = {:quizzes => quizzes, :totalItems => count}
+    end
+  end
+
+  def self.quiz_query(status='published', query='', page=1, per_page = 10)
     page -= 1
     statusCode =  Quiz.statuses[status] 
     query = '%'+query[0,20]+'%'

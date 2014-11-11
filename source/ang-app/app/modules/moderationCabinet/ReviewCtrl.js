@@ -1,6 +1,6 @@
 'use strict';
 /** Quiz Edit controller  */
-yunakQuizApp.controller('ReviewCtrl', ['$scope','QuizData', '$routeParams','tags', '$location','QuizValidation', function($scope, QuizData, $routeParams, tags, $location, QuizValidation) {
+yunakQuizApp.controller('ReviewCtrl', ['$scope','QuizData', '$routeParams', '$location','QuizValidation', function($scope, QuizData, $routeParams, $location, QuizValidation) {
 
   /** get Quiz by ID */
   $scope.init = function(){
@@ -52,7 +52,7 @@ yunakQuizApp.controller('ReviewCtrl', ['$scope','QuizData', '$routeParams','tags
 
   /** get all tags from backend*/
   $scope.loadTags = function(query) {
-      return tags.load();
+      return QuizData.getTags(query)
   };
 
 

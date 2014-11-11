@@ -23,7 +23,8 @@ angular.module('yunakQuiz.personalCabinet', [])
   $scope.outputData={
     currentPage: 1,
     itemsPerPage: 10,
-    searchData:''
+    searchData:'',
+    categoryFilter: []
   };
 
   $scope.quizUrl = '#/assessments/';
@@ -62,6 +63,13 @@ angular.module('yunakQuiz.personalCabinet', [])
       });
     });
   };
+
+  
+  $scope.categoryFilter = function(){
+    $scope.outputData.categoryFilter = $scope.searchRequest.categories_id;
+    $scope.searchQuery();
+  };
+
   
   $scope.searchQuery();
 

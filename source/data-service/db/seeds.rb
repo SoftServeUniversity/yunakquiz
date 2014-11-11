@@ -17,7 +17,6 @@ userRole =  Role.create(name: 'user')
 moderRole = Role.create(name: 'moder')
 superadminRole = Role.create(name: 'superadmin')
 
-
 user1 = userRole.users.create(username: "user123", password: "12345678", password_confirmation: "12345678", email: "user@mail.com", birthday: "2000-12-31T22:00:00.000Z")
 admin1 = adminRole.users.create(username: "admin123", password: "12345678", password_confirmation: "12345678", email: "admin@mail.com", birthday: "2000-12-31T22:00:00.000Z")
 moder1 = moderRole.users.create(username: "moder123", password: "12345678", password_confirmation: "12345678", email: "moder@mail.com", birthday: "2000-12-31T22:00:00.000Z")
@@ -26,7 +25,6 @@ superadmin1 = superadminRole.users.create(username: "super123", password: "12345
 valera = userRole.users.create(username: "Valera", password: "12345678", password_confirmation: "12345678", email: "user@mail.com", birthday: "2000-12-31T22:00:00.000Z")
 ivan = userRole.users.create(username: "Ivan", password: "12345678", password_confirmation: "12345678", email: "user@mail.com", birthday: "2000-12-31T22:00:00.000Z")
 vasyl = userRole.users.create(username: "Vasyl", password: "12345678", password_confirmation: "12345678", email: "user@mail.com", birthday: "2000-12-31T22:00:00.000Z")
-
 
 Permission.create(tabs: 'admin1', admin: '1', superadmin: '4')
 Permission.create(tabs: 'admin2', admin: '1', superadmin: '4')
@@ -348,53 +346,6 @@ quiz14.tags << tag32
 quiz14.tags << tag33
 quiz14.tags << tag7
 quiz14.update(user: valera)
-
-quiz6 = subcat4.quizzes.create(category_id: 6,status: "published", title: "Тест на знання історії світу", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
-quiz6.tags << tag6
-quiz6.tags << tag5
-quiz6.tags << tag10 = Tag.create(tag: "всьо")
-
-quiz7 = subcat4.quizzes.create(category_id: 6,status:"published", title: "Тест на знання другої світової війни", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
-quiz7.tags << tag11 = Tag.create(tag: "гітлер")
-quiz7.tags << tag12 = Tag.create(tag: "сталін")
-quiz7.tags << tag13 = Tag.create(tag: "голодомор")
-quiz7.tags << tag14 = Tag.create(tag: "друга_світова")
-
-quiz8 = subcat4.quizzes.create(category_id: 6,status:"published", title: "Тест на знання першої світової війни", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
-quiz8.tags << tag15 = Tag.create(tag: "перша_світова")
-quiz8.tags << tag16 = Tag.create(tag: "війна")
-quiz8.tags << tag17 = Tag.create(tag: "німеччина")
-
-quiz9 = subcat2.quizzes.create(category_id: 3,status:"published", title: "Тест на знання правил хокею", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
-quiz9.tags << tag18 = Tag.create(tag: "хокей")
-quiz9.tags << tag19 = Tag.create(tag: "лід")
-quiz9.tags << tag20 = Tag.create(tag: "клюшка")
-
-quiz10 = subcat1.quizzes.create(category_id: 2,status:"published", title: "Тест на знання видатних футболістів", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
-quiz10.tags << tag21 = Tag.create(tag: "рональдо")
-quiz10.tags << tag22 = Tag.create(tag: "блохін")
-quiz10.tags << tag23 = Tag.create(tag: "шевченко")
-
-quiz11 = subcat4.quizzes.create(category_id: 6,status:"published", title: "Тест на знання війни в Вєтнамі", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
-quiz11.tags << tag24 = Tag.create(tag: "вєтнам")
-quiz11.tags << tag25 = Tag.create(tag: "гвинтокрил")
-quiz11.tags << tag26 = Tag.create(tag: "напалм")
-
-quiz12 = subcat3.quizzes.create(category_id: 5,status:"published", title: "Тест на знання революції гідності 2014 року", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
-quiz12.tags << tag27 = Tag.create(tag: "революція")
-quiz12.tags << tag4
-quiz12.tags << tag28 = Tag.create(tag: "яник")
-
-quiz13 = subcat3.quizzes.create(category_id: 5,status:"published", title: "Тест на знання Украйни в часи незалежності", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
-quiz13.tags << tag29 = Tag.create(tag: "1991")
-quiz13.tags << tag4
-quiz13.tags << tag30 = Tag.create(tag: "незалежність")
-quiz13.tags << tag31 = Tag.create(tag: "батьківщина")
-
-quiz14 = subcat5.quizzes.create(category_id: 5,status:"published", title: "Тест на знання Поліморфізму", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
-quiz14.tags << tag32 = Tag.create(tag: "ооп")
-quiz14.tags << tag33 = Tag.create(tag: "поліморфізм")
-quiz14.tags << tag34 = Tag.create(tag: "програмування")
 
 Faq.create(faq_question: "Як створити свій тест?", faq_answer: "Для цього потрібно зареєструватись")
 Faq.create(faq_question: "Де можна знайти інформацію про сайт?", faq_answer: "В нижньому меню, яке називається Про Нас")
