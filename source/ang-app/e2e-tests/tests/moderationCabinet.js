@@ -1,6 +1,6 @@
 'use strict';
 
-xdescribe('PersonalCabinet', function() {
+xdescribe('ModerationlCabinet', function() {
 	var ptor =  protractor.getInstance();
  	var mockModule = require('../http_backend_quiz.js');
  	ptor.addMockModule('httpBackendMock', mockModule.httpBackendMock);
@@ -8,39 +8,36 @@ xdescribe('PersonalCabinet', function() {
  	describe('page structure', function() {
 		
 		beforeEach(function() {
-			browser.get('http://localhost:8000/#/admin/personalCabinet');
+			browser.get('http://localhost:8000/#/admin/moderationCabinet');
 		});
 
 		it('should have title', function() {
 			expect(element(by.css('.assessment-title')).getText())
-			.toMatch(/Особистий кабінет/);
+			.toMatch(/Кабінет модератора/);
 		});
 
-		it('should have CreateNew button', function() {
-			expect(element(by.linkText('Додати тест')).getAttribute('href'))
-			.toMatch('#/admin/assessments/create/')
-
+		it('should have Category filter', function() {
+			expect(element.all(by.repeater('parCat in allCats')).count()).toBe(3);
 		});
 
-		it('should have 5 tabs: published, enhance, review, draft and profile', function() {
-			expect(element.all(by.css('ul.nav li')).count()).toBe(5);
+		it('should have Category filter button', function() {
+			expect(element(by.buttonText('Застосувати фільтр')).isPresent()).toBe(true);
+		});
+
+		it('should have 3 tabs: published, enhance, review', function() {
+			expect(element.all(by.css('ul.nav li')).count()).toBe(3);
 			
-		});
-
-		it('should have search input', function() {
-			var input = element(by.model("outputData.searchData"));
-			expect(input.isPresent()).toBe(true);
 		});
 
 	});
 
-	describe('published tab view', function() {
+	describe('Published tab view', function() {
 		
 		beforeEach(function() {
-			browser.get('http://localhost:8000/#/admin/personalCabinet/published');
+			browser.get('http://localhost:8000/#/admin/moderationCabinet/published');
 		});
 
-		it('should show published tab activeted ', function() {
+		it('should show pablished tab activeted ', function() {
 			var tab = element.all(by.css('ul.nav li.persCabActive'))
 			expect(tab.getText()).toMatch(/Опубліковані/); 
 			
@@ -48,7 +45,7 @@ xdescribe('PersonalCabinet', function() {
 		});
 
 		it('should show table title', function() {
-			expect(element.all(by.css('table thead tr th')).count()).toBe(6);
+			expect(element.all(by.css('table thead tr th')).count()).toBe(5);
 		
 		});
 
@@ -58,8 +55,8 @@ xdescribe('PersonalCabinet', function() {
 
 		it('should show Edit button', function() {
 			var quizzess = element.all(by.repeater('quiz in quizzes'));
-			expect(quizzess.get(0).element(by.linkText('Редагувати тест')).getAttribute('href'))
-			.toMatch('#/admin/assessments/1')
+			expect(quizzess.get(0).element(by.linkText('Перевірити тест')).getAttribute('href'))
+			.toMatch('#/admin/moderationCabinet/review/1')
 
 		});
 
