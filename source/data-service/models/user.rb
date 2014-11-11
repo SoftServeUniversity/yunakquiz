@@ -52,19 +52,24 @@ class User < ActiveRecord::Base
     self.password = nil
   end
 
-  def self.quiz_query(status='enabled', query = '', page=1, per_page = 10)
+  def self.quiz_query(status='enabled', query = '', page=1, per_page = 10, role)
     page -= 1
     statusCode =  User.statuses[status] 
     query = '%'+query[0,20]+'%'
     if statusCode 
-      users = User.select("id, username, first_name, last_name, email, role_id, status").where("status=? AND last_name like ?", statusCode, query).offset(page*per_page.to_i).limit(per_page)
+      users = User.select("id, username, first_name, last_name, email, role_id, status").where("status=? AND username like ? AND role_id IN (?)", statusCode, query, role).offset(page*per_page.to_i).limit(per_page)
       users = users.as_json()
-      resultData = {:users => users, :totalItems => queryCount(statusCode,query)}
+      resultData = {:users => users, :totalItems => queryCount(statusCode, query, role)}
     end
   end
 
-  def self.queryCount(statusCode,query)
-    User.where("status=? AND last_name like ?", statusCode, query).count()
+  def self.queryCount(statusCode,query, role)
+    User.where("status=? AND last_name like ? AND role_id IN (?)", statusCode, query, role).count()
+  end
+
+  def self.delete_user(id)
+    user = User.find_by(id: id)
+    user.deleted! if user
   end
   
 end

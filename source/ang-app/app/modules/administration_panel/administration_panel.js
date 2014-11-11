@@ -15,4 +15,27 @@
         }]
       }
     });
+
+    app.controller('ModalDeleteCtrl', ['$scope','$modalInstance', function($scope, $modalInstance) {
+  
+    $scope.clearMsg = function(){
+      if($scope.errorMsg) $scope.deleteConfirm = "";
+      $scope.errorMsg ="";
+    };
+
+    $scope.ok = function () {
+      var password = 1911;
+      if($scope.deleteConfirm == password){
+        $scope.clearMsg();
+        $modalInstance.close();
+      }
+      else{$scope.errorMsg = "Невірний пароль!"}
+    };
+
+    $scope.cancel = function () {
+      $modalInstance.dismiss('cancel');
+    };
+
+}]);
+
 })();

@@ -93,14 +93,16 @@ module PlastApp
     end
 
     post '/admin/users' do
-      content_type :json
       data = JSON.parse(request.body.read)
-      #check permisions here
-      @users = User.quiz_query(data['status'], data['searchData'],data['currentPage'],data['itemsPerPage'])
-      
-      response_helper @users, "Users not found!"
-      #return "HEllo"
+      @users = User.quiz_query(data['status'], data['searchData'],data['currentPage'],data['itemsPerPage'], data['roles'])
+     response_helper @users, "Users not found!"
+    end
 
+    delete '/admin/users:id' do
+      content_type :json
+      @user = User.delete_user(params['id'])
+      
+      response_helper @user, "User not deleted!"
     end
 
   end

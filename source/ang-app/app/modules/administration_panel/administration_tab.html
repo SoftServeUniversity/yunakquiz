@@ -1,4 +1,55 @@
 <admin-panel></admin-panel>
 <div class="panel">
-<h1>Administration goes here</h1>
+<div class="panel">
+<div class="row">
+		<div class="col-sm-4">
+			<div class="input-group">
+	      		<input ng-model="outputData.searchData" type="text" class="form-control" placeholder="Пошук користувача по Username" />
+	      		<span class="input-group-btn">
+	        		<button ng-click="searchQuery()" class="btn btn-default" type="button">Вьо!</button>
+	      		</span>
+	    	</div>
+	    </div>
+</div>
+<table class="table table-hover">
+	<thead>
+		<tr>
+			<th class="col-md-2 text-center">Ім’я</th>
+			<th class="col-md-2 text-center">Username</th>
+			<th class="col-md-2 text-center">Пошта</th>
+			<th class="col-md-2 text-center">Роль</th>
+			<th class="col-md-1"></th>
+			<th class="col-md-1"></th>
+			<th class="col-md-1"></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="user in users">
+			<td class="text-center">{{user.first_name + " " + user.last_name}}</td>
+			<td class="text-center">{{user.username}}</td>
+			<td class="text-center">{{user.email}}</td>
+			<td class="text-center">{{user.role_id}}</td>
+			<td>
+				<a ng-click="deleteUser(user.id)" type="button" class="btn btn-success btn-xs">Змінити статус</a>
+			</td>
+			<td>
+				<a ng-click="deleteUser(user.id)" type="button" class="btn btn-warning btn-xs">Внести в чорний список</a>
+			</td>
+			<td>
+				<a ng-click="deleteUser(user.id)" type="button" class="btn btn-danger btn-xs">Видалити</a>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<div ng-show="totalItems>outputData.itemsPerPage" class="row text-center">
+		<pagination total-items="totalItems" ng-model="outputData.currentPage" ng-change="queryList()"  items-per-page="outputData.itemsPerPage" class="pagination" ></pagination>
+	<div class="pagination pull-right">
+		<select ng-change="searchQuery()" ng-model="outputData.itemsPerPage" class="form-control">
+		  <option value="10" >10</option>
+		  <option value="25" >25</option>
+		  <option value="50" >50</option>
+		  <option value="{{totalItems}}">Всі</option>
+		</select>
+	</div>
+</div>
 </div>

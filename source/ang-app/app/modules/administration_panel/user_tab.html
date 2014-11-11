@@ -3,7 +3,7 @@
 <div class="row">
 		<div class="col-sm-4">
 			<div class="input-group">
-	      		<input ng-model="outputData.searchData" type="text" class="form-control" placeholder="Пошук користувача по прізвищу" />
+	      		<input ng-model="outputData.searchData" type="text" class="form-control" placeholder="Пошук користувача по Username" />
 	      		<span class="input-group-btn">
 	        		<button ng-click="searchQuery()" class="btn btn-default" type="button">Вьо!</button>
 	      		</span>
@@ -14,9 +14,8 @@
 	<thead>
 		<tr>
 			<th class="col-md-2 text-center">Ім’я</th>
-			<th class="col-md-3 text-center">Прізвище</th>
+			<th class="col-md-3 text-center">Username</th>
 			<th class="col-md-2 text-center">Пошта</th>
-			<th class="col-md-2 text-center">Статус користувача</th>
 			<th class="col-md-1"></th>
 			<th class="col-md-1"></th>
 			<th class="col-md-1"></th>
@@ -24,18 +23,17 @@
 	</thead>
 	<tbody>
 		<tr ng-repeat="user in users">
-			<td class="text-center">{{user.first_name}}</td>
-			<td class="text-center">{{user.last_name}}</td>
+			<td class="text-center">{{user.first_name + " " + user.last_name}}</td>
+			<td class="text-center">{{user.username}}</td>
 			<td class="text-center">{{user.email}}</td>
-			<td class="text-center">{{user.status}}</td>
 			<td>
-				<a ng-click="deleteQuiz(quiz.id)" type="button" class="btn btn-success btn-xs">Змінити статус</a>
+				<a ng-click="deleteUser(user.id)" type="button" class="btn btn-success btn-xs">Змінити статус</a>
 			</td>
 			<td>
-				<a ng-href="#/admin/assessments/{{quiz.id}}" type="button" class="btn btn-warning btn-xs">Внести в чорний список</a>
+				<a ng-click="deleteUser(user.id)" type="button" class="btn btn-warning btn-xs">Внести в чорний список</a>
 			</td>
 			<td>
-				<a ng-click="deleteQuiz(quiz.id)" type="button" class="btn btn-danger btn-xs">Видалити</a>
+				<a ng-click="deleteUser(user.id)" type="button" class="btn btn-danger btn-xs">Видалити</a>
 			</td>
 		</tr>
 	</tbody>
