@@ -33,6 +33,13 @@ module PlastApp
       end
     end
 
+    def logged_user 
+     if session[:user_id]
+      return User.find(session[:user_id])
+     end
+     nil
+    end
+
     options '/*' do
     end
     
@@ -176,9 +183,8 @@ module PlastApp
     end
 
     get '/permission' do
-      if session[:user_id]
-        user = User.find(session[:user_id])
-        role = Role.find(user.role_id)
+      if logged_user
+        role = Role.find(logged_user.role_id)
         base = Permission.where("#{role.name} = #{role.id}").pluck("tabs").to_json
         return base
       else
