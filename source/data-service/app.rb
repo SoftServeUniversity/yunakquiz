@@ -131,16 +131,14 @@ module PlastApp
 
     post '/assessments/moderator/:status' do
       content_type :json
-      puts logged_user.username if logged_user
-      puts '------------------------------------------------------'
-      data = JSON.parse(request.body.read)
-      
-      if data['categoryFilter'].empty?
-        @quizzes = Quiz.quiz_query(params['status'],data['searchData'],data['currentPage'],data['itemsPerPage'])
-      else
-        @quizzes = Quiz.quiz_query_cat(params['status'],data['categoryFilter'],data['currentPage'],data['itemsPerPage'])
+      if logged_user.role.name === "moder"
+        data = JSON.parse(request.body.read)
+        categories = data['categoryFilter'] 
+        categories = Category.all.pluck("id") if categories.empty? 
+        @quizzes = Quiz.quiz_query_cat(params['status'],categories,data['currentPage'],data['itemsPerPage'])
+        response_helper @quizzes, "Quizzes not found"
       end
-      response_helper @quizzes, "Quiz not deleted!"
+      response_helper @quizzes, "Forbidden!"
     end
     
     ##Assessment comments section

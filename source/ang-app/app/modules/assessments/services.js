@@ -28,6 +28,10 @@ yunakQuizApp.factory('QuizData', ['$http', '$location', function($http, $locatio
             return $http.post(back_url+'/assessments/'+state, queryData) 
           },
 
+      queryListModer: function(state, queryData){
+            return $http.post(back_url+'/assessments/moderator/'+state, queryData) 
+          },
+
       getCat: function(){
             return $http.get(back_url+'/categories') 
           },

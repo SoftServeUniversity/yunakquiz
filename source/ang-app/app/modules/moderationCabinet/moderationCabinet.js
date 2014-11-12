@@ -4,7 +4,8 @@ angular.module('yunakQuiz.moderationCabinet', [])
   $routeProvider
   .when('/admin/moderationCabinet', {
     templateUrl: 'modules/moderationCabinet/moderationCabinet.html',
-    controller: 'CabinetCtrl'
+    controller: 'CabinetCtrl',
+    queryFn: "queryListModer"
   })
   .when('/admin/moderationCabinet/review/:quiz_id', {
     templateUrl: 'modules/moderationCabinet/review.html',
@@ -12,7 +13,8 @@ angular.module('yunakQuiz.moderationCabinet', [])
   })  
   .when('/admin/moderationCabinet/:state', {
     templateUrl: 'modules/moderationCabinet/moderationCabinet.html',
-    controller: 'CabinetCtrl'
+    controller: 'CabinetCtrl', 
+    queryFn: "queryListModer"
   })
  
 }]);

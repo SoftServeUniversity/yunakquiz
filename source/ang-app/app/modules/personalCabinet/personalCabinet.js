@@ -4,7 +4,8 @@ angular.module('yunakQuiz.personalCabinet', ['ngRoute', 'flow'])
   $routeProvider
   .when('/admin/personalCabinet', {
     templateUrl: 'modules/personalCabinet/quizesList.html',
-    controller: 'CabinetCtrl'
+    controller: 'CabinetCtrl',
+    queryFn: "queryList"
   })
   .when('/admin/personalCabinet/profile', {
     templateUrl: 'modules/personalCabinet/profile.html',
@@ -13,12 +14,13 @@ angular.module('yunakQuiz.personalCabinet', ['ngRoute', 'flow'])
   })
   .when('/admin/personalCabinet/:state', {
     templateUrl: 'modules/personalCabinet/quizesList.html',
-    controller: 'CabinetCtrl'
+    controller: 'CabinetCtrl',
+    queryFn: "queryList"
   })   
 }])
 
-.controller('CabinetCtrl', ['$scope','QuizData', '$routeParams','$http','$location','$modal', function($scope, QuizData, $routeParams, $http, $location,$modal) {
-  
+.controller('CabinetCtrl', ['$scope','QuizData', '$routeParams','$http','$location','$modal', '$route', function($scope, QuizData, $routeParams, $http, $location,$modal, $route) {
+  var queryFn = $route.current.queryFn;
   $scope.tab = $routeParams.state || "published";
 
   $scope.outputData={
@@ -42,7 +44,7 @@ angular.module('yunakQuiz.personalCabinet', ['ngRoute', 'flow'])
   };
 
   $scope.queryList = function() {
-    QuizData.queryList($scope.tab, $scope.outputData)
+    QuizData[queryFn]($scope.tab, $scope.outputData)
       .success(function(data, status, headers, config) {
         $scope.updateData(data);        
       })
