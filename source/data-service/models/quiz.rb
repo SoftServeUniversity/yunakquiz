@@ -25,28 +25,37 @@ class Quiz < ActiveRecord::Base
     else
       quiz = user.quizzes.find_by(:id => id)
     end  
+    quiz = nil if quiz.deleted?
     quiz.add_questions if quiz
   end
   
-  def self.create_quiz(data)
+  def self.create_quiz(data, user)
     category = Category.find(data['category_id'])
     quiz = category.quizzes.create(title: data['title'],description: data['description'], status: data['status'])
+    quiz.update(user: user)
     Tag.insert_tags(data['tags'], quiz)
     Question.createQ(data['questions'], quiz)
     quiz[:id]
   end
   
-  def self.update_quiz(data)
+  def self.update_quiz(data, user)
     quiz = Quiz.find(data['id'])
-    quiz.update(title: data['title'], description: data['description'], category_id: data['category_id'], status: data['status'])
-    Tag.update_tags(data['tags'], quiz)
-    Question.update_questions(data['questions'], quiz)
-    return quiz
+    return nil if quiz.deleted?
+    
+    if (quiz.user == user) || user.role.name === "moder"
+      quiz.update(title: data['title'], description: data['description'], category_id: data['category_id'], status: data['status'])
+      Tag.update_tags(data['tags'], quiz)
+      Question.update_questions(data['questions'], quiz)
+      return quiz
+    end
+    return nil
   end
 
-  def self.delete_quiz(id)
+  def self.delete_quiz(id, user)
     quiz = Quiz.find_by(id: id)
-    quiz.deleted! if quiz
+    if (quiz.user == user) || user.role.name === "moder"
+      quiz.deleted! if quiz
+    end
   end
 
   def self.quiz_query_cat(status='published', categories=[], page=1, per_page = 10)

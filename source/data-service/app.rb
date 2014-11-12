@@ -82,25 +82,28 @@ module PlastApp
 
     post '/assessments' do
       content_type :json
-      data = JSON.parse(request.body.read)
-      @quiz = Quiz.create_quiz(data)
-
+      if logged_user
+        data = JSON.parse(request.body.read)
+        @quiz = Quiz.create_quiz(data, logged_user)
+      end  
       response_helper @quiz, "Quiz not created!"
     end
 
 
     put '/assessments' do
       content_type :json
-      data = JSON.parse(request.body.read)
-      @quiz = Quiz.update_quiz(data) unless data['id'].nil?
-      
+      if logged_user
+        data = JSON.parse(request.body.read)
+        @quiz = Quiz.update_quiz(data, logged_user) unless data['id'].nil?
+      end
       response_helper @quiz, "Quiz not found!"
     end    
 
     delete '/assessments/:id' do
       content_type :json
-      @quiz = Quiz.delete_quiz(params['id'])
-      
+      if logged_user
+        @quiz = Quiz.delete_quiz(params['id'], logged_user)
+      end
       response_helper @quiz, "Quiz not deleted!"
     end
     ## end of Assessment resource.
