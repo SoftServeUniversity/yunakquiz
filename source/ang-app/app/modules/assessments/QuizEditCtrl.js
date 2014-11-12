@@ -4,7 +4,7 @@ yunakQuizApp.controller('QuizEditCtrl', ['$scope','QuizData', '$routeParams','ta
 
   /** get Quiz by ID */
   $scope.init = function(){
-    QuizData.get($routeParams.quiz_id)
+    QuizData.getForEdit($routeParams.quiz_id)
       .success(function(data, status, headers, config){
         $scope.quiz = data;
         $scope.getComments(data['id']);

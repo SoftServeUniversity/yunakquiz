@@ -8,6 +8,10 @@ yunakQuizApp.factory('QuizData', ['$http', '$location', function($http, $locatio
             return $http.get(back_url+'/assessments/'+id )
           },
 
+      getForEdit: function(id){
+            return $http.get(back_url+'/assessments/edit/'+id )
+          },    
+
       create: function(quiz){       
             return $http.post(back_url+'/assessments', quiz)
           },

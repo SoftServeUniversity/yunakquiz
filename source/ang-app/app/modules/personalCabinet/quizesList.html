@@ -1,5 +1,6 @@
-<div ng-include="'modules/personalCabinet/personalCabinetHeader.html'"></div>
-<h4 ng-show="!totalItems" class="text-center quizMarginTop">В даній вкладці немає тестів</h4>
+<div ng-hide="error" ng-include="'modules/personalCabinet/personalCabinetHeader.html'"></div>
+<h4 ng-show="error" class="text-center quizMarginTop">{{error}}</h4>
+<h4 ng-hide="totalItems||error" class="text-center quizMarginTop">В даній вкладці немає тестів</h4>
 <table ng-show="totalItems" class="table table-hover">
 	<thead>
 		<tr>

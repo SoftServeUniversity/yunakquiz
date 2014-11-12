@@ -68,7 +68,16 @@ module PlastApp
       content_type :json
       @quiz = Quiz.get_by_id(params['id'])
 
-      response_helper @quiz, ["Quiz #{params['id']} not found!"]
+      response_helper @quiz, ["Published Quiz #{params['id']} not found!"]
+    end
+
+    get '/assessments/edit/:id' do
+      content_type :json
+      if logged_user
+        @quiz = Quiz.get_for_edit(params['id'], logged_user)
+        response_helper @quiz, ["Quiz #{params['id']} not found!"]
+      end
+      response_helper @quiz, ["Forbidden!!!"]
     end
 
     post '/assessments' do
@@ -105,8 +114,24 @@ module PlastApp
 
     post '/assessments/:status' do
       content_type :json
+      if logged_user
+        data = JSON.parse(request.body.read)
+        @quizzes = Quiz.quiz_query(
+          logged_user,
+          params['status'],
+          data['searchData'],
+          data['currentPage'],
+          data['itemsPerPage'])
+      end
+      response_helper @quizzes, "Потрібно залогуватись"
+    end
+
+    post '/assessments/moderator/:status' do
+      content_type :json
+      puts logged_user.username if logged_user
+      puts '------------------------------------------------------'
       data = JSON.parse(request.body.read)
-      #check permisions here
+      
       if data['categoryFilter'].empty?
         @quizzes = Quiz.quiz_query(params['status'],data['searchData'],data['currentPage'],data['itemsPerPage'])
       else

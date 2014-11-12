@@ -42,9 +42,13 @@ angular.module('yunakQuiz.personalCabinet', ['ngRoute', 'flow'])
   };
 
   $scope.queryList = function() {
-    QuizData.queryList($scope.tab, $scope.outputData).success(function(data, status, headers, config) {
+    QuizData.queryList($scope.tab, $scope.outputData)
+      .success(function(data, status, headers, config) {
         $scope.updateData(data);        
-    });
+      })
+      .error(function(data){
+        $scope.error = data;
+      });
   };
 
   $scope.updateData = function(data){
