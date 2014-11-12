@@ -131,7 +131,7 @@ module PlastApp
 
     post '/assessments/moderator/:status' do
       content_type :json
-      if logged_user.role.name === "moder"
+      if logged_user && logged_user.role.name === "moder"
         data = JSON.parse(request.body.read)
         categories = data['categoryFilter'] 
         categories = Category.all.pluck("id") if categories.empty? 
