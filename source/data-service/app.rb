@@ -237,27 +237,43 @@ module PlastApp
       return [200, "ok"]
     end
 
-    post '/saveQuestion' do
+    # put '/updateQuestion' do
+    #   content_type :json
+    #   upQs = JSON.parse(request.body.read)
+
+    #   questionId = Faq.find(upQs['id'])
+
+
+    # end
+
+    put '/saveQuestion' do
       content_type :json
       save_Question = JSON.parse(request.body.read)
 
       if(Faq.where('id=?', save_Question['id']).length == 0)
-        Faq.create(id:save_Question['id'], faq_question:save_Question['Question'], faq_answer:save_Question['Answer'])
+        curFaq = Faq.create(faq_question:save_Question['Question'], faq_answer:save_Question['Answer'])
+    
+        if curFaq
+          return [200, "Creation Success"]
+        else
+          return [400, "Creation Error"]
+        end
+      else
+        curfaq = Faq.where('id=?', save_Question['id'])
+        curfaq[0].faq_answer = save_Question['Answer']
+        curfaq[0].faq_question = save_Question['Question']
+        curfaq[0].save()
       end
-      
-      curfaq = Faq.where('id=?', save_Question['id'])
-      curfaq[0].faq_answer = save_Question['Answer']
-      curfaq[0].faq_question = save_Question['Question']
-      curfaq[0].save()
+
     end
 
     delete '/deleteQuestion/:id' do
       content_type :json
       # getQuestion = JSON.parse(request.body.read)
-      Faq.find(params['id']).delete()
+      Faq.find(params['id']).destroy()
       [200, {'success' => "success"}.to_json]
 
-      Faq.select(['id', 'faq_question', 'faq_answer']).to_json
+     # Faq.select(['id', 'faq_question', 'faq_answer']).to_json
     end
 
   end
