@@ -43,7 +43,7 @@
 
       $scope.saveQuestion = function(data, id) {
         angular.extend(data, {id: id});
-        $scope.validate(id);
+      //  $scope.validate(id);
         getQuestions.put(data).success(function(){
           init();
         });   
@@ -62,6 +62,10 @@
           return false
         }
         return true
+      };
+
+      $scope.cancelEction = function(){
+        $scope.showButton = false;
       };
 
       $scope.addQuestion = function() {
