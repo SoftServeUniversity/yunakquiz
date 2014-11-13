@@ -16,6 +16,7 @@ module PlastApp
 
     Dir.glob('./config/*.rb').each {|file| require file}
     Dir.glob('./models/*.rb').each {|file| require file}
+    Dir.glob('./lib/*.rb').each {|file| require file}    
 
 
     get '/' do
@@ -84,6 +85,26 @@ module PlastApp
       end
     end
 
+    get '/categories/parent' do
+      Category.getParentCategories()
+    end
+
+    get '/categories/subcats' do
+      Category.getAllSubCategories()
+    end
+
+    get '/categories/all' do
+      Category.getAllCategories()
+    end
+
+    get '/categories/category/:id' do
+      Category.getCategoryById(params['id'])  
+    end
+
+    get '/categories/subcat/:id' do
+      Category.getSubCatByParCatId(params['id'])
+    end
+    
   end
 
 end
