@@ -45,6 +45,8 @@ exports.httpBackendMock = function() {
       {"id":7,"category_id":0,"title":"Програмування"},
       {"id":8,"category_id":7,"title":"Основи ООП"},
       {"id":9,"category_id":7,"title":"Основи Java"}];
+      
+    var permission = ["admin1","admin2","admin3","admin4","admin5","admin6","comm1","comm2"];
 
     $httpBackend.whenGET('http://localhost:9292/categories/parent').respond(parCategoryMock);
     $httpBackend.whenGET('http://localhost:9292/categories/subcats').respond(subCategoryMock);
@@ -52,6 +54,7 @@ exports.httpBackendMock = function() {
     $httpBackend.whenGET('http://localhost:9292/about_us').respond(aboutUsMock);
     $httpBackend.whenGET('http://localhost:9292/contacts').respond(contactsMock);
     $httpBackend.whenGET('http://localhost:9292/guest-search').respond(allCategories);
+    $httpBackend.whenGET('http://localhost:9292/permission').respond(permission);
     $httpBackend.whenGET().passThrough();
   });
 };
