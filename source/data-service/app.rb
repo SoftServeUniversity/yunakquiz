@@ -85,6 +85,11 @@ module PlastApp
       end
     end
 
+    get '/about_us' do
+      content_type :json
+      Staticinfo.select(['id','about_us','updated_at']).to_json
+    end  
+
     get '/categories/parent' do
       Category.getParentCategories()
     end
@@ -104,7 +109,6 @@ module PlastApp
     get '/categories/subcat/:id' do
       Category.getSubCatByParCatId(params['id'])
     end
-    
-  end
 
+  end
 end
