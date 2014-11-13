@@ -60,7 +60,7 @@ angular.module('yunakQuiz.permission', ['ngRoute'])
             defer.resolve(result);
           }).error(function(data){
             result = data;
-            defer.resolve(result);
+            defer.reject(result);
           });
       return defer.promise;     
     }
