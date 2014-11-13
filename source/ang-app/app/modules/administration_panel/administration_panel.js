@@ -16,16 +16,16 @@
       }
     });
 
-    app.controller('ModalDeleteCtrl', ['$scope','$modalInstance', function($scope, $modalInstance) {
+    app.controller('ModalConfirmCtrl', ['$scope','$modalInstance', function($scope, $modalInstance) {
   
     $scope.clearMsg = function(){
-      if($scope.errorMsg) $scope.deleteConfirm = "";
+      if($scope.errorMsg) $scope.enteredPassword = "";
       $scope.errorMsg ="";
     };
 
     $scope.ok = function () {
       var password = 1911;
-      if($scope.deleteConfirm == password){
+      if($scope.enteredPassword == password){
         $scope.clearMsg();
         $modalInstance.close();
       }
@@ -36,6 +36,29 @@
       $modalInstance.dismiss('cancel');
     };
 
-}]);
+    }]);
+
+    app.controller('ModalStatusCtrl', ['$scope','$modalInstance', function($scope, $modalInstance) {
+  
+    $scope.clearMsg = function(){
+      if($scope.errorMsg) $scope.enteredPassword = "";
+      $scope.errorMsg ="";
+    };
+
+    $scope.ok = function () {
+      var password = 1911;
+      if($scope.enteredPassword == password){
+        $scope.clearMsg();
+        $modalInstance.close($scope.newUserRole);
+      }
+      else{$scope.errorMsg = "Невірний пароль!"}
+    };
+
+    $scope.cancel = function () {
+      $modalInstance.dismiss('cancel');
+    };
+
+    }]);
+
 
 })();

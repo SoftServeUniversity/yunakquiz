@@ -45,7 +45,7 @@
       $scope.deleteUser = function(userId){
         var modalDelete = $modal.open({
           templateUrl: 'modules/administration_panel/modalDeleteUser.html',
-          controller: 'ModalDeleteCtrl',
+          controller: 'ModalConfirmCtrl',
           size: 'sm'
         });
         modalDelete.result.then(function () {
@@ -53,7 +53,36 @@
             $scope.searchQuery();
           });
         });
-              };
+      };
+
+      $scope.blockUnblockUser = function(userId){
+        var modalBlock = $modal.open({
+          templateUrl: 'modules/administration_panel/modalBlockUser.html',
+          controller: 'ModalConfirmCtrl',
+          size: 'sm'
+        });
+        modalBlock.result.then(function () {
+          $http.put('http://localhost:9292/admin/users'+userId).success(function(data) {
+            $scope.searchQuery();
+          });
+        });
+      };
+
+      $scope.changeStatusUser = function(userId){
+        var modalBlock = $modal.open({
+          templateUrl: 'modules/administration_panel/modalStatusUser.html',
+          controller: 'ModalStatusCtrl',
+          size: 'sm'
+        });
+        modalBlock.result.then(function (newUserRole) {
+          $scope.newUserRole = {
+            role: newUserRole
+          }
+          $http.put('http://localhost:9292/admin/user_role'+userId, $scope.newUserRole).success(function(data) {
+            $scope.searchQuery();
+          });
+        });
+      };
 
       $scope.searchQuery();
 

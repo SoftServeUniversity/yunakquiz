@@ -97,7 +97,7 @@ module PlastApp
 
     post '/admin/users' do
       data = JSON.parse(request.body.read)
-      @users = User.quiz_query(data['status'], data['searchData'],data['currentPage'],data['itemsPerPage'], data['roles'])
+      @users = User.user_query(data['status'], data['searchData'],data['currentPage'],data['itemsPerPage'], data['roles'])
      response_helper @users, "Users not found!"
     end
 
@@ -107,8 +107,34 @@ module PlastApp
         user.destroy
         return [200, 'ok']
       end
-      return [400, 'bad request']
+      return [400, 'User not found']
     end
 
+    put '/admin/users:id' do
+      user = User.find(params['id'])
+      if !user.nil?
+        if user.enabled?
+          user.blocked!
+          user.save
+        else 
+          user.enabled!
+          user.save
+        end
+        return [200, 'ok']
+      end
+      return [400, 'user not found']
     end
+
+    put '/admin/user_role:id' do
+      data = JSON.parse(request.body.read)
+      user = User.find(params['id'])
+      if !user.nil?
+          user.role_id = data['role'].to_i
+          user.save
+          return [200, 'ok']
+      end
+      return [400, 'user not found']
+    end
+
+  end
 end
