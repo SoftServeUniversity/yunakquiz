@@ -15,20 +15,20 @@ describe('aboutUs', function(){
     browser.get('http://localhost:8000/#/about-us'); 
     
     var aboutUsTitleElement = element.all(by.css('.pageTitle')).getText();
-    function aboutUsContentCheck(){
-      expect(element.all(by.css('h5')).getText()).toMatch(aboutUsMatch);
-    }
     
     beforeEach(function() {
       browser.get('http://localhost:8000/#/about-us'); 
     });
-
-    it('should have page title "Про пласт"', function() {
-      expect(aboutUsTitleElement).toMatch(aboutUsTitle);
-    }); 
-    it('should have page which contain frase "ABOUT US WORKS"', function() {
-      aboutUsContentCheck();
-    }); 
+    function aboutUsContentCheck(){
+      expect(element.all(by.css('h5')).getText()).toMatch(aboutUsMatch);
+    }
+      it('should have page title "Про пласт"', function() {
+        expect(aboutUsTitleElement).toMatch(aboutUsTitle);
+      }); 
+      it('should have page which contain frase "ABOUT US WORKS"', function() {
+        aboutUsContentCheck();
+      }); 
   });
+  
 });
 
