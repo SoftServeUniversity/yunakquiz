@@ -7,6 +7,9 @@
           when('/about-us', {
             templateUrl: './modules/partials/about-us.html',
             controller: 'aboutUs'
+          }).
+          when('/contacts', {
+            templateUrl: './modules/partials/contacts-page.html',
           })
       }
     ]);
