@@ -57,13 +57,9 @@
   font: 18px italic arial;     
   color: #9b9a9a;
 }
-.pageTitleBox {
+.pageTitle{
   line-height: 50px;
   margin-bottom: 20px;
-}
-.pageTitle {
-  margin-bottom: 15px;
-  margin-top: 15px;
   text-align: center;
 }
 .greetings-container{
@@ -110,7 +106,30 @@
 }
 /* end assessment styles */
 
-/*from category container*/
+/*Category Container*/
+.triangle-topright {
+  width: 0;
+  height: 0;
+  border-top: 15px solid rgb(6,106,255);
+  border-left: 15px solid transparent;
+}
+.rectangle {
+  color:white;
+  position: relative;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 2px;
+  display: block;
+  width: 120px;
+  height: 23px;
+  overflow: hidden;
+  background: rgb(74,147,255);
+  text-align: center;
+  z-index: 2;
+}
+.rectangle a {
+color: white;
+}
 .categories-container{
   border: 1px solid #ccc;
   padding: 18px 20px 0px;
@@ -120,6 +139,7 @@
   z-index: 1;
 }
 /* eof Category container*/
+
 /*contacts page*/
 .categories-container .contacts{
   padding-bottom: 20px;
@@ -132,4 +152,4 @@
 .contact-us h4{
   color:#5bc0de;
 }
-
+/*eof contacts page*/

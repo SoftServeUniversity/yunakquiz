@@ -6,10 +6,11 @@
         $routeProvider.
           when('/about-us', {
             templateUrl: './modules/partials/about-us.html',
+            controller: 'aboutUs'
           }).
           when('/contacts', {
             templateUrl: './modules/partials/contacts-page.html',
-            controller:'contacts'
+            controller: 'contacts'
           })
       }
     ]);
@@ -24,6 +25,14 @@
 
         contactsRead.success(function(data){
           $scope.contacts = data;
+        });
+    }]);
+    app.controller('aboutUs', 
+      ['$scope', '$http', '$sce', 'aboutUsReadUpdate', function ($scope, $http, $sce, aboutUsReadUpdate) {
+        $scope.about_Us = '';
+
+        aboutUsReadUpdate.read().success(function(data){
+          $scope.about_Us = $sce.trustAsHtml(data[0].about_us);
         });    
     }])
 })(); 
