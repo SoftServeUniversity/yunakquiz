@@ -6,15 +6,15 @@ describe('HomePage', function(){
   var mockModule = require('../mocked-backend.js');
   var headerMenuTitle = 'Система Пластових електронних опитників';
   var HeaderMenu = [
-      {menuName: 'Головна', menuId: 'headerPrimary',url: 'http://localhost:8000/#/'},
-      {menuName: 'Пошук', menuId: 'headerSearch', url: 'http://localhost:8000/#/guest-search'},
-      {menuName: 'Контакти', menuId: 'headerContacts', url: 'http://localhost:8000/#/contacts'},
-      {menuName: 'Статистика', menuId: 'headerStatistics', url: 'http://localhost:8000/#/statistics'}
+      {menuName: 'Головна', menuClass: '.menuHomeLnk',url: 'http://localhost:8000/#/'},
+      {menuName: 'Пошук', menuClass: '.menuSearchLnk', url: 'http://localhost:8000/#/guest-search'},
+      {menuName: 'Контакти', menuClass: '.menuContactsLnk', url: 'http://localhost:8000/#/contacts'},
+      {menuName: 'Статистика', menuClass: '.menuStatisticsLnk', url: 'http://localhost:8000/#/statistics'}
       ];
   var FooterMenu = [
-      {menuName: 'Головна', menuId: 'footerPrimary', url: 'http://localhost:8000/#/'},
-      {menuName: 'Про Нас', menuId: 'footerAbout', url: 'http://localhost:8000/#/about-us'},
-      {menuName: 'Контакти', menuId: 'footerContacts', url: 'http://localhost:8000/#/contacts'},
+      {menuName: 'Головна', menuClass: '.footerHomeLnk', url: 'http://localhost:8000/#/'},
+      {menuName: 'Про Нас', menuClass: '.footerAboutLnk', url: 'http://localhost:8000/#/about-us'},
+      {menuName: 'Контакти', menuClass: '.footerContactsLnk', url: 'http://localhost:8000/#/contacts'},
       ];
   var parCategories = [
       {catName: 'Спорт', testcount: 'Тестів: 8', subcatQuantity: 3, url: 'http://localhost:8000/#/parentcat-page/1'},
@@ -48,7 +48,7 @@ describe('HomePage', function(){
 
   function checkMenuItems(menuName){
     menuName.forEach(function(menuItem){
-      var curelem = element(by.id(menuItem.menuId)).getText();
+      var curelem = element(by.css(menuItem.menuClass)).getText();
 
       expect(curelem).toMatch(menuItem.menuName);
     });
@@ -56,7 +56,7 @@ describe('HomePage', function(){
 
   function menuItemsClick(menuName){
     menuName.forEach(function(menuItem){
-      var curelem = element(by.id(menuItem.menuId));
+      var curelem = element(by.css(menuItem.menuClass));
 
       curelem.click();
       expect(browser.getLocationAbsUrl()).toMatch(menuItem.url);
