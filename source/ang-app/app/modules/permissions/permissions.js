@@ -79,6 +79,8 @@ angular.module('yunakQuiz.permission', ['ngRoute'])
         defer.resolve(true);
       } else
         defer.resolve(false);
+      },function(reason) {
+        defer.reject(false);
       });
     return defer.promise;     
   }

@@ -35,14 +35,17 @@
       $scope.tab = 'Часті запитання';
 
       getAccess($scope.tab).then(function(data){
-        if(data) {
-          getQuestions.get().success(function(data){
+          if(data) {
+            getQuestions.get().success(function(data){
             $scope.Questions = data;
           });
-        } else {
-        $location.path( "/404" );
-        };
-      });
+          } else {
+            $location.path( "/404" );
+          }
+        },function(){
+          $location.path( "/404" ); 
+          }
+      );
     
       $scope.saveQuestion = function(data, id) {
         angular.extend(data, {id: id});

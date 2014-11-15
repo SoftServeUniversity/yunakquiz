@@ -32,9 +32,12 @@
           if(data) {
             $scope.readData();
           } else {
-          $location.path( "/404" );
-          };
-        });
+            $location.path( "/404" );
+          }
+        },function(){
+          $location.path( "/404" ); 
+          }
+        );
 
         $scope.readData = function(param){
 

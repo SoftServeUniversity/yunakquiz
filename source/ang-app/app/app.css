@@ -251,7 +251,7 @@ color: white;
 .admin-pan-category-add-input .ng-valid.ng-dirty{
   border-color: #78fa89;
 }
-.invalid{
+.captcha.invalid{
   border-color: #fa787e;
 }
 .admin-pan-category-add-captcha-rnd{
@@ -260,10 +260,7 @@ color: white;
 .admin-pan-category-add-input .form-control {
   font-weight: bold;
 }
-.admin-pan-category-del-msg,
-.admin-pan-category-del-err-msg,
-.admin-pan-category-edit-err-msg,
-.admin-pan-category-create-err-msg{
+.admin-pan-modal-msg{
   color:#c12e2a;
   text-align: center;
   font-weight: bold;

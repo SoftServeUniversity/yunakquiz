@@ -21,8 +21,11 @@
           if(data) {
             /*do thomething on access granted*/
           } else {
-          $location.path( "/404" );
-          };
-      });
+            $location.path( "/404" );
+          }
+        },function(){
+          $location.path( "/404" ); 
+          }
+      );
     }]);
 })();

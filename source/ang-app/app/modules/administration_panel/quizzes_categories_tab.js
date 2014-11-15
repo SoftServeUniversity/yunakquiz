@@ -101,11 +101,11 @@
 
     app.controller('quizzescategoriesTab', 
       ['$http', '$scope','categoriesQuery', 'categoryEdit', 'quizCount', 'addParCatTitle',
-       'captchaRnd', 'doCatHaveSubCat','getSubCats','getParCats','getTabTemplates', '$location','getAccess',
+       'captchaRnd', 'doCatHaveSubCat','getSubCats','getParCats','getTabTemplates', '$location','getAccess','$modal',
        function ($http, $scope, categoriesQuery, categoryEdit, quizCount, addParCatTitle,
-        captchaRnd, doCatHaveSubCat, getSubCats, getParCats, getTabTemplates, $location, getAccess){
+        captchaRnd, doCatHaveSubCat, getSubCats, getParCats, $location,$modal, getAccess){
       $scope.tab = 'Категорії тестів';
-      $scope.categories = {};
+      $scope.allCategories = {};
       $scope.currentCategory = {};
       $scope.currentCatToEdit = {};
       $scope.catToDelete = {};
@@ -115,25 +115,34 @@
       $scope.subCategories = [];
       $scope.captchaInput = '';
       $scope.captchaText = '';
+      $scope.errorModalMsg = '';
+      $scope.catExistErr = 'Така категорія вже існує';
+      $scope.catEditServerErr = 'Помилка при редагуванні';
+      $scope.catHaveSubCatMsg = 'Увага, категорія містить підкатегорії';
+      $scope.catDeleteServerErr = 'Помилка при видаленні';
+      $scope.catDelRelationalDataMsg = 'Увага, будуть видалені підкатегорії та інші пов\'язані дані';
       
       getAccess($scope.tab).then(function(data){
         if(data) {
         updateCatPage();
-      } else {
-        $location.path( "/404" );
-      }
-      });
+        } else {
+          $location.path( "/404" );
+        }
+      },function(){
+        $location.path( "/404" ); 
+        }
+      );
 
       $scope.createCategory = function(){
         var request = {id:$scope.subParCatSelect.id, title:$scope.currentCategory.title};
         
-        if(captchaValidate('#captchaAdmPanCreateCat')){
+        if(captchaValidate()){
           categoryEdit.create(request).success(function(data){
             $("#createCatModal").modal("hide");
             updateCatPage();
           })
           .error(function(data){
-            $('.admin-pan-category-create-err-msg').show();
+            $scope.errorModalMsg = $scope.catExistErr;
           });
         };
       };
@@ -144,12 +153,12 @@
          category_id: $scope.subParCatSelect.id,
          title: $scope.catToEdit.title};
 
-        if(captchaValidate('#captchaAdmPanEditCat')){ 
+        if(captchaValidate()){ 
           categoryEdit.update(request).success(function(data){
             $("#editCatModal").modal("hide");
             updateCatPage();
           }).error(function(data){
-            $('.admin-pan-category-edit-err-msg').show();
+            $scope.errorModalMsg = $scope.catEditServerErr;
           });
         };
       };
@@ -157,12 +166,12 @@
       $scope.deleteCategory = function(){
         var request = $scope.catToDelete.id;
         
-        if(captchaValidate('#captchaAdmPanDeleteCat')){ 
+        if(captchaValidate()){ 
           categoryEdit.delCat(request).success(function(data){
             $("#deleteCatModal").modal("hide");
             updateCatPage();
           }).error(function(data){
-            $('.admin-pan-category-create-err-msg').show();
+            $scope.errorModalMsg = $scope.catDeleteServerErr;
           });
         };
       };
@@ -178,7 +187,7 @@
         $scope.captchaText = captchaRnd();
         jQuery.extend($scope.catToDelete,category);
         setCurCatEditDlg(category);
-        showHideAlertMsgButtons(category, ".admin-pan-category-del-msg", "#dropdownSubCats", false);
+        showHideAlertMsgButtons(category, $scope.catDelRelationalDataMsg, false);
         $("#deleteCatModal").modal("show");
       };
       
@@ -188,7 +197,7 @@
         jQuery.extend($scope.currentCatToEdit,category);
         jQuery.extend($scope.catToEdit,category); //we do not need two way data binding here
         setCurCatEditDlg(category);
-        showHideAlertMsgButtons(category, ".admin-pan-category-del-msg", "#dropdownSubCatsEdit", true);
+        showHideAlertMsgButtons(category, $scope.catHaveSubCatMsg, true);
         $("#editCatModal").modal("show");
       };
 
@@ -210,13 +219,8 @@
         $scope.captchaInput = '';
         $scope.captchaRnd = '';
         $("#selSubCatEdit").prop('disabled', false);
-        $('.admin-pan-category-del-err-msg').hide();
-        $('.admin-pan-category-del-msg').hide();
-        $('.admin-pan-category-create-err-msg').hide();
-        $('.admin-pan-category-edit-err-msg').hide();
-        $("#captchaAdmPanCreateCat").removeClass("invalid");
-        $("#captchaAdmPanEditCat").removeClass("invalid");
-        $("#captchaAdmPanDeleteCat").removeClass("invalid");
+        $scope.errorModalMsg = '';
+        $(".captcha").removeClass("invalid");
       };
       
       function updateCatPage(){
@@ -226,26 +230,26 @@
           $scope.parCatGrouped = getParCats(data);
           subCats = getSubCats(data);
           $scope.subParCatSelect = addDefaultOption($scope.parCatGrouped, $scope.subParCatSelect);
-          $scope.categories = addParCatTitle(data);
+          $scope.allCategories = addParCatTitle(data);
           $scope.groupedQuizzes = quizCount(subCats);
           $scope.clearForm();
         });
       };
 
-      function showHideAlertMsgButtons(category, msgClass, dropDownId, parCatSelLock) {
-        var result = doCatHaveSubCat(category, $scope.categories, $scope.subCategories)
+      function showHideAlertMsgButtons(category, alertMsg, parCatSelLock) {
+        var result = doCatHaveSubCat(category, $scope.allCategories, $scope.subCategories)
         if(result.haveCats){
            $scope.subCategories = result.subCatsList;
           //show hidden button and alert message,lock select parCat;
-          $(msgClass).show();
-          $(dropDownId).show();
+          $scope.errorModalMsg = alertMsg;
+          $(".dropdownSubCats").show();
           if(parCatSelLock) {
             $("#selSubCatEdit").prop('disabled', true);
           };
         } else {
           //hidde button and alert message;
-          $(msgClass).hide();
-          $(dropDownId).hide();
+          $scope.errorModalMsg = '';
+          $(".dropdownSubCats").hide();
         };
       };
 
@@ -257,13 +261,13 @@
           return optionByBindName;
       };
 
-      function captchaValidate(id){
+      function captchaValidate(){
         if(parseInt($scope.captchaInput) === $scope.captchaText) {
           return true;
         } else {
           $scope.captchaText = captchaRnd();
           $scope.captchaInput ='';
-          $(id).addClass("invalid");
+          $('.captcha').addClass("invalid");
           return false;
         };
       }

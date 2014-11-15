@@ -13,13 +13,16 @@
 
           getTabTemplates.getResponse().then(function(data){
             $scope.tabs = data;
-            if (data.length > 0){
+            if(data.length > 0){
               $scope.results = data;
             }
             else{
-             $location.path( "/404" );
+              $location.path( "/404" );
             };
-          });
+          },function() {
+            $location.path( "/404" );
+            }
+          );
           $scope.isSelected = function (tab,curent) {
             if($scope.tabs){
               return curent ===  tab;

@@ -15,11 +15,14 @@
       $scope.tab = 'Адміністрація';
 
       getAccess($scope.tab).then(function(data){
-        if(data) {
+          if(data) {
             /*do thomething on access granted*/
-        } else {
-          $location.path( "/404" );
-        };
-      });
+          } else {
+            $location.path( "/404" );
+          }
+        },function(){
+          $location.path( "/404" ); 
+          }
+        );
     }]);
 })();

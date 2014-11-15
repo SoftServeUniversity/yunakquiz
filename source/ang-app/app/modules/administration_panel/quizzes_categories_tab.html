@@ -12,7 +12,7 @@
     </div>
   </div>
   <div class="panel-body">
-    <div ng-repeat="category in categories">
+    <div ng-repeat="category in allCategories">
       <a class="list-group-item col-xs-12">
         <div class="col-xs-1 text-center">{{category.id}}</div>
         <div class="col-xs-2 text-center">{{category.title}}</div>
@@ -36,7 +36,7 @@
           </button>
           <h4 class="modal-title text-center" id="myModalLabel">
             <label>Створення Категорії</label>
-            <div class="admin-pan-category-create-err-msg">Така категорія вже існує</div>
+            <div class="admin-pan-modal-msg">{{errorModalMsg}}</div>
           </h4>
         </div>
       </div>
@@ -57,7 +57,7 @@
           </div>
           <div class="row">
             <div class="col-xs-4 pull-right">
-              <input type="text" class="form-control" id="captchaAdmPanCreateCat" placeholder="Введіть число..." ng-model="captchaInput" required>
+              <input type="text" class="form-control captcha" placeholder="Введіть число..." ng-model="captchaInput" required>
             </div>
               <div class="col-xs-2 admin-pan-category-add-captcha-rnd pull-right" ng-bind="captchaText"></div>
           </div>
@@ -80,9 +80,8 @@
         </button>
         <h4 class="modal-title text-center" id="myModalLabel">
           <label>Редагувати категорію</label>
-          <div class="admin-pan-category-edit-err-msg">Помилка при редагуванні</div>
         </h4>
-        <div class="admin-pan-category-del-msg">Увага, категорія містить підкатегорії</div>
+        <div class="admin-pan-modal-msg">{{errorModalMsg}}</div>
       </div>
       <form name="editCat" ng-submit="editCat.$valid && updateCategory()" novalidate>
         <div class="modal-body">
@@ -101,14 +100,14 @@
           </div>
           <div class="row">
             <div class="col-xs-4 pull-right">
-              <input type="text" class="form-control" id="captchaAdmPanEditCat" placeholder="Введіть число..." ng-model="captchaInput" required>
+              <input type="text" class="form-control captcha" placeholder="Введіть число..." ng-model="captchaInput" required>
             </div>
               <div class="col-xs-2 admin-pan-category-add-captcha-rnd pull-right" ng-bind="captchaText"></div>
           </div>
         </div>
         <div class="modal-footer">
           <div class="btn-group pull-left" dropdown is-open="modalEditdropDown.isopen">
-            <button type="button" class="btn btn-danger dropdown-toggle" ng-disabled="disabled" id="dropdownSubCatsEdit">Підкатегорії
+            <button type="button" class="btn btn-danger dropdown-toggle dropdownSubCats" >Підкатегорії
               <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" role="menu">
@@ -133,9 +132,8 @@
           </button>
         <h4 class="modal-title text-center" id="myModalLabel">
           <label>Видалити категорію</label>
-          <div class="admin-pan-category-del-err-msg">Помилка при видаленні</div>
         </h4>
-        <div class="admin-pan-category-del-msg">Увага, будуть видалені підкатегорії та інші пов'язані дані</div>
+        <div class="admin-pan-modal-msg">{{errorModalMsg}}</div>
         </div>
       </div>
       <form name="editCat" ng-submit="deleteCategory()">
@@ -151,13 +149,13 @@
           <div class="row">
             <div class="col-xs-2 col-xs-offset-2 admin-pan-category-add-captcha-rnd" ng-bind="captchaText"></div>
             <div class="col-xs-4 col-xs-offset-1">
-              <input type="text" class="form-control" id="captchaAdmPanDeleteCat" placeholder="Введіть число..." ng-model="captchaInput" required>
+              <input type="text" class="form-control captcha" placeholder="Введіть число..." ng-model="captchaInput" required>
             </div>
           </div>
         </div>
         <div class="modal-footer">
           <div class="btn-group pull-left" dropdown is-open="modalDeldropDown.isopen">
-            <button type="button" class="btn btn-danger dropdown-toggle" ng-disabled="disabled" id="dropdownSubCats">Підкатегорії
+            <button type="button" class="btn btn-danger dropdown-toggle dropdownSubCats">Підкатегорії
               <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" role="menu">
