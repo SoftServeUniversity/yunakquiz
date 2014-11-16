@@ -33,9 +33,8 @@ module PlastApp
       search_string = "SELECT GROUP_CONCAT(tag, \' \') as allTags, quizzes.*\
       FROM quizzes JOIN quizzes_tags ON quizzes_tags.quiz_id = quizzes.id\
       JOIN tags ON quizzes_tags.tag_id = tags.id WHERE category_id IN (?)\
-      AND status IN (?)\
-      GROUP BY quizzes.title HAVING allTags LIKE \"%"\
-       << search_request[:tags][0] << "%\""
+      AND status IN (?) GROUP BY quizzes.title HAVING \
+      allTags LIKE \"%{search_request[:tags][0]}%\""
 
       # Removing first element from array
       search_request[:tags].shift 
