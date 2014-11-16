@@ -35,7 +35,7 @@
     });
     quizesById.get().success(function(data){
       $scope.quizzes = data;
-      console.log = data;
+    //  console.log = data;
     });          
         
     $scope.numberTest = function(subcat_id){
