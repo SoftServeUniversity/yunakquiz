@@ -13,7 +13,8 @@ class CreateUsersTable < ActiveRecord::Migration
       table.string "plast_level"
       table.string "picture"
       table.integer "role_id"
-      table.integer "status", :default => 1
+      #table.integer "status", :default => 1
+      table.boolean "blocked", :default => false
       table.timestamps
     end 
   end
