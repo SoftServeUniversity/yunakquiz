@@ -7,58 +7,26 @@
                           <!--Here go category selection-->
   <div class="row">  
     <div class="well col-xs-offset-1 col-xs-3">
-
-
-      <div ng-repeat="parCat in allCats | filter: {category_id: '0'}">
-              
-        <a  class="list-group-item"
-            ng-init="parCat.search=false"
-            ng-click="selectSubCat(allCats, parCat)"
-            ng-class="{active: parCat.search}"> 
-            {{parCat.title}} 
-        </a>
-
-        <div ng-repeat="subCat in allCats"> 
-
-          <a  ng-if="subCat.category_id === parCat.id"
-              class="list-group-item col-xs-offset-1"
-              ng-init="subCat.search=false" 
-              ng-class="{search_subcat_select: subCat.search}"
-              ng-click="subCat.search = !subCat.search">
-              {{subCat.title}}
-          </a>
-        </div>
-      </div>
-
-      <button class="guestSearchMarginTop btn btn-info btn-block" 
-              ng-click="searchData(allCats, searchRequest.tags)">
-              Застосувати фільтр
-      </button>
-
+      <guestsearchcat search-results="searchResults" 
+                      all-cats="allCats" 
+                      search-error="searchError" 
+                      tags="tags"
+                      total-items="totalItems"
+                      current-page="currentPage">
+      </guestsearchcat>
     </div>
                       <!--End of category selection-->
 
                           <!--Tags input block-->
 
     <div class="col-xs-7">
-      <form ng-submit="searchData(allCats, searchRequest.tags)"> 
-        <div class="input-group">
-          <tags-input type="text" 
-                      class="bootstrap" 
-                      placeholder="введіть шось для пошуку..." 
-                      ng-model="tags" 
-                      add-on-space="true"
-                      min-length="1"
-                      add-on-comma="false"
-                      add-on-enter="false">
-          </tags-input>
-          <span class="input-group-btn btn-block">
-            <input  type="submit" 
-                    class="btn btn-primary" 
-                    value="Пошук"/>
-          </span>  
-        </div>                  
-      </form>
+      <guestsearchtag search-results="searchResults" 
+                      all-cats="allCats" 
+                      search-error="searchError" 
+                      tags="tags"
+                      total-items="totalItems"
+                      current-page="currentPage">      
+      </guestsearchtag>
                       <!--End of tags input block-->
 
                             <!--Error block-->

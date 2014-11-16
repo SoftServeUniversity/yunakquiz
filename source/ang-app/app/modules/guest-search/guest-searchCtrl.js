@@ -40,7 +40,7 @@ guestSearch.controller('SearchCtrl', ['$scope', '$http',
   // Function that creates searchRequest object and
   // Make search request 
   // and checks recived data
-  $scope.searchData = function(allCats, searchRequest) {
+  $scope.searchData = function(allCats) {
 
     // Clean searchRequest variable
     $scope.searchRequest = {categories_id:[], tags:[]};
