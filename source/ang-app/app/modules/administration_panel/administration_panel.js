@@ -16,6 +16,13 @@
       }
     });
 
+    app.constant('Roles', {
+      1: "Адміністратор",
+      2: "Користувач",
+      3: "Модератор",
+      4: "Убер адміністратор"
+    });
+
     app.controller('ModalConfirmCtrl', ['$scope','$modalInstance', function($scope, $modalInstance) {
   
     $scope.clearMsg = function(){
@@ -24,7 +31,7 @@
     };
 
     $scope.ok = function () {
-      var password = 1911;
+      var password = "qwerty";
       if($scope.enteredPassword == password){
         $scope.clearMsg();
         $modalInstance.close();
@@ -38,7 +45,9 @@
 
     }]);
 
-    app.controller('ModalStatusCtrl', ['$scope','$modalInstance', function($scope, $modalInstance) {
+    app.controller('ModalStatusCtrl', ['$scope','$modalInstance', 'Roles', 'userRole', function($scope, $modalInstance, Roles, userRole) {
+    $scope.roles = Roles;
+    $scope.userRole = userRole;
   
     $scope.clearMsg = function(){
       if($scope.errorMsg) $scope.enteredPassword = "";
@@ -46,7 +55,7 @@
     };
 
     $scope.ok = function () {
-      var password = 1911;
+      var password = "qwerty";
       if($scope.enteredPassword == password){
         $scope.clearMsg();
         $modalInstance.close($scope.newUserRole);

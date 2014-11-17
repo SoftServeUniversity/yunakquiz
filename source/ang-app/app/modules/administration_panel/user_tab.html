@@ -13,12 +13,12 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat="user in users">
+			<tr ng-repeat="user in users" class="slide-top">
 				<td class="text-center">{{user.username}}</td>
 				<td class="text-center">{{user.first_name + " " + user.last_name}}</td>
 				<td class="text-center">{{user.email}}</td>
 				<td>
-					<a ng-click="changeStatusUser(user.id)" type="button" class="btn btn-success btn-xs">Змінити статус</a>
+					<a ng-click="changeStatusUser(user.id, user.role_id)" type="button" class="btn btn-success btn-xs">Змінити статус</a>
 				</td>
 				<td>
 					<a ng-click="blockUnblockUser(user.id)" type="button" class="btn btn-warning btn-xs">Внести в чорний список</a>

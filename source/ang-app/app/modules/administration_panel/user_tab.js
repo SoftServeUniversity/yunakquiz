@@ -1,11 +1,11 @@
 (function (){
   var  app = angular.module('yunakQuiz.userTab' ,['ngRoute']);
 
-    app.config(['$routeProvider',
-      function($routeProvider) {
+    app.config(['$routeProvider','$locationProvider',
+      function($routeProvider, $locationProvider) {
         $routeProvider.
           when('/administration-panel/', {
-            templateUrl: './modules/administration_panel/user_tab.html',
+            templateUrl: 'modules/administration_panel/user_tab.html',
             controller: 'userTab'
           }).
           when('/administration-panel/userTab', {
@@ -14,10 +14,8 @@
       }
     ]);
 
-    app.controller('userTab', ['$scope','$http','$location','$modal', function ($scope, $http, $location, $modal) {
-
+    app.controller('userTab', ['$scope','$http','$location','$modal', 'Roles', function ($scope, $http, $location, $modal, Roles) {
       $scope.tab = 'userTab';
-
       $scope.outputData={
         currentPage: 1,
         itemsPerPage: 10,
@@ -68,11 +66,16 @@
         });
       };
 
-      $scope.changeStatusUser = function(userId){
+      $scope.changeStatusUser = function(userId, userRole){
         var modalBlock = $modal.open({
           templateUrl: 'modules/administration_panel/modalStatusUser.html',
           controller: 'ModalStatusCtrl',
-          size: 'sm'
+          size: 'sm', 
+          resolve: {
+            userRole: function () {
+              return userRole;
+            }
+          }
         });
         modalBlock.result.then(function (newUserRole) {
           $scope.newUserRole = {

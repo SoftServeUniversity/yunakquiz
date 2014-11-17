@@ -5,15 +5,16 @@
       function($routeProvider) {
         $routeProvider.
           when('/administration-panel/administrationTab', {
-            templateUrl: './modules/administration_panel/administration_tab.html',
+            templateUrl: 'modules/administration_panel/administration_tab.html',
             controller: 'administrationTab'
           })
       }
     ]);
 
-    app.controller('administrationTab', ['$scope','$http','$location','$modal', function ($scope, $http, $location, $modal) {
+    app.controller('administrationTab', ['$scope','$http','$location','$modal', 'Roles', function ($scope, $http, $location, $modal, Roles) {
       $scope.tab = 'administrationTab';
-
+      $scope.roles = Roles;
+      
       $scope.outputData={
         currentPage: 1,
         itemsPerPage: 10,
@@ -66,11 +67,16 @@
 
       $scope.searchQuery();
 
-      $scope.changeStatusUser = function(userId){
+      $scope.changeStatusUser = function(userId, userRole){
         var modalBlock = $modal.open({
           templateUrl: 'modules/administration_panel/modalStatusUser.html',
           controller: 'ModalStatusCtrl',
-          size: 'sm'
+          size: 'sm', 
+          resolve: {
+            userRole: function () {
+              return userRole;
+            }
+          }
         });
         modalBlock.result.then(function (newUserRole) {
           $scope.newUserRole = {

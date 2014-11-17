@@ -5,9 +5,9 @@
 <div class="form-group">
 	<label for="role">Статус:</label>
 	<select id="role" ng-model="newUserRole" class="form-control">
-		  <option value="2" >Користувач</option>
-		  <option value="1" >Адміністратор</option>
-		  <option value="3" >Модератор</option>
+		  <option value="2" ng-selected="userRole == 2">{{roles[2]}}</option>
+		  <option value="1" ng-selected="userRole == 1">{{roles[1]}}</option>
+		  <option value="3" ng-selected="userRole == 3">{{roles[3]}}</option>
 	</select>
 </div>
 <div class="form-group">

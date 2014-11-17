@@ -4,6 +4,7 @@
 angular.module('yunakQuiz', [
   'ui.bootstrap',
   'ngRoute',
+  'ngAnimate',
   'yunakQuiz.measures',
   'yunakQuiz.assessments',
   'yunakQuiz.users',

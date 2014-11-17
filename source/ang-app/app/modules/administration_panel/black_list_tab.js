@@ -66,11 +66,16 @@
 
       $scope.searchQuery();
 
-      $scope.changeStatusUser = function(userId){
+      $scope.changeStatusUser = function(userId, userRole){
         var modalBlock = $modal.open({
           templateUrl: 'modules/administration_panel/modalStatusUser.html',
           controller: 'ModalStatusCtrl',
-          size: 'sm'
+          size: 'sm', 
+          resolve: {
+            userRole: function () {
+              return userRole;
+            }
+          }
         });
         modalBlock.result.then(function (newUserRole) {
           $scope.newUserRole = {
