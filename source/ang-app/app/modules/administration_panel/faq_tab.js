@@ -16,7 +16,7 @@
     editableOptions.theme = 'bs3';
   });
 
-  app.factory("getQuestions", ['$http', function ($http) {
+  app.factory("QuestionsService", ['$http', function ($http) {
     return { 
       get : function() {
         return $http.get('http://localhost:9292/faq');
@@ -31,12 +31,12 @@
       }
     }
   }]);
-    app.controller('faqTab', ['$http', 'getQuestions', '$scope', function ($http, getQuestions, $scope) {
+    app.controller('faqTab', ['$http', 'QuestionsService', '$scope', function ($http, QuestionsService, $scope) {
       $scope.tab = 'faqTab';
       $scope.showButton = false;
 
       var init = function(){
-        getQuestions.get().success(function(data){
+        QuestionsService.get().success(function(data){
           $scope.Questions = data;
         }) 
       };
@@ -44,14 +44,14 @@
       $scope.saveQuestion = function(data, id) {
         angular.extend(data, {id: id});
       //  $scope.validate(id);
-        getQuestions.put(data).success(function(){
+        QuestionsService.put(data).success(function(){
           init();
         });   
         $scope.showButton = false;
       };
 
       $scope.removeQuestion = function(index) {
-        getQuestions.delete(index).success(function(){
+        QuestionsService.delete(index).success(function(){
           init();
         });
       };      

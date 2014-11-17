@@ -13,6 +13,7 @@ describe('faq page', function(){
 		{"id": 5, "faq_question": "Чи можна для пошук вибрати якусь конкретну підкатегорію?", "faq_answer": "Так, звичайно."}
 	];
 
+	var tabPosition = 5;
 	var allQuestions = 5;
 	var generalTitle = "Адміністративна панель";
 	var faqTabTitle = "Часті питання";
@@ -22,7 +23,7 @@ describe('faq page', function(){
  	});
 	 		
 		
- 	// testing FAQ page
+ 	// testing FAQ page for Administration panel
 
 	describe('faq page', function(){
 
@@ -36,7 +37,7 @@ describe('faq page', function(){
 
 	   	it('should see faq page title', function(){
 	   		var faqTabT = element.all(by.css('section li a'));
-	   		expect(faqTabT.get(5).getText()).toMatch(faqTabTitle);
+	   		expect(faqTabT.get(tabPosition).getText()).toMatch(faqTabTitle);
 	   	});
 
 	   	it('should all questions and answers on the page', function(){
