@@ -7,7 +7,7 @@
           <td id="eColSt">Edit</td>
         </tr>
         <tr ng-repeat="Question in Questions" >
-          <td>
+          <td class="someClass">
             <span class="inputClass" editable-text="Question.faq_question" e-name="Question" e-form="rowform" e-required>
             {{$index+1}}. {{Question.faq_question || 'Введіть питання'}} 
             </span></br>
