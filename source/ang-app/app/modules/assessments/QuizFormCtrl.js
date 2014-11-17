@@ -26,12 +26,38 @@ angular.module('yunakQuiz.assessments')
     $scope.selectedSubcat='';
   };
 
+  $scope.setSubcat = function(){
+    $scope.quiz.category_id = $scope.selectedSubcat.id;
+  };
+
+  $scope.selectCat = function(){
+    for (var i=0; i < $scope.categories.length; i++){   
+      if (selectSubcat($scope.categories[i].categories)){
+        $scope.selectedCat = $scope.categories[i];
+      }
+    };
+  }
+
+  function selectSubcat(subCatsArray){
+    for (var i=0; i < subCatsArray.length; i++){    
+      if (subCatsArray[i].id == $scope.quiz.category_id){
+        $scope.selectedSubcat = subCatsArray[i];
+        return true;
+      };
+    };
+  };
+
   $scope.addAnswer = function(question) {
     question.answers.push(new QuizDataService.Answer());
   };
 
   $scope.deleteAnswer = function(index, question) {
-    question.answers.splice(index, 1);
+    if (question.answers[index].id){
+      question.answers[index].toDelete = true;
+    }
+    else {  
+      question.answers.splice(index, 1);
+    }  
   }
 
   $scope.setCorrectAnswer=function(question,answer){
@@ -43,8 +69,13 @@ angular.module('yunakQuiz.assessments')
     $scope.quiz.questions.push(new QuizDataService.Question())    
   };
     
-  $scope.deleteQuestion=function(index){
-    $scope.quiz.questions.splice(index,1);
+  $scope.deleteQuestion = function(index, question){
+    if(question.id){
+      question.toDelete = true;
+    }
+    else{
+      $scope.quiz.questions.splice(index,1);
+    }
   };
 
   getCat();

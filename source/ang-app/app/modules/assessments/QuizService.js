@@ -19,9 +19,6 @@ yunakQuizApp.factory('QuizService', ['$http', function($http){
       if(question.answers[y].checked){
         question.invalid=false;
       }
-      else {
-        question.answers[y].checked = false
-      }
     };
   };
 
@@ -38,17 +35,15 @@ yunakQuizApp.factory('QuizService', ['$http', function($http){
     return quizValid;
   };
 
-
-
   /** Check all questions in quiz */
   function checkQuestions(questions){
     for (var i=0; i<questions.length; i++){
-      questions[i].nice = checkAnswer(questions[i]);
+      questions[i].nice = checkAnswers(questions[i]);
     }
   };
 
   /** check question for correct answers  */
-  function checkAnswer(question){
+  function checkAnswers(question){
     var correct=true;
     for (var i=0;i<question.answers.length; i++){
       if(question.answers[i].correct){
@@ -62,26 +57,22 @@ yunakQuizApp.factory('QuizService', ['$http', function($http){
     return correct;
   };
 
-
   /** count quiz score */
  function countCorrectAnswers(quiz){
     var questions = quiz.questions;
     var correctAnswers = 0;
-    checkQuestions(questions)
+    checkQuestions(questions);
     for (var i=0;i<questions.length; i++){
       if (questions[i].nice) {correctAnswers++}
     }
     var count = (correctAnswers / questions.length) * 100 ;
     count = count.toFixed(2);
     return +count;
-
   };
 
   function submitQuiz(){
     this.quiz.result = countCorrectAnswers(this.quiz);
     return postResult(this.quiz.id, this.quiz.result);
-
-    
   };
 
   return {
@@ -91,6 +82,5 @@ yunakQuizApp.factory('QuizService', ['$http', function($http){
     validateQuiz: validateQuiz,
     submitQuiz: submitQuiz
   }
-
 
 }]);

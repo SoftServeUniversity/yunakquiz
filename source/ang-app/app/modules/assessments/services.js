@@ -79,35 +79,8 @@ yunakQuizApp.factory('QuizData', ['$http', '$location', function($http, $locatio
     this.quiz.questions[0] = new Question();
   };
 
-  return {
-    quiz : quiz,
-    Question : Question,
-    Answer : Answer,
-    initQuiz : initQuiz  
-  }
-}])
-.factory('TagsService', ['$http', '$location', function($http, $location){
-  var back_url = 'http://localhost:9292';
-    return{
-      getTags: function(query){
-            return $http.get(back_url+'/tags/'+query)
-      }
-    }
-  }
-])
-.factory('CategoriesService', ['$http', '$location', function($http, $location){
-  var back_url = 'http://localhost:9292';
-    return{
-      getCat: function(){
-            return $http.get(back_url+'/categories') 
-      },
-    }
-  }
-])
-.factory('QuizValidation', [function(){
-
-  /** check all questions to be valid */
-  var validateQuiz = function(questions){
+  function validateQuiz(quiz){
+    var questions = quiz.questions;
     var invalid = false;
     for(var i = 0; i < questions.length;i++){
       if(!questions[i].toDelete){
@@ -131,28 +104,35 @@ yunakQuizApp.factory('QuizData', ['$http', '$location', function($http, $locatio
       };
     };
   };
-  return validateQuiz;
+ 
+  return {
+    quiz : quiz,
+    Question : Question,
+    Answer : Answer,
+    initQuiz : initQuiz,
+    validateQuiz : validateQuiz  
   }
-]);
-
-
-yunakQuizApp.service('tags', function($q) {
-  var tags = [
-    {"tag": "Tag1" },
-    {"tag": "Tag2" },
-    {"tag": "Tag3" },
-    {"tag": "Tag4" },
-    {"tag": "Tag5" },
-    {"tag": "Tag6" },
-    {"tag": "Tag7" },
-    {"tag": "Tag8" },
-    {"tag": "Tag9" },
-    {"tag": "Tag10" }
-  ];
   
-  this.load = function() {
-    var deferred = $q.defer();
-    deferred.resolve(tags);
-    return deferred.promise;
-  };
-});
+}])
+
+.factory('TagsService', ['$http', '$location', function($http, $location){
+  var back_url = 'http://localhost:9292';
+    return{
+      getTags: function(query){
+            return $http.get(back_url+'/tags/'+query)
+      }
+    }
+  }
+])
+
+.factory('CategoriesService', ['$http', '$location', function($http, $location){
+  var back_url = 'http://localhost:9292';
+    return{
+      getCat: function(){
+            return $http.get(back_url+'/categories') 
+      },
+    }
+  }
+])
+
+

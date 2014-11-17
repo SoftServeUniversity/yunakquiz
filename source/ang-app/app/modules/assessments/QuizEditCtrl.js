@@ -1,6 +1,8 @@
 'use strict';
 /** Quiz Edit controller  */
-yunakQuizApp.controller('QuizEditCtrl', ['$scope','QuizData', '$routeParams','tags', '$location','QuizValidation', function($scope, QuizData, $routeParams, tags, $location, QuizValidation) {
+yunakQuizApp.controller('QuizEditCtrl', 
+  ['$scope','QuizData', '$routeParams', '$location', 'QuizDataService', 
+  function($scope, QuizData, $routeParams, $location, QuizDataService) {
 
   /** get Quiz by ID */
   $scope.init = function(){
@@ -46,57 +48,57 @@ yunakQuizApp.controller('QuizEditCtrl', ['$scope','QuizData', '$routeParams','ta
     };
   };
 
-  $scope.clearSubcat = function(){
-    $scope.selectedSubcat='';
-  };
+  // $scope.clearSubcat = function(){
+  //   $scope.selectedSubcat='';
+  // };
 
   /** get all tags from backend*/
-  $scope.loadTags = function(query) {
-      return QuizData.getTags(query);
-  };
+  // $scope.loadTags = function(query) {
+  //     return QuizData.getTags(query);
+  // };
 
   /** add empty answer*/
-  $scope.addAnswer = function(question) {
-    question.answers.push({correct:false});
-  };
+  // $scope.addAnswer = function(question) {
+  //   question.answers.push({correct:false});
+  // };
 
   /** mark answer to delete in backend */
-  $scope.deleteAnswer = function(answer) {
-    answer.toDelete = true;
-  }
+  // $scope.deleteAnswer = function(answer) {
+  //   answer.toDelete = true;
+  // }
 
   /** set that this answer to be correct/incorrect */
-  $scope.setCorrectAnswer=function(question,answer){
-    question.invalid = false;
-    answer.correct = !answer.correct;
-  };
+  // $scope.setCorrectAnswer=function(question,answer){
+  //   question.invalid = false;
+  //   answer.correct = !answer.correct;
+  // };
 
   /** add empty question */
-  $scope.addQuestion = function(){
-    $scope.addQuestionDisabled = true;
-    $scope.quiz.questions.push({answers:[{correct:false},{correct:false}]});
-  };
+  // $scope.addQuestion = function(){
+  //   $scope.addQuestionDisabled = true;
+  //   $scope.quiz.questions.push({answers:[{correct:false},{correct:false}]});
+  // };
     
   /** delete question or mark to delete it on backend */  
-  $scope.deleteQuestion = function(question,index){
-    if(question.id){
-      question.toDelete = true;
-    }
-    else{
-      $scope.quiz.questions.splice(index,1);
-    }
-  };
+  // $scope.deleteQuestion = function(question,index){
+  //   if(question.id){
+  //     question.toDelete = true;
+  //   }
+  //   else{
+  //     $scope.quiz.questions.splice(index,1);
+  //   }
+  // };
 
 
 
   /** save draft Quiz */
   $scope.saveQuiz=function(){
-    $scope.sendQuiz("draft");
+    sendQuiz("draft");
   };
 
   /** save Quiz for review */
   $scope.reviewQuiz=function(){
-    $scope.sendQuiz("review");
+    sendQuiz("review");
   };
 
   /** send Quiz to backend  */
