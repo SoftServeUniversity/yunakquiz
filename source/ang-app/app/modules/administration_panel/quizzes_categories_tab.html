@@ -2,12 +2,12 @@
 <div class="panel panel-default">
   <div class="panel-heading admin-pan-category-add-head">
     <div class="row">
-      <div class="col-xs-1 text-center">№</div>
-      <div class="col-xs-2 text-center">Назва Категорії</div>
-      <div class="col-xs-3 text-center">Батьківська категорія</div>
-      <div class="col-xs-2 text-center">Кількість тестів</div>
+      <div class="col-xs-1 text-center catTitleId">№</div>
+      <div class="col-xs-2 text-center catTitleName">Назва Категорії</div>
+      <div class="col-xs-3 text-center catTitleParentName">Батьківська категорія</div>
+      <div class="col-xs-2 text-center quizTitleCount">Кількість тестів</div>
     <!-- Button trigger modal -->
-      <button class="btn btn-primary btn-sm  admin-pan-category-add-btn" ng-click="showCreateCatDlg()">Додати Категорію
+      <button class="btn btn-primary btn-sm admin-pan-category-add-btn" ng-click="showCreateCatDlg()">Додати Категорію
       </button>
     </div>
   </div>
@@ -79,7 +79,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
         <h4 class="modal-title text-center" id="myModalLabel">
-          <label>Редагувати категорію</label>
+          <label class="modEditTitle">Редагувати категорію</label>
         </h4>
         <div class="admin-pan-modal-msg">{{errorModalMsg}}</div>
       </div>

@@ -16,6 +16,19 @@ exports.httpBackendMock = function() {
       {"id":10,"category_id":3,"title":"Мережі"},
       {"id":11,"category_id":4,"title":"Столиці"},
       {"id":12,"category_id":4,"title":"Гори"}];
+    var allCatsMock =
+      [{"id":1,"category_id":0,"title":"Спорт"},
+       {"id":2,"category_id":1,"title":"Футбол"},
+       {"id":6,"category_id":1,"title":"Хокей"},
+       {"id":7,"category_id":1,"title":"Баскетбол"},
+       {"id":3,"category_id":0,"title":"Комп'ютери"},
+       {"id":8,"category_id":3,"title":"Комплектуючі"},
+       {"id":9,"category_id":3,"title":"Програмування"},
+       {"id":10,"category_id":3,"title":"Мережі"},
+       {"id":4,"category_id":0,"title":"Туризм"},
+       {"id":5,"category_id":4,"title":"Країни"},
+       {"id":11,"category_id":4,"title":"Столиці"},
+       {"id":12,"category_id":4,"title":"Гори"}];
     var quizzesMock = 
       [{"id":1,"category_id":2},
       {"id":2,"category_id":6},
@@ -55,6 +68,8 @@ exports.httpBackendMock = function() {
     $httpBackend.whenGET('http://localhost:9292/contacts').respond(contactsMock);
     $httpBackend.whenGET('http://localhost:9292/guest-search').respond(allCategories);
     $httpBackend.whenGET('http://localhost:9292/permission').respond(permission);
+    $httpBackend.whenGET('http://localhost:9292/categories/all').respond(allCatsMock);
+    $httpBackend.whenPUT('http://localhost:9292/about_us').respond("succes");
     $httpBackend.whenGET().passThrough();
   });
 };

@@ -132,7 +132,7 @@ describe('HomePage', function(){
     };
 
     function subCatContainer(elemNumber){
-      var subCatContainer = element.all(by.css('.categories-container')) 
+      var subCatContainer = element.all(by.css('.categories-container')); 
       var curentElem = subCatContainer.get(elemNumber).all(by.binding('{{subCat.title | limitStringTo:true:13}}')).count();
       return curentElem
     };
