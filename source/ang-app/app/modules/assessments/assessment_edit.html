@@ -2,7 +2,8 @@
 <h3 class="text-center assessment-title">Редагування тесту</h3>
 	<div ng-if="errorMsg" ng-bind="errorMsg" class="alert col-sm-12 text-center alert-danger"></div>
 	<div class="col-md-8">
-		<form name="quizEditForm" novalidate>
+		<quiz-form  quiz="quiz" quiz-create-form="quizCreateForm"> </quiz-form>
+		<!-- <form name="quizEditForm" novalidate>
 			<div class="col-md-12 jumbotron">
 		
 				<label class="col-md-5 control-label text-right">Назва тесту</label>
@@ -60,6 +61,7 @@
 				<button ng-click="addQuestion()" class="btn btn-info"><span class="glyphicon glyphicon-plus"></span> Додати питання</button>
 			</div>
 
+		</form> -->
 			<div class=" col-sm-12 quizMarginTop">
 				<button ng-click="saveQuiz()" ng-disabled="quizEditForm.$invalid" class="btn btn-warning">Зберегти  чорновик</button>
 				<button ng-click="reviewQuiz()" ng-disabled="quizEditForm.$invalid" class="btn btn-success">Відправити на модерацію</button> 
@@ -69,7 +71,6 @@
 		  		{{ 'Current version is v%VERSION%.' | interpolate }}
 			</p>
 			</div>
-		</form>
 	</div>
 
 	<div class="col-md-4" >
