@@ -4,9 +4,9 @@
 <div ng-include="'modules/assessments/breadCrumbs.html'"></div>
 
 <div>
-	<h3 class="text-center">Твій вислід: <span>{{counter}}</span> зі <span>100</span> балів!</h3>
+	<h3 class="text-center">Твій вислід: <span>{{quiz.result}}</span> зі <span>100</span> балів!</h3>
 	<div class="progress">
-  		<div class="progress-bar" role="progressbar" aria-valuenow="{{counter}}" aria-valuemin="0" aria-valuemax="100" style="width: {{counter}}%;">{{counter}}%
+  		<div class="progress-bar" role="progressbar" aria-valuenow="{{quiz.result}}" aria-valuemin="0" aria-valuemax="100" style="width: {{quiz.result}}%;">{{quiz.result}}%
   		</div>
 	</div>
 </div>

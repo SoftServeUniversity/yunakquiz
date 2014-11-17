@@ -20,7 +20,7 @@ angular.module('yunakQuiz.personalCabinet', ['ngRoute', 'flow'])
 }])
 
 .controller('CabinetCtrl', ['$scope','QuizData', '$routeParams','$http','$location','$modal', '$route', function($scope, QuizData, $routeParams, $http, $location,$modal, $route) {
-  var queryFn = $route.current.queryFn;
+  var queryFnName = $route.current.queryFn;
   $scope.tab = $routeParams.state || "published";
 
   $scope.outputData={
@@ -44,7 +44,7 @@ angular.module('yunakQuiz.personalCabinet', ['ngRoute', 'flow'])
   };
 
   $scope.queryList = function() {
-    QuizData[queryFn]($scope.tab, $scope.outputData)
+    QuizData[queryFnName]($scope.tab, $scope.outputData)
       .success(function(data, status, headers, config) {
         $scope.updateData(data);        
       })

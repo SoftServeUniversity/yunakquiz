@@ -10,7 +10,8 @@ class Quiz < ActiveRecord::Base
       self.as_json(
       :include => [
         { :questions => {:include => :answers}},
-        {:tags=> {:only => [:id, :tag]}}
+        { :tags=> {:only => [:id, :tag]}},
+        { :category => {:include => :category}}
       ])
   end
 

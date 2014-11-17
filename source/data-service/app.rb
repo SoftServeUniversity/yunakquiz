@@ -80,6 +80,16 @@ module PlastApp
       response_helper @quiz, ["Forbidden!!!"]
     end
 
+    post '/assessments/result' do
+      content_type :json
+      data = JSON.parse(request.body.read)
+      if logged_user
+        # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      end  
+      @quiz={}
+      response_helper @quiz, "Quiz not created!"
+    end    
+
     post '/assessments' do
       content_type :json
       if logged_user
