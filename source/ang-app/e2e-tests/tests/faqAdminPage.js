@@ -12,7 +12,6 @@ describe('faq page', function(){
 		{"id": 4, "faq_question": "Де можна знайти тест на знання правил хокею?", "faq_answer": "В підкатегорії Хокей, яка знаходиться в категорії Спорт"},
 		{"id": 5, "faq_question": "Чи можна для пошук вибрати якусь конкретну підкатегорію?", "faq_answer": "Так, звичайно."}
 	];
-
 	var tabPosition = 5;
 	var allQuestions = 5;
 	var generalTitle = "Адміністративна панель";
@@ -20,8 +19,7 @@ describe('faq page', function(){
 
 	beforeEach(function() {
     	ptor.addMockModule('httpBackendMock', mockModule.httpBackendMock);  
- 	});
-	 		
+ 	});	 		
 		
  	// testing FAQ page for Administration panel
 
@@ -43,7 +41,6 @@ describe('faq page', function(){
 	   	it('should all questions and answers on the page', function(){
 	   		expect(element.all(by.repeater('Question in Questions')).count()).toEqual(allQuestions);
 	   	});
-
 	   	
 	   	it('should see all question and answer', function(){
 	   		for(var i = 0; i < questions.length; i++){
@@ -85,5 +82,4 @@ describe('faq page', function(){
 	   	// 	expect(element.all(by.repeater('Question in Questions')).count()).toEqual(4);
 	   	// });
 	});
-
 });

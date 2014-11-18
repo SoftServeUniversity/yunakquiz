@@ -1,5 +1,5 @@
 (function(){ 
-	var  app = angular.module('yunakQuiz.faqPage' ,['ngRoute']);
+	var  app = angular.module('yunakQuiz.faqPage' ,['ngRoute', 'yunakQuiz.faqTab']);
 
 	app.config(['$routeProvider',
   	function($routeProvider) {
@@ -11,9 +11,9 @@
    		}
  	]);
 
- 	app.controller('faqCtrl', ['$scope', '$http', function ($scope, $http) {
+ 	app.controller('faqCtrl', ['$scope', '$http', 'QuestionService', function ($scope, $http, QuestionService) {
 
-    $http.get('http://localhost:9292/faq').success(function(data){
+    QuestionService.get().success(function(data){
       $scope.Questions = data;
 
       for (var i = $scope.Questions.length - 1; i >= 0; i--) {
