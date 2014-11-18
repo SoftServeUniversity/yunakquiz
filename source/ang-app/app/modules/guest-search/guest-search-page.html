@@ -1,57 +1,29 @@
                                   <!--Header-->
 <div class="row">
   <h3 class="pageTitle bg-primary"> Гостьовий пошук </h3>
-</div>
-  
+</div> 
                               <!--End of header-->
 <div class="container-fluid">
                           <!--Here go category selection-->
   <div class="row">  
     <div class="well col-xs-offset-1 col-xs-3">
-
-
-      <div ng-repeat="parCat in allCats | filter: {category_id: '0'}">
-              
-        <a  class="list-group-item"
-            ng-init="parCat.search=false"
-            ng-click="selectSubCat(allCats, parCat)"
-            ng-class="{active: parCat.search}"> 
-            {{parCat.title}} 
-        </a>
-
-        <div ng-repeat="subCat in allCats"> 
-
-          <a  ng-if="subCat.category_id === parCat.id"
-              class="list-group-item col-xs-offset-1"
-              ng-init="subCat.search=false" 
-              ng-class="{search_subcat_select: subCat.search}"
-              ng-click="subCat.search = !subCat.search">
-              {{subCat.title}}
-          </a>
-        </div>
-      </div>
-
-      <button class="guestSearchMarginTop btn btn-info btn-block" 
-              ng-click="searchData(allCats, searchRequest.tags)">
-              Застосувати фільтр
-      </button>
-
+      <my-guest-search-cat button="searchData(allCats)" categories="allCats"></my-guest-search-cat>
     </div>
                       <!--End of category selection-->
 
                           <!--Tags input block-->
 
     <div class="col-xs-7">
-      <form ng-submit="searchData(allCats, searchRequest.tags)"> 
+      <form ng-submit="searchData(allCats)"> 
         <div class="input-group">
           <tags-input type="text" 
-                      class="bootstrap" 
-                      placeholder="введіть шось для пошуку..." 
-                      ng-model="tags" 
-                      add-on-space="true"
-                      min-length="1"
-                      add-on-comma="false"
-                      add-on-enter="false">
+                class="bootstrap" 
+                placeholder="введіть шось для пошуку..." 
+                ng-model="tags" 
+                add-on-space="true"
+                min-length="1"
+                add-on-comma="false"
+                add-on-enter="false">
           </tags-input>
           <span class="input-group-btn btn-block">
             <input  type="submit" 
@@ -91,7 +63,12 @@
                   class="pagination-sm"
                   items-per-page="10" 
                   max-size="10"
+                  previous-text="Назад" 
+                  next-text="Уперед" 
+                  first-text="&laquo;" 
+                  last-text="&raquo;"
                   ng-change="pageChanged()">
+                  <!-- items-per-page="10" MUST BE CHANGED-->
       </pagination>
     </div>
   </div>
