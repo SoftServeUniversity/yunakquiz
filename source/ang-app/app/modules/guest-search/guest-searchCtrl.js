@@ -15,28 +15,7 @@ guestSearch.controller('SearchCtrl', ['$scope', '$http',
   // Init pagination part 
   $scope.totalItems = 0;
   $scope.currentPage = 1;
-
-  // Select parCat and set subCat according to
-  // parCat state
-  $scope.selectSubCat = function(allCats, parCat) {
-
-    parCat.search = !parCat.search;
-
-    for (var i = 0 ; allCats.length > i ; i++){
-      if (allCats[i].category_id == parCat.id) {
-        allCats[i].search = parCat.search;
-      };
-    };
-  };
         
-  // Reciving all Categories from server in one 
-  // array 
-  guestSearchFactory.getAllCats().success(function(data) {
-    $scope.allCats = data;
-  }).error(function(data) {
-      $scope.searchError = 2;
-    });
-
   // Function that creates searchRequest object and
   // Make search request 
   // and checks recived data
@@ -45,20 +24,9 @@ guestSearch.controller('SearchCtrl', ['$scope', '$http',
     // Clean searchRequest variable
     $scope.searchRequest = {categories_id:[], tags:[]};
 
-    for (var i = 0 ; allCats.length > i ; i++) {
-      if (allCats[i].search){
-        $scope.searchRequest.categories_id.push(allCats[i].id);
-      };
-    };
-
-    // Check if there were some categories_id 
-    // if not then push all ids from allCats
-    if ($scope.searchRequest.categories_id.length === 0) {
-      for (var i = 0 ; allCats.length > i ; i++) {
-      	$scope.searchRequest.categories_id.push(allCats[i].id);
-      };
-    };
-
+    // Writing selected cat in search request
+    $scope.searchRequest.categories_id=guestSearchFactory.checkAllCats(allCats);
+    
     // Adding all tags to request
     // and all tags to lower case 
     for (var i = 0 ; $scope.tags.length > i ; i++) {

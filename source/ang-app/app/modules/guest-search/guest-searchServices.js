@@ -20,6 +20,31 @@
             
       guestSearch: function(searchData) {
         return $http.post('http://localhost:9292/search', searchData);
+      },
+
+
+      // Recives allCats and generate 
+      // array of numbers and returns it
+      checkAllCats: function(allCats) {
+
+        var searchRequestCategoriesId = [];
+
+        // If search key is true adding to searchRequest array
+        for (var i = 0 ; allCats.length > i ; i++) {
+          if (allCats[i].search){
+            searchRequestCategoriesId.push(allCats[i].id);
+          };
+        };
+
+        // Check if there were some categories_id 
+        // if not then push all ids from allCats
+        if (searchRequestCategoriesId.length === 0) {
+          for (var i = 0 ; allCats.length > i ; i++) {
+            searchRequestCategoriesId.push(allCats[i].id);
+          };
+        };
+         return searchRequestCategoriesId;
       } 
+
     };
 }]);

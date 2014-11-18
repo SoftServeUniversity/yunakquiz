@@ -7,26 +7,31 @@
                           <!--Here go category selection-->
   <div class="row">  
     <div class="well col-xs-offset-1 col-xs-3">
-      <guestsearchcat search-results="searchResults" 
-                      all-cats="allCats" 
-                      search-error="searchError" 
-                      tags="tags"
-                      total-items="totalItems"
-                      current-page="currentPage">
-      </guestsearchcat>
+      <my-guest-search-cat button="searchData(allCats)" categories="allCats"></my-guest-search-cat>
     </div>
                       <!--End of category selection-->
 
                           <!--Tags input block-->
 
     <div class="col-xs-7">
-      <guestsearchtag search-results="searchResults" 
-                      all-cats="allCats" 
-                      search-error="searchError" 
-                      tags="tags"
-                      total-items="totalItems"
-                      current-page="currentPage">      
-      </guestsearchtag>
+      <form ng-submit="searchData(allCats)"> 
+        <div class="input-group">
+          <tags-input type="text" 
+                class="bootstrap" 
+                placeholder="введіть шось для пошуку..." 
+                ng-model="tags" 
+                add-on-space="true"
+                min-length="1"
+                add-on-comma="false"
+                add-on-enter="false">
+          </tags-input>
+          <span class="input-group-btn btn-block">
+            <input  type="submit" 
+                    class="btn btn-primary" 
+                    value="Пошук"/>
+          </span>  
+        </div>                  
+      </form>
                       <!--End of tags input block-->
 
                             <!--Error block-->
