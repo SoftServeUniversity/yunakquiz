@@ -4,7 +4,7 @@ yunakQuizApp.factory('QuizService', ['$http', function($http){
   var back_url = 'http://localhost:9292';
   var quiz={};
 
-  function get(id){
+  function getQuiz(id){
     return $http.get(back_url+'/assessments/'+id )
   };
 
@@ -15,23 +15,21 @@ yunakQuizApp.factory('QuizService', ['$http', function($http){
   /** Validate if question has at least one answer picked  */
   function validateQuestion(question){
     question.invalid=true;
-    for(var y=0; y<question.answers.length; y++){
-      if(question.answers[y].checked){
+    angular.forEach(question.answers, function(answer){
+      if(answer.checked){
         question.invalid=false;
       }
-    };
+    });
   };
 
     /** Validate if all questions in quiz has marked answers  */
   function validateQuiz(){
     var questions = this.quiz.questions;
     var quizValid=true;
-    for(var i =0; i < questions.length; i++){
-      validateQuestion(questions[i]);
-      if(questions[i].invalid){
-        quizValid = false;
-      };
-    };
+    angular.forEach(questions, function(question){
+       validateQuestion(question);
+       if (question.invalid) {quizValid = false;}
+    });
     return quizValid;
   };
 
@@ -45,15 +43,13 @@ yunakQuizApp.factory('QuizService', ['$http', function($http){
   /** check question for correct answers  */
   function checkAnswers(question){
     var correct=true;
-    for (var i=0;i<question.answers.length; i++){
-      if(question.answers[i].correct){
-        if(question.answers[i].checked){
-          correct= true && correct;
-        } 
+    angular.forEach(question.answers, function(value){
+      if(value.correct){
+        if(value.checked) {correct= true && correct;} 
         else {correct= false;}
       } 
-      else if(question.answers[i].checked){correct= false;}
-    }
+      else if (value.checked) {correct= false;}
+    });
     return correct;
   };
 
@@ -61,11 +57,12 @@ yunakQuizApp.factory('QuizService', ['$http', function($http){
  function countCorrectAnswers(quiz){
     var questions = quiz.questions;
     var correctAnswers = 0;
+    var count;
     checkQuestions(questions);
-    for (var i=0;i<questions.length; i++){
-      if (questions[i].nice) {correctAnswers++}
-    }
-    var count = (correctAnswers / questions.length) * 100 ;
+    angular.forEach(questions, function(question){
+      if (question.nice) {correctAnswers++}
+    });
+    count = (correctAnswers / questions.length) * 100 ;
     count = count.toFixed(2);
     return +count;
   };
@@ -77,7 +74,7 @@ yunakQuizApp.factory('QuizService', ['$http', function($http){
 
   return {
     quiz : quiz,
-    getQuiz : get,
+    getQuiz : getQuiz,
     validateQuestion: validateQuestion,
     validateQuiz: validateQuiz,
     submitQuiz: submitQuiz

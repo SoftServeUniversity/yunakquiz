@@ -4,7 +4,8 @@
 		
 				<label class="col-md-5 control-label text-right">Назва тесту</label>
 				<div class="col-md-7 ">
-					<input ng-model="quiz.title" class="form-control" type="text" required />
+					<input ng-model="quiz.title"  ng-blur="validateTitle()" class="form-control" type="text" required />
+					<div ng-show="titleError" class="text-danger"> * Тест з такою назвою вже існує !</div>
 				</div>
 			
 			
@@ -36,23 +37,23 @@
 				</div>	
 			</div>
 
-			<div ng-repeat="question in quiz.questions" ng-if="!question.toDelete" class="col-sm-12 well questionField">
+			<div ng-repeat="question in quiz.questions | filter:filterFunction as questions"  class="col-sm-12 well questionField">
 				
 				<input ng-model="question.title" class="form-control" placeholder="Введіть текст запитання" type="text" required />
-						
+										
 				<textarea ng-model="question.description" class="form-control quizMarginTop" placeholder="Введіть пояснення до запитання" type="text" required>
 				</textarea>
 						
-				<div ng-repeat="answer in question.answers" ng-if="!answer.toDelete" class="input-group quizMarginTop col-sm-11  col-xs-12  col-sm-offset-1">
+				<div ng-repeat="answer in question.answers | filter:filterFunction as answers"  class="input-group quizMarginTop col-sm-11  col-xs-12  col-sm-offset-1">
 				    <span ng-click="setCorrectAnswer(question,answer)" class="input-group-addon glyphicon quizBtnFix glyphicon-ok markCorrectAnswerBtn" ng-class="{'quizCorrectAnswer':answer.correct}">
 				    </span>
 				    <input ng-model="answer.title" type="text" class="form-control" placeholder="Введіть відповідь" type="text" required />
-				    <span  ng-show="question.answers.length>2" ng-click="deleteAnswer($index, question)" class="btn input-group-addon glyphicon glyphicon-remove quizDeleteAnswer quizBtnFix">
+				    <span  ng-show="answers.length>2" ng-click="deleteAnswer(answer, question)" class="btn input-group-addon glyphicon glyphicon-remove quizDeleteAnswer quizBtnFix">
 				    </span>
 				</div>
 				<div ng-show="question.invalid" class="quizMarginTop col-sm-11 col-xs-12 col-sm-offset-1 text-danger">* Позначте хоча б одну правильну відповідь</div>
 				<button ng-click="addAnswer(question)" class="btn btn-info quizMarginTop"><span class="glyphicon glyphicon-plus"></span> Додати відповідь</button>
-				<div ng-show="quiz.questions.length>1" ng-click="deleteQuestion($index, question)" class="closeButton glyphicon glyphicon-remove"></div>
+				<div ng-show="questions.length>1" ng-click="deleteQuestion(question)" class="closeButton glyphicon glyphicon-remove"></div>
 			</div>
 			<div class=" col-sm-12">
 				<button ng-click="addQuestion()" class="btn btn-info"><span class="glyphicon glyphicon-plus"></span> Додати питання</button>

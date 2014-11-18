@@ -9,11 +9,10 @@ angular.module('yunakQuiz.assessments')
   }
 }])
 .controller('quizFormCtrl', 
-  ['$scope', 'QuizDataService', 'TagsService', 'CategoriesService', '$timeout' ,
-  function($scope, QuizDataService, TagsService, CategoriesService, $timeout ){
+  ['$scope', 'QuizDataService', 'TagsService', 'CategoriesService', 'QuizResourceService',
+  function($scope, QuizDataService, TagsService, CategoriesService, QuizResourceService ){
+  
   getCat();
-
-
 
   $scope.loadTags = function (query) {
       return TagsService.getTags(query)
@@ -54,15 +53,27 @@ angular.module('yunakQuiz.assessments')
     };
   };
 
+  $scope.validateTitle = function(){
+    QuizResourceService.validateTitle($scope.quiz.title, $scope.quiz.id)
+      .success(function(data) { 
+        $scope.titleError =  data 
+      })
+  };
+  
+  $scope.filterFunction = function(element) {
+    return element.toDelete ? false : true
+  };
+
   $scope.addAnswer = function(question) {
     question.answers.push(new QuizDataService.Answer());
   };
 
-  $scope.deleteAnswer = function(index, question) {
-    if (question.answers[index].id){
-      question.answers[index].toDelete = true;
+  $scope.deleteAnswer = function(answer, question) {
+    if (answer.id){
+      answer.toDelete = true;
     }
     else {  
+      var index = question.answers.indexOf(answer);
       question.answers.splice(index, 1);
     }  
   }
@@ -76,12 +87,13 @@ angular.module('yunakQuiz.assessments')
     $scope.quiz.questions.push(new QuizDataService.Question())    
   };
     
-  $scope.deleteQuestion = function(index, question){
+  $scope.deleteQuestion = function(question){
     if(question.id){
       question.toDelete = true;
     }
     else{
-      $scope.quiz.questions.splice(index,1);
+      var index = $scope.quiz.questions.indexOf(question);
+      $scope.quiz.questions.splice(index, 1);
     }
   };
 

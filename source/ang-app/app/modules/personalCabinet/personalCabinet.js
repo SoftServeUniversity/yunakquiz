@@ -27,7 +27,7 @@ angular.module('yunakQuiz.personalCabinet', ['ngRoute', 'flow'])
   
   var queryFnName = $route.current.queryFn;
   $scope.tab = $routeParams.state || "published";
- 
+
   getAccess($route.current.permision).then(function(data){
     if (data) {
       $scope.searchQuery();

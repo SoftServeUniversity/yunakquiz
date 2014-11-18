@@ -31,10 +31,22 @@ yunakQuizApp.factory('CabinetService', ['$http', '$location', function($http, $l
 
       delete: function(id){
             return $http.delete(back_url+'/'+id ) 
-          }
+          },
+      validateTitle: function(title, id){
+            var data = {query: title, id: id};
+            return $http.post(back_url+'/title', data) 
+          }    
+
     }      
 }])
-.factory('QuizCommentsService', ['$http', '$location', '$resource' , function($http, $location, $resource){
+.factory('QuizResource', ['$resource', function( $resource) {
+    return $resource('http://localhost:9292/admin/assessments/:id')
+  }])
+
+.factory('QuizCommentsService', 
+  ['$http', '$location', '$resource' , 
+  function($http, $location, $resource){
+   
    var back_url = 'http://localhost:9292';
     return{
        get: function(id){
@@ -50,7 +62,10 @@ yunakQuizApp.factory('CabinetService', ['$http', '$location', function($http, $l
           }
       }    
 }])
-.factory('QuizDataService', ['$http', '$location', function($http, $location){
+.factory('QuizDataService', 
+  ['$http', '$location', 'QuizCommentsService', '$filter',
+  function($http, $location, QuizCommentsService, $filter){
+
   var MIN_ASWERS_QTY = 2;
   var back_url = 'http://localhost:9292';
   var quiz ={};
@@ -67,42 +82,42 @@ yunakQuizApp.factory('CabinetService', ['$http', '$location', function($http, $l
   };
 
   function initQuiz(){
+    this.quiz = {};
     this.quiz.questions = [];
     this.quiz.questions[0] = new Question();
+  };
+
+  function filterDeleted(element) {
+    return element.toDelete ? false : true
   };
 
   function validateQuiz(quiz){
     var questions = quiz.questions;
     var invalid = false;
-    for(var i = 0; i < questions.length;i++){
-      if(!questions[i].toDelete){
-        validateQuestion(questions[i]);
-        if(questions[i].invalid){
+    questions = $filter('filter')(questions, filterDeleted);
+    angular.forEach(questions, function(question){
+      validateQuestion(question);
+      if(question.invalid){
           invalid = true;
         };
-      };
-    };
+        
+    });
     return invalid;
   };
 
   /** check question to be valid */
   function validateQuestion (question){
-    var answers = question.answers;
-    question.invalid = true;
-    for(var i = 0; i < answers.length;i++){
-      
-      if (answers[i].correct && !answers[i].toDelete) {
-        question.invalid =  false;
-      };
-    };
+    var answers = $filter('filter')(question.answers, filterDeleted);
+    answers = $filter('filter')(answers, {correct: true})
+    question.invalid =  answers.length ? false : true;
   };
- 
+  
   return {
     quiz : quiz,
     Question : Question,
     Answer : Answer,
     initQuiz : initQuiz,
-    validateQuiz : validateQuiz  
+    validateQuiz : validateQuiz 
   }
 
 }])

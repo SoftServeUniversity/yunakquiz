@@ -83,6 +83,17 @@ module PlastApp
       response_helper @quiz, "Quiz not created!"
     end
 
+    post '/admin/assessments/title' do
+      content_type :json
+      data = JSON.parse(request.body.read)
+      if data['id']
+        @query = Quiz.where(title: data['query']).where.not(id: data['id']).exists? 
+      else
+        @query = Quiz.where(title: data['query']).exists?
+      end  
+      @query.to_json
+    end
+
     put '/admin/assessments/:id' do
       content_type :json
       if logged_user

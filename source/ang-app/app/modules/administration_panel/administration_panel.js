@@ -12,7 +12,6 @@
           $scope.tabs = {};
 
           getTabTemplates.getResponse().then(function(data){
-            console.log(data);
             $scope.tabs = data;
             if (data.length > 0){
               $scope.results = data;
