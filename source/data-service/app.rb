@@ -1,12 +1,11 @@
 module PlastApp
   require 'sinatra'
+  require 'sinatra/activerecord'
   require 'json'
   require 'rest_client'
   require 'rubygems'
-  require 'sinatra/activerecord'
   require 'json/ext' # required for .to_json
   require 'sinatra/cross_origin'
-
   require 'sinatra/asset_pipeline'
 
   class YunakQuiz < Sinatra::Base
@@ -17,7 +16,6 @@ module PlastApp
     Dir.glob('./config/*.rb').each {|file| require file}
     Dir.glob('./models/*.rb').each {|file| require file}
     Dir.glob('./lib/*.rb').each {|file| require file}    
-
 
     get '/' do
         erb :index
@@ -66,6 +64,16 @@ module PlastApp
         JSON.pretty_generate(quiz) 
       else
         return [400, quiz.to_json]
+      end
+    end
+    
+    post '/user' do
+      data = JSON.parse request.body.read
+      user = User.new(data)
+      if user.save
+        return [200, "ok"]
+      else
+        return [400, user.errors.messages.to_json]
       end
     end
 
