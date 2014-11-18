@@ -32,6 +32,18 @@ angular.module('yunakQuiz.permission', ['ngRoute'])
    'temp' : 'administration-panel/faqTab',
    'caption': 'Часті запитання'
   },
+
+  {
+   'name' : 'comm1',
+   'temp' : '/admin/personalCabinet',
+   'caption': 'personalCabinet'
+  },
+
+  {
+   'name' : 'moder1',
+   'temp' : '/admin/personalCabinet',
+   'caption': 'moderationCabinet'
+  }
 ])
 
 .factory('getTabTemplates', ["$location", "$http", "tabs", "$q", function($location, $http, tabs, $q) {
@@ -39,8 +51,7 @@ angular.module('yunakQuiz.permission', ['ngRoute'])
     getResponse: function(){
       var defer = $q.defer();
       var result = [];
-
-      $http.get("http://localhost:9292/permission")
+       $http.get("http://localhost:9292/permission")
         .success(function(data){
           var givenTabs = tabs;
           var userAccess = data;
@@ -70,7 +81,6 @@ angular.module('yunakQuiz.permission', ['ngRoute'])
   return function(curTab){
     var defer = $q.defer();
     var access = {};
-
     getTabTemplates.getResponse().then(function(data){
       angular.forEach(data, function(tab,key){
         access[tab.caption] = tab;

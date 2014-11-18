@@ -1,10 +1,14 @@
 'use strict';
 /** Quiz Edit controller  */
 yunakQuizApp.controller('ReviewCtrl', 
-  ['$scope','QuizResourceService', 'QuizCommentsService', '$routeParams', '$location','QuizDataService', 
-  function($scope, QuizResourceService, QuizCommentsService, $routeParams, $location, QuizDataService) {
+  ['$scope','QuizResourceService', 'QuizCommentsService', '$routeParams', '$route','$location','QuizDataService', 'getAccess', 
+  function($scope, QuizResourceService, QuizCommentsService, $routeParams, $route, $location, QuizDataService, getAccess) {
 
+  getAccess($route.current.permision).then(function(data){
+    data ? init() : $location.path( "/403" );
+  });
   /** get Quiz by ID */
+  function init(){
   QuizResourceService.get($routeParams.quiz_id)
       .success(function(data, status, headers, config){
          $scope.quiz = data;
@@ -13,7 +17,7 @@ yunakQuizApp.controller('ReviewCtrl',
       .error(function(data){
         $location.path('/404/');
       });
-    
+  };  
 
   function getComments(quiz_id) {
     QuizCommentsService.get(quiz_id)

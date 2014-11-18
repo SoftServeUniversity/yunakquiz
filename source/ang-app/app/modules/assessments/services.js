@@ -1,60 +1,16 @@
 'use strict';
 
 /** Connection to back-end for quiz  */
-yunakQuizApp.factory('QuizData', ['$http', '$location', function($http, $location){
+yunakQuizApp.factory('CabinetService', ['$http', '$location', function($http, $location){
   var back_url = 'http://localhost:9292';
     return{
-      // get: function(id){
-      //       return $http.get(back_url+'/assessments/'+id )
-      //     },
-
-      getForEdit: function(id){
-            return $http.get(back_url+'/admin/assessments/'+id )
-          },    
-
-      create: function(quiz){       
-            return $http.post(back_url+'/admin/assessments', quiz)
-          },
-
-      update: function(quiz){
-            return $http.put(back_url+'/admin/assessments', quiz);
-          },
-
-      delete: function(id){
-            return $http.delete(back_url+'/admin/assessments/'+id ) 
-          },
-
       queryList: function(state, queryData){
             return $http.post(back_url+'/assessments/'+state, queryData) 
           },
 
       queryListModer: function(state, queryData){
             return $http.post(back_url+'/assessments/moderator/'+state, queryData) 
-          },
-
-      getCat: function(){
-            return $http.get(back_url+'/categories') 
-          },
-
-      // getBreadcrumbs: function(catId){
-      //       return $http.get(back_url+'/breadcrumbs/'+catId) 
-      //     },
-
-      // getComments: function(id){
-      //       return $http.get(back_url+'/assessments/'+id+'/comments')
-      //     },
-
-      // updateComments: function(comments){
-      //       return $http.put(back_url+'/assessments/comments', comments)
-      //     },
-
-      // deleteComments: function(id){
-      //       return $http.delete(back_url+'/assessments/'+id+'/comments')
-      //     },
-
-      getTags: function(query){
-            return $http.get(back_url+'/tags/'+query)
-          },
+          }
     }
   }
 ])

@@ -5,16 +5,19 @@ angular.module('yunakQuiz.moderationCabinet', [])
   .when('/admin/moderationCabinet', {
     templateUrl: 'modules/moderationCabinet/moderationCabinet.html',
     controller: 'CabinetCtrl',
-    queryFn: "queryListModer"
+    queryFn: "queryListModer",
+    permision: "moderationCabinet"
   })
   .when('/admin/moderationCabinet/review/:quiz_id', {
     templateUrl: 'modules/moderationCabinet/review.html',
-    controller: 'ReviewCtrl'
+    controller: 'ReviewCtrl',
+    permision: "moderationCabinet"
   })  
   .when('/admin/moderationCabinet/:state', {
     templateUrl: 'modules/moderationCabinet/moderationCabinet.html',
     controller: 'CabinetCtrl', 
-    queryFn: "queryListModer"
+    queryFn: "queryListModer",
+    permision: "moderationCabinet"
   })
  
 }]);

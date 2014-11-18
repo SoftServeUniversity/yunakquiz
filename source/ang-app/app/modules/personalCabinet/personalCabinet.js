@@ -5,7 +5,8 @@ angular.module('yunakQuiz.personalCabinet', ['ngRoute', 'flow'])
   .when('/admin/personalCabinet', {
     templateUrl: 'modules/personalCabinet/quizesList.html',
     controller: 'CabinetCtrl',
-    queryFn: "queryList"
+    queryFn: "queryList",
+    permision: "personalCabinet"
   })
   .when('/admin/personalCabinet/profile', {
     templateUrl: 'modules/personalCabinet/profile.html',
@@ -15,13 +16,27 @@ angular.module('yunakQuiz.personalCabinet', ['ngRoute', 'flow'])
   .when('/admin/personalCabinet/:state', {
     templateUrl: 'modules/personalCabinet/quizesList.html',
     controller: 'CabinetCtrl',
-    queryFn: "queryList"
+    queryFn: "queryList",
+    permision: "personalCabinet"
   })   
 }])
 
-.controller('CabinetCtrl', ['$scope','QuizData', '$routeParams','$http','$location','$modal', '$route', function($scope, QuizData, $routeParams, $http, $location,$modal, $route) {
+.controller('CabinetCtrl', 
+  ['$scope', 'QuizResourceService', 'CabinetService', '$routeParams', '$modal', '$route', 'getAccess', '$location',
+  function($scope, QuizResourceService, CabinetService, $routeParams, $modal, $route, getAccess, $location) {
+  
   var queryFnName = $route.current.queryFn;
   $scope.tab = $routeParams.state || "published";
+ 
+  getAccess($route.current.permision).then(function(data){
+    if (data) {
+      $scope.searchQuery();
+    }      
+    else
+    {
+      $location.path( "/403" );
+    }
+  });
 
   $scope.outputData={
     currentPage: 1,
@@ -31,7 +46,6 @@ angular.module('yunakQuiz.personalCabinet', ['ngRoute', 'flow'])
   };
 
   $scope.quizUrl = '#/assessments/';
-
 
   $scope.searchQuery = function(){
     $scope.outputData.currentPage = 1;
@@ -44,7 +58,7 @@ angular.module('yunakQuiz.personalCabinet', ['ngRoute', 'flow'])
   };
 
   $scope.queryList = function() {
-    QuizData[queryFnName]($scope.tab, $scope.outputData)
+    CabinetService[queryFnName]($scope.tab, $scope.outputData)
       .success(function(data, status, headers, config) {
         $scope.updateData(data);        
       })
@@ -65,7 +79,7 @@ angular.module('yunakQuiz.personalCabinet', ['ngRoute', 'flow'])
       size: 'sm'
     });
     modalDelete.result.then(function () {
-      QuizData.delete(quizId).success(function(data) {
+      QuizResourceService.delete(quizId).success(function(data) {
         $scope.searchQuery();
       });
     });
@@ -78,7 +92,7 @@ angular.module('yunakQuiz.personalCabinet', ['ngRoute', 'flow'])
   };
 
   
-  $scope.searchQuery();
+  
 
 }])
 .controller('ModalDeleteCtrl', ['$scope','$modalInstance', function($scope, $modalInstance) {
