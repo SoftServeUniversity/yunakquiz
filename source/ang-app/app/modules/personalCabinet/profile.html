@@ -2,63 +2,62 @@
 <div class="container" ng-init="profile.copyAppUser(appCtrl.user)">
   <div ng-include="'modules/personalCabinet/personalCabinetHeader.html'"></div>
   <div class="row">
-    <div class="col-lg-10 col-md-10 col-lg-offset-1 col-md-offset-1">
       <div class="row col-md-12 profile-container" >
         <div class="col-md-2"></div>
         <div class="col-md-2">
           <div class="col-md-6" flow-init="{singleFile:true}" flow-name="profile.$flow">
             <img class="thumbnail profile-avatar" ng-src="http://localhost:9292/avatar/{{profile.user.picture || 'no_avatar.png'}}" flow-img="$flow.files[0]" />
             <div class="btn button-group row col-md-6">
-              <button type="button" class="btn btn-default" flow-btn ng-click="profile.changeAvatar()" >Change</button>
-              <button type="button" class="btn btn-primary" ng-show="$flow.files.length" ng-click="profile.saveAvatar()">Save</button>
+              <button type="button" class="btn btn-default" flow-btn ng-click="profile.changeAvatar()" >Змінити</button>
+              <button type="button" class="btn btn-primary" ng-show="$flow.files.length" ng-click="profile.saveAvatar()">Зберегти</button>
             </div>
           </div>
         </div>
         <div class="col-md-6 form-horizontal">
           <div class="row" ng-class="{'form-group': profile.editable}">
-            <div class="col-md-5 text-right"><strong>First Name</strong></div>
+            <div class="col-md-5 text-right"><strong>Ім'я</strong></div>
             <div class="col-md-7">
               <input type="text" ng-model="profile.user.first_name" class="form-control" ng-show="profile.editable">
               <p ng-hide="profile.editable">{{profile.user.first_name}}</p>
             </div>
           </div>
           <div class="row" ng-class="{'form-group': profile.editable}">
-            <div class="col-md-5 text-right"><strong>Last Name</strong></div>
+            <div class="col-md-5 text-right"><strong>Прізвище</strong></div>
             <div class="col-md-7">
               <input type="text" ng-model="profile.user.last_name" class="form-control" ng-show="profile.editable">
               <p ng-hide="profile.editable">{{profile.user.last_name}}</p>
             </div>
           </div>
           <div class="row" ng-class="{'form-group': profile.editable}">
-            <div class="col-md-5 text-right"><strong>Email</strong></div>
+            <div class="col-md-5 text-right"><strong>Пошта</strong></div>
             <div class="col-md-7">
               <input type="text" ng-model="profile.user.email" class="form-control" ng-show="profile.editable">
               <p ng-hide="profile.editable">{{profile.user.email}}</p>
             </div>
           </div>
           <div class="row" ng-class="{'form-group': profile.editable}">
-            <div class="col-md-5 text-right"><strong>Birthday</strong></div>
+            <div class="col-md-5 text-right"><strong>День народження</strong></div>
             <div class="col-md-7">
               <input type="date" ng-model="profile.user.birthday" class="form-control" ng-show="profile.editable">
               <p ng-hide="profile.editable">{{profile.user.birthday | date: "MMM dd, yyyy"}}</p>
             </div>
           </div>
           <div class="row" ng-class="{'form-group': profile.editable}">
-            <div class="col-md-5 text-right"><strong>Plast hovel</strong></div>
+            <div class="col-md-5 text-right"><strong>Пластовий курінь</strong></div>
             <div class="col-md-7">
               <input type="text" ng-model="profile.user.plast_hovel" class="form-control" ng-show="profile.editable">
               <p ng-hide="profile.editable">{{profile.user.plast_hovel}}</p>
             </div>
           </div>
           <div class="row" ng-class="{'form-group': profile.editable}">
-            <div class="col-md-5 text-right"><strong>Plast region</strong></div>
+            <div class="col-md-5 text-right"><strong>Станиця</strong></div>
             <div class="col-md-7">
               <input type="text" ng-model="profile.user.plast_region" class="form-control" ng-show="profile.editable">
               <p ng-hide="profile.editable">{{profile.user.plast_region}}</p>
             </div>
           </div>
           <div class="row" ng-class="{'form-group': profile.editable}">
-            <div class="col-md-5 text-right"><strong>Plast level</strong></div>
+            <div class="col-md-5 text-right"><strong>Пластовий ступінь</strong></div>
             <div class="col-md-7">
               <select class="form-control" id="plast_level" ng-model="profile.user.plast_level" class="form-control" ng-show="profile.editable">
                 <option value="початківець">Початківець</option>
@@ -70,14 +69,13 @@
           </div>
           <div class="col-md-5"></div>
           <div class="row col-md-7">
-            <button type="button" class="btn btn-primary" ng-click="profile.edit()" ng-hide="profile.editable">Edit</button>
-            <button type="button" class="btn btn-success" ng-show="profile.editable" ng-click="profile.saveEdit()">Save</button>
-            <button type="button" class="btn btn-danger" ng-show="profile.editable" ng-click="profile.cancelEdit()">Cancel</button>
-            <button type="button" class="btn btn-danger" ng-hide="profile.editable" data-toggle="modal" data-target="#deleteProfile">Delete profile</button>
+            <button type="button" class="btn btn-primary" ng-click="profile.edit()" ng-hide="profile.editable">Редагувати</button>
+            <button type="button" class="btn btn-success" ng-show="profile.editable" ng-click="profile.saveEdit()">Зберегти</button>
+            <button type="button" class="btn btn-danger" ng-show="profile.editable" ng-click="profile.cancelEdit()">Відмінити</button>
+            <button type="button" class="btn btn-danger" ng-hide="profile.editable" data-toggle="modal" data-target="#deleteProfile">Видалити</button>
           </div>
         </div>  
         <div class="col-md-2"></div>
       </div>
-    </div>
   </div>
 </div>

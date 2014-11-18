@@ -9,13 +9,12 @@ angular.module('yunakQuiz.personalCabinet')
 }])
 .controller("ProfileController", ["userService", "$scope", "$timeout", "$location", 
   function(userService, $scope, $timeout, $location){
+    $scope.tab = 'profile';
     this.user = {};
     var profile = this; 
     this.previousUser = {};
     this.editable = false;
     
-    $scope.tab = 'profile'
-
     this.getRandom = function(min, max) {
       return Math.floor(Math.random() * (max - min + 1)) + min;
     };
@@ -69,6 +68,56 @@ angular.module('yunakQuiz.personalCabinet')
         profile.syncUserAvatar();
       });
       this.$flow.upload();
+    };
+    
+    this.changeAvatar = function(){
+      this.$flow.on('filesSubmitted', function(){
+        URL.revokeObjectURL(profile.avatarFileURL);
+        var flowFile = profile.$flow.files[0];
+        if (!!flowFile){
+          profile.avatarFileURL = URL.createObjectURL(flowFile.file);
+          var canvas = $('<canvas/>').get(0);
+          canvas.width = canvas.height = 200;
+          var context = canvas.getContext('2d');
+          var image = new Image();
+          image.onload = function() {
+            var cropSize = (image.width < image.height)? image.width: image.height;
+            var sourceX = (image.width - cropSize) / 2;
+            var sourceY = (image.height - cropSize) / 2;
+            context.drawImage(image, sourceX, sourceY, cropSize, cropSize, 0, 0, 200, 200);
+            var croppedURI = canvas.toDataURL('image/png');
+            var croppedFile = profile.dataURItoFile(croppedURI);
+            profile.$flow.files[0].file = croppedFile;
+            profile.$flow.files[0].size = croppedFile.size;
+            profile.$flow.files[0].name = croppedFile.name;
+            profile.$flow.files[0].relativePath = croppedFile.name;
+            profile.$flow.files[0].bootstrap();
+            $('.thumbnail.profile-avatar').attr('src', croppedURI);
+          };
+          image.src = profile.avatarFileURL;
+        }
+        profile.$flow.off('filesSubmitted');
+      });
+    };
+        
+    this.dataURItoFile = function(dataURI) {
+      var base64 = ';base64,';
+      var byteString, file;
+      var mimeType = dataURI.split(',')[0].split(':')[1].split(';')[0];
+      if (dataURI.indexOf(base64) == -1){
+        byteString = decodeURIComponent(dataURI.split(',')[1]);
+        file = new Blob([byteString], {type: mimeType});
+      } else {
+        byteString = window.atob(dataURI.split(base64)[1]);
+        var byteArray = new Uint8Array(byteString.length);
+        for (var i = 0; i < byteString.length; i++) {
+            byteArray[i] = byteString.charCodeAt(i);
+        }
+        file = new Blob([byteArray], {type: mimeType});
+      }
+      file.name = 'crop.png';
+      file.lastModifiedDate = new Date();
+      return file;
     };
     
     this.deleteUser = function(){
