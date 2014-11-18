@@ -28,11 +28,11 @@ module PlastApp
       end
     end
 
-    options '/*' do
-    end
-    
     get '/' do
         erb :index
+    end
+
+    options '/*' do
     end
     
     get '/access' do
@@ -93,6 +93,16 @@ module PlastApp
         JSON.pretty_generate(quiz) 
       else
         return [400, quiz.to_json]
+      end
+    end
+    
+    post '/user' do
+      data = JSON.parse request.body.read
+      user = User.new(data)
+      if user.save
+        return [200, "ok"]
+      else
+        return [400, user.errors.messages.to_json]
       end
     end
 
