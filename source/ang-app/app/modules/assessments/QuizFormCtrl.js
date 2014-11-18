@@ -2,15 +2,18 @@ angular.module('yunakQuiz.assessments')
 .directive('quizForm', [ function() {
   return {
     restrict: 'EA',
-    scope: {quiz: '=', quizCreateForm: '='},
+    scope: {quiz: '=', quizFormName: '='},
     controller: 'quizFormCtrl',
     templateUrl: './modules/assessments/QuizFormTpl.html',
     replace: true
   }
 }])
 .controller('quizFormCtrl', 
-  ['$scope', 'QuizDataService', 'TagsService', 'CategoriesService', 
-  function($scope, QuizDataService, TagsService, CategoriesService ){
+  ['$scope', 'QuizDataService', 'TagsService', 'CategoriesService', '$timeout' ,
+  function($scope, QuizDataService, TagsService, CategoriesService, $timeout ){
+  getCat();
+
+
 
   $scope.loadTags = function (query) {
       return TagsService.getTags(query)
@@ -18,8 +21,11 @@ angular.module('yunakQuiz.assessments')
 
   function getCat(){
     CategoriesService.getCat().success(function(data, status, headers, config) {
-          $scope.categories=data;        
-      });
+          $scope.categories=data;  
+          $scope.$watch('quiz.id', function(newVal) {
+           if (newVal) { selectCat() }
+          });
+    });
   };
 
   $scope.clearSubcat = function(){
@@ -30,7 +36,8 @@ angular.module('yunakQuiz.assessments')
     $scope.quiz.category_id = $scope.selectedSubcat.id;
   };
 
-  $scope.selectCat = function(){
+  function selectCat(){
+    // alert("set cat")
     for (var i=0; i < $scope.categories.length; i++){   
       if (selectSubcat($scope.categories[i].categories)){
         $scope.selectedCat = $scope.categories[i];
@@ -78,6 +85,6 @@ angular.module('yunakQuiz.assessments')
     }
   };
 
-  getCat();
+  
   
 }]);

@@ -63,21 +63,49 @@ module PlastApp
       end
     end 
 
-    ## Assessment resource!!
-    get '/assessments/:id' do
-      content_type :json
-      @quiz = Quiz.get_by_id(params['id'])
 
-      response_helper @quiz, ["Published Quiz #{params['id']} not found!"]
-    end
-
-    get '/assessments/edit/:id' do
+    ## Quiz CRUD
+    get '/admin/assessments/:id' do
       content_type :json
       if logged_user
         @quiz = Quiz.get_for_edit(params['id'], logged_user)
         response_helper @quiz, ["Quiz #{params['id']} not found!"]
       end
       response_helper @quiz, ["Forbidden!!!"]
+    end
+
+    post '/admin/assessments' do
+      content_type :json
+      if logged_user
+        data = JSON.parse(request.body.read)
+        @quiz = Quiz.create_quiz(data, logged_user)
+      end  
+      response_helper @quiz, "Quiz not created!"
+    end
+
+    put '/admin/assessments/:id' do
+      content_type :json
+      if logged_user
+        data = JSON.parse(request.body.read)
+        @quiz = Quiz.update_quiz(data, logged_user) unless data['id'].nil?
+      end
+      response_helper @quiz, "Quiz not found!"
+    end    
+
+    delete '/admin/assessments/:id' do
+      content_type :json
+      if logged_user
+        @quiz = Quiz.delete_quiz(params['id'], logged_user)
+      end
+      response_helper @quiz, "Quiz not deleted!"
+    end
+
+    ## Assessment resource!!
+    get '/assessments/:id' do
+      content_type :json
+      @quiz = Quiz.get_by_id(params['id'])
+
+      response_helper @quiz, ["Published Quiz #{params['id']} not found!"]
     end
 
     post '/assessments/result' do
@@ -90,32 +118,6 @@ module PlastApp
       response_helper @quiz, "Quiz not created!"
     end    
 
-    post '/assessments' do
-      content_type :json
-      if logged_user
-        data = JSON.parse(request.body.read)
-        @quiz = Quiz.create_quiz(data, logged_user)
-      end  
-      response_helper @quiz, "Quiz not created!"
-    end
-
-
-    put '/assessments' do
-      content_type :json
-      if logged_user
-        data = JSON.parse(request.body.read)
-        @quiz = Quiz.update_quiz(data, logged_user) unless data['id'].nil?
-      end
-      response_helper @quiz, "Quiz not found!"
-    end    
-
-    delete '/assessments/:id' do
-      content_type :json
-      if logged_user
-        @quiz = Quiz.delete_quiz(params['id'], logged_user)
-      end
-      response_helper @quiz, "Quiz not deleted!"
-    end
     ## end of Assessment resource.
 
     get '/breadcrumbs/:cat_id' do

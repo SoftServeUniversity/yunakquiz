@@ -1,10 +1,9 @@
 'use strict';
 /** Quiz Create controller  */
 yunakQuizApp.controller('QuizCreateCtrl', 
-  ['$scope','QuizDataService', '$location', 
-  function($scope, QuizDataService, $location) {
+  ['$scope', 'QuizResourceService', 'QuizDataService', '$location', 
+  function($scope, QuizResourceService, QuizDataService, $location) {
 
-  // $scope.quiz = {};
   QuizDataService.initQuiz();
   $scope.quiz = QuizDataService.quiz;
         
@@ -20,7 +19,7 @@ yunakQuizApp.controller('QuizCreateCtrl',
   function sendQuiz(state){
     $scope.quiz.status = state;
     if(!QuizDataService.validateQuiz($scope.quiz)){
-      QuizData.create($scope.quiz)
+      QuizResourceService.create($scope.quiz)
       .success(function(data, status, headers, config) {
         $location.path('/admin/personalCabinet/'+state);
       })

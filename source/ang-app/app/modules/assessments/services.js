@@ -9,19 +9,19 @@ yunakQuizApp.factory('QuizData', ['$http', '$location', function($http, $locatio
       //     },
 
       getForEdit: function(id){
-            return $http.get(back_url+'/assessments/edit/'+id )
+            return $http.get(back_url+'/admin/assessments/'+id )
           },    
 
       create: function(quiz){       
-            return $http.post(back_url+'/assessments', quiz)
+            return $http.post(back_url+'/admin/assessments', quiz)
           },
 
       update: function(quiz){
-            return $http.put(back_url+'/assessments', quiz);
+            return $http.put(back_url+'/admin/assessments', quiz);
           },
 
       delete: function(id){
-            return $http.delete(back_url+'/assessments/'+id ) 
+            return $http.delete(back_url+'/admin/assessments/'+id ) 
           },
 
       queryList: function(state, queryData){
@@ -40,17 +40,17 @@ yunakQuizApp.factory('QuizData', ['$http', '$location', function($http, $locatio
       //       return $http.get(back_url+'/breadcrumbs/'+catId) 
       //     },
 
-      getComments: function(id){
-            return $http.get(back_url+'/assessments/'+id+'/comments')
-          },
+      // getComments: function(id){
+      //       return $http.get(back_url+'/assessments/'+id+'/comments')
+      //     },
 
-      updateComments: function(comments){
-            return $http.put(back_url+'/assessments/comments', comments)
-          },
+      // updateComments: function(comments){
+      //       return $http.put(back_url+'/assessments/comments', comments)
+      //     },
 
-      deleteComments: function(id){
-            return $http.delete(back_url+'/assessments/'+id+'/comments')
-          },
+      // deleteComments: function(id){
+      //       return $http.delete(back_url+'/assessments/'+id+'/comments')
+      //     },
 
       getTags: function(query){
             return $http.get(back_url+'/tags/'+query)
@@ -58,6 +58,42 @@ yunakQuizApp.factory('QuizData', ['$http', '$location', function($http, $locatio
     }
   }
 ])
+.factory('QuizResourceService', ['$http', '$location', '$resource' , function($http, $location, $resource){
+   var back_url = 'http://localhost:9292/admin/assessments';
+    return{
+      get: function(id){
+            return $http.get(back_url+'/'+id )
+          },    
+
+      create: function(quiz){       
+            return $http.post(back_url, quiz)
+          },
+
+      update: function(quiz){
+            return $http.put(back_url+'/'+quiz.id, quiz);
+          },
+
+      delete: function(id){
+            return $http.delete(back_url+'/'+id ) 
+          }
+    }      
+}])
+.factory('QuizCommentsService', ['$http', '$location', '$resource' , function($http, $location, $resource){
+   var back_url = 'http://localhost:9292';
+    return{
+       get: function(id){
+            return $http.get(back_url+'/assessments/'+id+'/comments')
+          },
+
+      update: function(comments){
+            return $http.put(back_url+'/assessments/comments', comments)
+          },
+
+      delete: function(id){
+            return $http.delete(back_url+'/assessments/'+id+'/comments')
+          }
+      }    
+}])
 .factory('QuizDataService', ['$http', '$location', function($http, $location){
   var MIN_ASWERS_QTY = 2;
   var back_url = 'http://localhost:9292';
@@ -112,7 +148,7 @@ yunakQuizApp.factory('QuizData', ['$http', '$location', function($http, $locatio
     initQuiz : initQuiz,
     validateQuiz : validateQuiz  
   }
-  
+
 }])
 
 .factory('TagsService', ['$http', '$location', function($http, $location){

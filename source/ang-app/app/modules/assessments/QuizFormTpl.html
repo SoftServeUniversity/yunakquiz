@@ -1,5 +1,5 @@
 <div class="row">
-	<form name="quizEditForm" novalidate>
+	<form name="quizFormName" novalidate>
 			<div class="col-md-12 jumbotron">
 		
 				<label class="col-md-5 control-label text-right">Назва тесту</label>
@@ -23,6 +23,7 @@
 				<label class="col-md-5 control-label quizMarginTop  text-right">Категорія</label>
 				<div class="col-md-7 quizMarginTop ">
 					<select ng-change="clearSubcat()" ng-model="selectedCat" ng-options="category.title for category in categories" class="form-control" required>
+						<option ng-hide="selectedCat" value="">Оберіть Категорію</option>
 					</select>
 			   	</div>
 			   

@@ -41,7 +41,7 @@ class Quiz < ActiveRecord::Base
   
   def self.update_quiz(data, user)
     quiz = Quiz.find(data['id'])
-    return nil if quiz.deleted?
+    return nil if quiz.deleted? || quiz.nil?
     
     if (quiz.user == user) || user.role.name === "moder"
       quiz.update(title: data['title'], description: data['description'], category_id: data['category_id'], status: data['status'])
