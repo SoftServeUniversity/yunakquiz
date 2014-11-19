@@ -1,6 +1,6 @@
 'use strict';
 
-yunakQuizApp.factory('QuizService', ['$http', function($http){
+yunakQuizApp.factory('QuizService', ['$http','CONFIG', function($http, CONFIG){
   var back_url = 'http://localhost:9292';
   var quiz={};
 

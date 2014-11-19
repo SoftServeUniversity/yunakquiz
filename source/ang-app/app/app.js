@@ -37,14 +37,5 @@ angular.module('yunakQuiz', [
       otherwise({
         redirectTo: '/'
       });
-}])
-.constant('paginationConfig', {
-  boundaryLinks: true,
-  directionLinks: true,
-  maxSize : 10,
-  rotate: false,
-  firstText: '≪',
-  previousText: '<',
-  nextText: '>',
-  lastText: '≫'
-});
+}]);
+

@@ -1,7 +1,10 @@
 'use strict';
 
 /** Connection to back-end for quiz  */
-yunakQuizApp.factory('CabinetService', ['$http', '$location', function($http, $location){
+yunakQuizApp.factory('CabinetService', 
+  ['$http', '$location',
+   function($http, $location){
+
   var back_url = 'http://localhost:9292';
     return{
       queryList: function(state, queryData){
@@ -14,7 +17,10 @@ yunakQuizApp.factory('CabinetService', ['$http', '$location', function($http, $l
     }
   }
 ])
-.factory('QuizResourceService', ['$http', '$location', '$resource' , function($http, $location, $resource){
+.factory('QuizResourceService', 
+  ['$http', '$location', '$resource' , 
+  function($http, $location, $resource){
+
    var back_url = 'http://localhost:9292/admin/assessments';
     return{
       get: function(id){
@@ -66,13 +72,12 @@ yunakQuizApp.factory('CabinetService', ['$http', '$location', function($http, $l
   ['$http', '$location', 'QuizCommentsService', '$filter',
   function($http, $location, QuizCommentsService, $filter){
 
-  var MIN_ASWERS_QTY = 2;
   var back_url = 'http://localhost:9292';
   var quiz ={};
   
   function Question(){
     this.answers = [];
-    for (var i=0; i < (MIN_ASWERS_QTY || 1); i++){
+    for (var i=0; i < (CONFIG.MIN_ASWERS_QTY); i++){
       this.answers.push(new Answer());
     };
   };
