@@ -12,8 +12,8 @@
       }
     ]);
 
-    app.controller("modalEditDelCreateCatCtrl",['$modalInstance','$scope','categoryEdit','captchaRnd','validateCaptcha',
-      function($modalInstance, $scope, categoryEdit, captchaRnd, validateCaptcha){
+    app.controller("modalEditDelCreateCatCtrl",['$modalInstance','$scope', '$http', 'categoryEdit','pwdCheck', 
+      function($modalInstance, $scope, $http, categoryEdit, pwdCheck){
       $scope.currentCategory = {};
 
       $scope.cancel = function(){
@@ -24,55 +24,63 @@
         $modalInstance.close();
       };
 
-       $scope.updateCategory = function(){
+      $scope.updateCategory = function(){
         var request = 
           {id: $scope.catToEditDelete.id,
            category_id: $scope.subParCatSelect.id,
            title: $scope.catToEditDelete.title
           };
-
-        if(validateCaptcha($scope.captchaInput, $scope.captchaText)){ 
-          categoryEdit.update(request).success(function(data){
-            $scope.submit();
-          }).error(function(data){
-            $scope.errorModalMsg = $scope.catEditServerErr;
-            $scope.captchaText = captchaRnd();
+          pwdCheck($scope.pwdInput).success(function(){
+            categoryEdit.update(request).success(function(data){
+              $scope.submit();
+            }).error(function(data){
+              $scope.errorModalMsg = $scope.catEditServerErr;
+              $scope.pwdInput = '';
+            });
+          }).error(function(){
+            $scope.pwdPlaceHolder = $scope.pwdInputErr;
+            $scope.pwdInput = '';
           });
-        };
       };
 
       $scope.createCategory = function(){
         var request = {id:$scope.subParCatSelect.id, title:$scope.currentCategory.title};
         
-        if(validateCaptcha($scope.captchaInput, $scope.captchaText)){
-          categoryEdit.create(request).success(function(data){
+          pwdCheck($scope.pwdInput).success(function(){
+            categoryEdit.create(request).success(function(data){
             $scope.submit();
-          })
-          .error(function(data){
-            $scope.errorModalMsg = $scope.catExistErr;
-            $scope.captchaText = captchaRnd();
+            })
+            .error(function(data){
+              $scope.errorModalMsg = $scope.catExistErr;
+              $scope.pwdInput = '';
+            });
+          }).error(function(){
+            $scope.pwdPlaceHolder = $scope.pwdInputErr;
+            $scope.pwdInput = '';
           });
-        };
       };
 
       $scope.deleteCategory = function(){
         var request = $scope.catToEditDelete.id;
-        
-        if(validateCaptcha($scope.captchaInput, $scope.captchaText)){ 
-          categoryEdit.delCat(request).success(function(data){
+
+          pwdCheck($scope.pwdInput).success(function(){
+            categoryEdit.delCat(request).success(function(data){
             $scope.submit();
           }).error(function(data){
             $scope.errorModalMsg = $scope.catDeleteServerErr;
-            $scope.captchaText = captchaRnd();
+            $scope.pwdInput = '';
           });
-        };
-      };
+          }).error(function(){
+            $scope.pwdPlaceHolder = $scope.pwdInputErr;
+            $scope.pwdInput = '';
+          });
+       };
     }]);
 
     app.controller('quizzescategoriesTabCtrl',['$http','$scope','categoriesQuery','quizCount',
-      'addParCatTitle','captchaRnd','doCatHaveSubCat','getSubCats','getParCats','$location','$modal',
+      'addParCatTitle','doCatHaveSubCat','getSubCats','getParCats','$location','$modal',
       'getAccess','addDefaultOption','setCurCatEditDlg',
-      function($http,$scope,categoriesQuery,quizCount,addParCatTitle,captchaRnd,
+      function($http,$scope,categoriesQuery,quizCount,addParCatTitle,
       doCatHaveSubCat,getSubCats,getParCats,$location,$modal,getAccess,addDefaultOption,
       setCurCatEditDlg){
       $scope.tab = 'Категорії тестів'; // Initialize  Tab 
@@ -81,15 +89,16 @@
       $scope.subParCatSelect = {};
       $scope.parCatGrouped = {};
       $scope.subCategories = [];
-      $scope.captchaInput = '';
-      $scope.captchaText = '';
+      $scope.pwdPlaceHolder = 'Введіть пароль...'
       $scope.errorModalMsg = '';
+      $scope.pwdInput='';
       $scope.dropdownSubCats = true;
       $scope.lockSelSubCatEdit = false;
       $scope.catExistErr = 'Така категорія вже існує';
       $scope.catEditServerErr = 'Помилка при редагуванні';
       $scope.catHaveSubCatMsg = 'Увага, категорія містить підкатегорії';
       $scope.catDeleteServerErr = 'Помилка при видаленні';
+      $scope.pwdInputErr = 'Невірний пароль';
       $scope.catDelRelationalDataMsg = 'Увага, будуть видалені підкатегорії та інші пов\'язані дані';
       
       getAccess($scope.tab).then(function(accessGranted){
@@ -106,7 +115,6 @@
 
       $scope.showCreateCatDlg = function(){
         clearForm();
-        $scope.captchaText = captchaRnd();
 
         var modalCreateCat = $modal.open({
           templateUrl: 'modules/administration_panel/modalCreateCat.html',
@@ -121,7 +129,6 @@
       
       $scope.showDeleteCatDlg = function(category){
         clearForm();
-        $scope.captchaText = captchaRnd();
         jQuery.extend($scope.catToEditDelete,category); //we do not need two way data binding here
         $scope.subParCatSelect = setCurCatEditDlg($scope.catToEditDelete, $scope.parCatGrouped);
         showHideAlertMsgButtons(category, $scope.catDelRelationalDataMsg, false);
@@ -139,7 +146,6 @@
       
       $scope.showEditCatDlg = function(category){
         clearForm();
-        $scope.captchaText = captchaRnd();
         jQuery.extend($scope.catToEditDelete,category); //we do not need two way data binding here
         $scope.subParCatSelect = setCurCatEditDlg($scope.catToEditDelete, $scope.parCatGrouped);
         showHideAlertMsgButtons(category, $scope.catHaveSubCatMsg, true);

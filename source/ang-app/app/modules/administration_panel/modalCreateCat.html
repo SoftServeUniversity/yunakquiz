@@ -14,23 +14,23 @@
   <form name="createCat" ng-submit="createCat.$valid && createCategory()" novalidate>
     <div class="modal-body">
       <div class="row">
-        <label class="col-xs-5 control-lablel">Назва категорії</label>
+        <label class="col-xs-5 control-lablel category-label">Назва категорії</label>
         <div class="col-xs-7 admin-pan-category-edit-input">
           <input type="text" class="form-control" placeholder="Введіть назву категорії..." ng-model="currentCategory.title" required>
         </div>
       </div>
       <div class="row">
-        <label class="col-xs-5 control-lablel">Батьківська категорія</label>
+        <label class="col-xs-5 control-lablel category-label">Батьківська категорія</label>
         <div class="col-xs-7 admin-pan-category-edit-input">
           <select class="form-control" ng-model="subParCatSelect" ng-options="parCat.title for parCat in parCatGrouped">
           </select>
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-4 pull-right">
-          <input type="text" class="form-control captcha" placeholder="Введіть число..." ng-model="captchaInput" required>
+        <label class="col-xs-5 control-lablel category-label">Пароль</label>
+        <div class="col-xs-7 admin-pan-category-edit-input">
+          <input type="password" class="form-control" placeholder="{{pwdPlaceHolder}}" ng-model="pwdInput"required>
         </div>
-          <div class="col-xs-2 admin-pan-category-add-captcha-rnd pull-right" ng-bind="captchaText"></div>
       </div>
     </div>
     <div class="modal-footer">

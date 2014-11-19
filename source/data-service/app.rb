@@ -351,6 +351,19 @@ module PlastApp
     get '/last_quizzes/:id' do
       Quiz.lastQuizzes(params['id'])
     end
+    
+    post '/checkpassword/' do
+      content_type :json
+      data = JSON.parse(request.body.read)
+      if session[:user_id]
+        userToCheck = User.find(session[:user_id])
+        user = User.authenticate(userToCheck['username'], data['password'])
+      end
+      if user
+        return [200, 'ok']
+      end
+      return [400, 'bad request']
+    end
 
   end
 end
