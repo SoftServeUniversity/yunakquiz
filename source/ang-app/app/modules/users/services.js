@@ -5,6 +5,7 @@
       this.$scope = $scope;
       this.error = {};
       this.takenUsers = [];
+      this.takenEmails = [];
     }
     
     Validation.prototype.hasErrors = function(fieldname) {
@@ -34,6 +35,9 @@
       this.takenUsers.push(username);
     };
      
+    Validation.prototype.addTakenEmail = function(email){
+      this.takenEmails.push(email);
+    }; 
     Validation.prototype.passwordError = function() {
       if (this.hasErrors("password")) {
         if (this.$scope.regform.password.$error.required) {
@@ -59,6 +63,7 @@
     }; 
     
     Validation.prototype.emailError = function() {
+      var emailField = this.$scope.regform.email;  
       if (this.hasErrors("email")) {
         if (this.$scope.regform.email.$error.required) {
           this.error.email = "Будь-ласка, введіть електронну адресу";
@@ -66,7 +71,11 @@
           this.error.email = "Будь-ласка, введіть валідну електронну адресу";
         }
       } else {
-        this.error.email = "";
+        if (this.takenEmails.indexOf(emailField.$viewValue) !== -1){
+          this.error.email = "Користувач з такою адресою вже існує";
+        } else {
+          this.error.email = "";
+        }
       }
       return this.error.email;
     }; 
