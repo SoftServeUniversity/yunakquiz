@@ -46,7 +46,11 @@ yunakQuizApp.factory('CabinetService',
     }      
 }])
 .factory('QuizResource', ['$resource', function( $resource) {
-    return $resource('http://localhost:9292/admin/assessments/:id')
+   
+    return $resource('http://localhost:9292/admin/assessments/:id', 
+      { id:'@id' },
+      { update: {method:'PUT'} }
+      )
   }])
 
 .factory('QuizCommentsService', 
@@ -97,20 +101,18 @@ yunakQuizApp.factory('CabinetService',
   };
 
   function validateQuiz(quiz){
-    var questions = quiz.questions;
     var invalid = false;
-    questions = $filter('filter')(questions, filterDeleted);
+    var questions = $filter('filter')(quiz.questions, filterDeleted);
     angular.forEach(questions, function(question){
       validateQuestion(question);
       if(question.invalid){
           invalid = true;
-        };
-        
+      };
     });
     return invalid;
   };
 
-  /** check question to be valid */
+  /** check question to have at least one correct answer */
   function validateQuestion (question){
     var answers = $filter('filter')(question.answers, filterDeleted);
     answers = $filter('filter')(answers, {correct: true})
