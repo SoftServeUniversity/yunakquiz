@@ -7,13 +7,18 @@ angular.module('yunakQuiz.personalCabinet')
     testChunks: false
   };
 }])
-.controller("ProfileController", ["userService", "$scope", "$timeout", "$location", 
-  function(userService, $scope, $timeout, $location){
+.controller("ProfileController", ["userService", "$scope", "$timeout", "$location", "uploadFileService",
+  function(userService, $scope, $timeout, $location, uploadFileService){
     $scope.tab = 'profile';
     this.user = {};
     var profile = this; 
     this.previousUser = {};
     this.editable = false;
+    this.uploadFile = undefined;
+    
+    this.setUploadService = function(){
+      this.uploadFile = new uploadFileService(this.$flow);
+    };
     
     this.getRandom = function(min, max) {
       return Math.floor(Math.random() * (max - min + 1)) + min;
