@@ -5,9 +5,10 @@ angular.module('yunakQuiz.assessments')
   ['$scope', 'QuizResource', 'QuizCommentsService', '$routeParams', '$location', 'QuizMngService', 
   function($scope, QuizResource, QuizCommentsService,$routeParams, $location, QuizMngService) {
 
-  $scope.quiz = QuizResource.get({id:$routeParams.quiz_id}, function(quiz){
-    getComments(quiz.id);
-  });
+  $scope.quiz = QuizResource.get({id:$routeParams.quiz_id}, 
+    function (quiz){ getComments(quiz.id); }, 
+    function (response){ $scope.errorMsg = response.data || 'Тест не отримано'}
+    );
 
   function getComments(quiz_id) {
     QuizCommentsService.get(quiz_id)
@@ -34,11 +35,11 @@ angular.module('yunakQuiz.assessments')
     };
   };
 
-  function success(value, responseHeaders){
+  function success(value){
     $location.path('/admin/personalCabinet/'+value.status);
   };
 
-  function error(httpResponse){
+  function error(response){
     window.scrollTo(0,0);
     $scope.errorMsg = 'Ваш тест не збережено';
   }

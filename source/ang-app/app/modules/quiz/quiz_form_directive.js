@@ -9,8 +9,8 @@ angular.module('yunakQuiz.assessments')
   }
 }])
 .controller('quizFormCtrl', 
-  ['$scope', 'QuizMngService', 'TagsService', 'CategoriesService', 'QuizResourceService', 'CONFIG',
-  function($scope, QuizMngService, TagsService, CategoriesService, QuizResourceService, CONFIG){
+  ['$scope', 'QuizMngService', 'TagsService', 'CategoriesService', 'QuizResource', 'CONFIG',
+  function($scope, QuizMngService, TagsService, CategoriesService, QuizResource, CONFIG){
   
   $scope.MIN_ASWERS_QTY=CONFIG.MIN_ASWERS_QTY;
   $scope.MIN_QUESTIONS_QTY=CONFIG.MIN_QUESTIONS_QTY;
@@ -57,10 +57,11 @@ angular.module('yunakQuiz.assessments')
   };
 
   $scope.validateTitle = function(){
-    QuizResourceService.validateTitle($scope.quiz.title, $scope.quiz.id)
-      .success(function(data) { 
-        $scope.titleError =  data 
-      })
+    QuizResource.validateTitle({id:$scope.quiz.id, query:$scope.quiz.title}, successTitle);
+  };
+
+  function successTitle(data){
+    $scope.titleError =  data.titlePresent;
   };
   
   $scope.filterFunction = function(element) {

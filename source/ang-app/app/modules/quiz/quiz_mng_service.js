@@ -2,46 +2,12 @@
 
 /** Connection to back-end for quiz  */
 angular.module('yunakQuiz.assessments')
-.factory('QuizResourceService', 
-  ['$http', '$location', '$resource' , 
-  function($http, $location, $resource){
 
-   var back_url = 'http://localhost:9292/admin/assessments';
-    return{
-      get: function(id){
-            return $http.get(back_url+'/'+id )
-          },    
-
-      create: function(quiz){       
-            return $http.post(back_url, quiz)
-          },
-
-      update: function(quiz){
-            return $http.put(back_url+'/'+quiz.id, quiz);
-          },
-
-      delete: function(id){
-            return $http.delete(back_url+'/'+id ) 
-          },
-      validateTitle: function(title, id){
-            var data = {query: title, id: id};
-            return $http.post(back_url+'/title', data) 
-          }    
-
-    }      
-}])
-.factory('QuizResource', ['$resource','CONFIG', function( $resource,CONFIG) {
-   
-    return $resource(CONFIG.BASE_URL+'/admin/assessments/:id', 
-      { id:'@id' },
-      { update: {method:'PUT'} }
-      )
-  }])
 .factory('QuizMngService', 
-  ['$http', '$location', 'QuizCommentsService', '$filter', 'CONFIG',
-  function($http, $location, QuizCommentsService, $filter, CONFIG){
+  ['$http', '$location', 'QuizCommentsService', 'QuizResource', '$filter', 'CONFIG',
+  function($http, $location, QuizCommentsService, QuizResource, $filter, CONFIG){
 
-  var quiz ={};
+  var quiz = {}
   
   function Question(){
     this.answers = [];
@@ -55,7 +21,7 @@ angular.module('yunakQuiz.assessments')
   };
 
   function initQuiz(){
-    this.quiz = {};
+    this.quiz = new QuizResource();
     this.quiz.questions = [];
     for (var i=0; i < (CONFIG.MIN_QUESTIONS_QTY); i++){
       this.quiz.questions.push(new Question());
@@ -94,41 +60,4 @@ angular.module('yunakQuiz.assessments')
   }
 
 }])
-
-.factory('QuizCommentsService', 
-  ['$http', '$location', '$resource' , 
-  function($http, $location, $resource){
-   
-   var back_url = 'http://localhost:9292';
-    return{
-       get: function(id){
-            return $http.get(back_url+'/assessments/'+id+'/comments')
-          },
-
-      update: function(comments){
-            return $http.put(back_url+'/assessments/comments', comments)
-          },
-
-      delete: function(id){
-            return $http.delete(back_url+'/assessments/'+id+'/comments')
-          }
-      }    
-}])
-
-.factory('TagsService', ['$http', 'CONFIG', function($http, CONFIG){
-    return{
-      getTags: function(query){
-            return $http.get(CONFIG.BASE_URL+'/tags/'+query)
-      }
-    }
-}])
-
-.factory('CategoriesService', ['$http', 'CONFIG', function($http, CONFIG){
-    return{
-      getCat: function(){
-            return $http.get(CONFIG.BASE_URL+'/categories') 
-      },
-    }
-}])
-
 

@@ -1,10 +1,10 @@
 'use strict';
 /** Quiz Edit controller  */
 angular.module('yunakQuiz.assessments')
-.controller('ReviewCtrl', 
-  ['$scope','QuizResourceService', 'QuizCommentsService', '$routeParams',
+.controller('QuizReviewCtrl', 
+  ['$scope','QuizResource', 'QuizCommentsService', '$routeParams',
    '$route','$location','QuizMngService', 'getAccess', 
-  function($scope, QuizResourceService, QuizCommentsService, $routeParams,
+  function($scope, QuizResource, QuizCommentsService, $routeParams,
    $route, $location, QuizMngService, getAccess) {
 
   getAccess($route.current.permision).then(function(data){
@@ -12,15 +12,11 @@ angular.module('yunakQuiz.assessments')
   });
   /** get Quiz by ID */
   function init(){
-  QuizResourceService.get($routeParams.quiz_id)
-      .success(function(data, status, headers, config){
-         $scope.quiz = data;
-         getComments(data['id']);
-      })
-      .error(function(data){
-        $location.path('/404/');
-      });
-  };  
+    $scope.quiz = QuizResource.get({id:$routeParams.quiz_id}, 
+    function (quiz){ getComments(quiz.id); }, 
+    function (response){ $scope.errorMsg = response.data || 'Тест не отримано'}
+    );
+  };
 
   function getComments(quiz_id) {
     QuizCommentsService.get(quiz_id)
@@ -52,7 +48,7 @@ angular.module('yunakQuiz.assessments')
     })
     .error(function() {
       window.scrollTo(0,0);
-      $scope.errorMsg = 'Ваш тест не збережено';
+      $scope.errorMsg = 'Коментарі не збережено';
     })
 
   };
@@ -70,19 +66,20 @@ angular.module('yunakQuiz.assessments')
   /** send Quiz to backend  */
   function sendQuiz(state){
     $scope.quiz.status = state;
-        
     if(!QuizMngService.validateQuiz($scope.quiz)){
-  
-      QuizResourceService.update($scope.quiz)
-        .success(function(data, status, headers, config) {
-          sendComments($scope.quiz.status);
-        })
-        .error(function() {
-            window.scrollTo(0,0);
-            $scope.errorMsg = 'Ваш тест не збережено';
-        })
-    }
+      $scope.quiz.$update(success, error);
+    };
   };
+
+  function success(value){
+    sendComments(value.status);
+    $location.path('/admin/personalCabinet/'+value.status);
+  };
+
+  function error(response){
+    window.scrollTo(0,0);
+    $scope.errorMsg = 'Ваш тест не збережено';
+  }
 
   
 }]);

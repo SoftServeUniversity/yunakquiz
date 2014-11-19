@@ -1,10 +1,11 @@
 
 angular.module('yunakQuiz.cabinet')
 .controller('CabinetCtrl', 
-  ['$scope', 'QuizResourceService', 'CabinetService', '$routeParams', '$modal', '$route', 'getAccess', '$location','paginationConfig',
-  function($scope, QuizResourceService, CabinetService, $routeParams, $modal, $route, getAccess, $location,paginationConfig) {
+  ['$scope', 'QuizResource', 'CabinetService', '$routeParams', '$modal', '$route', 'getAccess', '$location','paginationConfig',
+  function($scope, QuizResource, CabinetService, $routeParams, $modal, $route, getAccess, $location,paginationConfig) {
   
   $scope.items_per_page = paginationConfig.items_per_page;
+  $scope.quizUrl = '#/assessments/';
 
   var queryFnName = $route.current.queryFn;
   $scope.tab = $routeParams.state || "published";
@@ -20,8 +21,6 @@ angular.module('yunakQuiz.cabinet')
     categoryFilter: []
   };
 
-  $scope.quizUrl = '#/assessments/';
-
   $scope.searchQuery = function(){
     $scope.outputData.currentPage = 1;
     $scope.queryList();
@@ -35,14 +34,14 @@ angular.module('yunakQuiz.cabinet')
   $scope.queryList = function() {
     CabinetService[queryFnName]($scope.tab, $scope.outputData)
       .success(function(data, status, headers, config) {
-        $scope.updateData(data);        
+        updateData(data);        
       })
       .error(function(data){
         $scope.error = data;
       });
   };
 
-  $scope.updateData = function(data){
+  function updateData(data){
     $scope.quizzes = data.quizzes;
     $scope.totalItems = data.totalItems;
   };
@@ -52,17 +51,13 @@ angular.module('yunakQuiz.cabinet')
       templateUrl: 'modules/cabinet/quiz_delete_modal.html',
       controller: 'ModalDeleteCtrl',
       size: 'sm'
-    });
-    modalDelete.result.then(function () {
-      QuizResourceService.delete(quizId).success(function(data) {
-        $scope.searchQuery();
-      });
+    }).result;
+
+    modalDelete.then(function () {
+      QuizResource.delete({id:quizId}, function(){ $scope.searchQuery() })
     });
   };
   
-  $scope.categoryFilter = function(){
-    $scope.outputData.categoryFilter = $scope.searchRequest.categories_id;
-    $scope.searchQuery();
-  };
+  
 }]);
 

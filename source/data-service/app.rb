@@ -91,7 +91,7 @@ module PlastApp
       else
         @query = Quiz.where(title: data['query']).exists?
       end  
-      @query.to_json
+      {titlePresent:@query}.to_json
     end
 
     put '/admin/assessments/:id' do

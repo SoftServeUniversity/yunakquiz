@@ -36,7 +36,7 @@ class Quiz < ActiveRecord::Base
     quiz.update(user: user)
     Tag.insert_tags(data['tags'], quiz)
     Question.createQ(data['questions'], quiz)
-    quiz[:id]
+    quiz
   end
   
   def self.update_quiz(data, user)

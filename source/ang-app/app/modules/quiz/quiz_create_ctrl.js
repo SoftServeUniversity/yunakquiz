@@ -2,8 +2,8 @@
 /** Quiz Create controller  */
 angular.module('yunakQuiz.assessments')
 .controller('QuizCreateCtrl', 
-  ['$scope', 'QuizResourceService', 'QuizMngService', '$location', 
-  function($scope, QuizResourceService, QuizMngService, $location) {
+  ['$scope', 'QuizResource', 'QuizMngService', '$location', 
+  function($scope, QuizResource, QuizMngService, $location) {
 
   QuizMngService.initQuiz();
   $scope.quiz = QuizMngService.quiz;
@@ -20,15 +20,17 @@ angular.module('yunakQuiz.assessments')
   function sendQuiz(state){
     $scope.quiz.status = state;
     if(!QuizMngService.validateQuiz($scope.quiz)){
-      QuizResourceService.create($scope.quiz)
-      .success(function(data, status, headers, config) {
-        $location.path('/admin/personalCabinet/'+state);
-      })
-      .error(function(data, status, headers, config) {
-        window.scrollTo(0,0);
-      $scope.errorMsg = 'Ваш тест не збережено';
-      });
+        $scope.quiz.$save(success, error);
     };
   };
+
+  function success(value){
+    $location.path('/admin/personalCabinet/'+value.status);
+  };
+
+  function error(response){
+    window.scrollTo(0,0);
+    $scope.errorMsg = 'Ваш тест не збережено';
+  }
 
 }]);
