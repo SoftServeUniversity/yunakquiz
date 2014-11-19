@@ -4,13 +4,16 @@ angular.module('yunakQuiz.assessments')
     restrict: 'EA',
     scope: {quiz: '=', quizFormName: '='},
     controller: 'quizFormCtrl',
-    templateUrl: './modules/assessments/QuizFormTpl.html',
+    templateUrl: './modules/quiz/quiz_form.html',
     replace: true
   }
 }])
 .controller('quizFormCtrl', 
-  ['$scope', 'QuizDataService', 'TagsService', 'CategoriesService', 'QuizResourceService',
-  function($scope, QuizDataService, TagsService, CategoriesService, QuizResourceService ){
+  ['$scope', 'QuizMngService', 'TagsService', 'CategoriesService', 'QuizResourceService', 'CONFIG',
+  function($scope, QuizMngService, TagsService, CategoriesService, QuizResourceService, CONFIG){
+  
+  $scope.MIN_ASWERS_QTY=CONFIG.MIN_ASWERS_QTY;
+  $scope.MIN_QUESTIONS_QTY=CONFIG.MIN_QUESTIONS_QTY;
   
   getCat();
 
@@ -65,7 +68,7 @@ angular.module('yunakQuiz.assessments')
   };
 
   $scope.addAnswer = function(question) {
-    question.answers.push(new QuizDataService.Answer());
+    question.answers.push(new QuizMngService.Answer());
   };
 
   $scope.deleteAnswer = function(answer, question) {
@@ -84,7 +87,7 @@ angular.module('yunakQuiz.assessments')
   };
 
   $scope.addQuestion = function(){
-    $scope.quiz.questions.push(new QuizDataService.Question())    
+    $scope.quiz.questions.push(new QuizMngService.Question())    
   };
     
   $scope.deleteQuestion = function(question){

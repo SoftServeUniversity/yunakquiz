@@ -1,11 +1,12 @@
 'use strict';
 /** Quiz Create controller  */
-yunakQuizApp.controller('QuizCreateCtrl', 
-  ['$scope', 'QuizResourceService', 'QuizDataService', '$location', 
-  function($scope, QuizResourceService, QuizDataService, $location) {
+angular.module('yunakQuiz.assessments')
+.controller('QuizCreateCtrl', 
+  ['$scope', 'QuizResourceService', 'QuizMngService', '$location', 
+  function($scope, QuizResourceService, QuizMngService, $location) {
 
-  QuizDataService.initQuiz();
-  $scope.quiz = QuizDataService.quiz;
+  QuizMngService.initQuiz();
+  $scope.quiz = QuizMngService.quiz;
         
   $scope.saveQuiz=function(){
     sendQuiz("draft");
@@ -18,7 +19,7 @@ yunakQuizApp.controller('QuizCreateCtrl',
   /** Redirect to result-page if quiz is valid  */
   function sendQuiz(state){
     $scope.quiz.status = state;
-    if(!QuizDataService.validateQuiz($scope.quiz)){
+    if(!QuizMngService.validateQuiz($scope.quiz)){
       QuizResourceService.create($scope.quiz)
       .success(function(data, status, headers, config) {
         $location.path('/admin/personalCabinet/'+state);

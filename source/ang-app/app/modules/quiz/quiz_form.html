@@ -48,12 +48,12 @@
 				    <span ng-click="setCorrectAnswer(question,answer)" class="input-group-addon glyphicon quizBtnFix glyphicon-ok markCorrectAnswerBtn" ng-class="{'quizCorrectAnswer':answer.correct}">
 				    </span>
 				    <input ng-model="answer.title" type="text" class="form-control" placeholder="Введіть відповідь" type="text" required />
-				    <span  ng-show="answers.length>2" ng-click="deleteAnswer(answer, question)" class="btn input-group-addon glyphicon glyphicon-remove quizDeleteAnswer quizBtnFix">
+				    <span  ng-show="answers.length>MIN_ASWERS_QTY" ng-click="deleteAnswer(answer, question)" class="btn input-group-addon glyphicon glyphicon-remove quizDeleteAnswer quizBtnFix">
 				    </span>
 				</div>
 				<div ng-show="question.invalid" class="quizMarginTop col-sm-11 col-xs-12 col-sm-offset-1 text-danger">* Позначте хоча б одну правильну відповідь</div>
 				<button ng-click="addAnswer(question)" class="btn btn-info quizMarginTop"><span class="glyphicon glyphicon-plus"></span> Додати відповідь</button>
-				<div ng-show="questions.length>1" ng-click="deleteQuestion(question)" class="closeButton glyphicon glyphicon-remove"></div>
+				<div ng-show="questions.length>MIN_QUESTIONS_QTY" ng-click="deleteQuestion(question)" class="closeButton glyphicon glyphicon-remove"></div>
 			</div>
 			<div class=" col-sm-12">
 				<button ng-click="addQuestion()" class="btn btn-info"><span class="glyphicon glyphicon-plus"></span> Додати питання</button>

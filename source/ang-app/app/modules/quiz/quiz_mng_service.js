@@ -1,22 +1,7 @@
 'use strict';
 
 /** Connection to back-end for quiz  */
-yunakQuizApp.factory('CabinetService', 
-  ['$http', '$location',
-   function($http, $location){
-
-  var back_url = 'http://localhost:9292';
-    return{
-      queryList: function(state, queryData){
-            return $http.post(back_url+'/assessments/'+state, queryData) 
-          },
-
-      queryListModer: function(state, queryData){
-            return $http.post(back_url+'/assessments/moderator/'+state, queryData) 
-          }
-    }
-  }
-])
+angular.module('yunakQuiz.assessments')
 .factory('QuizResourceService', 
   ['$http', '$location', '$resource' , 
   function($http, $location, $resource){
@@ -45,38 +30,17 @@ yunakQuizApp.factory('CabinetService',
 
     }      
 }])
-.factory('QuizResource', ['$resource', function( $resource) {
+.factory('QuizResource', ['$resource','CONFIG', function( $resource,CONFIG) {
    
-    return $resource('http://localhost:9292/admin/assessments/:id', 
+    return $resource(CONFIG.BASE_URL+'/admin/assessments/:id', 
       { id:'@id' },
       { update: {method:'PUT'} }
       )
   }])
+.factory('QuizMngService', 
+  ['$http', '$location', 'QuizCommentsService', '$filter', 'CONFIG',
+  function($http, $location, QuizCommentsService, $filter, CONFIG){
 
-.factory('QuizCommentsService', 
-  ['$http', '$location', '$resource' , 
-  function($http, $location, $resource){
-   
-   var back_url = 'http://localhost:9292';
-    return{
-       get: function(id){
-            return $http.get(back_url+'/assessments/'+id+'/comments')
-          },
-
-      update: function(comments){
-            return $http.put(back_url+'/assessments/comments', comments)
-          },
-
-      delete: function(id){
-            return $http.delete(back_url+'/assessments/'+id+'/comments')
-          }
-      }    
-}])
-.factory('QuizDataService', 
-  ['$http', '$location', 'QuizCommentsService', '$filter',
-  function($http, $location, QuizCommentsService, $filter){
-
-  var back_url = 'http://localhost:9292';
   var quiz ={};
   
   function Question(){
@@ -93,7 +57,9 @@ yunakQuizApp.factory('CabinetService',
   function initQuiz(){
     this.quiz = {};
     this.quiz.questions = [];
-    this.quiz.questions[0] = new Question();
+    for (var i=0; i < (CONFIG.MIN_QUESTIONS_QTY); i++){
+      this.quiz.questions.push(new Question());
+    };
   };
 
   function filterDeleted(element) {
@@ -129,24 +95,40 @@ yunakQuizApp.factory('CabinetService',
 
 }])
 
-.factory('TagsService', ['$http', '$location', function($http, $location){
-  var back_url = 'http://localhost:9292';
+.factory('QuizCommentsService', 
+  ['$http', '$location', '$resource' , 
+  function($http, $location, $resource){
+   
+   var back_url = 'http://localhost:9292';
+    return{
+       get: function(id){
+            return $http.get(back_url+'/assessments/'+id+'/comments')
+          },
+
+      update: function(comments){
+            return $http.put(back_url+'/assessments/comments', comments)
+          },
+
+      delete: function(id){
+            return $http.delete(back_url+'/assessments/'+id+'/comments')
+          }
+      }    
+}])
+
+.factory('TagsService', ['$http', 'CONFIG', function($http, CONFIG){
     return{
       getTags: function(query){
-            return $http.get(back_url+'/tags/'+query)
+            return $http.get(CONFIG.BASE_URL+'/tags/'+query)
       }
     }
-  }
-])
+}])
 
-.factory('CategoriesService', ['$http', '$location', function($http, $location){
-  var back_url = 'http://localhost:9292';
+.factory('CategoriesService', ['$http', 'CONFIG', function($http, CONFIG){
     return{
       getCat: function(){
-            return $http.get(back_url+'/categories') 
+            return $http.get(CONFIG.BASE_URL+'/categories') 
       },
     }
-  }
-])
+}])
 
 

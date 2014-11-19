@@ -1,8 +1,11 @@
 'use strict';
 /** Quiz Edit controller  */
-yunakQuizApp.controller('ReviewCtrl', 
-  ['$scope','QuizResourceService', 'QuizCommentsService', '$routeParams', '$route','$location','QuizDataService', 'getAccess', 
-  function($scope, QuizResourceService, QuizCommentsService, $routeParams, $route, $location, QuizDataService, getAccess) {
+angular.module('yunakQuiz.assessments')
+.controller('ReviewCtrl', 
+  ['$scope','QuizResourceService', 'QuizCommentsService', '$routeParams',
+   '$route','$location','QuizMngService', 'getAccess', 
+  function($scope, QuizResourceService, QuizCommentsService, $routeParams,
+   $route, $location, QuizMngService, getAccess) {
 
   getAccess($route.current.permision).then(function(data){
     data ? init() : $location.path( "/403" );
@@ -68,7 +71,7 @@ yunakQuizApp.controller('ReviewCtrl',
   function sendQuiz(state){
     $scope.quiz.status = state;
         
-    if(!QuizDataService.validateQuiz($scope.quiz)){
+    if(!QuizMngService.validateQuiz($scope.quiz)){
   
       QuizResourceService.update($scope.quiz)
         .success(function(data, status, headers, config) {

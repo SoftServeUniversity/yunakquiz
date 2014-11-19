@@ -1,11 +1,12 @@
 'use strict';
 /** QuizResult controller  */
-yunakQuizApp.controller('QuizResultCtrl', 
-	['$scope','QuizService', '$location', 
-	function($scope, QuizService, $location) {
+angular.module('yunakQuiz.assessments')
+.controller('QuizResultCtrl', 
+	['$scope','QuizPassService', '$location', 
+	function($scope, QuizPassService, $location) {
 
 	/**    */
-	$scope.quiz = QuizService.quiz;
+	$scope.quiz = QuizPassService.quiz;
 	if (!$scope.quiz.id) {
 		$location.path('/');	
 	}

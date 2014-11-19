@@ -1,7 +1,7 @@
 <div class="quiz">
 <h3  ng-bind="quiz.title" class="text-center assessment-title"></h3>
 
-<div ng-include="'modules/assessments/breadCrumbs.html'"></div>
+<div ng-include="'modules/quiz/bread_crumbs.html'"></div>
 
 <div>
 	<h3 class="text-center">Твій вислід: <span>{{quiz.result}}</span> зі <span>100</span> балів!</h3>
@@ -28,8 +28,4 @@
 
 <button ng-click="redirectToAssessment()" class="btn btn-primary" role="button">Пройти тест знову</button> 
 
-<p>
-  Showing of 'interpolate' filter:
-  {{ 'Current version is v%VERSION%.' | interpolate }}
-</p>
 </div>

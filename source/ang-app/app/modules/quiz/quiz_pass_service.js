@@ -1,15 +1,16 @@
 'use strict';
 
-yunakQuizApp.factory('QuizService', ['$http','CONFIG', function($http, CONFIG){
-  var back_url = 'http://localhost:9292';
+angular.module('yunakQuiz.assessments')
+  .factory('QuizPassService', ['$http','CONFIG', function($http, CONFIG){
+  
   var quiz={};
 
   function getQuiz(id){
-    return $http.get(back_url+'/assessments/'+id )
+    return $http.get(CONFIG.BASE_URL+'/assessments/'+id )
   };
 
   function postResult(id, result){
-      return $http.post(back_url+'/assessments/result', {quizId : id, result : result})
+      return $http.post(CONFIG.BASE_URL+'/assessments/result', {quizId : id, result : result})
   };
 
   /** Validate if question has at least one answer picked  */
@@ -63,7 +64,7 @@ yunakQuizApp.factory('QuizService', ['$http','CONFIG', function($http, CONFIG){
       if (question.nice) {correctAnswers++}
     });
     count = (correctAnswers / questions.length) * 100 ;
-    count = count.toFixed(2);
+    count = count.toFixed(CONFIG.SCORE_ROUND);
     return +count;
   };
 

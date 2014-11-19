@@ -1,5 +1,5 @@
 (function(){
-angular.module('yunakQuiz.personalCabinet')
+angular.module('yunakQuiz.cabinet')
 .config(["flowFactoryProvider", function(flowFactoryProvider) {
   flowFactoryProvider.defaults = {
     target: 'http://localhost:9292/avatar',
@@ -92,7 +92,7 @@ angular.module('yunakQuiz.personalCabinet')
 .directive("deleteUserProfile", function(){
   return {
     restrict: "E",
-    templateUrl: "modules/personalCabinet/deleteProfileModal.html"
+    templateUrl: "modules/cabinet/profile_delete_modal.html"
   };
 });
 })();
