@@ -18,9 +18,14 @@ angular.module('yunakQuiz.sessions', ['ngRoute', "ngResource"])
           },
           function(data){
             lgnCtrl.message = "Не валідний нік і/або пароль!";
+            lgnCtrl.user = {};
           });
       }
     };
+    this.clearFields = function(){
+      this.message = "";
+      this.user = {};
+    };  
     this.register = function(){
         $("#login").modal("hide");
         $location.path("/auth/signup");
