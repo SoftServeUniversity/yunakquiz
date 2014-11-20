@@ -139,3 +139,18 @@ color: white;
   z-index: 1;
 }
 /* eof Category container*/
+
+/* login styles */
+.modal-header {
+	background-color: #eae8e8;
+	border-radius: 7px 7px 0px 0px;
+}
+
+.border {
+	border: 1px solid #990000;
+}
+
+.form-label {
+	min-width: 22%;
+}
+/* end login styles */
