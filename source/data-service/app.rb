@@ -6,6 +6,7 @@ module PlastApp
   require 'sinatra/activerecord'
   require 'json/ext' # required for .to_json
   require 'sinatra/cross_origin'
+  require 'securerandom'
 
   require 'sinatra/asset_pipeline'
 
@@ -39,16 +40,22 @@ module PlastApp
     end
 
     post '/avatar' do
-      if session[:user_id]
-        user = User.find(session[:user_id])
-        tempfile = params[:file][:tempfile]
-        filename = params[:file][:filename]
-        saved_name = "#{user.username}#{File.extname(filename)}"
-        FileUtils.copy(tempfile.path, "public/avatar/#{saved_name}")
-        return [200, saved_name]
-      end
-      return [401, "unauthorized"]
+      tempfile = params[:file][:tempfile]
+      filename = params[:file][:filename]
+      saved_name = "#{SecureRandom.hex(5)}#{File.extname(filename)}"
+      FileUtils.copy(tempfile.path, "public/avatar/#{saved_name}")
+      return [200, saved_name]
     end  
+    
+    delete '/user' do
+      data = params
+      user = User.authenticate(data['username'], data['password'])
+      if user
+        user.destroy
+        return [200, 'ok']
+      end
+      return [400, 'bad request']
+    end
 
     get '/assessments' do
       content_type :json
