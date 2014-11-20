@@ -1,5 +1,5 @@
 <div class="row">
-		<h3 class="text-center assessment-title">Кабінет модератора</h3>
+	<h3 class="text-center assessment-title">Кабінет модератора</h3>
 
 	<div class="col-md-3">
 	<!--Search module -->
@@ -8,7 +8,6 @@
 	</div>
 	<div class="col-md-9">
 		<div class="input-group col-md-8 col-md-offset-2">
-	          <!-- <guestsearchtag tags="tags" filter-fn="searchData()"></guestsearchtag> -->
 		</div>
 
 		<ul class="nav nav-tabs quizMarginTop">
@@ -42,7 +41,7 @@
 					</td>
 					<td class="text-center">{{quiz.user.username}}</td>
 					<td>
-						<a ng-href="#/admin/moderationCabinet/review/{{quiz.id}}" type="button" class="btn btn-info btn-xs">Перевірити тест</a>
+						<a ng-href="#/admin/assessments/review/{{quiz.id}}" type="button" class="btn btn-info btn-xs">Перевірити тест</a>
 					</td>
 					<td>
 						<a ng-click="deleteQuiz(quiz.id)" type="button" class="btn btn-danger btn-xs">Видалити тест</a>
@@ -54,9 +53,7 @@
 			<pagination total-items="totalItems" ng-model="outputData.currentPage" ng-change="queryList()"  items-per-page="outputData.itemsPerPage" class="pagination" ></pagination>
 			<div class="pagination pull-right">
 				<select ng-change="searchQuery()" ng-model="outputData.itemsPerPage" class="form-control">
-				  <option value="10" >10</option>
-				  <option value="25" >25</option>
-				  <option value="50" >50</option>
+				  <option ng-repeat="item in items_per_page" value="{{item}}">{{item}}</option>
 				  <option value="{{totalItems}}">Всі</option>
 				</select>
 			</div>

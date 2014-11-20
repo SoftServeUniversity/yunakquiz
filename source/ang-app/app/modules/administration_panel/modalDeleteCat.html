@@ -6,7 +6,7 @@
         <span aria-hidden="true">&times;</span>
       </button>
       <h4 class="modal-title text-center">
-        <label>Видалити категорію</label>
+        <label class="modTitle">Видалити категорію</label>
       </h4>
     <div class="admin-pan-modal-msg">{{errorModalMsg}}</div>
     </div>
@@ -22,9 +22,9 @@
         <label class="col-xs-7 control-lablel">{{subParCatSelect.title}}</label>
       </div>
       <div class="row">
-        <div class="col-xs-2 col-xs-offset-2 admin-pan-category-add-captcha-rnd" ng-bind="captchaText"></div>
-        <div class="col-xs-4 col-xs-offset-1">
-          <input type="text" class="form-control captcha" placeholder="Введіть число..." ng-model="captchaInput" required>
+        <label class="col-xs-5 control-lablel category-label">Пароль</label>
+        <div class="col-xs-7 admin-pan-category-edit-input">
+          <input type="password" class="form-control" placeholder="{{pwdPlaceHolder}}" ng-model="pwdInput"required>
         </div>
       </div>
     </div>

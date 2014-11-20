@@ -1,13 +1,11 @@
-<div class="quiz row">
-<h3 class="text-center assessment-title">Редагування тесту</h3>
-	<div ng-if="errorMsg" ng-bind="errorMsg" class="alert col-sm-12 text-center alert-danger"></div>
-	<div class="col-md-8">
-		<form name="quizEditForm" novalidate>
+<div class="row">
+	<form name="quizFormName" novalidate>
 			<div class="col-md-12 jumbotron">
 		
 				<label class="col-md-5 control-label text-right">Назва тесту</label>
 				<div class="col-md-7 ">
-					<input ng-model="quiz.title" class="form-control" type="text" required />
+					<input ng-model="quiz.title"  ng-blur="validateTitle()" class="form-control" type="text" required />
+					<div ng-show="titleError" class="text-danger"> * Тест з такою назвою вже існує !</div>
 				</div>
 			
 			
@@ -26,64 +24,41 @@
 				<label class="col-md-5 control-label quizMarginTop  text-right">Категорія</label>
 				<div class="col-md-7 quizMarginTop ">
 					<select ng-change="clearSubcat()" ng-model="selectedCat" ng-options="category.title for category in categories" class="form-control" required>
+						<option ng-hide="selectedCat" value="">Оберіть Категорію</option>
 					</select>
 			   	</div>
 			   
 			   
 				<label class="col-md-5 control-label quizMarginTop  text-right">Підкатегорія</label>
 				<div class="col-md-7 quizMarginTop ">
-					<select ng-model="selectedSubcat" ng-options="subcat.title for subcat in selectedCat.categories track by subcat.id" class="form-control" required>
+					<select ng-model="selectedSubcat" ng-change="setSubcat()" ng-options="subcat.title for subcat in selectedCat.categories track by subcat.id" class="form-control" required>
 						<option ng-hide="selectedSubcat" value="">Оберіть Підкатегорію</option>
 					</select>
 				</div>	
 			</div>
 
-			<div ng-repeat="question in quiz.questions" ng-if="!question.toDelete" class="col-sm-12 well questionField">
+			<div ng-repeat="question in quiz.questions | filter:filterFunction as questions"  class="col-sm-12 well questionField">
 				
 				<input ng-model="question.title" class="form-control" placeholder="Введіть текст запитання" type="text" required />
-						
+										
 				<textarea ng-model="question.description" class="form-control quizMarginTop" placeholder="Введіть пояснення до запитання" type="text" required>
 				</textarea>
 						
-				<div ng-repeat="answer in question.answers" ng-if="!answer.toDelete" class="input-group quizMarginTop col-sm-11  col-xs-12  col-sm-offset-1">
+				<div ng-repeat="answer in question.answers | filter:filterFunction as answers"  class="input-group quizMarginTop col-sm-11  col-xs-12  col-sm-offset-1">
 				    <span ng-click="setCorrectAnswer(question,answer)" class="input-group-addon glyphicon quizBtnFix glyphicon-ok markCorrectAnswerBtn" ng-class="{'quizCorrectAnswer':answer.correct}">
 				    </span>
 				    <input ng-model="answer.title" type="text" class="form-control" placeholder="Введіть відповідь" type="text" required />
-				    <span  ng-show="question.answers.length>2" ng-click="deleteAnswer(answer)" class="btn input-group-addon glyphicon glyphicon-remove quizDeleteAnswer quizBtnFix">
+				    <span  ng-show="answers.length>MIN_ASWERS_QTY" ng-click="deleteAnswer(answer, question)" class="btn input-group-addon glyphicon glyphicon-remove quizDeleteAnswer quizBtnFix">
 				    </span>
 				</div>
 				<div ng-show="question.invalid" class="quizMarginTop col-sm-11 col-xs-12 col-sm-offset-1 text-danger">* Позначте хоча б одну правильну відповідь</div>
 				<button ng-click="addAnswer(question)" class="btn btn-info quizMarginTop"><span class="glyphicon glyphicon-plus"></span> Додати відповідь</button>
-				<div ng-show="quiz.questions.length>1" ng-click="deleteQuestion(question,$index)" class="closeButton glyphicon glyphicon-remove"></div>
+				<div ng-show="questions.length>MIN_QUESTIONS_QTY" ng-click="deleteQuestion(question)" class="closeButton glyphicon glyphicon-remove"></div>
 			</div>
 			<div class=" col-sm-12">
 				<button ng-click="addQuestion()" class="btn btn-info"><span class="glyphicon glyphicon-plus"></span> Додати питання</button>
 			</div>
 
-			<div class=" col-sm-12 quizMarginTop">
-				<button ng-click="saveQuiz()" ng-disabled="quizEditForm.$invalid" class="btn btn-warning">Зберегти  чорновик</button>
-				<button ng-click="reviewQuiz()" ng-disabled="quizEditForm.$invalid" class="btn btn-success">Відправити на модерацію</button> 
-
-			<p>
-		  		Showing of 'interpolate' filter:
-		  		{{ 'Current version is v%VERSION%.' | interpolate }}
-			</p>
-			</div>
 		</form>
-	</div>
-
-	<div class="col-md-4" >
-		<div class="panel panel-default">
-		  	<div class="panel-heading text-uppercase text-center"><strong>Коментарі модератора</strong>
-		  		<span ng-bind="comments.length" class="badge pull-right"></span>
-		  	</div>
-		  	<ul class="list-group">
-		    	<li ng-repeat="comment in comments" class="list-group-item">
-		    		<button ng-if="!comment.id" type="button" ng-click="deleteComment($index)" class="close pull-right"><span aria-hidden="true">&times;</span></button>
-		    		{{comment.text}}
-		    		<div ng-if="comment.created_at" class="text-right"><i class="small"><span class="glyphicon glyphicon-time"></span>&nbsp;&nbsp;{{comment.created_at| date:"dd/mm/yy HH:mm"}}</i></div>
-		    	</li>
-		    </ul>
-		</div>
-	</div>
 </div>
+	

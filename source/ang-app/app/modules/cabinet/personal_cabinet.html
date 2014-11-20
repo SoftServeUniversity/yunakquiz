@@ -1,5 +1,6 @@
-<div ng-include="'modules/personalCabinet/personalCabinetHeader.html'"></div>
-<h4 ng-show="!totalItems" class="text-center quizMarginTop">В даній вкладці немає тестів</h4>
+<div ng-hide="error" ng-include="'modules/cabinet/personal_cabinet_tabs.html'"></div>
+<h4 ng-show="error" class="text-center quizMarginTop">{{error}}</h4>
+<h4 ng-hide="totalItems||error" class="text-center quizMarginTop">В даній вкладці немає тестів</h4>
 <table ng-show="totalItems" class="table table-hover">
 	<thead>
 		<tr>
@@ -34,9 +35,7 @@
 		<pagination total-items="totalItems" ng-model="outputData.currentPage" ng-change="queryList()"  items-per-page="outputData.itemsPerPage" class="pagination" ></pagination>
 	<div class="pagination pull-right">
 		<select ng-change="searchQuery()" ng-model="outputData.itemsPerPage" class="form-control">
-		  <option value="10" >10</option>
-		  <option value="25" >25</option>
-		  <option value="50" >50</option>
+		  <option ng-repeat="item in items_per_page" value="{{item}}">{{item}}</option>
 		  <option value="{{totalItems}}">Всі</option>
 		</select>
 	</div>

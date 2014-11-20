@@ -56,6 +56,7 @@ module PlastApp
   ## Assessments block starts here!
 
     def response_helper data,msg
+      content_type :json
       if data
         return [200, data.to_json]
       else
@@ -63,81 +64,122 @@ module PlastApp
       end
     end 
 
-    ## Assessment resource!!
-    get '/assessments/:id' do
-      content_type :json
-      @quiz = Quiz.get_by_id(params['id'])
 
-      response_helper @quiz, ["Quiz #{params['id']} not found!"]
+    ## Quiz resource start
+    get '/admin/assessments/:id' do
+      if logged_user
+        @quiz = Quiz.get_for_edit(params['id'], logged_user)
+        response_helper @quiz, ["Quiz #{params['id']} not found!"]
+      end
+      response_helper @quiz, ["Forbidden!!!"]
     end
 
-    post '/assessments' do
-      content_type :json
-      data = JSON.parse(request.body.read)
-      @quiz = Quiz.create_quiz(data)
-
+    post '/admin/assessments' do
+      if logged_user
+        data = JSON.parse(request.body.read)
+        @quiz = Quiz.create_quiz(data, logged_user)
+      end  
       response_helper @quiz, "Quiz not created!"
     end
 
-
-    put '/assessments' do
-      content_type :json
-      data = JSON.parse(request.body.read)
-      @quiz = Quiz.update_quiz(data) unless data['id'].nil?
-      
+    put '/admin/assessments/:id' do
+      if logged_user
+        data = JSON.parse(request.body.read)
+        @quiz = Quiz.update_quiz(data, logged_user) unless data['id'].nil?
+      end
       response_helper @quiz, "Quiz not found!"
     end    
 
-    delete '/assessments/:id' do
-      content_type :json
-      @quiz = Quiz.delete_quiz(params['id'])
-      
+    delete '/admin/assessments/:id' do
+      if logged_user
+        @quiz = Quiz.delete_quiz(params['id'], logged_user)
+      end
       response_helper @quiz, "Quiz not deleted!"
     end
+
+    ## Validate if quiz title exists
+    post '/admin/assessments/title' do
+      data = JSON.parse(request.body.read)
+      if data['id']
+        query = Quiz.where(title: data['query']).where.not(id: data['id']).exists? 
+      else
+        query = Quiz.where(title: data['query']).exists?
+      end  
+      @result = {titlePresent: query}
+      response_helper @result, "Error"
+    end
+    ## Quiz resource end
+
+    get '/assessments/:id' do
+      @quiz = Quiz.get_by_id(params['id'])
+
+      response_helper @quiz, ["Published Quiz #{params['id']} not found!"]
+    end
+
+    post '/assessments/result' do
+      data = JSON.parse(request.body.read)
+      if logged_user
+        Result.save(logged_user, data['quiz_id'], data['grade'])
+      end  
+      @quiz={}
+      response_helper @quiz, "Quiz not created!"
+    end    
+
     ## end of Assessment resource.
 
     get '/breadcrumbs/:cat_id' do
-      content_type :json
       @breadcrumbs = Category.get_breadcrumds(params['cat_id'])
 
       response_helper @breadcrumbs, ["Quiz #{params['id']} not found!"]
     end
 
+    ## Quizzes list for user
     post '/assessments/:status' do
-      content_type :json
-      data = JSON.parse(request.body.read)
-      #check permisions here
-      if data['categoryFilter'].empty?
-        @quizzes = Quiz.quiz_query(params['status'],data['searchData'],data['currentPage'],data['itemsPerPage'])
-      else
-        @quizzes = Quiz.quiz_query_cat(params['status'],data['categoryFilter'],data['currentPage'],data['itemsPerPage'])
+      if logged_user
+        data = JSON.parse(request.body.read)
+        @quizzes = Quiz.quiz_query(
+          logged_user,
+          params['status'],
+          data['searchData'],
+          data['currentPage'],
+          data['itemsPerPage'])
       end
-      response_helper @quizzes, "Quiz not deleted!"
+      response_helper @quizzes, "Потрібно залогуватись"
+    end
+
+    ## Quizzes list for moderators
+    post '/assessments/moderator/:status' do
+      if logged_user && logged_user.role.name === "moder"
+        data = JSON.parse(request.body.read)
+        categories = data['categoryFilter'] 
+        categories = Category.all.pluck("id") if categories.empty? 
+        @quizzes = Quiz.quiz_query_cat(params['status'],categories,data['currentPage'],data['itemsPerPage'])
+        response_helper @quizzes, "Quizzes not found"
+      end
+      response_helper @quizzes, "Forbidden!"
     end
     
-    ##Assessment comments section
+    ##Quiz comments section start
     get '/assessments/:id/comments' do
-      content_type :json
       @comment = Comment.get_by_quiz(params['id'])
 
       response_helper @comment, ["Comments #{params['id']} not found!"]
     end 
 
-    put '/assessments/comments' do
-      content_type :json
+    post '/assessments/:id/comments' do
       data = JSON.parse(request.body.read)
-      @comments = Comment.update_comments(data)
+      @comments = {comments: Comment.update_comments(data['comments'])}
 
       response_helper @comments, ["comments not updated"]
     end 
 
     delete '/assessments/:id/comments' do
       content_type :json
-      @comments = Comment.delete_comments(params['id'])
+      @comments = {deleted: Comment.delete_comments(params['id'])}
 
       response_helper @comments, ["Comments not deleted!"]
     end
-    ## end of Assessment comments section
+    ##Quiz comments section end
 
     get '/tags/:query' do
       content_type :json
@@ -304,7 +346,7 @@ module PlastApp
     delete '/user' do
       data = params
       user = User.authenticate(data['username'], data['password'])
-      if !user.nil?
+      if user
         user.destroy
         return [200, 'ok']
       end
@@ -352,6 +394,60 @@ module PlastApp
 
     get '/last_quizzes/:id' do
       Quiz.lastQuizzes(params['id'])
+    end
+    
+    post '/checkpassword/' do
+      content_type :json
+      data = JSON.parse(request.body.read)
+      if session[:user_id]
+        userToCheck = User.find(session[:user_id])
+        user = User.authenticate(userToCheck['username'], data['password'])
+      end
+      if user
+        return [200, 'ok']
+      end
+      return [400, 'bad request']
+    end
+
+    post '/admin/users' do
+      data = JSON.parse(request.body.read)
+      @users = User.user_query(data['status'], data['searchData'],data['currentPage'],data['itemsPerPage'], data['roles'])
+     response_helper @users, "Users not found!"
+    end
+
+    delete '/admin/users:id' do
+      user = User.find(params['id'])
+      if !user.nil?
+        user.destroy
+        return [200, 'ok']
+      end
+      return [400, 'User not found']
+    end
+
+    put '/admin/users:id' do
+      user = User.find(params['id'])
+      if !user.nil?
+        if user.enabled?
+          user.blocked!
+          user.save
+        else 
+          user.enabled!
+          user.save
+        end
+        return [200, 'ok']
+      end
+      return [400, 'user not found']
+    end
+
+    put '/admin/user_role:id' do
+      data = JSON.parse(request.body.read)
+      user = User.find(params['id'])
+      if !user.nil?
+          user.role_id = data['role'].to_i
+          user.save
+          return [200, 'ok']
+      end
+      return [400, 'user not found']
     end
 
   end

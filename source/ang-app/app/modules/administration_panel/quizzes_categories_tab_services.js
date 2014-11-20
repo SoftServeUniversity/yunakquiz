@@ -15,7 +15,13 @@
         }
       }
     }]);
+    app.factory("pwdCheck", ['$http', function ($http) {
+      return function(pwd){
+        var request = {password:pwd};
 
+        return $http.post('http://localhost:9292/checkpassword/', request)
+      };
+    }]);
     app.factory("addParCatTitle", function(){
       return function(target){
         var catsById = {};
@@ -40,17 +46,6 @@
       });
       return catsAsArray;
       }
-    });
-
-    app.factory("captchaRnd", function(){
-      return function (){
-        var min = 1000;
-        var max = 9999;
-        var rnd = 0;
-
-        rnd = Math.round(Math.random() * (max - min) + min);
-        return rnd;
-      };
     });
 
     app.factory("doCatHaveSubCat", function(){
@@ -114,17 +109,4 @@
         return selectedSubParCat;
       };
     });
-
-    app.factory("validateCaptcha",['captchaRnd', function(captchaRnd){
-      return function (captchaInput, generatedCaptcha){
-        if(parseInt(captchaInput) === generatedCaptcha) {
-          return true;
-        } else {
-          generatedCaptcha = captchaRnd();
-          captchaInput ='';
-          $('.captcha').addClass("invalid");
-          return false;
-        };
-      };
-    }]);
 })();

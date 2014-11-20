@@ -7,8 +7,7 @@ angular.module('yunakQuiz', [
   'ngResource',
   'yunakQuiz.measures',
   'yunakQuiz.assessments',
-  'yunakQuiz.personalCabinet',
-  'yunakQuiz.moderationCabinet',
+  'yunakQuiz.cabinet',
   'yunakQuiz.users',
   'yunakQuiz.sessions',
   'yunakQuiz.version',
@@ -37,14 +36,5 @@ angular.module('yunakQuiz', [
       otherwise({
         redirectTo: '/'
       });
-}])
-.constant('paginationConfig', {
-  boundaryLinks: true,
-  directionLinks: true,
-  maxSize : 10,
-  rotate: false,
-  firstText: '≪',
-  previousText: '<',
-  nextText: '>',
-  lastText: '≫'
-});
+}]);
+

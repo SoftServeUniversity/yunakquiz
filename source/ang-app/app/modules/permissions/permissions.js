@@ -82,8 +82,7 @@ angular.module('yunakQuiz.permission', ['ngRoute'])
       
       var defer = $q.defer();
       var result = [];
-
-      $http.get("http://localhost:9292/permission")
+       $http.get("http://localhost:9292/permission")
         .success(function(data){
           // var givenTabs = tabs.getAdmin;
           // var givenTabs = commands;
@@ -132,6 +131,9 @@ angular.module('yunakQuiz.permission', ['ngRoute'])
     var access = {};
     
     getTabTemplates.getResponse('admin').then(function(data){
+
+    // getTabTemplates.getResponse().then(function(data){
+
       angular.forEach(data, function(tab,key){
         access[tab.caption] = tab;
       });

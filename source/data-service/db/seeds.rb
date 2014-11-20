@@ -13,8 +13,8 @@ subcat5 = cat3.categories.create(title: "Основи ООП")
 subcat6 = cat3.categories.create(title: "Основи Java")
 
 adminRole = Role.create(name: 'admin')
-userRole =  Role.create(name: 'user')
 moderRole = Role.create(name: 'moder')
+userRole =  Role.create(name: 'user')
 superadminRole = Role.create(name: 'superadmin')
 
 user1 = userRole.users.create(username: "user123", password: "12345678", password_confirmation: "12345678", email: "user@mail.com", birthday: "2000-12-31T22:00:00.000Z")
@@ -22,9 +22,9 @@ admin1 = adminRole.users.create(username: "admin123", password: "12345678", pass
 moder1 = moderRole.users.create(username: "moder123", password: "12345678", password_confirmation: "12345678", email: "moder@mail.com", birthday: "2000-12-31T22:00:00.000Z")
 superadmin1 = superadminRole.users.create(username: "super123", password: "12345678", password_confirmation: "12345678", email: "super@mail.com", birthday: "2000-12-31T22:00:00.000Z")
 
-valera = userRole.users.create(username: "Valera", password: "12345678", password_confirmation: "12345678", email: "user@mail.com", birthday: "2000-12-31T22:00:00.000Z")
-ivan = userRole.users.create(username: "Ivan", password: "12345678", password_confirmation: "12345678", email: "user@mail.com", birthday: "2000-12-31T22:00:00.000Z")
-vasyl = userRole.users.create(username: "Vasyl", password: "12345678", password_confirmation: "12345678", email: "user@mail.com", birthday: "2000-12-31T22:00:00.000Z")
+valera = userRole.users.create(username: "Valera", password: "12345678", password_confirmation: "12345678", email: "valera@mail.com", birthday: "2000-12-31T22:00:00.000Z")
+ivan = userRole.users.create(username: "Ivan", password: "12345678", password_confirmation: "12345678", email: "ivan@mail.com", birthday: "2000-12-31T22:00:00.000Z")
+vasyl = userRole.users.create(username: "Vasyl", password: "12345678", password_confirmation: "12345678", email: "vasyl@mail.com", birthday: "2000-12-31T22:00:00.000Z")
 
 Permission.create(tabs: 'admin1', admin: '1', superadmin: '4')
 Permission.create(tabs: 'admin2', admin: '1', superadmin: '4')
@@ -32,6 +32,7 @@ Permission.create(tabs: 'admin3', admin: '1', superadmin: '4')
 Permission.create(tabs: 'admin4', admin: '1', superadmin: '4')
 Permission.create(tabs: 'admin5', admin: '1', superadmin: '4')
 Permission.create(tabs: 'admin6', admin: '1', superadmin: '4')
+Permission.create(tabs: 'admin7', admin: '1', superadmin: '4')
 
 Permission.create(tabs: 'moder1', moder: '2', superadmin: '4')
 Permission.create(tabs: 'moder2', moder: '2', superadmin: '4')
