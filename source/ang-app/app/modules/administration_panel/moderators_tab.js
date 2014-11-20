@@ -1,18 +1,18 @@
 (function (){
-  var  app = angular.module('yunakQuiz.administrationTab' ,['ngRoute']);
+  var  app = angular.module('yunakQuiz.moderatorsTab' ,['ngRoute']);
 
     app.config(['$routeProvider',
       function($routeProvider) {
         $routeProvider.
-          when('/administration-panel/administrationTab', {
-            templateUrl: 'modules/administration_panel/administration_tab.html',
-            controller: 'administrationTab'
+          when('/administration-panel/moderatorsTab', {
+            templateUrl: 'modules/administration_panel/moderators_tab.html',
+            controller: 'moderatorsCtrl'
           })
       }
     ]);
 
-    app.controller('administrationTab', ['$scope','$http','$location','$modal', 'Roles', function ($scope, $http, $location, $modal, Roles) {
-      $scope.tab = 'administrationTab';
+    app.controller('moderatorsCtrl', ['$scope','$http','$location','$modal', 'Roles', function ($scope, $http, $location, $modal, Roles) {
+      $scope.tab = 'moderatorsTab';
       $scope.roles = Roles;
       
       $scope.outputData={
@@ -20,7 +20,7 @@
         itemsPerPage: 10,
         searchData:'',
         status: 'enabled',
-        roles: [1,4]
+        roles: 3
       };
 
       $scope.searchQuery = function(){

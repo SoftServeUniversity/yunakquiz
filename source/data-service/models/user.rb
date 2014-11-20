@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
   has_many :quizzes
   attr_protected :hashed_password, :salt
   attr_accessor :password
-  enum status: [:blocked, :enabled]
+  enum status: [:blocked, :enabled, :deleted]
   
   USERNAME_REGEX = /\A[A-Z0-9_-]+\z/i
   EMAIL_REGEX = /\A([A-Z0-9\-_]+\.?[A-Z0-9\-_]+)+@([A-Z0-9\-_]+\.?[A-Z0-9\-_]+)+\.[a-z]{2,4}\z/i

@@ -4,19 +4,17 @@
 	<table class="table table-hover">
 		<thead>
 			<tr>
-				<th class="col-md-3 text-center">Username</th>
-				<th class="col-md-2 text-center">Ім’я</th>
-				<th class="col-md-2 text-center">Пошта</th>
-				<th class="col-md-2 text-center">Роль</th>
+				<th class="col-md-3 text-center">Псевдо</th>
+				<th class="col-md-3 text-center">Пошта</th>
+				<th class="col-md-3 text-center">Роль</th>
 				<th class="col-md-1"></th>
 				<th class="col-md-1"></th>
 				<th class="col-md-1"></th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat="user in users" class="bouncy-slide-right">
+			<tr ng-repeat="user in users" class="toggle">
 				<td class="text-center">{{user.username}}</td>
-				<td class="text-center">{{user.first_name + " " + user.last_name}}</td>
 				<td class="text-center">{{user.email}}</td>
 				<td class="text-center">{{roles[user.role_id]}}</td>
 				<td>

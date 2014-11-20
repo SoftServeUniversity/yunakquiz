@@ -22,8 +22,8 @@
 /* line 66, ../sass/ng-animation.scss */
 .toggle.ng-enter {
   opacity: 0;
-  transition-duration: 3000ms;
-  -webkit-transition-duration: 3000ms;
+  transition-duration: 750ms;
+  -webkit-transition-duration: 750ms;
 }
 /* line 71, ../sass/ng-animation.scss */
 .toggle.ng-enter-active {
@@ -32,8 +32,8 @@
 /* line 75, ../sass/ng-animation.scss */
 .toggle.ng-leave {
   opacity: 1;
-  transition-duration: 3000ms;
-  -webkit-transition-duration: 3000ms;
+  transition-duration: 250ms;
+  -webkit-transition-duration: 250ms;
 }
 /* line 80, ../sass/ng-animation.scss */
 .toggle.ng-leave-active {

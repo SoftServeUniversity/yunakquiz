@@ -2,7 +2,7 @@
   var  app = angular.module('yunakQuiz.administrationPanel',
     ['ngRoute','yunakQuiz.aboutusTab', 'yunakQuiz.administrationTab',
     'yunakQuiz.blacklistTab', 'yunakQuiz.faqTab', 'yunakQuiz.quizzescategoriesTab',
-     'yunakQuiz.userTab']);
+     'yunakQuiz.userTab', 'yunakQuiz.moderatorsTab']);
 
     app.directive('adminPanel', function(){
       return {
