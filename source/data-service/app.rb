@@ -365,5 +365,20 @@ module PlastApp
       return [400, 'bad request']
     end
 
+    post '/admin/users' do
+      data = JSON.parse(request.body.read)
+      @users = User.user_query(data['status'], data['searchData'],data['currentPage'],data['itemsPerPage'], data['roles'])
+     response_helper @users, "Users not found!"
+    end
+
+    delete '/admin/users:id' do
+      user = User.find(params['id'])
+      if !user.nil?
+        user.destroy
+        return [200, 'ok']
+      end
+      return [400, 'User not found']
+    end
+
   end
 end
