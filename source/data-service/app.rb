@@ -302,7 +302,7 @@ module PlastApp
     delete '/user' do
       data = params
       user = User.authenticate(data['username'], data['password'])
-      if !user.nil?
+      if user
         user.destroy
         return [200, 'ok']
       end
