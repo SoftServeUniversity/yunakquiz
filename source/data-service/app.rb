@@ -119,8 +119,7 @@ module PlastApp
     post '/assessments/result' do
       data = JSON.parse(request.body.read)
       if logged_user
-        puts data
-        # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        Result.save(logged_user, data['quiz_id'], data['grade'])
       end  
       @quiz={}
       response_helper @quiz, "Quiz not created!"

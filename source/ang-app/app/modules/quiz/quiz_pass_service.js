@@ -10,7 +10,7 @@ angular.module('yunakQuiz.assessments')
   };
 
   function postResult(id, result){
-      return $http.post(CONFIG.BASE_URL+'/assessments/result', {quiz_id : id, result : result})
+      return $http.post(CONFIG.BASE_URL+'/assessments/result', {quiz_id : id, grade : result})
   };
 
   /** Validate if question has at least one answer picked  */
