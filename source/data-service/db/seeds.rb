@@ -32,6 +32,7 @@ Permission.create(tabs: 'admin3', admin: '1', superadmin: '4')
 Permission.create(tabs: 'admin4', admin: '1', superadmin: '4')
 Permission.create(tabs: 'admin5', admin: '1', superadmin: '4')
 Permission.create(tabs: 'admin6', admin: '1', superadmin: '4')
+Permission.create(tabs: 'admin7', admin: '1', superadmin: '4')
 
 Permission.create(tabs: 'moder1', moder: '2', superadmin: '4')
 Permission.create(tabs: 'moder2', moder: '2', superadmin: '4')

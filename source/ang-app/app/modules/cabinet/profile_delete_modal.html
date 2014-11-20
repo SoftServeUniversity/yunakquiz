@@ -2,12 +2,13 @@
   <div class="modal-dialog modal-sm">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">
+        <button type="button" class="close" data-dismiss="modal" ng-click="profile.clearErrors()">
           <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
         </button>
         <h4 class="modal-title text-center" id="myModalLabel">Видалення профайлу</h4>
       </div>
       <div class="modal-body">
+        <small class="text-danger">{{profile.deleteError}}</small>  
         <form role="form" novalidate="true" class="form-horizontal">
           <div class="form-group">
             <label for="password" class="control-label col-sm-6">Введіть пароль</label>

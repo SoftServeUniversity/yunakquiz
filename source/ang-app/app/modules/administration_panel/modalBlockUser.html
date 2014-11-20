@@ -1,0 +1,12 @@
+<div class="modal-header">
+    <h4 class="modal-title text-center">Для підтвердження блокування ведіть ваш пароль</h4>
+</div>
+<div class="modal-body">
+<input type="password" ng-click="clearMsg()" class="form-control text-center" ng-model="enteredPassword" />
+<p ng-show="errorMsg" ng-bind="errorMsg" class="text-danger text-center"></p>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-danger" ng-click="ok()">ОК!</button>
+    <button class="btn btn-info" ng-click="cancel()">Відміна</button>
+
+</div>

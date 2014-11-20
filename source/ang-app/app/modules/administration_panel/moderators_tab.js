@@ -1,29 +1,27 @@
 (function (){
-  var  app = angular.module('yunakQuiz.userTab' ,['ngRoute','yunakQuiz.permission']);
+  var  app = angular.module('yunakQuiz.moderatorsTab' ,['ngRoute']);
 
     app.config(['$routeProvider',
       function($routeProvider) {
         $routeProvider.
-          when('/administration-panel/', {
-            templateUrl: './modules/administration_panel/user_tab.html',
-            controller: 'userTab'
-          }).
-          when('/administration-panel/userTab', {
-            redirectTo: '/administration-panel/'
+          when('/administration-panel/moderatorsTab', {
+            templateUrl: './modules/administration_panel/moderators_tab.html',
+            controller: 'moderatorsCtrl'
           })
       }
     ]);
 
-    app.controller('userTab', ['$scope', 'getAccess','$http', '$location', '$modal', 'Roles', function ($scope, getAccess,$http, $location, $modal, Roles) {
-      $scope.tab = 'Користувачі';
-        $scope.outputData={
+    app.controller('moderatorsCtrl', ['$scope', 'getAccess','$http', '$location', '$modal', 'Roles', function ($scope, getAccess,$http, $location, $modal, Roles) {
+      $scope.tab = 'Модератори';
+      $scope.roles = Roles;
+      
+      $scope.outputData={
         currentPage: 1,
         itemsPerPage: 10,
         searchData:'',
         status: 'enabled',
-        roles: 2
+        roles: 3
       };
-
       getAccess($scope.tab).then(function(data){
           if(data) {
             $scope.searchQuery();
@@ -34,6 +32,7 @@
           $location.path( "/404" ); 
           }
       );
+
       $scope.searchQuery = function(){
         $scope.outputData.currentPage = 1;
         $scope.queryList();
@@ -98,4 +97,5 @@
       };
 
     }]);
+
 })();

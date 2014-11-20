@@ -8,4 +8,5 @@ guestSearch.config(['$routeProvider',function($routeProvider) {
     templateUrl: './modules/guest-search/guest-search-page.html',
     controller: 'SearchCtrl'
   })
-}]);    
+}]);  
+

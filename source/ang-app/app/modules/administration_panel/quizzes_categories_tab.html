@@ -2,172 +2,27 @@
 <div class="panel panel-default">
   <div class="panel-heading admin-pan-category-add-head">
     <div class="row">
-      <div class="col-xs-1 text-center">№</div>
-      <div class="col-xs-2 text-center">Назва Категорії</div>
-      <div class="col-xs-3 text-center">Батьківська категорія</div>
-      <div class="col-xs-2 text-center">Кількість тестів</div>
-    <!-- Button trigger modal -->
-      <button class="btn btn-primary btn-sm  admin-pan-category-add-btn" ng-click="showCreateCatDlg()">Додати Категорію
+      <div class="col-xs-1 text-center catTitleId">№</div>
+      <div class="col-xs-2 text-center catTitleName">Назва Категорії</div>
+      <div class="col-xs-3 text-center catTitleParentName">Батьківська категорія</div>
+      <div class="col-xs-2 text-center quizTitleCount">Кількість тестів</div>
+    <!-- Button trigger modal Create Category-->
+      <button class="btn btn-primary btn-sm admin-pan-category-add-btn" ng-click="showCreateCatDlg()">Додати Категорію
       </button>
     </div>
   </div>
   <div class="panel-body">
-    <div ng-repeat="category in categories">
+    <div ng-repeat="category in allCategories">
       <a class="list-group-item col-xs-12">
         <div class="col-xs-1 text-center">{{category.id}}</div>
         <div class="col-xs-2 text-center">{{category.title}}</div>
         <div class="col-xs-3 text-center">{{category.parCatTitle}}</div>
         <div class="col-xs-2 text-center">{{groupedQuizzes[category.id]}}</div>
+    <!-- Button trigger modal Edit Category-->
         <button class="btn btn-success btn-xs col-xs-1 col-xs-offset-1" ng-click="showEditCatDlg(category)">Редагувати</button>
+    <!-- Button trigger modal Delete Category -->
         <button class="btn btn-danger btn-xs col-xs-1 col-xs-offset-1" ng-click="showDeleteCatDlg(category)">Видалити</button>
       </a>
-    </div>
-  </div>
-</div>
-
-<!-- Modal Create Category-->
-<div class="modal fade" id="createCatModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content category-add-modal">
-      <div class="panel panel-success">
-        <div class="panel-heading">
-          <button type="button" class="close" data-dismiss="modal">
-            <span aria-hidden="true">&times;</span>
-          </button>
-          <h4 class="modal-title text-center" id="myModalLabel">
-            <label>Створення Категорії</label>
-            <div class="admin-pan-category-create-err-msg">Така категорія вже існує</div>
-          </h4>
-        </div>
-      </div>
-      <form name="categoryAddition" ng-submit="categoryAddition.$valid && createCategory()" novalidate>
-        <div class="modal-body ">
-          <div class="row">
-            <label class="col-xs-5 control-lablel">Назва категорії</label>
-            <div class="col-xs-7 admin-pan-category-add-input">
-              <input type="text" class="form-control" placeholder="Введіть назву категорії..." ng-model="currentCategory.title" required>
-            </div>
-          </div>
-          <div class="row">
-            <label class="col-xs-5 control-lablel">Батьківська категорія</label>
-            <div class="col-xs-7 admin-pan-category-add-input">
-              <select class="form-control" ng-model="subParCatSelect" ng-options="parCat.title for parCat in parCatGrouped">
-              </select>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-xs-4 pull-right">
-              <input type="text" class="form-control" id="captchaAdmPanCreateCat" placeholder="Введіть число..." ng-model="captchaInput" required>
-            </div>
-              <div class="col-xs-2 admin-pan-category-add-captcha-rnd pull-right" ng-bind="captchaText"></div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clearForm()">Скасувати</button>
-          <input type="submit" class="btn btn-primary" value="Додати категорію"/>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-<!--Modal Edit Category -->
-<div class="modal fade" id="editCatModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content category-add-modal">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" ng-click="clearForm()">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <h4 class="modal-title text-center" id="myModalLabel">
-          <label>Редагувати категорію</label>
-          <div class="admin-pan-category-edit-err-msg">Помилка при редагуванні</div>
-        </h4>
-        <div class="admin-pan-category-del-msg">Увага, категорія містить підкатегорії</div>
-      </div>
-      <form name="editCat" ng-submit="editCat.$valid && updateCategory()" novalidate>
-        <div class="modal-body">
-          <div class="row">
-            <label class="col-xs-5 control-lablel">Назва категорії</label>
-            <div class="col-xs-7 admin-pan-category-add-input">
-              <input type="text" class="form-control" placeholder="Введіть назву категорії..." ng-model="catToEdit.title" required>
-            </div>
-          </div>
-          <div class="row">
-            <label class="col-xs-5 control-lablel">Батьківська категорія</label>
-            <div class="col-xs-7 admin-pan-category-add-input">
-              <select class="form-control" id="selSubCatEdit" ng-model="subParCatSelect" ng-options="parCat.title for parCat in parCatGrouped">
-              </select>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-xs-4 pull-right">
-              <input type="text" class="form-control" id="captchaAdmPanEditCat" placeholder="Введіть число..." ng-model="captchaInput" required>
-            </div>
-              <div class="col-xs-2 admin-pan-category-add-captcha-rnd pull-right" ng-bind="captchaText"></div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <div class="btn-group pull-left" dropdown is-open="modalEditdropDown.isopen">
-            <button type="button" class="btn btn-danger dropdown-toggle" ng-disabled="disabled" id="dropdownSubCatsEdit">Підкатегорії
-              <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" role="menu">
-              <li ng-repeat="subCat in subCategories"><a>{{subCat.title}}</a></li>
-            </ul>
-          </div>
-          <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clearForm()">Скасувати</button>
-          <input type="submit" class="btn btn-primary" value="Застосувати"/>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-<!--Modal Delete Category -->
-<div class="modal fade" id="deleteCatModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content category-add-modal">
-      <div class="panel panel-danger">
-        <div class="panel-heading">
-          <button type="button" class="close" data-dismiss="modal" ng-click="clearForm()">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        <h4 class="modal-title text-center" id="myModalLabel">
-          <label>Видалити категорію</label>
-          <div class="admin-pan-category-del-err-msg">Помилка при видаленні</div>
-        </h4>
-        <div class="admin-pan-category-del-msg">Увага, будуть видалені підкатегорії та інші пов'язані дані</div>
-        </div>
-      </div>
-      <form name="editCat" ng-submit="deleteCategory()">
-        <div class="panel-body">
-          <div class="row">
-            <label class="col-xs-5 control-lablel">Назва категорії</label>
-            <label class="control-label col-xs-7">{{catToDelete.title}}</label>
-          </div>
-          <div class="row">
-            <label class="col-xs-5 control-lablel">Батьківська категорія</label>
-            <label class="col-xs-7 control-lablel">{{subParCatSelect.title}}</label>
-          </div>
-          <div class="row">
-            <div class="col-xs-2 col-xs-offset-2 admin-pan-category-add-captcha-rnd" ng-bind="captchaText"></div>
-            <div class="col-xs-4 col-xs-offset-1">
-              <input type="text" class="form-control" id="captchaAdmPanDeleteCat" placeholder="Введіть число..." ng-model="captchaInput" required>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <div class="btn-group pull-left" dropdown is-open="modalDeldropDown.isopen">
-            <button type="button" class="btn btn-danger dropdown-toggle" ng-disabled="disabled" id="dropdownSubCats">Підкатегорії
-              <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" role="menu">
-              <li ng-repeat="subCat in subCategories"><a>{{subCat.title}}</a></li>
-            </ul>
-          </div>
-          <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clearForm()">Скасувати</button>
-          <input type="submit" class="btn btn-danger" value="Видалити"/>
-        </div>
-      </form>
     </div>
   </div>
 </div>

@@ -31,6 +31,11 @@ angular.module('yunakQuiz.users', ['ngRoute', 'ngResource'])
             $location.path("/");    
           }, 
           function(response){
+            if (!!response.data.email && response.data.email.indexOf(existUser) !== -1){
+              reg.validation.addTakenEmail(reg.user.email);
+              reg.user.password = "";
+              reg.user.password_confirmation = "";
+            }
             if (!!response.data.username && response.data.username.indexOf(existUser) !== -1){
               reg.validation.addTakenUser(reg.user.username);
               reg.user.password = "";

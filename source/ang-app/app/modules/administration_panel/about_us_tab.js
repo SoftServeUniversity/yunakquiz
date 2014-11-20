@@ -27,50 +27,49 @@
         $scope.tab = 'Про нас';
         $scope.content = '';
         $scope.msg = '';
+        var changes = {canceled:{msg:"Зміни відхилено", color:"#419641"},
+                      errorOnLoad:{msg:"Помилка завантаження", color:'red'},
+                      saved: {msg:"Зміни збережено", color:'#419641'}};
 
         getAccess($scope.tab).then(function(data){
           if(data) {
             $scope.readData();
           } else {
-          $location.path( "/404" );
-          };
-        });
+            $location.path( "/404" );
+          }
+        },function(){
+          $location.path( "/404" ); 
+          }
+        );
 
         $scope.readData = function(param){
 
         aboutUsReadUpdate.read().success(function(data){
           $scope.content = data[0].about_us;
           if(param){
-            actionMsg('#419641',"Зміни відхилено");
+            $scope.msgShow(changes.canceled);
           };
         })
         .error(function(data){
-          actionMsg('red',"Помилка завантаження");
+          $scope.msgShow(changes.errorOnLoad);
         });
         };
 
-        
         $scope.updateData = function(){
           aboutUsReadUpdate.update($scope.content).success(function(data){
-          actionMsg('#419641',"Зміни збережено");
+          $scope.msgShow(changes.saved);
         })
         .error(function(data){
-          actionMsg('red',"Помилка завантаження");
+          $scope.msgShow(changes.errorOnLoad);
         });
         };
 
-        function actionMsg(color, msg) {
-          $scope.msg = '';
-  
-          var msgShow = function() {
-            $scope.msg = msg;
-          };
-          var msgClear = function() {
-            $scope.msg = "";
-          };
-         $timeout(msgShow, 100);
-         $('.aboutUsMsg').css('color', color);
-         $timeout(msgClear, 3000);
-        }
+        $scope.msgShow = function (param) {
+          $scope.msg = param.msg;
+          $('..about-us-msg-panel').css('color', param.color);
+        };
+        $scope.msgHide = function () {
+           $scope.msg = '';
+        };
     }]);
 })();

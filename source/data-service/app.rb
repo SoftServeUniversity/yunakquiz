@@ -344,7 +344,7 @@ module PlastApp
     delete '/user' do
       data = params
       user = User.authenticate(data['username'], data['password'])
-      if !user.nil?
+      if user
         user.destroy
         return [200, 'ok']
       end
@@ -392,6 +392,60 @@ module PlastApp
 
     get '/last_quizzes/:id' do
       Quiz.lastQuizzes(params['id'])
+    end
+    
+    post '/checkpassword/' do
+      content_type :json
+      data = JSON.parse(request.body.read)
+      if session[:user_id]
+        userToCheck = User.find(session[:user_id])
+        user = User.authenticate(userToCheck['username'], data['password'])
+      end
+      if user
+        return [200, 'ok']
+      end
+      return [400, 'bad request']
+    end
+
+    post '/admin/users' do
+      data = JSON.parse(request.body.read)
+      @users = User.user_query(data['status'], data['searchData'],data['currentPage'],data['itemsPerPage'], data['roles'])
+     response_helper @users, "Users not found!"
+    end
+
+    delete '/admin/users:id' do
+      user = User.find(params['id'])
+      if !user.nil?
+        user.destroy
+        return [200, 'ok']
+      end
+      return [400, 'User not found']
+    end
+
+    put '/admin/users:id' do
+      user = User.find(params['id'])
+      if !user.nil?
+        if user.enabled?
+          user.blocked!
+          user.save
+        else 
+          user.enabled!
+          user.save
+        end
+        return [200, 'ok']
+      end
+      return [400, 'user not found']
+    end
+
+    put '/admin/user_role:id' do
+      data = JSON.parse(request.body.read)
+      user = User.find(params['id'])
+      if !user.nil?
+          user.role_id = data['role'].to_i
+          user.save
+          return [200, 'ok']
+      end
+      return [400, 'user not found']
     end
 
   end

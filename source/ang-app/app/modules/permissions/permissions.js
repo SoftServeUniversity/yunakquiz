@@ -19,16 +19,19 @@ angular.module('yunakQuiz.permission', ['ngRoute'])
   },
 
   {'name' : 'admin4',
+   'temp' : 'administration-panel/moderatorsTab',
+   'caption': 'Модератори'
+  },
+  {'name' : 'admin5',
    'temp' : 'administration-panel/quizzescategoriesTab',
    'caption': 'Категорії тестів'
   },
-
-  {'name' : 'admin5',
+  {'name' : 'admin6',
    'temp' : 'administration-panel/aboutusTab',
    'caption': 'Про нас'
   },
 
-  {'name' : 'admin6',
+  {'name' : 'admin7',
    'temp' : 'administration-panel/faqTab',
    'caption': 'Часті запитання'
   },
@@ -44,6 +47,7 @@ angular.module('yunakQuiz.permission', ['ngRoute'])
    'temp' : '/admin/personalCabinet',
    'caption': 'moderationCabinet'
   }
+
 ])
 
 .factory('getTabTemplates', ["$location", "$http", "tabs", "$q", function($location, $http, tabs, $q) {
@@ -71,7 +75,7 @@ angular.module('yunakQuiz.permission', ['ngRoute'])
             defer.resolve(result);
           }).error(function(data){
             result = data;
-            defer.resolve(result);
+            defer.reject(result);
           });
       return defer.promise;     
     }
@@ -89,6 +93,8 @@ angular.module('yunakQuiz.permission', ['ngRoute'])
         defer.resolve(true);
       } else
         defer.resolve(false);
+      },function(reason) {
+        defer.reject(false);
       });
     return defer.promise;     
   }

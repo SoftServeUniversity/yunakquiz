@@ -153,16 +153,14 @@
 .about-us-read-btn{
 margin-right: 5px;
 }
-.aboutUsPanel{
-  position: relative;
+.about-us-msg-panel{
+  line-height: 30px;
+  font-weight: bold;
+  text-align: center;
+  margin: 0px 0px -10px 0px;
 }
-.aboutUsMsg{
- position: absolute;
- right: 30px;
- top:-60px;
- margin-right: 15px;
- line-height: 30px;
- font-weight: bold; 
+.aboutUsWindow{
+  margin-top: 20px;
 }
 /*eof admin panel aboutUs tab*/
 
@@ -209,6 +207,9 @@ color: white;
  color:#fff;
  border-color:#269abc;
 }
+.admin-panel-search {
+  margin-top: 20px;
+}
 /*eof admin panel styles*/
 
 /*contacts page*/
@@ -226,8 +227,17 @@ color: white;
 /*eof contacts page*/
 
 /*adm-pan categories edit*/
-.admin-pan-category-add-input{
+.admin-pan-category-edit-input{
   margin: 0px 0px 5px 0px;
+}
+.admin-pan-category-edit-input .ng-invalid.ng-dirty{
+  border-color: #fa787e;
+}
+.admin-pan-category-edit-input .ng-valid.ng-dirty{
+  border-color: #78fa89;
+}
+.admin-pan-category-edit-input .form-control {
+  font-weight: bold;
 }
 .admin-pan-category-add-btn{
   margin: 0px 15px 0px 0px;
@@ -235,8 +245,8 @@ color: white;
   top:5px;
   right: 5px;
 }
-.category-add-modal{
-  width:500px;
+.category-edit-modal .modal-dialog{
+  width:450px;
 }
 .admin-pan-category-add-head{
   margin: 0px 0px 0px 0px;
@@ -245,29 +255,15 @@ color: white;
   height: 40px;
   padding-left: 45px;
 }
-.admin-pan-category-add-input .ng-invalid.ng-dirty{
-  border-color: #fa787e;
-}
-.admin-pan-category-add-input .ng-valid.ng-dirty{
-  border-color: #78fa89;
-}
-.invalid{
-  border-color: #fa787e;
-}
-.admin-pan-category-add-captcha-rnd{
-  line-height: 30px;
-}
-.admin-pan-category-add-input .form-control {
-  font-weight: bold;
-}
-.admin-pan-category-del-msg,
-.admin-pan-category-del-err-msg,
-.admin-pan-category-edit-err-msg,
-.admin-pan-category-create-err-msg{
+.admin-pan-modal-msg{
   color:#c12e2a;
   text-align: center;
   font-weight: bold;
 }
+.category-label{
+  margin-top: 5px;
+}
+
 /*eof adm-pan categories edit*/
 
 /*styles for login */

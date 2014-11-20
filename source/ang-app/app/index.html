@@ -29,16 +29,16 @@
     <nav class="footer-menu">
       <ul >
         <li>
-          <a href="#">Головна</a> |
+          <a href="#" class="footerHomeLnk">Головна</a> |
         </li>
         <li>
-          <a href="#about-us">Про Нас</a> |
+          <a href="#about-us" class="footerAboutLnk">Про Нас</a> |
         </li>
         <li>
-          <a href="#contacts">Контакти</a> |
+          <a href="#contacts" class="footerContactsLnk">Контакти</a> |
         </li>
         <li>
-          <a href="#faq">FAQ</a> 
+          <a href="#faq" class="footerFaqLnk">FAQ</a> 
         </li>
       </ul>
     </nav>
@@ -69,6 +69,7 @@
   <script src="modules/guest-search/guest-search.js"></script>
   <script src="modules/guest-search/guest-searchCtrl.js"></script>
   <script src="modules/guest-search/guest-searchServices.js"></script>
+  <script src="modules/guest-search/directives/my-guest-search-directive.js"></script>
   <script src="modules/partials/staticPartialsRoutes.js"></script>
   <script src="modules/statistics/statistics.js"></script>
   <script src="modules/categories-container/categories-container.js"></script>
@@ -77,9 +78,12 @@
   <script src="modules/administration_panel/about_us_tab.js"></script>
   <script src="modules/administration_panel/administration_tab.js"></script>
   <script src="modules/administration_panel/black_list_tab.js"></script>
+  <script src="modules/administration_panel/moderators_tab.js"></script>
   <script src="modules/administration_panel/faq_tab.js"></script>
   <script src="modules/administration_panel/quizzes_categories_tab.js"></script>
+  <script src="modules/administration_panel/quizzes_categories_tab_services.js"></script>
   <script src="modules/administration_panel/user_tab.js"></script>
+
 <!-- quiz part -->
   <script src="modules/quiz/quiz.js"></script>
   <script src="modules/quiz/quiz_result_ctrl.js"></script>
@@ -95,8 +99,9 @@
   <script src="modules/cabinet/cabinet_service.js"></script>
   <script src="modules/cabinet/cabinet_ctrl.js"></script>
   <script src="modules/cabinet/quiz_delete_modal_ctrl.js"></script>
-
 <!-- end quiz part -->
+  <script src="modules/cabinet/profile.js"></script>
+  <script src="modules/cabinet/upload_file_service.js"></script>
 
   <script src="modules/users/users.js"></script>
   <script src="modules/users/services.js"></script>
@@ -104,7 +109,6 @@
   <script src="modules/sessions/sessions.js"></script>
   <script src="modules/parentcat-page/parentcat-page.js"></script>
   <script src="modules/faq/faq.js"></script>  
-  <script src="modules/cabinet/profile.js"></script>
   <script src="components/version/version.js"></script>
   <script src="components/version/version-directive.js"></script>
   <script src="components/version/interpolate-filter.js"></script>

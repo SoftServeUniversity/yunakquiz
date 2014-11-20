@@ -7,15 +7,20 @@ angular.module('yunakQuiz.cabinet')
     testChunks: false
   };
 }])
-.controller("ProfileController", ["userService", "$scope", "$timeout", "$location", 
-  function(userService, $scope, $timeout, $location){
+.controller("ProfileController", ["userService", "$scope", "$timeout", "$location", "uploadFileService", 
+  function(userService, $scope, $timeout, $location, uploadFileService){
+    $scope.tab = 'profile';
     this.user = {};
     var profile = this; 
     this.previousUser = {};
     this.editable = false;
+    this.uploadFile = undefined;
+    this.deleteError = "";
     
-    $scope.tab = 'profile'
-
+    this.setUploadService = function(){
+      this.uploadFile = new uploadFileService(this.$flow);
+    };
+    
     this.getRandom = function(min, max) {
       return Math.floor(Math.random() * (max - min + 1)) + min;
     };
@@ -51,43 +56,34 @@ angular.module('yunakQuiz.cabinet')
       this.editable = false;
     };
     
-    this.syncUserAvatar = function(){
-      userService.update({picture: this.user.picture}, 
-        function(data){
-          console.log("saved picture");
-        },
-        function(response, status, headers, config){
-          console.log("Fail");
-        });      
-    };
-    
-    this.saveAvatar = function(){
-      this.$flow.on('fileSuccess', function(file, response){
-        profile.$flow.off('fileSuccess');
-        profile.user.picture = response;
-        profile.$flow.cancel();
-        profile.syncUserAvatar();
-      });
-      this.$flow.upload();
+    this.clearErrors = function(){
+      this.deleteError = "";
+      this.user.password = "";
+      this.enteredCaptcha = "";
     };
     
     this.deleteUser = function(){
-      if ((this.captcha == this.enteredCaptcha) && (this.captcha != "") && (this.user.password != "")){
-        userService.remove(this.user, 
-          function(data){
-            console.log("user has been deleted"); 
+      if (!this.user.password || !this.enteredCaptcha) {
+          this.deleteError = "Введіть пароль і/або капчу";
+      } else {
+        if (this.captcha != this.enteredCaptcha){
+            this.deleteError = "Невірно введена капча";
+        } else {
+          userService.remove(this.user, 
+            function(data){
+              console.log("user has been deleted"); 
               $("#deleteProfile").modal("hide");
-                $timeout(function(){ 
-                  $location.path("/");
-                }, 400);
-                $scope.$emit("user_deleted", data);
-          }, 
-          function(response, status, headers, config){
-            console.log("mistake");
-          });
-      };
-    };
-     
+              $timeout(function(){ 
+                $location.path("/");
+              }, 400);
+              $scope.$emit("user_deleted", data);
+            }, 
+            function(response, status, headers, config){
+              profile.deleteError = "Невірно введений пароль";
+            });
+        }
+      }
+    };      
 }])
 .directive("deleteUserProfile", function(){
   return {
