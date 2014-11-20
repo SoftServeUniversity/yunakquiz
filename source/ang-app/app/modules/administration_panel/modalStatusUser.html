@@ -1,0 +1,22 @@
+<div class="modal-header">
+    <h4 class="modal-title text-center"></h4>
+</div>
+<div class="modal-body">
+<div class="form-group">
+	<label for="role">Статус:</label>
+	<select id="role" ng-model="newUserRole" class="form-control">
+		  <option value="2" ng-selected="userRole == 2">{{roles[2]}}</option>
+		  <option value="1" ng-selected="userRole == 1">{{roles[1]}}</option>
+		  <option value="3" ng-selected="userRole == 3">{{roles[3]}}</option>
+	</select>
+</div>
+<div class="form-group">
+	<label for="password">Ваш пароль:</label>
+	<input id="password" type="password" ng-click="clearMsg()" class="form-control text-center" ng-model="enteredPassword" />
+</div>
+<p ng-show="errorMsg" ng-bind="errorMsg" class="text-danger text-center"></p>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-danger" ng-click="ok()">ОК!</button>
+    <button class="btn btn-info" ng-click="cancel()">Відміна</button>
+</div>

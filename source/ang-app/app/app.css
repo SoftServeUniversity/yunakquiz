@@ -207,6 +207,9 @@ color: white;
  color:#fff;
  border-color:#269abc;
 }
+.admin-panel-search {
+  margin-top: 20px;
+}
 /*eof admin panel styles*/
 
 /*contacts page*/

@@ -19,19 +19,23 @@ angular.module('yunakQuiz.permission', ['ngRoute'])
   },
 
   {'name' : 'admin4',
+   'temp' : 'administration-panel/moderatorsTab',
+   'caption': 'Модератори'
+  },
+  {'name' : 'admin5',
    'temp' : 'administration-panel/quizzescategoriesTab',
    'caption': 'Категорії тестів'
   },
-
-  {'name' : 'admin5',
+  {'name' : 'admin6',
    'temp' : 'administration-panel/aboutusTab',
    'caption': 'Про нас'
   },
 
-  {'name' : 'admin6',
+  {'name' : 'admin7',
    'temp' : 'administration-panel/faqTab',
    'caption': 'Часті запитання'
   },
+  
 ])
 
 .factory('getTabTemplates', ["$location", "$http", "tabs", "$q", function($location, $http, tabs, $q) {
