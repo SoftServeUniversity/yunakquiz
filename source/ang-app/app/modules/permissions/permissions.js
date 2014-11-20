@@ -76,7 +76,11 @@ angular.module('yunakQuiz.permission', ['ngRoute'])
   ]  
 })
 
-.factory('getTabTemplates', ["$location", "$http", "tabs", "$q", function($location, $http, tabs, $q) {
+.value('tabVal', {
+  rezz : []
+})
+
+.factory('getTabTemplates', ["$location", "$http", "tabs", "$q", "tabVal", function($location, $http, tabs, $q, tabVal) {
   return {
     getResponse: function(getRole){
       
@@ -84,39 +88,45 @@ angular.module('yunakQuiz.permission', ['ngRoute'])
       var result = [];
        $http.get("http://localhost:9292/permission")
         .success(function(data){
-          // var givenTabs = tabs.getAdmin;
-          // var givenTabs = commands;
           
+          tabVal.rezz = data;
           var givenTabs;
 
-          alert("getRole: " + getRole);
-          alert("tabs: " + tabs.getAdmin);
           if (getRole == 'admin'){
-            alert("1");
             givenTabs = tabs.getAdmin;
           }
           else {
             givenTabs = tabs.getModer; 
-            alert("2");
           }
-          alert("givenTabs: " + givenTabs);
-
-          var userAccess = data;
-          var i=0;
-          var j=0;
-          var tlen = givenTabs.length;
-          var alen = userAccess.length;
+          
+          // var userAccess = data;
+          var userAccess = tabVal.rezz;
+          
+          angular.forEach(userAccess, function(uA, key1) {
+            angular.forEach(givenTabs, function(gT, key2) {
+              if(gT.name == uA) {
+                result.push(gT);
+              }
+            });            
+          });
+          // var i=0;
+          // var j=0;
+          // var tlen = givenTabs.length;
+          // var alen = userAccess.length;
   
-          for (j; j < alen; j++) {
-            for (i; i < tlen; i++) {
-              if(givenTabs[i].name === userAccess[j]) {
-                result.push(givenTabs[i]);
-              }     
-            };
-            i = 0;
-          };
-            defer.resolve(result);
-          }).error(function(data){
+          // for (j; j < alen; j++) {
+          //   for (i; i < tlen; i++) {
+          //     if(givenTabs[i].name === userAccess[j]) {
+          //       result.push(givenTabs[i]);
+          //     }     
+          //   };
+          //   i = 0;
+          // };
+          alert("result: " + result);
+          alert("result second: " + result[1].name);                    
+          defer.resolve(result);
+        })
+        .error(function(data){
             result = data;
             defer.reject(result);
           });
