@@ -1,40 +1,41 @@
 (function (){
-	var  app = angular.module('yunakQuiz.parentCatPage' ,['ngRoute','yunakQuiz.categoriesContainer']);
+  var  app = angular.module('yunakQuiz.parentCatPage' ,['ngRoute','yunakQuiz.categoriesContainer']);
 
-	app.config(['$routeProvider',
-  	function($routeProvider) {
-   		$routeProvider.
-       	when('/parentcat-page/:par_id', {
-       		templateUrl: './modules/parentcat-page/parentcat-page.html',
-       		controller: 'parentCatPage'
-       	})
-   		}
- 	]);
-  app.factory("getSubCatByCatId", ['$http', function ($http) {
-    return { 
-      get : function(id, callback) {
-        $http.get('http://localhost:9292/categories/subcat/'  + id).success(function(data){
-        callback(data);
-        });
+  app.config(['$routeProvider',
+    function($routeProvider) {
+      $routeProvider.
+        when('/parentcat-page/:par_id', {
+          templateUrl: './modules/parentcat-page/parentcat-page.html',
+          controller: 'parentCatPage'
+        })
+      }
+  ]);
+
+  app.filter('charLimit', function(){
+    return function(quizT){
+      if(quizT.length <= 13){
+        return quizT
+      } else{
+        return quizT.substring(0, 13) + '...'
       }
     }
-  }]);
+  });
   
- 	app.controller('parentCatPage', ['$scope', '$http','$routeParams','$filter', 'quizesById', 'catsById', 'getSubCatByCatId', function ($scope, $http, $routeParams, $filter, quizesById, catsById, getSubCatByCatId) {
+  app.controller('parentCatPage', ['$scope', '$http','$routeParams','$filter', 'quizesById', 'categoriesQuery',  function ($scope, $http, $routeParams, $filter, quizesById, categoriesQuery) {
     $scope.parCategory = {};
     $scope.quizzes = {};
     $scope.subCategories = {};
     var current_id =  $routeParams.par_id;
 
-    catsById.get(current_id ,function(data){
-          $scope.parCategory = data;
-        });
-    getSubCatByCatId.get(current_id ,function(data){
-          $scope.subCategories = data;
-        });
-      quizesById.get(0, function(data){
-            $scope.quizzes = data;
-          });          
+    categoriesQuery.getCategoryById(current_id).success(function(data){
+      $scope.parCategory = data;
+    });
+    categoriesQuery.getSubCatByParCatId(current_id).success(function(data){
+      $scope.subCategories = data;
+    });
+    quizesById.get().success(function(data){
+      $scope.quizzes = data;
+    });          
         
     $scope.numberTest = function(subcat_id){
       var number = 0;

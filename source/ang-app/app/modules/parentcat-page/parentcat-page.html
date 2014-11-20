@@ -1,34 +1,27 @@
 <div class="row">
-	<div class="col-md-12 pageTitleBox bg-primary">
-		<div class="center-block">
-		    <h3 class="pageTitle"> {{ parCategory[0].title }} </h3>
-		    <a href="#"> Статистика категорії </a>
-		</div>
+  <div class="col-md-12 pageTitleBox bg-primary">
+        <h3 class="pageTitle"> {{ parCategory[0].title }} </h3>
     </div>
 </div>
-<br>
-<br>
-
 <div class="Subcategory_Page">
-<div class="col-md-3 col-md-offset-1" ng-repeat="subCat in subCategories">
-	<div class="row"> 
-		<div class="col-md-12"> 
-			<div class="col-md-10 ">
-				<span class="rectangle"><a ng-href="#subcategory/{{subCat.id}}">{{subCat.title}}</a>
-				</span>
-				<div class="triangle-topright"></div>
-				<div class="row categories-container">
-					<ul class="list-unstyled  col-sm-offset-1 ">
-						<li>
-							<span class="quote-author"> Тестів:  {{numberTest(subCat.id)}} </span>
-						</li>
-						<li ng-if="quizz.category_id==subCat.id" ng-repeat="quizz in quizzes">
-							<a href="#">{{quizz.title}}</a>
-						</li> 
-					</ul> 
-				</div>
-			</div> 
-		</div>
-	</div>
-</div>
+  <div class="col-md-3 col-md-offset-1" ng-repeat="subCat in subCategories">
+    <div class="row"> 
+      <div class="col-md-10 ">
+        <span class="rectangle">
+          <a ng-href="#subcategory/{{subCat.id}}">{{subCat.title}}</a>
+        </span>
+        <div class="triangle-topright"></div>
+        <div class="row categories-container">
+          <ul class="list-unstyled  col-sm-offset-1 ">
+            <li>
+              <span class="quote-author"> Тестів:  {{numberTest(subCat.id)}} </span>
+            </li>
+            <li ng-if="quizz.category_id==subCat.id" ng-repeat="quizz in quizzes ">
+              <a href="#">{{quizz.title | charLimit}}</a>
+            </li> 
+          </ul> 
+        </div>
+      </div> 
+    </div>
+  </div>
 </div>
