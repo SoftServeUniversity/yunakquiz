@@ -3,6 +3,7 @@ class Quiz < ActiveRecord::Base
   belongs_to :user
   has_many :questions, :dependent => :destroy
   has_many :comments, :dependent => :destroy
+  has_many :results
   has_and_belongs_to_many :tags
   enum status: [:draft, :review, :enhance, :published, :deleted]
 
