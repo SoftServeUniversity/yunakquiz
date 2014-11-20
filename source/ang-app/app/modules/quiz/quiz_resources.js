@@ -10,27 +10,17 @@ angular.module('yunakQuiz.assessments')
         update: {method:'PUT'},
         validateTitle: {method:'POST', params: {id: undefined, title: 'title'}}
       }
-      )
+  )
 }])
 
-.factory('QuizCommentsService', 
-  ['$http', '$location', '$resource' , 
-  function($http, $location, $resource){
-   
-   var back_url = 'http://localhost:9292';
-    return{
-       get: function(id){
-            return $http.get(back_url+'/assessments/'+id+'/comments')
-          },
-
-      update: function(comments){
-            return $http.put(back_url+'/assessments/comments', comments)
-          },
-
-      delete: function(id){
-            return $http.delete(back_url+'/assessments/'+id+'/comments')
-          }
-      }    
+.factory('CommentsResource', ['$resource','CONFIG', function( $resource,CONFIG) {
+  return $resource(CONFIG.BASE_URL+'/assessments/:id/comments', 
+      { id:'@quiz_id'},
+      { 
+        update: {method:'PUT'},
+        validateTitle: {method:'POST', params: {id: 0, title: 'title'}}
+      }
+  )
 }])
 
 .factory('TagsService', ['$http', 'CONFIG', function($http, CONFIG){

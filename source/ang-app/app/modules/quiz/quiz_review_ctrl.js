@@ -2,9 +2,9 @@
 /** Quiz Edit controller  */
 angular.module('yunakQuiz.assessments')
 .controller('QuizReviewCtrl', 
-  ['$scope','QuizResource', 'QuizCommentsService', '$routeParams',
+  ['$scope','QuizResource', 'CommentsResource', '$routeParams',
    '$route','$location','QuizMngService', 'getAccess', 
-  function($scope, QuizResource, QuizCommentsService, $routeParams,
+  function($scope, QuizResource, CommentsResource, $routeParams,
    $route, $location, QuizMngService, getAccess) {
 
   getAccess($route.current.permision).then(function(data){
@@ -12,21 +12,15 @@ angular.module('yunakQuiz.assessments')
   });
   /** get Quiz by ID */
   function init(){
-    $scope.quiz = QuizResource.get({id:$routeParams.quiz_id}, 
-    function (quiz){ getComments(quiz.id); }, 
-    function (response){ $scope.errorMsg = response.data || 'Тест не отримано'}
-    );
+    $scope.quiz = QuizResource.get({id:$routeParams.quiz_id}, quizSuccess, quizError);
   };
 
-  function getComments(quiz_id) {
-    QuizCommentsService.get(quiz_id)
-      .success(function(data, status, headers, config){
-        $scope.comments = data;
-      });
+  function quizSuccess(quiz) {
+    $scope.comments = CommentsResource.query({id: quiz.id})
   };
-
-  $scope.deleteComment=function(index){
-    $scope.comments.splice(index,1);
+  
+  function quizError(response) { 
+    $scope.errorMsg = response.data || 'Тест не отримано'
   };
 
   $scope.addComment=function(){
@@ -34,25 +28,10 @@ angular.module('yunakQuiz.assessments')
     $scope.comment='';
   };
 
-  function sendComments(state){
-  var service;
-  if (state === "published") {
-    service = QuizCommentsService.delete($scope.quiz.id);
-  }
-  else {
-   service = QuizCommentsService.update($scope.comments); 
-  }
-  service
-    .success(function(data, status, headers, config) {
-      $location.path('/admin/moderationCabinet/');
-    })
-    .error(function() {
-      window.scrollTo(0,0);
-      $scope.errorMsg = 'Коментарі не збережено';
-    })
-
+  $scope.deleteComment=function(index){
+    $scope.comments.splice(index,1);
   };
-    
+
   /** save draft Quiz */
   $scope.enhanceQuiz=function(){
     sendQuiz("enhance");
@@ -67,19 +46,39 @@ angular.module('yunakQuiz.assessments')
   function sendQuiz(state){
     $scope.quiz.status = state;
     if(!QuizMngService.validateQuiz($scope.quiz)){
-      $scope.quiz.$update(success, error);
+      $scope.quiz.$update(sendQuizSuccess, sendQuizError);
     };
   };
 
-  function success(value){
+  function sendQuizSuccess(value){
     sendComments(value.status);
-    $location.path('/admin/personalCabinet/'+value.status);
   };
 
-  function error(response){
+  function sendQuizError(response){
     window.scrollTo(0,0);
     $scope.errorMsg = 'Ваш тест не збережено';
   }
 
+  function sendComments(state){
+    if (state === "published"){
+      CommentsResource.delete({id:$scope.quiz.id}, sendCommentsSuccess, sendCommentsError);
+    } 
+    else {
+      CommentsResource.save(
+        {id:$scope.quiz.id}, 
+        {comments: $scope.comments}, 
+        sendCommentsSuccess, sendCommentsError
+      );
+    }
+  };
+
+  function sendCommentsSuccess(){
+    $location.path('/admin/moderationCabinet/'+$scope.quiz.status);
+  };
+
+  function sendCommentsError(){
+    window.scrollTo(0,0);
+    $scope.errorMsg = 'Коментарі не збережено';
+  };
   
 }]);

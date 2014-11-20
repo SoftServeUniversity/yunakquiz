@@ -2,19 +2,17 @@
 /** Quiz Edit controller  */
 angular.module('yunakQuiz.assessments')
 .controller('QuizEditCtrl', 
-  ['$scope', 'QuizResource', 'QuizCommentsService', '$routeParams', '$location', 'QuizMngService', 
-  function($scope, QuizResource, QuizCommentsService,$routeParams, $location, QuizMngService) {
+  ['$scope', 'QuizResource', 'CommentsResource', '$routeParams', '$location', 'QuizMngService', 
+  function($scope, QuizResource, CommentsResource, $routeParams, $location, QuizMngService) {
 
-  $scope.quiz = QuizResource.get({id:$routeParams.quiz_id}, 
-    function (quiz){ getComments(quiz.id); }, 
-    function (response){ $scope.errorMsg = response.data || 'Тест не отримано'}
-    );
-
-  function getComments(quiz_id) {
-    QuizCommentsService.get(quiz_id)
-      .success(function(data, status, headers, config){
-        $scope.comments = data;
-      });
+  $scope.quiz = QuizResource.get({id:$routeParams.quiz_id}, quizSuccess, quizError);
+  
+  function quizSuccess(quiz) {
+    $scope.comments = CommentsResource.query({id: quiz.id})
+  };
+  
+  function quizError(response) { 
+    $scope.errorMsg = response.data || 'Тест не отримано'
   };
 
   /** save draft Quiz */

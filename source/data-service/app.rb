@@ -64,7 +64,7 @@ module PlastApp
     end 
 
 
-    ## Quiz CRUD
+    ## Quiz resource start
     get '/admin/assessments/:id' do
       content_type :json
       if logged_user
@@ -81,17 +81,6 @@ module PlastApp
         @quiz = Quiz.create_quiz(data, logged_user)
       end  
       response_helper @quiz, "Quiz not created!"
-    end
-
-    post '/admin/assessments/title' do
-      content_type :json
-      data = JSON.parse(request.body.read)
-      if data['id']
-        @query = Quiz.where(title: data['query']).where.not(id: data['id']).exists? 
-      else
-        @query = Quiz.where(title: data['query']).exists?
-      end  
-      {titlePresent:@query}.to_json
     end
 
     put '/admin/assessments/:id' do
@@ -111,7 +100,19 @@ module PlastApp
       response_helper @quiz, "Quiz not deleted!"
     end
 
-    ## Assessment resource!!
+    ## Validate if quiz title exists
+    post '/admin/assessments/title' do
+      content_type :json
+      data = JSON.parse(request.body.read)
+      if data['id']
+        @query = Quiz.where(title: data['query']).where.not(id: data['id']).exists? 
+      else
+        @query = Quiz.where(title: data['query']).exists?
+      end  
+      {titlePresent:@query}.to_json
+    end
+    ## Quiz resource end
+
     get '/assessments/:id' do
       content_type :json
       @quiz = Quiz.get_by_id(params['id'])
@@ -138,6 +139,7 @@ module PlastApp
       response_helper @breadcrumbs, ["Quiz #{params['id']} not found!"]
     end
 
+    ## Quizzes list for user
     post '/assessments/:status' do
       content_type :json
       if logged_user
@@ -152,6 +154,7 @@ module PlastApp
       response_helper @quizzes, "Потрібно залогуватись"
     end
 
+    ## Quizzes list for moderators
     post '/assessments/moderator/:status' do
       content_type :json
       if logged_user && logged_user.role.name === "moder"
@@ -164,7 +167,7 @@ module PlastApp
       response_helper @quizzes, "Forbidden!"
     end
     
-    ##Assessment comments section
+    ##Quiz comments section start
     get '/assessments/:id/comments' do
       content_type :json
       @comment = Comment.get_by_quiz(params['id'])
@@ -172,21 +175,21 @@ module PlastApp
       response_helper @comment, ["Comments #{params['id']} not found!"]
     end 
 
-    put '/assessments/comments' do
+    post '/assessments/:id/comments' do
       content_type :json
       data = JSON.parse(request.body.read)
-      @comments = Comment.update_comments(data)
+      @comments = {comments: Comment.update_comments(data['comments'])}
 
       response_helper @comments, ["comments not updated"]
     end 
 
     delete '/assessments/:id/comments' do
       content_type :json
-      @comments = Comment.delete_comments(params['id'])
+      @comments = {deleted: Comment.delete_comments(params['id'])}
 
       response_helper @comments, ["Comments not deleted!"]
     end
-    ## end of Assessment comments section
+    ##Quiz comments section end
 
     get '/tags/:query' do
       content_type :json

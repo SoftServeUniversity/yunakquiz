@@ -4,8 +4,8 @@
 angular.module('yunakQuiz.assessments')
 
 .factory('QuizMngService', 
-  ['$http', '$location', 'QuizCommentsService', 'QuizResource', '$filter', 'CONFIG',
-  function($http, $location, QuizCommentsService, QuizResource, $filter, CONFIG){
+  ['$http', '$location', 'QuizResource', '$filter', 'CONFIG',
+  function($http, $location, QuizResource, $filter, CONFIG){
 
   var quiz = {}
   
