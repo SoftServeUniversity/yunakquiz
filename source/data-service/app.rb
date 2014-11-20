@@ -380,5 +380,31 @@ module PlastApp
       return [400, 'User not found']
     end
 
+    put '/admin/users:id' do
+      user = User.find(params['id'])
+      if !user.nil?
+        if user.enabled?
+          user.blocked!
+          user.save
+        else 
+          user.enabled!
+          user.save
+        end
+        return [200, 'ok']
+      end
+      return [400, 'user not found']
+    end
+
+    put '/admin/user_role:id' do
+      data = JSON.parse(request.body.read)
+      user = User.find(params['id'])
+      if !user.nil?
+          user.role_id = data['role'].to_i
+          user.save
+          return [200, 'ok']
+      end
+      return [400, 'user not found']
+    end
+
   end
 end
