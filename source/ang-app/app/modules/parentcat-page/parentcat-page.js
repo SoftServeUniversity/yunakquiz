@@ -20,6 +20,19 @@
       }
     }
   });
+
+  app.directive('tooltip', function(){
+    return {
+      restrict: 'A',
+      link: function(scope, element, attrs){
+          $(element).hover(function(){
+              $(element).tooltip('show');
+          }, function(){
+              $(element).tooltip('hide');
+          });
+      }
+    };
+  });
   
   app.controller('parentCatPage', ['$scope', '$http','$routeParams','$filter', 'quizesById', 'categoriesQuery',  function ($scope, $http, $routeParams, $filter, quizesById, categoriesQuery) {
     $scope.parCategory = {};
@@ -35,8 +48,8 @@
     });
     quizesById.get().success(function(data){
       $scope.quizzes = data;
-    });          
-        
+    });  
+
     $scope.numberTest = function(subcat_id){
       var number = 0;
       var quizz = $scope.quizzes;
