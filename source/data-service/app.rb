@@ -56,6 +56,7 @@ module PlastApp
   ## Assessments block starts here!
 
     def response_helper data,msg
+      content_type :json
       if data
         return [200, data.to_json]
       else
@@ -66,7 +67,6 @@ module PlastApp
 
     ## Quiz resource start
     get '/admin/assessments/:id' do
-      content_type :json
       if logged_user
         @quiz = Quiz.get_for_edit(params['id'], logged_user)
         response_helper @quiz, ["Quiz #{params['id']} not found!"]
@@ -75,7 +75,6 @@ module PlastApp
     end
 
     post '/admin/assessments' do
-      content_type :json
       if logged_user
         data = JSON.parse(request.body.read)
         @quiz = Quiz.create_quiz(data, logged_user)
@@ -84,7 +83,6 @@ module PlastApp
     end
 
     put '/admin/assessments/:id' do
-      content_type :json
       if logged_user
         data = JSON.parse(request.body.read)
         @quiz = Quiz.update_quiz(data, logged_user) unless data['id'].nil?
@@ -93,7 +91,6 @@ module PlastApp
     end    
 
     delete '/admin/assessments/:id' do
-      content_type :json
       if logged_user
         @quiz = Quiz.delete_quiz(params['id'], logged_user)
       end
@@ -102,28 +99,27 @@ module PlastApp
 
     ## Validate if quiz title exists
     post '/admin/assessments/title' do
-      content_type :json
       data = JSON.parse(request.body.read)
       if data['id']
-        @query = Quiz.where(title: data['query']).where.not(id: data['id']).exists? 
+        query = Quiz.where(title: data['query']).where.not(id: data['id']).exists? 
       else
-        @query = Quiz.where(title: data['query']).exists?
+        query = Quiz.where(title: data['query']).exists?
       end  
-      {titlePresent:@query}.to_json
+      @result = {titlePresent: query}
+      response_helper @result, "Error"
     end
     ## Quiz resource end
 
     get '/assessments/:id' do
-      content_type :json
       @quiz = Quiz.get_by_id(params['id'])
 
       response_helper @quiz, ["Published Quiz #{params['id']} not found!"]
     end
 
     post '/assessments/result' do
-      content_type :json
       data = JSON.parse(request.body.read)
       if logged_user
+        puts data
         # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
       end  
       @quiz={}
@@ -133,7 +129,6 @@ module PlastApp
     ## end of Assessment resource.
 
     get '/breadcrumbs/:cat_id' do
-      content_type :json
       @breadcrumbs = Category.get_breadcrumds(params['cat_id'])
 
       response_helper @breadcrumbs, ["Quiz #{params['id']} not found!"]
@@ -141,7 +136,6 @@ module PlastApp
 
     ## Quizzes list for user
     post '/assessments/:status' do
-      content_type :json
       if logged_user
         data = JSON.parse(request.body.read)
         @quizzes = Quiz.quiz_query(
@@ -156,7 +150,6 @@ module PlastApp
 
     ## Quizzes list for moderators
     post '/assessments/moderator/:status' do
-      content_type :json
       if logged_user && logged_user.role.name === "moder"
         data = JSON.parse(request.body.read)
         categories = data['categoryFilter'] 
@@ -169,14 +162,12 @@ module PlastApp
     
     ##Quiz comments section start
     get '/assessments/:id/comments' do
-      content_type :json
       @comment = Comment.get_by_quiz(params['id'])
 
       response_helper @comment, ["Comments #{params['id']} not found!"]
     end 
 
     post '/assessments/:id/comments' do
-      content_type :json
       data = JSON.parse(request.body.read)
       @comments = {comments: Comment.update_comments(data['comments'])}
 

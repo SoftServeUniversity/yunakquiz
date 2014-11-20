@@ -25,7 +25,8 @@ angular.module('yunakQuiz.assessments')
   /** Redirect to result-page if quiz is valid  */
   $scope.passQuiz = function(){
     if (QuizPassService.validateQuiz()) {
-      QuizPassService.submitQuiz().success(function(){
+      QuizPassService.submitQuiz()
+      .success(function(){
         $location.path($location.path()+'/result'); 
       })
       .error(function(data){

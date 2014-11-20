@@ -15,19 +15,15 @@ angular.module('yunakQuiz.assessments')
   $scope.MIN_ASWERS_QTY=CONFIG.MIN_ASWERS_QTY;
   $scope.MIN_QUESTIONS_QTY=CONFIG.MIN_QUESTIONS_QTY;
   
-  getCat();
+  CategoriesService.getCat().success(function(data, status, headers, config) {
+    $scope.categories=data;  
+    $scope.$watch('quiz.id', function(newVal) {
+     if (newVal) { selectCat() }
+    });
+  });
 
   $scope.loadTags = function (query) {
       return TagsService.getTags(query)
-  };
-
-  function getCat(){
-    CategoriesService.getCat().success(function(data, status, headers, config) {
-          $scope.categories=data;  
-          $scope.$watch('quiz.id', function(newVal) {
-           if (newVal) { selectCat() }
-          });
-    });
   };
 
   $scope.clearSubcat = function(){
@@ -39,12 +35,11 @@ angular.module('yunakQuiz.assessments')
   };
 
   function selectCat(){
-    // alert("set cat")
-    for (var i=0; i < $scope.categories.length; i++){   
-      if (selectSubcat($scope.categories[i].categories)){
-        $scope.selectedCat = $scope.categories[i];
+    angular.forEach($scope.categories, function(category){
+      if (selectSubcat(category.categories)) {
+        $scope.selectedCat = category;
       }
-    };
+    });
   }
 
   function selectSubcat(subCatsArray){
@@ -65,7 +60,7 @@ angular.module('yunakQuiz.assessments')
   };
   
   $scope.filterFunction = function(element) {
-    return element.toDelete ? false : true
+    return !element.toDelete
   };
 
   $scope.addAnswer = function(question) {

@@ -28,10 +28,6 @@ angular.module('yunakQuiz.assessments')
     };
   };
 
-  function filterDeleted(element) {
-    return element.toDelete ? false : true
-  };
-
   function validateQuiz(quiz){
     var invalid = false;
     var questions = $filter('filter')(quiz.questions, filterDeleted);
@@ -47,10 +43,14 @@ angular.module('yunakQuiz.assessments')
   /** check question to have at least one correct answer */
   function validateQuestion (question){
     var answers = $filter('filter')(question.answers, filterDeleted);
-    answers = $filter('filter')(answers, {correct: true})
-    question.invalid =  answers.length ? false : true;
+    var correctAnswers = $filter('filter')(answers, {correct: true})
+    question.invalid = !correctAnswers.length;
   };
-  
+ 
+  function filterDeleted(element) {
+    return !element.toDelete
+  };
+
   return {
     quiz : quiz,
     Question : Question,
