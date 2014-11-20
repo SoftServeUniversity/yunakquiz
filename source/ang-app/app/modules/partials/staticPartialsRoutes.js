@@ -1,6 +1,6 @@
 (function (){
-  var  app = angular.module('yunakQuiz.staticPartialsRoute' ,['ngRoute','yunakQuiz.aboutusTab']);
-
+  //var  app = angular.module('yunakQuiz.staticPartialsRoute' ,['ngRoute','yunakQuiz.aboutusTab']);
+var  app = angular.module('yunakQuiz.staticPartialsRoute' ,['ngRoute']);
     app.config(['$routeProvider',
       function($routeProvider) {
         $routeProvider.
@@ -28,11 +28,12 @@
         });
     }]);
     app.controller('aboutUs', 
-      ['$scope', '$http', '$sce', 'aboutUsReadUpdate', function ($scope, $http, $sce, aboutUsReadUpdate) {
+      //['$scope', '$http', '$sce', 'aboutUsReadUpdate', function ($scope, $http, $sce, aboutUsReadUpdate) {
+      ['$scope', '$http', '$sce', function ($scope, $http, $sce) {        
         $scope.about_Us = '';
 
-        aboutUsReadUpdate.read().success(function(data){
-          $scope.about_Us = $sce.trustAsHtml(data[0].about_us);
-        });    
+        // aboutUsReadUpdate.read().success(function(data){
+        //   $scope.about_Us = $sce.trustAsHtml(data[0].about_us);
+        // });    
     }])
 })(); 
