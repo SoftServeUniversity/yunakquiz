@@ -109,14 +109,16 @@ background:rgb(255,0,0);
   color: #005229;
   text-decoration: none;
   font-size: 17px;
+  outline: none;
 }
 
 .FAQ_Page a:visited {
-    background-color: white;
+  background-color: white;
 }
 
 .FAQ_Page p {
   font-size: 15px;
+  padding: 0 20px;
 }
 
 .FAQ_Page .col-center {
