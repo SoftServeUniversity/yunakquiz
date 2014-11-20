@@ -16,12 +16,13 @@
 
     app.controller('userTab', ['$scope', 'getAccess','$http', '$location', '$modal', 'Roles', function ($scope, getAccess,$http, $location, $modal, Roles) {
       $scope.tab = 'Користувачі';
-        $scope.outputData={
-        currentPage: 1,
-        itemsPerPage: 10,
-        searchData:'',
-        status: 'enabled',
-        roles: 2
+        
+      $scope.outputData={
+      currentPage: 1,
+      itemsPerPage: 10,
+      searchData:'',
+      status: 'enabled',
+      roles: 2
       };
 
       getAccess($scope.tab).then(function(data){

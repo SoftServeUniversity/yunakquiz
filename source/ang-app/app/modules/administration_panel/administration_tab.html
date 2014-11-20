@@ -1,7 +1,7 @@
 <admin-panel></admin-panel>
 <div class="panel">
 <div ng-include src="'./modules/administration_panel/search.html'"></div>
-	<table class="table table-hover">
+	<table ng-show="totalItems" class="table table-hover">
 		<thead>
 			<tr>
 				<th class="col-md-3 text-center">Псевдо</th>
@@ -29,5 +29,6 @@
 			</tr>
 		</tbody>
 	</table>
+<div ng-hide="totalItems" class="alert alert-info text-center" role="alert">Адміністраторів в системі немае</div>
 <div ng-include src="'./modules/administration_panel/pagination.html'"></div>
 </div>

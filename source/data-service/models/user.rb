@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
   belongs_to :role
   attr_protected :hashed_password, :salt
   attr_accessor :password
-  enum status: [:blocked, :enabled, :deleted]
+  enum status: [:blocked, :enabled]
   
   USERNAME_REGEX = /\A[A-Z0-9_-]+\z/i
   EMAIL_REGEX = /\A([A-Z0-9\-_]+\.?[A-Z0-9\-_]+)+@([A-Z0-9\-_]+\.?[A-Z0-9\-_]+)+\.[a-z]{2,4}\z/i
@@ -64,7 +64,7 @@ class User < ActiveRecord::Base
   end
 
   def self.queryCount(statusCode,query, role)
-    User.where("status=? AND last_name like ? AND role_id IN (?)", statusCode, query, role).count()
+    User.where("status=? AND username like ? AND role_id IN (?)", statusCode, query, role).count()
   end
 
   def self.block_unblock_user(id)

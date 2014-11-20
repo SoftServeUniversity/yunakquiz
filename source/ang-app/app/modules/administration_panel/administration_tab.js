@@ -13,6 +13,7 @@
 
     app.controller('administrationTab', ['$scope', 'getAccess','$http', '$location', '$modal', 'Roles', function ($scope, getAccess,$http, $location, $modal, Roles) {
       $scope.tab = 'Адміністрація';
+      $scope.roles = Roles;
       
       $scope.outputData={
         currentPage: 1,
