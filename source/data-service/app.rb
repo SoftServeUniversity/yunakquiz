@@ -257,6 +257,8 @@ module PlastApp
       user = User.authenticate(data['username'], data['password'])
       if !user.nil?
         session[:user_id] = user.id
+        # role = Role.find(user.role_id)
+        # base = Permission.where("#{role.name} = #{role.id}").pluck("tabs").to_json
         return [200, filtered_user(user).to_json]
       end
         return [401, "unauthorized"]
