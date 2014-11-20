@@ -13,8 +13,8 @@ subcat5 = cat3.categories.create(title: "Основи ООП")
 subcat6 = cat3.categories.create(title: "Основи Java")
 
 adminRole = Role.create(name: 'admin')
-userRole =  Role.create(name: 'user')
 moderRole = Role.create(name: 'moder')
+userRole =  Role.create(name: 'user')
 superadminRole = Role.create(name: 'superadmin')
 
 user1 = userRole.users.create(username: "user123", password: "12345678", password_confirmation: "12345678", email: "user@mail.com", birthday: "2000-12-31T22:00:00.000Z")
