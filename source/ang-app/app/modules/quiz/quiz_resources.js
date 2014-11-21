@@ -4,11 +4,11 @@
 angular.module('yunakQuiz.assessments')
 
 .factory('QuizResource', ['$resource','CONFIG', function( $resource,CONFIG) {
-  return $resource(CONFIG.BASE_URL+'/admin/assessments/:id/:title', 
-      { id:'@id', title: '' },
+  return $resource(CONFIG.BASE_URL+'/admin/assessments/:id', 
+      { id:'@id'},
       { 
         update: {method:'PUT'},
-        validateTitle: {method:'POST', params: {id: undefined, title: 'title'}}
+        validateTitle: {method:'POST', id:undefined, url:CONFIG.BASE_URL+'/admin/assessments/title'}
       }
   )
 }])
