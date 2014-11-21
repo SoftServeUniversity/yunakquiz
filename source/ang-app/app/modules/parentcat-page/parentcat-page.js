@@ -1,15 +1,15 @@
 (function (){
-	var  app = angular.module('yunakQuiz.parentCatPage' ,['ngRoute','yunakQuiz.categoriesContainer']);
+  var  app = angular.module('yunakQuiz.parentCatPage' ,['ngRoute','yunakQuiz.categoriesContainer']);
 
-	app.config(['$routeProvider',
-  	function($routeProvider) {
-   		$routeProvider.
-       	when('/parentcat-page/:par_id', {
-       		templateUrl: './modules/parentcat-page/parentcat-page.html',
-       		controller: 'parentCatPage'
-       	})
-   		}
- 	]);
+  app.config(['$routeProvider',
+    function($routeProvider) {
+      $routeProvider.
+        when('/parentcat-page/:par_id', {
+          templateUrl: './modules/parentcat-page/parentcat-page.html',
+          controller: 'parentCatPage'
+        })
+      }
+  ]);
 
   app.filter('charLimit', function(){
     return function(quizT){
@@ -20,8 +20,21 @@
       }
     }
   });
+
+  app.directive('tooltip', function(){
+    return {
+      restrict: 'A',
+      link: function(scope, element, attrs){
+          $(element).hover(function(){
+              $(element).tooltip('show');
+          }, function(){
+              $(element).tooltip('hide');
+          });
+      }
+    };
+  });
   
- 	app.controller('parentCatPage', ['$scope', '$http','$routeParams','$filter', 'quizesById', 'categoriesQuery',  function ($scope, $http, $routeParams, $filter, quizesById, categoriesQuery) {
+  app.controller('parentCatPage', ['$scope', '$http','$routeParams','$filter', 'quizesById', 'categoriesQuery',  function ($scope, $http, $routeParams, $filter, quizesById, categoriesQuery) {
     $scope.parCategory = {};
     $scope.quizzes = {};
     $scope.subCategories = {};
@@ -35,9 +48,8 @@
     });
     quizesById.get().success(function(data){
       $scope.quizzes = data;
-      console.log = data;
-    });          
-        
+    });  
+
     $scope.numberTest = function(subcat_id){
       var number = 0;
       var quizz = $scope.quizzes;

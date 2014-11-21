@@ -1,15 +1,14 @@
 <div class="row">
-  <h3 class="pageTitle bg-primary"> {{ parCategory[0].title }} </h3>
+  <div class="pageTitleBox bg-primary">
+    <h3 class="pageTitle"> {{ parCategory[0].title }} </h3>
+  </div>
 </div>
-<br>
-<br>
-
 <div class="Subcategory_Page">
-<div class="col-md-3 col-md-offset-1" ng-repeat="subCat in subCategories">
-  <div class="row"> 
-    <div class="col-md-12"> 
+  <div class="col-md-3 col-md-offset-1" ng-repeat="subCat in subCategories">
+    <div class="row"> 
       <div class="col-md-10 ">
-        <span class="rectangle"><a ng-href="#subcategory/{{subCat.id}}">{{subCat.title}}</a>
+        <span class="rectangle">
+          <a ng-href="#subcategory/{{subCat.id}}">{{subCat.title}}</a>
         </span>
         <div class="triangle-topright"></div>
         <div class="row categories-container">
@@ -18,12 +17,11 @@
               <span class="quote-author"> Тестів:  {{numberTest(subCat.id)}} </span>
             </li>
             <li ng-if="quizz.category_id==subCat.id" ng-repeat="quizz in quizzes ">
-              <a href="#/assessments/{{quizz.id}}">{{quizz.title| charLimit}}</a>
+              <a href="#/assessments/{{quizz.id}}" data-toggle="tooltip" data-position="top" data-original-title="{{quizz.title}}" tooltip>{{quizz.title | charLimit}}</a>
             </li> 
           </ul> 
         </div>
       </div> 
     </div>
   </div>
-</div>
 </div>

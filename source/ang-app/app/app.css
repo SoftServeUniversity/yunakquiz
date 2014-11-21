@@ -286,14 +286,11 @@ color: white;
   color: #005229;
   text-decoration: none;
   font-size: 17px;
+  outline: none;
 }
 
 .FAQ_Page a:visited {
-    background-color: white;
-}
-
-.FAQ_Page a:hover{
-  text-decoration: underline;
+  background-color: white;
 }
 
 .FAQ_Page p {
@@ -312,18 +309,56 @@ color: white;
   width: 400px;
 }
 
+.FAQ_AdminPage .table.table-bordered.table-condensed{
+  margin-right: 15px;
+  border: none;
+}
+
 .FAQ_AdminPage .tableStyle {
   font-weight: bold;
 }
 
+.FAQ_AdminPage td.someClass{
+  border: none;
+}
+
+.FAQ_AdminPage .inputClass{
+  font-weight: bold;
+}
+
+.FAQ_AdminPage div.buttons{
+  padding-left: 30px;
+}
+
+.FAQ_AdminPage form.form-buttons.form-inline.ng-pristine.ng-valid{
+  margin-left: 45px;
+}
+
+.FAQ_AdminPage button.btn.btn-success{
+  margin-top: -10px;
+  margin-bottom: 10px;
+  margin-left: 3px;
+}
+
+.FAQ_AdminPage td.tdStyle{
+  white-space: nowrap;
+  border: none;
+}
+
+.FAQ_AdminPage table{
+  margin-top: 10px;
+}
+
 td#qaColSt {
-  width: 65%;
+  width: 75%;
+  border: none;
 }
 
 td#eColSt{
   width: 15%;
+  text-align: center;
 }
-/*eo faq page for admin*/
+/*eo faq page for admin*
 
 /* Guest search styles */
 .search-result {
