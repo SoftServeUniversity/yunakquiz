@@ -137,12 +137,9 @@ module PlastApp
     post '/assessments/:status' do
       if logged_user
         data = JSON.parse(request.body.read)
-        @quizzes = Quiz.quiz_query(
-          logged_user,
-          params['status'],
-          data['searchData'],
-          data['currentPage'],
-          data['itemsPerPage'])
+        categories = nil
+        @quizzes = Quiz.quiz_query(params['status'], data['searchData'],
+        data['currentPage'], data['itemsPerPage'], categories, logged_user)
       end
       response_helper @quizzes, "Потрібно залогуватись"
     end
@@ -153,7 +150,8 @@ module PlastApp
         data = JSON.parse(request.body.read)
         categories = data['categoryFilter'] 
         categories = Category.all.pluck("id") if categories.empty? 
-        @quizzes = Quiz.quiz_query_cat(params['status'],categories,data['currentPage'],data['itemsPerPage'])
+        @quizzes = Quiz.quiz_query(params['status'], data['searchData'],
+         data['currentPage'], data['itemsPerPage'],categories)
         response_helper @quizzes, "Quizzes not found"
       end
       response_helper @quizzes, "Forbidden!"

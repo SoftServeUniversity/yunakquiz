@@ -3,15 +3,7 @@
 </div>
 <div ng-class="{invisible:tab =='profile'}" class="row">
     <div class="col-sm-4">
-        <form ng-submit="searchQuery()">
-            <div class="input-group">
-                <input ng-model="outputData.searchData" type="text" class="form-control" placeholder="Пошук по назві тесту" />
-                <button ng-if="outputData.searchData" type="button" ng-click="clearInput()" class="close clearSearchInput"><span aria-hidden="true">&times;</span></button>
-                <span class="input-group-btn">
-                    <button ng-click="searchQuery()" class="btn btn-default" type="button">Вьо!</button>
-                </span>
-            </div>
-        </form>
+        <div ng-include="'modules/cabinet/search_input.html'"></div>
     </div>
     <div class=" col-sm-8 text-right">
         <a ng-href="#/admin/assessments/create/" class="btn btn-success">Додати тест</a>
