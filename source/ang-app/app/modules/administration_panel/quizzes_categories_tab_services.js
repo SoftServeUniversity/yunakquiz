@@ -2,24 +2,24 @@
   var  app = angular.module('yunakQuiz.quizzescategoriesTabFactories' ,
     ['ngRoute']);
 
-    app.factory("categoryEdit", ['$http', function ($http) {
+    app.factory("categoryEdit", ['$http','CONFIG', function ($http,CONFIG) {
       return { 
         create : function(data) {
-          return $http.put('http://localhost:9292/admin/category/create', data)
+          return $http.put(CONFIG.BASE_URL + '/admin/category/create', data)
         },
         update : function(data) {
-          return $http.put('http://localhost:9292/admin/category/update', data)
+          return $http.put(CONFIG.BASE_URL + '/admin/category/update', data)
         },
         delCat : function(data) {
-          return $http.delete('http://localhost:9292/admin/category/delete/' + data)
+          return $http.delete(CONFIG.BASE_URL + '/admin/category/delete/' + data)
         }
       }
     }]);
-    app.factory("pwdCheck", ['$http', function ($http) {
+    app.factory("pwdCheck", ['$http','CONFIG', function ($http,CONFIG) {
       return function(pwd){
         var request = {password:pwd};
 
-        return $http.post('http://localhost:9292/checkpassword/', request)
+        return $http.post(CONFIG.BASE_URL + '/checkpassword/', request)
       };
     }]);
     app.factory("addParCatTitle", function(){

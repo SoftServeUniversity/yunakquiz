@@ -11,13 +11,13 @@
       }
     ]);
 
-    app.factory("aboutUsReadUpdate", ['$http', function ($http) {
+    app.factory("aboutUsReadUpdate", ['$http','CONFIG', function ($http,CONFIG) {
       return { 
         read : function() {
-          return $http.get('http://localhost:9292/about_us')
+          return $http.get(CONFIG.BASE_URL + '/about_us')
         },
         update : function(data) {
-          return $http.put('http://localhost:9292/about_us', data)
+          return $http.put(CONFIG.BASE_URL + '/about_us', data)
         }
       }
     }]);
@@ -66,7 +66,7 @@
 
         $scope.msgShow = function (param) {
           $scope.msg = param.msg;
-          $('..about-us-msg-panel').css('color', param.color);
+          $('.about-us-msg-panel').css('color', param.color);
         };
         $scope.msgHide = function () {
            $scope.msg = '';
