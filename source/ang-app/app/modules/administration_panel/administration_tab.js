@@ -1,5 +1,11 @@
 (function (){
-  var  app = angular.module('yunakQuiz.administrationTab' ,['ngRoute','yunakQuiz.permission']);
+  var  app = angular.module('yunakQuiz.administrationTab' ,['ngRoute','yunakQuiz.permission'])
+  .factory('users', ['$resource',
+    function($resource) {
+      return $resource('http://localhost:9292/admin/users', null,
+        {'update': { method:'PUT' }
+      }); 
+  }])
 
     app.config(['$routeProvider',
       function($routeProvider) {
@@ -11,7 +17,8 @@
       }
     ]);
 
-    app.controller('administrationTab', ['$scope', 'getAccess','$http', '$location', '$modal', 'Roles', function ($scope, getAccess,$http, $location, $modal, Roles) {
+    app.controller('administrationTab', ['$scope', 'getAccess','$http', '$location', '$modal', 'Roles', "users", 
+      function ($scope, getAccess,$http, $location, $modal, Roles, users) {
       $scope.tab = 'Адміністрація';
       $scope.roles = Roles;
       
@@ -38,6 +45,16 @@
         $scope.outputData.currentPage = 1;
         $scope.queryList();
       };
+
+      // $scope.queryList = function() {
+      //   users.save($scope.outputData,
+      //     function(data){
+      //       $scope.updateData(data);    
+      //     }, 
+      //     function(response){
+      //      console.log("bad");
+      //     } 
+      // )};
 
       $scope.queryList = function() {
         $http.post('http://localhost:9292/admin/users', $scope.outputData).success(function(data, status, headers, config) {
