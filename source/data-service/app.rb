@@ -159,14 +159,14 @@ module PlastApp
     
     ##Quiz comments section start
     get '/assessments/:id/comments' do
-      @comment = Comment.get_by_quiz(params['id'])
+      @comment = {quiz_id:params['id'].to_i, arr: Comment.get_by_quiz(params['id'])}
 
       response_helper @comment, ["Comments #{params['id']} not found!"]
     end 
 
     post '/assessments/:id/comments' do
       data = JSON.parse(request.body.read)
-      @comments = {comments: Comment.update_comments(data['comments'])}
+      @comments = {updated: Comment.update_comments(data['arr'],params['id'])}
 
       response_helper @comments, ["comments not updated"]
     end 

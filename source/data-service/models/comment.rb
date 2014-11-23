@@ -2,13 +2,13 @@ class Comment < ActiveRecord::Base
   belongs_to :quiz
 
   def self.get_by_quiz(quiz_id)
-    	Comment.where(:quiz_id => quiz_id)
+    	Comment.where(:quiz_id => quiz_id).select("id,text,updated_at")
   end
 
-  def self.update_comments(data)
+  def self.update_comments(data,id)
 	  	data.each do |comment|
 	  		if comment['id'] == nil
-	  			Comment.create(:quiz_id => comment['quiz_id'], :text => comment['text'])
+	  			Comment.create(:quiz_id => id, :text => comment['text'])
 	  		end
 	   	end
   end
