@@ -1,3 +1,4 @@
+# encoding: UTF-8
 module PlastApp
   require 'sinatra'
   require 'sinatra/activerecord'
@@ -12,6 +13,10 @@ module PlastApp
     register Sinatra::AssetPipeline
     register Sinatra::ActiveRecordExtension
     register Sinatra::CrossOrigin
+
+    use Rack::Session::Cookie, 
+      :secret => 'cca369ff55af5ceefc50939498d93f5905272422baf5d86dd0c4271e2e68a9ba'
+
 
     Dir.glob('./config/*.rb').each {|file| require file}
     Dir.glob('./models/*.rb').each {|file| require file}
@@ -124,6 +129,16 @@ module PlastApp
         JSON.pretty_generate(quizzes) 
       else
         return [400, "Not found "+params['status']]
+      end
+    end
+
+    get '/permission' do
+      if logged_user
+        role = Role.find(logged_user.role_id)
+        base = Permission.where("#{role.name} = #{role.id}").pluck("tabs").to_json
+        return base
+      else
+        return [401, "unauthorized"]
       end
     end
 
