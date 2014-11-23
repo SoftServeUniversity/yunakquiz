@@ -100,10 +100,11 @@
       '$modal',
       'getAccess',
       'addSelectorForParCat',
-      'setCurCatEditDlg', 
+      'setCurCatEditDlg',
+      'modalDlg',
         function ($http, $scope, categoriesQuery, quizCount, addParCatTitle,
           doCatHaveSubCat, getSubCatsList, getParCatsList, $location, $modal, getAccess,
-          addSelectorForParCat, setCurCatEditDlg) {
+          addSelectorForParCat, setCurCatEditDlg, modalDlg) {
 
           $scope.tab = 'Категорії тестів'; // Initialize  Tab 
           $scope.allCategories = {};
@@ -136,15 +137,11 @@
           $scope.modalCreateCat = function () {
             clearData();
 
-            var modalCreateCat = $modal.open({
-              templateUrl: 'modules/administration_panel/modalCreateCat.html',
-              controller: 'modalEditDelCreateCatCtrl',
-              windowClass: 'category-edit-modal',
-              scope: $scope
-            });
-            modalCreateCat.result.then(function () {
-              updateCatPage();
-            });
+            var modalCreateCat = modalDlg('createCat', $scope);
+
+              modalCreateCat.result.then(function () {
+                updateCatPage();
+              });
           };
 
           $scope.modalDeleteCat = function (category) {
@@ -153,12 +150,8 @@
             $scope.subParCatSelect = setCurCatEditDlg($scope.catToEditDelete, $scope.parCatGrouped);
             showHideAlertMsgModalElem(category, $scope.catDelRelationalDataMsg, false);
 
-            var modalDelCat = $modal.open({
-              templateUrl: 'modules/administration_panel/modalDeleteCat.html',
-              controller: 'modalEditDelCreateCatCtrl',
-              windowClass: 'category-edit-modal',
-              scope: $scope
-            });
+            var modalDelCat = modalDlg('deleteCat', $scope);
+
             modalDelCat.opened.then(function () {
               if($scope.groupedQuizzes[$scope.catToEditDelete.id]) {
                 $scope.errorModalMsg = $scope.catDelQuizzesMsg;
@@ -178,15 +171,11 @@
             $scope.subParCatSelect = setCurCatEditDlg($scope.catToEditDelete, $scope.parCatGrouped);
             showHideAlertMsgModalElem(category, $scope.catHaveSubCatMsg, true);
 
-            var modalEditCat = $modal.open({
-              templateUrl: 'modules/administration_panel/modalEditCat.html',
-              controller: 'modalEditDelCreateCatCtrl',
-              windowClass: 'category-edit-modal',
-              scope: $scope
-            });
-            modalEditCat.result.then(function () {
-              updateCatPage();
-            });
+            var modalEditCat = modalDlg('editCat', $scope);
+
+              modalEditCat.result.then(function () {
+                updateCatPage();
+              });
           };
 
           function clearData () {

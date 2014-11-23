@@ -22,6 +22,23 @@
         return $http.post(CONFIG.BASE_URL + '/checkpassword/', request)
       };
     }]);
+
+    app.factory("modalDlg", ['$modal', function ($modal) {
+      var templateUrl = {
+          createCat: 'modules/administration_panel/modalCreateCat.html',
+          deleteCat: 'modules/administration_panel/modalDeleteCat.html',
+          editCat: 'modules/administration_panel/modalEditCat.html'
+      };
+        return function (modAlias, $scope) {
+          return $modal.open({
+                 templateUrl: templateUrl[modAlias],
+                 controller: 'modalEditDelCreateCatCtrl',
+                 windowClass: 'category-edit-modal',
+                 scope: $scope
+              });
+      };
+    }]);
+    
     app.factory("addParCatTitle", function () {
       return function (target) {
         var catsById = {};
@@ -31,7 +48,7 @@
          catsById[cat.id] = cat;
         });
         angular.forEach(catsById, function (cat) {
-          if(cat.category_id != 0){
+          if(cat.category_id != 0) {
             if(!catsById[cat.category_id]) {
              catsById[cat.category_id] = {};
              catsById[cat.category_id].title = "error in DB";
@@ -49,10 +66,10 @@
     });
 
     app.factory("doCatHaveSubCat", function () {
-      return function (category, categoriesList, subCategoriesList){
+      return function (category, categoriesList, subCategoriesList) {
         var result = false;
           angular.forEach(categoriesList, function (cat) {
-            if(cat.category_id != 0 && cat.category_id == category.id){
+            if(cat.category_id != 0 && cat.category_id == category.id) {
               subCategoriesList.push(cat);
               result = true;
             };
@@ -98,15 +115,15 @@
     });
 
     app.factory("setCurCatEditDlg", function () {
-      return function (category, parCatGrouped){
+      return function (category, parCatGrouped) {
         var selectedSubParCat = {};
 
-        angular.forEach(parCatGrouped, function (cat, index) {
-          if(cat.id === category.category_id) {
-            selectedSubParCat = parCatGrouped[index];
-          }
-        })
-        return selectedSubParCat;
+          angular.forEach(parCatGrouped, function (cat, index) {
+            if(cat.id === category.category_id) {
+              selectedSubParCat = parCatGrouped[index];
+            }
+          })
+          return selectedSubParCat;
       };
     });
 })();
