@@ -18,7 +18,8 @@
 
     app.controller("modalEditDelCreateCatCtrl", [
       '$modalInstance',
-      '$scope', '$http',
+      '$scope',
+      '$http',
       'categoryEdit',
       'pwdCheck',
         function ($modalInstance, $scope, $http, categoryEdit, pwdCheck) {
@@ -199,7 +200,7 @@
 
           function showHideAlertMsgModalElem (category, alertMsg, catsSelLock) {
             var result = doCatHaveSubCat(category, $scope.allCategories, $scope.subCategories)
-            if(result.haveCats){
+            if(result.haveCats) {
               $scope.subCategories = result.subCatsList;
               //show hidden button and alert message,lock select parCat;
               $scope.errorModalMsg = alertMsg;

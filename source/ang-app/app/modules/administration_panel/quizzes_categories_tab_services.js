@@ -24,27 +24,27 @@
     }]);
 
     app.factory("modalDlg", ['$modal', function ($modal) {
-      var templateUrl = {
+      return function (modAlias, $scope) {
+        var templateUrl = {
           createCat: 'modules/administration_panel/modalCreateCat.html',
           deleteCat: 'modules/administration_panel/modalDeleteCat.html',
           editCat: 'modules/administration_panel/modalEditCat.html'
-      };
-        return function (modAlias, $scope) {
+        };
           return $modal.open({
-                 templateUrl: templateUrl[modAlias],
-                 controller: 'modalEditDelCreateCatCtrl',
-                 windowClass: 'category-edit-modal',
-                 scope: $scope
-              });
+                  templateUrl: templateUrl[modAlias],
+                  controller: 'modalEditDelCreateCatCtrl',
+                  windowClass: 'category-edit-modal',
+                  scope: $scope
+                 });
       };
     }]);
-    
+
     app.factory("addParCatTitle", function () {
-      return function (target) {
+      return function (categories) {
         var catsById = {};
         var catsAsArray = [];
 
-        angular.forEach(target, function (cat) {
+        angular.forEach(categories, function (cat) {
          catsById[cat.id] = cat;
         });
         angular.forEach(catsById, function (cat) {
@@ -83,7 +83,7 @@
         var parCats = [];
 
           angular.forEach(categories, function (cat) {
-            if(cat.category_id === 0){
+            if(cat.category_id === 0) {
               parCats.push(cat);
             };
           });
@@ -106,8 +106,12 @@
 
     app.factory("addSelectorForParCat", function () {
       return function (categoriesList, optionByBindName) {
-        var defaultToCreate = {id:0, category_id:0, title:"---"};
-          
+        var defaultToCreate = {
+            id:0,
+            category_id:0,
+            title:"---"
+        };
+
           categoriesList.push(defaultToCreate);
           optionByBindName = categoriesList[categoriesList.length-1];
           return optionByBindName;
