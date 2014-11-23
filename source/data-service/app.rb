@@ -400,9 +400,9 @@ module PlastApp
         user = User.authenticate(userToCheck['username'], data['password'])
       end
       if user
-        return [200, 'ok']
+        return [200]
       end
-      return [400, 'bad request']
+      return [400]
     end
 
     post '/admin/users' do
