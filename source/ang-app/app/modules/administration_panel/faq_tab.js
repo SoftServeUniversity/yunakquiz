@@ -1,5 +1,5 @@
 (function (){
-  var  app = angular.module('yunakQuiz.faqTab' ,['ngRoute', 'xeditable']);
+  var  app = angular.module('yunakQuiz.faqTab' ,['ngRoute', 'xeditable', 'yunakQuiz.permission']);
 
   app.config(['$routeProvider',
     function($routeProvider) {
@@ -33,51 +33,63 @@
     }
   }]);
   
-  app.controller('faqTab', ['$http', 'QuestionService', '$scope', function ($http, QuestionService, $scope) {
-    $scope.tab = 'faqTab';
-    $scope.showButton = false;
-
-    var init = function(){
-      QuestionService.get().success(function(data){
-        $scope.Questions = data;
-      }) 
-    };
-
-    $scope.saveQuestion = function(data, id) {
-      angular.extend(data, {id: id});
-      QuestionService.put(data).success(function(){
-        init();
-      });   
+  app.controller('faqTab', [
+    '$http',
+    'QuestionService',
+    '$scope',
+    'getAccess',
+    '$location',
+    function ($http, QuestionService, $scope, getAccess, $location) {
+      $scope.url = $location.path();
       $scope.showButton = false;
-    };
 
-    $scope.removeQuestion = function(index) {
-      QuestionService.delete(index).success(function(){
-        init();
-      });
-    };      
-
-    $scope.validate = function(index){        
-      if (!$scope.Questions[index].faq_question.length  && !$scope.Questions[index].faq_answer.length) {
-        $scope.Questions.splice(index, 1);
-        return false
-      }
-      return true
-    };
-
-    $scope.cancelEction = function(){
-      $scope.showButton = false;
-    };
-
-    $scope.addQuestion = function() {
-      $scope.inserted = {
-        faq_question: '',
-        faq_answer: ''
+      var init = function(){
+        QuestionService.get().success(function(data){
+          $scope.Questions = data;
+        }) 
       };
-      $scope.Questions.push($scope.inserted);
-      $scope.showButton = true;
-    };
 
-    init(); 
+      if (getAccess($scope.url,'admin')) {
+        init();
+      } else {
+        $location.path( "/404" );
+      };
+
+      $scope.saveQuestion = function(data, id) {
+        angular.extend(data, {id: id});
+        QuestionService.put(data).success(function(){
+          init();
+        });   
+        $scope.showButton = false;
+      };
+
+      $scope.removeQuestion = function(index) {
+        QuestionService.delete(index).success(function(){
+          init();
+        });
+      };      
+
+      $scope.validate = function(index){        
+        if (!$scope.Questions[index].faq_question.length  && !$scope.Questions[index].faq_answer.length) {
+          $scope.Questions.splice(index, 1);
+          return false
+        }
+        return true
+      };
+
+      $scope.cancelEction = function(){
+        $scope.showButton = false;
+      };
+
+      $scope.addQuestion = function() {
+        $scope.inserted = {
+          faq_question: '',
+          faq_answer: ''
+        };
+        $scope.Questions.push($scope.inserted);
+        $scope.showButton = true;
+      };
+
+      init(); 
   }])
 })();

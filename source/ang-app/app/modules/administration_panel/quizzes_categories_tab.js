@@ -107,7 +107,7 @@
           doCatHaveSubCat, getSubCatsList, getParCatsList, $location, $modal, getAccess,
           addSelectorForParCat, setCurCatEditDlg, modalDlg) {
 
-          $scope.tab = 'Категорії тестів'; // Initialize  Tab 
+          $scope.url = $location.path(); // Initialize  Tab 
           $scope.allCategories = {};
           $scope.catToEditDelete = {};
           $scope.subParCatSelect = {};
@@ -124,16 +124,11 @@
           $scope.catDelRelationalDataMsg = 'Увага, будуть видалені підкатегорії';
           $scope.catDelQuizzesMsg = 'Увага підкатегорії містять тести, видалення не можливе';
 //Getting permission for page load 
-          getAccess($scope.tab).then(function (accessGranted) {
-            if(accessGranted) {
-              updateCatPage();
-            } else {
-                $location.path( "/404" );
-            };
-          },function () {
-              $location.path( "/404" ); 
-            }
-          );
+          if (getAccess($scope.url,'admin')){
+            updateCatPage();
+          } else {
+            $location.path( "/404" );
+          };
 
           $scope.modalCreateCat = function () {
             clearData();

@@ -19,26 +19,18 @@
           controller: ['$scope', '$http', function ($scope, $http) {
             $scope.tabs = {};
 
-            getTabTemplates.getResponse().then(function(data){
-              $scope.tabs = data;
-              if(data.length > 0){
-                $scope.results = data;
-              }
-              else{
-                $location.path( "/404" );
-              };
-            },function () {
-              $location.path( "/404" );
-              }
-            );
-            $scope.isSelected = function (tab, curent) {
-              if($scope.tabs){
-                return curent ===  tab;
-              }
-              else return false;
-            };
-          }]
-        }
+          $scope.tabs = getTabTemplates.getTabs('admin');
+          if (!$scope.tabs.length) {
+            $location.path( "/404" );
+          }
+          $scope.isSelected = function (url, curent) {
+            if ($scope.tabs){
+              return curent ===  url;
+            }
+            else return false;
+          };
+        }]
+      }
     }]);
     app.constant('Roles', {
       1: "Адміністратор",
