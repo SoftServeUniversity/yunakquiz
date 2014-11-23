@@ -3,157 +3,136 @@
 angular.module('yunakQuiz.permission', ['ngRoute'])
 
 .constant('tabs', {
-  getAdmin: 
+  admin: 
   [
     {'name' : 'admin1',
-     'temp' : 'administration-panel/userTab',
+     'temp' : '/administration-panel/',
      'caption': 'Користувачі' 
     },
 
     {'name' : 'admin2',
-     'temp' : 'administration-panel/blacklistTab',
+     'temp' : '/administration-panel/blacklistTab',
      'caption': 'Чорний список'
     },
 
     {'name' : 'admin3',
-     'temp' : 'administration-panel/administrationTab',
+     'temp' : '/administration-panel/administrationTab',
      'caption': 'Адміністрація'
     },
 
     {'name' : 'admin4',
-     'temp' : 'administration-panel/quizzescategoriesTab',
-     'caption': 'Категорії тестів'
+     'temp' : '/administration-panel/moderatorsTab',
+     'caption': 'Модератори'
     },
 
     {'name' : 'admin5',
-     'temp' : 'administration-panel/aboutusTab',
-     'caption': 'Про нас'
-    },
-
-    {'name' : 'admin6',
-     'temp' : 'administration-panel/faqTab',
-     'caption': 'Часті запитання'
-    }
-  ],  
-  getModer:
-  [
-    {'name' : 'moder1',
-     'temp' : 'administration-panel/userTab',
-     'caption': 'Користувачі' 
-    },
-
-    {'name' : 'moder2',
-     'temp' : 'administration-panel/blacklistTab',
-     'caption': 'Чорний список'
-    },
-
-    {'name' : 'moder3',
-     'temp' : 'administration-panel/administrationTab',
-     'caption': 'Адміністрація'
-    },
-
-    {'name' : 'moder4',
-     'temp' : 'administration-panel/quizzescategoriesTab',
+     'temp' : '/administration-panel/quizzescategoriesTab',
      'caption': 'Категорії тестів'
     },
 
-    {'name' : 'moder5',
-     'temp' : 'administration-panel/aboutusTab',
+    {'name' : 'admin6',
+     'temp' : '/administration-panel/aboutusTab',
      'caption': 'Про нас'
     },
 
-    {'name' : 'moder6',
-     'temp' : 'administration-panel/faqTab',
+    {'name' : 'admin7',
+     'temp' : '/administration-panel/faqTab',
      'caption': 'Часті запитання'
     }
-  ],
-  getSuper: 
+  ],  
+  moder:
   [
-    {'name' : 'all',
-     'temp' : 'administration-panel/userTab',
-     'caption': 'ALL' 
+    {'name' : 'moder1',
+     'temp' : '/admin/personalCabinet',
+     'caption': 'Кабінет Модератора' 
     }
+  ],
+  menuAcces: 
+  [
+    {'name' : 'menu1',
+     'temp' : '/admin/personalCabinet/profile',
+     'caption': 'Особистий кабінет' 
+    },
+
+    {'name' : 'menu2',
+     'temp' : '/administration-panel/userTab',
+     'caption': 'Панель Адміністратора' 
+    },
+
+    {'name' : 'menu3',
+     'temp' : '/admin/personalCabinet',
+     'caption': 'Кабінет Модератора' 
+    }        
   ]  
 })
 
-.value('tabVal', {
-  rezz : []
-})
-
-.factory('getTabTemplates', ["$location", "$http", "tabs", "$q", "tabVal", function($location, $http, tabs, $q, tabVal) {
+.factory('getTabTemplates', ["$location", "$http", "tabs", "$q", function($location, $http, tabs, $q) {
+  var tabsByRoles = {};
+  
   return {
-    getResponse: function(getRole){
-      
+    
+    getResponse: function(){
       var defer = $q.defer();
-      var result = [];
-       $http.get("http://localhost:9292/permission")
-        .success(function(data){
-          
-          tabVal.rezz = data;
-          var givenTabs;
-
-          if (getRole == 'admin'){
-            givenTabs = tabs.getAdmin;
-          }
-          else {
-            givenTabs = tabs.getModer; 
-          }
-          
-          // var userAccess = data;
-          var userAccess = tabVal.rezz;
-          
-          angular.forEach(userAccess, function(uA, key1) {
-            angular.forEach(givenTabs, function(gT, key2) {
-              if(gT.name == uA) {
-                result.push(gT);
+      $http.get("http://localhost:9292/permission").success(function(data){
+        var userAccess = data;
+        tabsByRoles = {};
+        
+        // helper function to sort tabs by roles
+        function sortTabsByRoles(givenTabs, role){
+          angular.forEach(userAccess, function(uAccess) {
+            angular.forEach(givenTabs, function(givenTab) {
+              if(givenTab.name == uAccess) {
+                tabsByRoles[role].push(givenTab);
               }
             });            
           });
-          // var i=0;
-          // var j=0;
-          // var tlen = givenTabs.length;
-          // var alen = userAccess.length;
-  
-          // for (j; j < alen; j++) {
-          //   for (i; i < tlen; i++) {
-          //     if(givenTabs[i].name === userAccess[j]) {
-          //       result.push(givenTabs[i]);
-          //     }     
-          //   };
-          //   i = 0;
-          // };
-          alert("result: " + result);
-          alert("result second: " + result[1].name);                    
-          defer.resolve(result);
-        })
-        .error(function(data){
-            result = data;
-            defer.reject(result);
-          });
+        }
+        
+        // sort tabs by all roles which stored in constant , roles will be key wor array of tabs
+        function initRolesTabs(rolesToInit){
+          for(var role in rolesToInit){
+            tabsByRoles[role] = [];
+            sortTabsByRoles(tabs[role], role);
+          }
+        };
+        initRolesTabs(tabs);
+        defer.resolve(true);
+      })
+      .error(function(data){
+        tabsByRoles = {};
+        defer.reject(data);
+      });
       return defer.promise;     
+    },
+    
+    getTabs: function (role) {
+      if (tabsByRoles[role]) {
+        return tabsByRoles[role];
+      };
+      return false;
     }
   }
 }])
 
-.factory('getAccess', ["$location", "$http", "tabs", "$q", 'getTabTemplates', function($location, $http, tabs, $q, getTabTemplates) {
-  return function(curTab){
-    var defer = $q.defer();
+.factory('getAccess', ["$location", "$http", 'getTabTemplates', function($location, $http, getTabTemplates) {
+  return function(curUrl,role){
     var access = {};
-    
-    getTabTemplates.getResponse('admin').then(function(data){
-
-    // getTabTemplates.getResponse().then(function(data){
-
-      angular.forEach(data, function(tab,key){
-        access[tab.caption] = tab;
-      });
-      if(access[curTab]){
-        defer.resolve(true);
-      } else
-        defer.resolve(false);
-      },function(reason) {
-        defer.reject(false);
-      });
-    return defer.promise;     
-  }
+    var tabs;
+      tabs = getTabTemplates.getTabs(role);
+        if(!tabs) {
+          return false;
+        }; 
+        angular.forEach(tabs, function(tab,key){
+          access[tab.temp] = tab;
+        });
+        if(!access[curUrl]){
+          return false;
+        } 
+      return true;
+    };
 }])
+
+.run(function(getTabTemplates){
+  //get access tabs on page load for logged in user or guest
+  getTabTemplates.getResponse();
+})

@@ -12,7 +12,7 @@
     ]);
 
     app.controller('blacklistTab', ['$scope', 'getAccess', '$location','$http','$modal', function ($scope, getAccess, $location,$http,$modal) {
-      $scope.tab = 'Чорний список';
+      $scope.url = $location.path();
 
       $scope.outputData={
         currentPage: 1,
@@ -21,25 +21,22 @@
         status: 'blocked',
         roles: [1,2,3,4]
       };
-      getAccess($scope.tab).then(function(data){
-          if(data) {
-             $scope.searchQuery();
-          } else {
-            $location.path( "/404" );
-          }
-        },function(){
-          $location.path( "/404" ); 
-          }
-        );
-      $scope.searchQuery = function(){
-        $scope.outputData.currentPage = 1;
-        $scope.queryList();
-      };
 
       $scope.queryList = function() {
         $http.post('http://localhost:9292/admin/users', $scope.outputData).success(function(data, status, headers, config) {
             $scope.updateData(data);        
         });
+      };
+      
+      $scope.searchQuery = function(){
+        $scope.outputData.currentPage = 1;
+        $scope.queryList();
+      };
+
+      if(getAccess($scope.url,'admin')){
+        $scope.searchQuery();
+      } else {
+        $location.path( "/404" );
       };
 
       $scope.updateData = function(data){

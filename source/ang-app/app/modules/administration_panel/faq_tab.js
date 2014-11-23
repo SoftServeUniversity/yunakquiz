@@ -32,21 +32,16 @@
     }
   }]);
     app.controller('faqTab', ['$http', 'getQuestions', '$scope', 'getAccess', '$location', function ($http, getQuestions, $scope, getAccess, $location) {
-      $scope.tab = 'Часті запитання';
+      $scope.url = $location.path();
 
-      getAccess($scope.tab).then(function(data){
-          if(data) {
-            getQuestions.get().success(function(data){
-            $scope.Questions = data;
-          });
-          } else {
-            $location.path( "/404" );
-          }
-        },function(){
-          $location.path( "/404" ); 
-          }
-      );
-    
+      if(getAccess($scope.url,'admin')) {
+        getQuestions.get().success(function(data){
+          $scope.Questions = data;
+        });
+      } else {
+        $location.path( "/404" );
+      };
+      
       $scope.saveQuestion = function(data, id) {
         angular.extend(data, {id: id});
         getQuestions.post(data);        

@@ -24,27 +24,21 @@
 
     app.controller('aboutusTab', ['$scope', '$http', 'aboutUsReadUpdate', '$timeout', 'getAccess', '$location',
       function ($scope, $http, aboutUsReadUpdate, $timeout, getAccess, $location) {
-        $scope.tab = 'Про нас';
+        $scope.url = $location.path();
         $scope.content = '';
         $scope.msg = '';
         var changes = {canceled:{msg:"Зміни відхилено", color:"#419641"},
                       errorOnLoad:{msg:"Помилка завантаження", color:'red'},
                       saved: {msg:"Зміни збережено", color:'#419641'}};
 
-        getAccess($scope.tab).then(function(data){
-          if(data) {
-            $scope.readData();
-          } else {
-            $location.path( "/404" );
-          }
-        },function(){
-          $location.path( "/404" ); 
-          }
-        );
+        if(getAccess($scope.url,'admin')){
+          read();
+        } else {
+          $location.path( "/404" );
+        };
 
-        $scope.readData = function(param){
-
-        aboutUsReadUpdate.read().success(function(data){
+        function read(param){
+          aboutUsReadUpdate.read().success(function(data){
           $scope.content = data[0].about_us;
           if(param){
             $scope.msgShow(changes.canceled);
@@ -53,6 +47,10 @@
         .error(function(data){
           $scope.msgShow(changes.errorOnLoad);
         });
+        }
+
+        $scope.readData = function(param){
+        read(param);
         };
 
         $scope.updateData = function(){

@@ -15,8 +15,9 @@
     ]);
 
     app.controller('userTab', ['$scope', 'getAccess','$http', '$location', '$modal', 'Roles', function ($scope, getAccess,$http, $location, $modal, Roles) {
-      $scope.tab = 'Користувачі';
-        $scope.outputData={
+      $scope.url = $location.path();
+      $scope.searchQuery;
+      $scope.outputData={
         currentPage: 1,
         itemsPerPage: 10,
         searchData:'',
@@ -24,16 +25,6 @@
         roles: 2
       };
 
-      getAccess($scope.tab).then(function(data){
-          if(data) {
-            $scope.searchQuery();
-          } else {
-            $location.path( "/404" );
-          }
-        },function(){
-          $location.path( "/404" ); 
-          }
-      );
       $scope.searchQuery = function(){
         $scope.outputData.currentPage = 1;
         $scope.queryList();
@@ -76,6 +67,11 @@
         });
       };
 
+      if(getAccess($scope.url,'admin')){
+        $scope.searchQuery();
+      } else {
+        $location.path( "/404" );
+      }
       $scope.changeStatusUser = function(userId, userRole){
         var modalBlock = $modal.open({
           templateUrl: 'modules/administration_panel/modalStatusUser.html',

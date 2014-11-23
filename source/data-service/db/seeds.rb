@@ -38,8 +38,9 @@ Permission.create(tabs: 'moder1', moder: '2', superadmin: '4')
 Permission.create(tabs: 'moder2', moder: '2', superadmin: '4')
 Permission.create(tabs: 'moder3', moder: '2', superadmin: '4')
 
-Permission.create(tabs: 'comm1', admin: '1', moder: '2', user: '3', superadmin: '4')
-Permission.create(tabs: 'comm2', admin: '1', moder: '2', user: '3', superadmin: '4')
+Permission.create(tabs: 'menu1', admin: '1', moder: '2', user: '3', superadmin: '4')
+Permission.create(tabs: 'menu2', admin: '1', superadmin: '4')
+Permission.create(tabs: 'menu3', moder: '2', superadmin: '4')
 
 tag1 = Tag.create(tag: "футбол")
 tag2 = Tag.create(tag: "спорт")

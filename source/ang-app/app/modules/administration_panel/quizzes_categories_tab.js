@@ -83,7 +83,7 @@
       function($http,$scope,categoriesQuery,quizCount,addParCatTitle,
       doCatHaveSubCat,getSubCats,getParCats,$location,$modal,getAccess,addDefaultOption,
       setCurCatEditDlg){
-      $scope.tab = 'Категорії тестів'; // Initialize  Tab 
+      $scope.url = $location.path(); // Initialize  Tab 
       $scope.allCategories = {};
       $scope.catToEditDelete = {};
       $scope.subParCatSelect = {};
@@ -101,17 +101,11 @@
       $scope.pwdInputErr = 'Невірний пароль';
       $scope.catDelRelationalDataMsg = 'Увага, будуть видалені підкатегорії та інші пов\'язані дані';
       
-      getAccess($scope.tab).then(function(accessGranted){
-        if(accessGranted) {
+      if(getAccess($scope.url,'admin')){
         updateCatPage();
-        } else {
-          $location.path( "/404" );
-        }
-      },function(){
-        $location.path( "/404" ); 
-        }
-      );
-
+      } else {
+        $location.path( "/404" );
+      };      
 
       $scope.showCreateCatDlg = function(){
         clearForm();

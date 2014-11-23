@@ -11,24 +11,16 @@
         controller: ['$scope', '$http', function ($scope, $http) {
           $scope.tabs = {};
 
-          getTabTemplates.getResponse().then(function(data){
-            $scope.tabs = data;
-            if(data.length > 0){
-              $scope.results = data;
-            }
-            else{
-              $location.path( "/404" );
-            };
-          },function() {
+          $scope.tabs = getTabTemplates.getTabs('admin');
+          if(!$scope.tabs.length){
             $location.path( "/404" );
-            }
-          );
-          $scope.isSelected = function (tab,curent) {
+          }
+          $scope.isSelected = function (url,curent) {
             if($scope.tabs){
-              return curent ===  tab;
+              return curent ===  url;
             }
             else return false;
-            };
+          };
         }]
       }
     }]);
