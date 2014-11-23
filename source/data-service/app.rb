@@ -256,7 +256,7 @@ module PlastApp
       if newCat
         return [200, newCat.to_json]
       else
-        return [400, {'error' => "operation failed"}.to_json]
+        return [400, " категорія вже існує"]
       end    
     end
 
@@ -267,7 +267,7 @@ module PlastApp
       if newCat
         return [200, newCat.to_json]
       else
-        return [400, {'error' => "operation failed"}.to_json]
+        return [400, " оновлення категорії невдале"]
       end    
     end
 
@@ -277,7 +277,7 @@ module PlastApp
       if catToDel
         return [200, catToDel.to_json]
       else
-        return [400, {'error' => "operation failed"}.to_json]
+        return [400, " видалення категорії невдале"]
       end    
     end
     
@@ -407,9 +407,9 @@ module PlastApp
         user = User.authenticate(userToCheck['username'], data['password'])
       end
       if user
-        return [200, 'ok']
+        return [200, 'Password Matched']
       end
-      return [400, 'bad request']
+      return [400, 'Невірний пароль']
     end
 
     post '/admin/users' do

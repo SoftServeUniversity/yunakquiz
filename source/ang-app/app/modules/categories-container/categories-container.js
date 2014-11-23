@@ -1,7 +1,7 @@
-(function (){
+(function () {
   var  app = angular.module('yunakQuiz.categoriesContainer' ,['ngRoute']);
 
-    app.factory("categoriesQuery", ['$http','CONFIG', function ($http, CONFIG) {
+    app.factory("categoriesQuery", ['$http', 'CONFIG', function ($http, CONFIG) {
       return { 
         getParentCategories : function () {
           return $http.get(CONFIG.BASE_URL + '/categories/parent')
@@ -29,12 +29,12 @@
        }
     }]);
 
-    app.factory("groupById", function (){
-      return function (target){
+    app.factory("groupById", function () {
+      return function (target) {
         var groupedObjectById = {};
 
-        angular.forEach(target, function (cat, key){
-          if(!groupedObjectById[cat.category_id]){
+        angular.forEach(target, function (cat) {
+          if(!groupedObjectById[cat.category_id]) {
             groupedObjectById[cat.category_id] = [];
           };
           groupedObjectById[cat.category_id].push(cat);
@@ -43,19 +43,19 @@
       }
     });
 
-    app.factory("quizCount",['groupById','quizesById', function (groupById, quizesById){
-      return function (subCats){
+    app.factory("quizCount", ['groupById', 'quizesById', function (groupById, quizesById) {
+      return function (subCats) {
         var testsCount = 0;
         var quizzesCount ={};
         var groupedQuizzes;
         var groupedSubcat = groupById(subCats);
 
-        quizesById.get().success(function (quizzes){
+        quizesById.get().success(function (quizzes) {
           groupedQuizzes = groupById(quizzes);
           //each of element is id of parCat and are key which have array of subcats 
-          angular.forEach(groupedSubcat, function (cat,parcat){
+          angular.forEach(groupedSubcat, function (cat, parcat) {
             testsCount = 0;//loop trougth each subcategory 
-            angular.forEach(groupedSubcat[parcat], function (cat, key){ 
+            angular.forEach(groupedSubcat[parcat], function (cat) { 
               if(groupedQuizzes[cat.id]){
                 quizzesCount[cat.id] = groupedQuizzes[cat.id].length;//acumulating in new Obj quizzes count in parcat
                 testsCount = testsCount + groupedQuizzes[cat.id].length;//acumulating in new Obj quizzes count in subcat
@@ -89,16 +89,16 @@
       return {
         restrict: 'E',
         templateUrl: './modules/categories-container/categories-container.html',
-        controller: ['$http','$scope', 'categoriesQuery', 'quizesById', 'groupById','quizCount',
-          function ($http, $scope, categoriesQuery, quizesById, groupById, quizCount){
+        controller: ['$http', '$scope', 'categoriesQuery', 'quizesById', 'groupById', 'quizCount',
+          function ($http, $scope, categoriesQuery, quizesById, groupById, quizCount) {
             $scope.parCategories = {};
             $scope.subCategories = {};
             $scope.quizzesCount = {};
 
-            categoriesQuery.getParentCategories().success(function (data){
+            categoriesQuery.getParentCategories().success(function (data) {
               $scope.parCategories = data; 
             });
-            categoriesQuery.getSubCategories().success(function (subCats){
+            categoriesQuery.getSubCategories().success(function (subCats) {
               $scope.subCategories = groupById(subCats);//for each id of categories we get array of equal subcategories
               $scope.quizzesCount = quizCount(subCats);//.quizzesParCatCount;
             });

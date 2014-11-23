@@ -2,7 +2,7 @@
   var  app = angular.module('yunakQuiz.administrationTab' ,['ngRoute','yunakQuiz.permission']);
 
     app.config(['$routeProvider',
-      function($routeProvider) {
+      function ($routeProvider) {
         $routeProvider.
           when('/administration-panel/administrationTab', {
             templateUrl: './modules/administration_panel/administration_tab.html',

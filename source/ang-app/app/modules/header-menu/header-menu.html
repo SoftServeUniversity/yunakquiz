@@ -16,17 +16,17 @@
 			</li>
 		</ul>
 	</div>
-	  <a href="" data-toggle="modal" data-target="#login" ng-hide="appCtrl.userLoggedIn()"> 
-	    <img class="login-header-menu " src="./modules/img/login.jpg" alt="Login" height="42" width="42" ></a>
-      <div class="col-md-1">
-        <div class="dropdown" ng-show="appCtrl.userLoggedIn()">
-          <a class="btn dropdown-toggle" href="#"><h4>{{appCtrl.user.username}} <span class="caret"></span></h4></a>
-            <ul class="dropdown-menu" role="menu">
-              <li role="presentation"><a role="menuitem" tabindex="-1" href="#/admin/personalCabinet/profile">Особистий кабінет</a></li>
-              <li role="presentation"><a role="menuitem" tabindex="-1" href="#/administration-panel/">Панель адміністратора</a></li>
-              <li role="presentation" class="divider"></li>
-              <li role="presentation"><a role="menuitem" tabindex="-1" href="#" ng-click="appCtrl.logout()">Вийти</a></li>
-            </ul>
-        </div>
-      </div>
+		<a href="" data-toggle="modal" data-target="#login" ng-hide="appCtrl.userLoggedIn()"> 
+			<img class="login-header-menu " src="./modules/img/login.jpg" alt="Login" height="42" width="42" ></a>
+			<div class="col-md-1">
+				<div class="dropdown" ng-show="appCtrl.userLoggedIn()">
+					<a class="btn dropdown-toggle" href="#"><h4>{{appCtrl.user.username}} <span class="caret"></span></h4></a>
+						<ul class="dropdown-menu" role="menu">
+							<li role="presentation"><a role="menuitem" tabindex="-1" href="#/admin/personalCabinet/profile">Особистий кабінет</a></li>
+							<li role="presentation"><a role="menuitem" tabindex="-1" href="#/administration-panel/">Панель адміністратора</a></li>
+							<li role="presentation" class="divider"></li>
+							<li role="presentation"><a role="menuitem" tabindex="-1" href="#" ng-click="appCtrl.logout()">Вийти</a></li>
+						</ul>
+				</div>
+			</div>
 </div>
