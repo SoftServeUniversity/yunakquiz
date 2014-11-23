@@ -1,0 +1,26 @@
+<div ng-hide="error" ng-include="'modules/user_statistic/user_statistic_tabs.html'"></div>
+
+<table class="table table-hover">
+	<thead>
+		<tr>
+			<th>№</th>
+			<th class="">Назва тесту</th>
+			<th class="">Кількість спроб</th>
+			<th class="">Останнє проходження</th>
+			<th class="">Максимальний бал</th>
+			<th class="">Останній бал</th>
+			<th class="">Середній бал</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="quiz in quizzes">
+			<td>{{$index+1}}</td>
+			<td>{{quiz.title}}</td>
+			<td>{{quiz.results.length}}</td>
+			<td>{{quiz.results[quiz.results.length-1].created_at| date:"dd/mm/yy HH:mm"}}</td>
+			<td>{{maxGrade(quiz)}}</td>
+			<td>{{quiz.results[quiz.results.length-1].grade}}</td>
+			<td>{{midGrade(quiz.grade)}}</td>
+		</tr>
+	</tbody>
+</table>

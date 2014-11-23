@@ -179,6 +179,29 @@ module PlastApp
     end
     ##Quiz comments section end
 
+    ##User_statistic block
+    get '/statistic/general' do
+      user = User.find(session[:user_id])
+      created = user.quizzes.count()
+      passed = user.results
+      grade = []
+      passed.each do |item|
+        grade.push(item.grade)
+      end
+      @statistic = {user_id:session[:user_id], created:created, passed:grade}
+
+      response_helper @statistic, ["not found!"]
+    end
+
+    get '/statistic/list' do
+      quizzes = Quiz.joins(:results)
+      .where(:results => { :user_id =>session[:user_id]}).select("id,title").group('id')
+      .as_json(:include => {:results =>{:only => [:grade,:created_at]}})
+
+      response_helper quizzes, ["not found!"]
+    end 
+    ##User_statistic block's end
+
     get '/tags/:query' do
       content_type :json
       query = '%'+params['query'][0,20]+'%'

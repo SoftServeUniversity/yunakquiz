@@ -7,6 +7,7 @@ angular.module('yunakQuiz', [
   'ngResource',
   'yunakQuiz.measures',
   'yunakQuiz.assessments',
+  'yunakQuiz.userStatistic',
   'yunakQuiz.cabinet',
   'yunakQuiz.users',
   'yunakQuiz.sessions',
