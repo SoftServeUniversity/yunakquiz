@@ -3,7 +3,7 @@
 	<div ng-if="errorMsg" ng-bind="errorMsg" class="alert col-sm-12 text-center alert-danger"></div>
 	<div class="col-md-8">
 		<quiz-form  quiz="quiz" quiz-form-name="quizFormName"> </quiz-form>
-		<div class=" col-sm-12 quizMarginTop">
+		<div class="quizMarginTop text-center">
 			<button ng-click="enhanceQuiz()" ng-disabled="quizFormName.$invalid" class="btn btn-warning">Відправити на доопрацювання</button>
 			<button ng-click="publishQuiz()" ng-disabled="quizFormName.$invalid" class="btn btn-success">Опублікувати</button> 
 		</div>
