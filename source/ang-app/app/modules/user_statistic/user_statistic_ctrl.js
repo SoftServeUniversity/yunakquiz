@@ -26,7 +26,8 @@ angular.module('yunakQuiz.userStatistic')
 .controller('UserStatisticListCtrl',['$scope','UserStatiticService', 'CONFIG',
 	function($scope,UserStatiticService,CONFIG) {
    $scope.tab = "list";
-
+   $scope.dateFormat = CONFIG.DATE_FORMAT;
+   
    	UserStatiticService.getStat($scope.tab)
       .success(function(data, status, headers, config) {
 		$scope.quizzes = data;    

@@ -18,7 +18,7 @@
 		    	<li ng-repeat="comment in comments.arr" class="list-group-item">
 		    		<button ng-if="!comment.id" type="button" ng-click="deleteComment($index)" class="close pull-right"><span aria-hidden="true">&times;</span></button>
 		    		{{comment.text}}
-		    		<div ng-if="comment.updated_at" class="text-right"><i class="small"><span class="glyphicon glyphicon-time"></span>&nbsp;&nbsp;{{comment.updated_at| date:"dd/mm/yy HH:mm"}}</i></div>
+		    		<div ng-if="comment.updated_at" class="text-right"><i class="small"><span class="glyphicon glyphicon-time"></span>&nbsp;&nbsp;{{comment.updated_at| date:dateFormat}}</i></div>
 		    	</li>
 		    </ul>
 		</div>

@@ -3,14 +3,17 @@
 angular.module('yunakQuiz.assessments')
 .controller('QuizReviewCtrl', 
   ['$scope','QuizResource', 'CommentsResource', '$routeParams',
-   '$route','$location','QuizMngService', 'getAccess', 
+   '$route','$location','QuizMngService', 'getAccess','CONFIG', 
   function($scope, QuizResource, CommentsResource, $routeParams,
-   $route, $location, QuizMngService, getAccess) {
+   $route, $location, QuizMngService, getAccess,CONFIG) {
 
   getAccess($route.current.permision).then(function(data){
     data ? init() : $location.path( "/403" );
   });
   /** get Quiz by ID */
+  
+  $scope.dateFormat = CONFIG.DATE_FORMAT;
+
   function init(){
     $scope.quiz = QuizResource.get({id:$routeParams.quiz_id}, quizSuccess, quizError);
     console.log($scope.quiz);
@@ -18,7 +21,6 @@ angular.module('yunakQuiz.assessments')
 
   function quizSuccess(quiz) {
     $scope.comments = CommentsResource.get({id: quiz.id});
-    console.log($scope);
   };
   
   function quizError(response) { 

@@ -17,7 +17,7 @@
 			<td>{{$index+1}}</td>
 			<td>{{quiz.title}}</td>
 			<td>{{quiz.results.length}}</td>
-			<td>{{quiz.results[quiz.results.length-1].created_at| date:"dd/mm/yy HH:mm"}}</td>
+			<td>{{quiz.results[quiz.results.length-1].created_at| date:dateFormat}}</td>
 			<td>{{maxGrade(quiz)}}</td>
 			<td>{{quiz.results[quiz.results.length-1].grade}}</td>
 			<td>{{midGrade(quiz.grade)}}</td>
