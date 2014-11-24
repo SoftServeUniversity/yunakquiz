@@ -29,7 +29,7 @@
       </div>
     </div>
     <div class="modal-footer">
-      <div class="btn-group pull-left" dropdown is-open="modalDeldropDown.isopen" ng-show="dropdownSubCats">
+      <div class="btn-group pull-left" dropdown is-open="modalDeldropDown.isopen" ng-show="showDropdownSubCats">
         <button type="button" class="btn btn-danger dropdown-toggle">Підкатегорії
           <span class="caret"></span>
         </button>
@@ -38,7 +38,7 @@
         </ul>
       </div>
       <button type="button" class="btn btn-default" ng-click="cancel()">Скасувати</button>
-      <input type="submit" class="btn btn-danger" value="Видалити"/>
+      <input type="submit" class="btn btn-danger" value="Видалити" ng-disabled="lockDeleteBtn"/>
     </div>
   </form>
 </div>

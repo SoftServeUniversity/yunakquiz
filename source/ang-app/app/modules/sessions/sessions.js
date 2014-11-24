@@ -1,8 +1,8 @@
 'use strict';
 
-angular.module('yunakQuiz.sessions', ['ngRoute', "ngResource"])
-.controller("SessionsCtrl", ["$location", "$scope", "accessService", 
-  function($location, $scope, accessService){
+angular.module('yunakQuiz.sessions', ['ngRoute', "ngResource",'yunakQuiz.permission'])
+.controller("SessionsCtrl", ["$location", "$scope", "accessService", 'getTabTemplates',
+  function($location, $scope, accessService, getTabTemplates){
     var lgnCtrl = this;
     this.user = {};
     this.message = "";
@@ -12,9 +12,11 @@ angular.module('yunakQuiz.sessions', ['ngRoute', "ngResource"])
       } else {
         accessService.save(this.user,
           function(data){
+            getTabTemplates.getResponse().then(function(){
             $("#login").modal("hide");
             $location.path("/");
             $scope.$emit("user_logged_in", data);
+          });
           },
           function(data){
             lgnCtrl.message = "Не валідний нік і/або пароль!";

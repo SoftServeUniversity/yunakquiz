@@ -7,7 +7,7 @@
       <div class="col-xs-3 text-center catTitleParentName">Батьківська категорія</div>
       <div class="col-xs-2 text-center quizTitleCount">Кількість тестів</div>
     <!-- Button trigger modal Create Category-->
-      <button class="btn btn-primary btn-sm admin-pan-category-add-btn" ng-click="showCreateCatDlg()">Додати Категорію
+      <button class="btn btn-primary btn-sm admin-pan-category-add-btn" ng-click="modalCreateCat()">Додати Категорію
       </button>
     </div>
   </div>
@@ -19,9 +19,9 @@
         <div class="col-xs-3 text-center">{{category.parCatTitle}}</div>
         <div class="col-xs-2 text-center">{{groupedQuizzes[category.id]}}</div>
     <!-- Button trigger modal Edit Category-->
-        <button class="btn btn-success btn-xs col-xs-1 col-xs-offset-1" ng-click="showEditCatDlg(category)">Редагувати</button>
+        <button class="btn btn-success btn-xs col-xs-1 col-xs-offset-1" ng-click="modalEditCat(category)">Редагувати</button>
     <!-- Button trigger modal Delete Category -->
-        <button class="btn btn-danger btn-xs col-xs-1 col-xs-offset-1" ng-click="showDeleteCatDlg(category)">Видалити</button>
+        <button class="btn btn-danger btn-xs col-xs-1 col-xs-offset-1" ng-click="modalDeleteCat(category)">Видалити</button>
       </a>
     </div>
   </div>

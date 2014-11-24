@@ -12,7 +12,7 @@
     ]);
 
     app.controller('moderatorsCtrl', ['$scope', 'getAccess','$http', '$location', '$modal', 'Roles', function ($scope, getAccess,$http, $location, $modal, Roles) {
-      $scope.tab = 'Модератори';
+      $scope.url = $location.path();
       $scope.roles = Roles;
       
       $scope.outputData={
@@ -22,26 +22,22 @@
         status: 'enabled',
         roles: 3
       };
-      getAccess($scope.tab).then(function(data){
-          if(data) {
-            $scope.searchQuery();
-          } else {
-            $location.path( "/404" );
-          }
-        },function(){
-          $location.path( "/404" ); 
-          }
-      );
-
-      $scope.searchQuery = function(){
-        $scope.outputData.currentPage = 1;
-        $scope.queryList();
-      };
 
       $scope.queryList = function() {
         $http.post('http://localhost:9292/admin/users', $scope.outputData).success(function(data, status, headers, config) {
             $scope.updateData(data);        
         });
+      };
+      
+      $scope.searchQuery = function(){
+        $scope.outputData.currentPage = 1;
+        $scope.queryList();
+      };
+
+      if (getAccess($scope.url,'admin')) {
+        $scope.searchQuery();
+      } else {
+        $location.path( "/404" );
       };
 
       $scope.updateData = function(data){

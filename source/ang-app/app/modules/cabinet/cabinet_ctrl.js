@@ -12,9 +12,7 @@ angular.module('yunakQuiz.cabinet')
   var queryFnName = $route.current.queryFn;
   $scope.tab = $routeParams.state || "published";
 
-  getAccess($route.current.permision).then(function(data){
-    if (data) {$scope.searchQuery();} else{$location.path( "/403" );}
-  });
+
 
   $scope.outputData={
     currentPage: 1,
@@ -63,6 +61,7 @@ angular.module('yunakQuiz.cabinet')
     });
   };
   
+  $scope.queryList();
   
 }]);
 

@@ -14,8 +14,9 @@ angular.module('yunakQuiz.cabinet')
         $scope.clearMsg();
         $modalInstance.close();       
       })
-      .error(function(data){
-        $scope.errorMsg = "Невірний пароль!"
+      .error(function(msg){
+        console.log(msg);
+        $scope.errorMsg = msg;
     });
   };
 
