@@ -7,8 +7,8 @@ angular.module('yunakQuiz.cabinet')
     testChunks: false
   };
 }])
-.controller("ProfileController", ["userService", "$scope", "$timeout", "$location", "uploadFileService", 
-  function(userService, $scope, $timeout, $location, uploadFileService){
+.controller("ProfileController", ["userService", "$scope", "$timeout", "$location", "uploadFileService", "$modal", 
+  function(userService, $scope, $timeout, $location, uploadFileService, $modal){
     $scope.tab = 'profile';
     this.user = {};
     var profile = this; 
@@ -20,11 +20,6 @@ angular.module('yunakQuiz.cabinet')
     this.setUploadService = function(){
       this.uploadFile = new uploadFileService(this.$flow);
     };
-    
-    this.getRandom = function(min, max) {
-      return Math.floor(Math.random() * (max - min + 1)) + min;
-    };
-    this.captcha = this.getRandom(100, 999);
     
     $scope.$on("user_updated", function(event, data){
         profile.user = data;
@@ -56,39 +51,25 @@ angular.module('yunakQuiz.cabinet')
       this.editable = false;
     };
     
-    this.clearErrors = function(){
-      this.deleteError = "";
-      this.user.password = "";
-      this.enteredCaptcha = "";
-    };
-    
     this.deleteUser = function(){
-      if (!this.user.password || !this.enteredCaptcha) {
-          this.deleteError = "Введіть пароль і/або капчу";
-      } else {
-        if (this.captcha != this.enteredCaptcha){
-            this.deleteError = "Невірно введена капча";
-        } else {
-          userService.remove(this.user, 
-            function(data){
-              console.log("user has been deleted"); 
-              $("#deleteProfile").modal("hide");
-              $timeout(function(){ 
-                $location.path("/");
-              }, 400);
-              $scope.$emit("user_deleted", data);
-            }, 
-            function(response, status, headers, config){
-              profile.deleteError = "Невірно введений пароль";
-            });
+      var modal = $modal.open({
+        templateUrl: "modules/cabinet/profile_delete_modal.html",
+        controller: 'ConfirmDeleteUserCtrl',
+        size: 'sm',
+        resolve: {
+          user: function () {
+            return this.user;
+          }.bind(this)
         }
-      }
+      });
+      modal.result.then(function(data){
+        console.log("user has been deleted"); 
+        $timeout(function(){ 
+          $location.path("/");
+        }, 400);
+        $scope.$emit("user_deleted", data);
+      });
     };      
-}])
-.directive("deleteUserProfile", function(){
-  return {
-    restrict: "E",
-    templateUrl: "modules/cabinet/profile_delete_modal.html"
-  };
-});
+
+ }]);
 })();
