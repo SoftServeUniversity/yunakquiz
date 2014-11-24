@@ -57,6 +57,10 @@ angular.module('yunakQuiz.permission', ['ngRoute'])
     {'name' : 'Moder_enhance',
      'temp' : '/admin/moderationCabinet/enhance',
      'caption': 'Кабінет Модератора' 
+    },
+    {'name' : 'Moder_review_quiz',
+     'temp' : '/admin/assessments/review',
+     'caption': 'review_quiz' 
     }
   ],
     user:
@@ -84,7 +88,20 @@ angular.module('yunakQuiz.permission', ['ngRoute'])
     {'name' : 'User_profile',
      'temp' : '/admin/personalCabinet/profile',
      'caption': 'profile' 
+    },
+    {'name' : 'User_create_quiz',
+     'temp' : '/admin/assessments/create',
+     'caption': 'create_quiz' 
+    },
+    {'name' : 'User_edit_quiz',
+     'temp' : '/admin/assessments/edit',
+     'caption': 'edit_quiz' 
+    },
+    {'name' : 'User_statistic',
+     'temp' : '/admin/statistic',
+     'caption': 'user_statistic' 
     }
+
   ],
   menuAcces: 
   [

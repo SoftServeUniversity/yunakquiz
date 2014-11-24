@@ -5,7 +5,8 @@ angular.module('yunakQuiz')
   'MIN_QUESTIONS_QTY' : 1,
   'SCORE_ROUND': 2,
   'DEL_PASSWORD':'1911',
-  'BASE_URL': 'http://localhost:9292'
+  'BASE_URL': 'http://localhost:9292',
+  'DATE_FORMAT':'dd/MM/yy HH:mm'
 })
 
 .constant('paginationConfig', {

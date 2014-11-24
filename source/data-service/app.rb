@@ -137,12 +137,9 @@ module PlastApp
     post '/assessments/:status' do
       if logged_user
         data = JSON.parse(request.body.read)
-        @quizzes = Quiz.quiz_query(
-          logged_user,
-          params['status'],
-          data['searchData'],
-          data['currentPage'],
-          data['itemsPerPage'])
+        categories = nil
+        @quizzes = Quiz.quiz_query(params['status'], data['searchData'],
+        data['currentPage'], data['itemsPerPage'], categories, logged_user)
       end
       response_helper @quizzes, "Потрібно залогуватись"
     end
@@ -153,7 +150,8 @@ module PlastApp
         data = JSON.parse(request.body.read)
         categories = data['categoryFilter'] 
         categories = Category.all.pluck("id") if categories.empty? 
-        @quizzes = Quiz.quiz_query_cat(params['status'],categories,data['currentPage'],data['itemsPerPage'])
+        @quizzes = Quiz.quiz_query(params['status'], data['searchData'],
+         data['currentPage'], data['itemsPerPage'],categories)
         response_helper @quizzes, "Quizzes not found"
       end
       response_helper @quizzes, "Forbidden!"
@@ -161,14 +159,14 @@ module PlastApp
     
     ##Quiz comments section start
     get '/assessments/:id/comments' do
-      @comment = Comment.get_by_quiz(params['id'])
+      @comment = {quiz_id:params['id'].to_i, arr: Comment.get_by_quiz(params['id'])}
 
       response_helper @comment, ["Comments #{params['id']} not found!"]
     end 
 
     post '/assessments/:id/comments' do
       data = JSON.parse(request.body.read)
-      @comments = {comments: Comment.update_comments(data['comments'])}
+      @comments = {updated: Comment.update_comments(data['arr'],params['id'])}
 
       response_helper @comments, ["comments not updated"]
     end 
@@ -180,6 +178,29 @@ module PlastApp
       response_helper @comments, ["Comments not deleted!"]
     end
     ##Quiz comments section end
+
+    ##User_statistic block
+    get '/statistic/general' do
+      user = User.find(session[:user_id])
+      created = user.quizzes.count()
+      passed = user.results
+      grade = []
+      passed.each do |item|
+        grade.push(item.grade)
+      end
+      @statistic = {user_id:session[:user_id], created:created, passed:grade}
+
+      response_helper @statistic, ["not found!"]
+    end
+
+    get '/statistic/list' do
+      quizzes = Quiz.joins(:results)
+      .where(:results => { :user_id =>session[:user_id]}).select("id,title").group('id')
+      .as_json(:include => {:results =>{:only => [:grade,:created_at]}})
+
+      response_helper quizzes, ["not found!"]
+    end 
+    ##User_statistic block's end
 
     get '/tags/:query' do
       content_type :json
@@ -400,7 +421,7 @@ module PlastApp
     end
     
     post '/checkpassword/' do
-      content_type :json
+      # content_type :json
       data = JSON.parse(request.body.read)
       if session[:user_id]
         userToCheck = User.find(session[:user_id])

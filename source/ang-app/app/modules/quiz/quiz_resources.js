@@ -5,7 +5,7 @@ angular.module('yunakQuiz.assessments')
 
 .factory('QuizResource', ['$resource','CONFIG', function( $resource,CONFIG) {
   return $resource(CONFIG.BASE_URL+'/admin/assessments/:id/:title', 
-      { id:'@id', title: '' },
+      { id:'@id', title:''},
       { 
         update: {method:'PUT'},
         validateTitle: {method:'POST', params: {id: undefined, title: 'title'}}
@@ -14,13 +14,7 @@ angular.module('yunakQuiz.assessments')
 }])
 
 .factory('CommentsResource', ['$resource','CONFIG', function( $resource,CONFIG) {
-  return $resource(CONFIG.BASE_URL+'/assessments/:id/comments', 
-      { id:'@quiz_id'},
-      { 
-        update: {method:'PUT'},
-        validateTitle: {method:'POST', params: {id: 0, title: 'title'}}
-      }
-  )
+  return $resource(CONFIG.BASE_URL+'/assessments/:id/comments',  { id:'@quiz_id'} )
 }])
 
 .factory('TagsService', ['$http', 'CONFIG', function($http, CONFIG){

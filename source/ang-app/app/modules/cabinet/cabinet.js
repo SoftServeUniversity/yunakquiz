@@ -6,29 +6,30 @@ angular.module('yunakQuiz.cabinet', ['ngRoute', 'flow'])
     templateUrl: 'modules/cabinet/personal_cabinet.html',
     controller: 'CabinetCtrl',
     queryFn: "queryList",
-    permision: "personalCabinet"
+    permission: "user"
   })
   .when('/admin/personalCabinet/profile', {
     templateUrl: 'modules/cabinet/profile.html',
     controller: 'ProfileController',
-    controllerAs: 'profile'
+    controllerAs: 'profile',
+    permission: "user"
   })
   .when('/admin/personalCabinet/:state', {
     templateUrl: 'modules/cabinet/personal_cabinet.html',
     controller: 'CabinetCtrl',
     queryFn: "queryList",
-    permision: "personalCabinet"
+    permission: "user"
   })
   .when('/admin/moderationCabinet', {
     templateUrl: 'modules/cabinet/moderation_cabinet.html',
     controller: 'CabinetCtrl',
     queryFn: "queryListModer",
-    permision: "moderationCabinet"
+    permission: "moder"
   })
   .when('/admin/moderationCabinet/:state', {
     templateUrl: 'modules/cabinet/moderation_cabinet.html',
     controller: 'CabinetCtrl', 
     queryFn: "queryListModer",
-    permision: "moderationCabinet"
+    permission: "moder"
   })   
 }]);

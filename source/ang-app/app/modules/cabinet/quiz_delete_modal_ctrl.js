@@ -1,7 +1,7 @@
 
 angular.module('yunakQuiz.cabinet')
-.controller('ModalDeleteCtrl', ['$scope','$modalInstance','CONFIG', 
-  function($scope, $modalInstance, CONFIG) {
+.controller('ModalDeleteCtrl', ['$scope','$modalInstance','CONFIG','CabinetService', 
+  function($scope, $modalInstance, CONFIG,CabinetService) {
   
   $scope.clearMsg = function(){
     if($scope.errorMsg) $scope.deleteConfirm = "";
@@ -9,11 +9,15 @@ angular.module('yunakQuiz.cabinet')
   };
 
   $scope.ok = function () {
-    if($scope.deleteConfirm === CONFIG.DEL_PASSWORD){
-      $scope.clearMsg();
-      $modalInstance.close();
-    }
-    else{$scope.errorMsg = "Невірний пароль!"}
+    CabinetService.checkPwd($scope.pwd)
+    .success(function(data, status, headers, config) {
+        $scope.clearMsg();
+        $modalInstance.close();       
+      })
+      .error(function(msg){
+        console.log(msg);
+        $scope.errorMsg = msg;
+    });
   };
 
   $scope.cancel = function () {

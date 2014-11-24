@@ -1,6 +1,6 @@
 <div class="row">
 	<form name="quizFormName" novalidate>
-			<div class="col-md-12 jumbotron">
+			<div class="jumbotron" ng-class="{'col-md-12':quiz.id, 'col-md-8 col-md-offset-2':!quiz.id}">
 		
 				<label class="col-md-5 control-label text-right">Назва тесту</label>
 				<div class="col-md-7 ">
@@ -37,7 +37,7 @@
 				</div>	
 			</div>
 
-			<div ng-repeat="question in quiz.questions | filter:filterFunction as questions"  class="col-sm-12 well questionField">
+			<div ng-repeat="question in quiz.questions | filter:filterFunction as questions"  class="well questionField" ng-class="{'col-md-12':quiz.id, 'col-md-8 col-md-offset-2':!quiz.id}">
 				
 				<input ng-model="question.title" class="form-control" placeholder="Введіть текст запитання" type="text" required />
 										
@@ -55,7 +55,7 @@
 				<button ng-click="addAnswer(question)" class="btn btn-info quizMarginTop"><span class="glyphicon glyphicon-plus"></span> Додати відповідь</button>
 				<div ng-show="questions.length>MIN_QUESTIONS_QTY" ng-click="deleteQuestion(question)" class="closeButton glyphicon glyphicon-remove"></div>
 			</div>
-			<div class=" col-sm-12">
+			<div ng-class="{'col-md-12':quiz.id, 'col-md-8 col-md-offset-2':!quiz.id}">
 				<button ng-click="addQuestion()" class="btn btn-info"><span class="glyphicon glyphicon-plus"></span> Додати питання</button>
 			</div>
 

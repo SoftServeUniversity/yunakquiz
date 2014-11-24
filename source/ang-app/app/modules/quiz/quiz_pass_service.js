@@ -15,43 +15,33 @@ angular.module('yunakQuiz.assessments')
 
   /** Validate if question has at least one answer picked  */
   function validateQuestion(question){
-    question.invalid=true;
-    angular.forEach(question.answers, function(answer){
-      if(answer.checked){
-        question.invalid=false;
-      }
-    });
+    question.invalid = !question.answers.some(function(answer){ return answer.checked })
+    return question.invalid
   };
 
     /** Validate if all questions in quiz has marked answers  */
   function validateQuiz(){
     var questions = this.quiz.questions;
-    var quizValid=true;
+    var quizValid = true;
     angular.forEach(questions, function(question){
-       validateQuestion(question);
-       if (question.invalid) {quizValid = false;}
+      if (validateQuestion(question)) {quizValid = false;}
     });
     return quizValid;
   };
 
   /** Check all questions in quiz */
   function checkQuestions(questions){
-    for (var i=0; i<questions.length; i++){
-      questions[i].nice = checkAnswers(questions[i]);
-    }
+    angular.forEach(questions, function(question){
+      question.nice = checkAnswers(question)
+    });
   };
 
   /** check question for correct answers  */
   function checkAnswers(question){
-    var correct=true;
-    angular.forEach(question.answers, function(value){
-      if(value.correct){
-        if(value.checked) {correct= true && correct;} 
-        else {correct= false;}
-      } 
-      else if (value.checked) {correct= false;}
-    });
-    return correct;
+    var nice = question.answers.every(function(answer){
+      return  answer.correct == !!answer.checked
+    })
+    return nice;
   };
 
   /** count quiz score */

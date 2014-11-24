@@ -3,20 +3,26 @@
 angular.module('yunakQuiz.assessments')
 .controller('QuizReviewCtrl', 
   ['$scope','QuizResource', 'CommentsResource', '$routeParams',
-   '$route','$location','QuizMngService', 'getAccess', 
+   '$route','$location','QuizMngService', 'getAccess','CONFIG', 
   function($scope, QuizResource, CommentsResource, $routeParams,
-   $route, $location, QuizMngService, getAccess) {
+   $route, $location, QuizMngService, getAccess,CONFIG) {
 
-  getAccess($route.current.permision).then(function(data){
-    data ? init() : $location.path( "/403" );
-  });
   /** get Quiz by ID */
+  if (getAccess('/admin/assessments/review','moder')) {
+    init();
+  } else {
+    $location.path( "/404" );
+  };
+
+  $scope.dateFormat = CONFIG.DATE_FORMAT;
+
   function init(){
     $scope.quiz = QuizResource.get({id:$routeParams.quiz_id}, quizSuccess, quizError);
+    console.log($scope.quiz);
   };
 
   function quizSuccess(quiz) {
-    $scope.comments = CommentsResource.query({id: quiz.id})
+    $scope.comments = CommentsResource.get({id: quiz.id});
   };
   
   function quizError(response) { 
@@ -24,12 +30,12 @@ angular.module('yunakQuiz.assessments')
   };
 
   $scope.addComment=function(){
-    $scope.comments.push({'text':$scope.comment,'quiz_id':$scope.quiz.id});
-    $scope.comment='';
+    $scope.comments.arr.push({'text':$scope.newComments});
+    $scope.newComments='';
   };
 
   $scope.deleteComment=function(index){
-    $scope.comments.splice(index,1);
+    $scope.comments.arr.splice(index,1);
   };
 
   /** save draft Quiz */
@@ -60,16 +66,9 @@ angular.module('yunakQuiz.assessments')
   }
 
   function sendComments(state){
-    if (state === "published"){
-      CommentsResource.delete({id:$scope.quiz.id}, sendCommentsSuccess, sendCommentsError);
-    } 
-    else {
-      CommentsResource.save(
-        {id:$scope.quiz.id}, 
-        {comments: $scope.comments}, 
-        sendCommentsSuccess, sendCommentsError
-      );
-    }
+    state === "published"?
+      $scope.comments.$delete(sendCommentsSuccess, sendCommentsError):
+      $scope.comments.$save(sendCommentsSuccess, sendCommentsError);
   };
 
   function sendCommentsSuccess(){
@@ -80,5 +79,5 @@ angular.module('yunakQuiz.assessments')
     window.scrollTo(0,0);
     $scope.errorMsg = 'Коментарі не збережено';
   };
-  
+ 
 }]);

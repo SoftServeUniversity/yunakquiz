@@ -2,11 +2,16 @@
 /** Quiz Create controller  */
 angular.module('yunakQuiz.assessments')
 .controller('QuizCreateCtrl', 
-  ['$scope', 'QuizResource', 'QuizMngService', '$location', 
-  function($scope, QuizResource, QuizMngService, $location) {
+  ['$scope', 'QuizResource', 'QuizMngService', '$location', 'getAccess',
+  function($scope, QuizResource, QuizMngService, $location,getAccess) {
 
-  QuizMngService.initQuiz();
-  $scope.quiz = QuizMngService.quiz;
+  if (getAccess('/admin/assessments/create','user')) {
+    QuizMngService.initQuiz();
+    $scope.quiz = QuizMngService.quiz;
+  } else {
+    $location.path( "/404" );
+  };
+
         
   $scope.saveQuiz=function(){
     sendQuiz("draft");

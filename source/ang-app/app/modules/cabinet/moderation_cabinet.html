@@ -3,10 +3,13 @@
 
 	<div class="col-md-3">
 	<!--Search module -->
-	   <guestsearchcat search-request="searchRequest" filter-fn="categoryFilter()" ></guestsearchcat>
+	   <my-guest-search-cat button="searchQuery()" categories="allCats"></my-guest-search-cat>
 	<!-- end of Search module -->
 	</div>
 	<div class="col-md-9">
+		<div class="">
+        	<div ng-include="'modules/cabinet/search_input.html'"></div>
+    	</div>
 		<div class="input-group col-md-8 col-md-offset-2">
 		</div>
 
