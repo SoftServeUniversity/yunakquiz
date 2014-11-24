@@ -15,10 +15,16 @@ angular.module('yunakQuiz.userStatistic')
       });
 
     function roundGrade(arr){
-    	for(var count = 0, i = 0; i<arr.length; i++){
-    		count +=arr[i]
-    	}
-    	$scope.statistic.round = (count/arr.length).toFixed(CONFIG.SCORE_ROUND);
+      if (arr.length){
+      	for(var count = 0, i = 0; i<arr.length; i++){
+      		count +=arr[i]
+      	}
+        alert(count);
+      	$scope.statistic.round = count/arr.length;
+      }
+      else {
+        $scope.statistic.round = 0;
+      }
     };
  
 }])
