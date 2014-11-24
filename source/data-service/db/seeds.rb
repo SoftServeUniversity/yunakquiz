@@ -50,6 +50,7 @@ Permission.create(tabs: 'Moder_cabinet', moder: true, superadmin: true)
 Permission.create(tabs: 'Moder_published', moder: true, superadmin: true)
 Permission.create(tabs: 'Moder_review', moder: true, superadmin: true)
 Permission.create(tabs: 'Moder_enhance', moder: true, superadmin: true)
+Permission.create(tabs: 'Moder_review_quiz', moder: true, superadmin: true)
 
 Permission.create(tabs: 'User_cabinet', user: true, moder: true, admin: true, superadmin: true)
 Permission.create(tabs: 'User_published', user: true, moder: true, admin: true, superadmin: true)
@@ -57,6 +58,9 @@ Permission.create(tabs: 'User_enhance', user: true, moder: true, admin: true, su
 Permission.create(tabs: 'User_review', user: true, moder: true, admin: true, superadmin: true)
 Permission.create(tabs: 'User_draft', user: true, moder: true, admin: true, superadmin: true)
 Permission.create(tabs: 'User_profile', user: true, moder: true, admin: true, superadmin: true)
+Permission.create(tabs: 'User_create_quiz', user: true, moder: true, admin: true, superadmin: true)
+Permission.create(tabs: 'User_edit_quiz', user: true, moder: true, admin: true, superadmin: true)
+Permission.create(tabs: 'User_statistic', user: true, moder: true, admin: true, superadmin: true)
 
 Permission.create(tabs: 'menuPersonalCabinet', admin: true, moder: true, user: true, superadmin: true)
 Permission.create(tabs: 'menuAdminPanel', admin: true, superadmin: true)

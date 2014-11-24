@@ -59,13 +59,11 @@ angular.module('yunakQuiz.cabinet')
     });
   };
   
-  // if (getAccess($location.path(),$route.current.permission)) {
-  //   $scope.queryList();
-  // } else {
-  //   $location.path( "/404" );
-  // };
-
-  $scope.queryList();
+  if (getAccess($location.path(),$route.current.permission)) {
+    $scope.queryList();
+  } else {
+    $location.path( "/404" );
+  };
   
 }]);
 

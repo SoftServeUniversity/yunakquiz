@@ -2,10 +2,16 @@
 /** Quiz Edit controller  */
 angular.module('yunakQuiz.assessments')
 .controller('QuizEditCtrl', 
-  ['$scope', 'QuizResource', 'CommentsResource', '$routeParams', '$location', 'QuizMngService','CONFIG', 
-  function($scope, QuizResource, CommentsResource, $routeParams, $location, QuizMngService,CONFIG) {
+  ['$scope', 'QuizResource', 'CommentsResource', '$routeParams', '$location', 'QuizMngService','CONFIG','getAccess', 
+  function($scope, QuizResource, CommentsResource, $routeParams, $location, QuizMngService,CONFIG,getAccess) {
 
-  $scope.quiz = QuizResource.get({id:$routeParams.quiz_id}, quizSuccess, quizError);
+
+  if (getAccess('/admin/assessments/edit','user')) {
+    $scope.quiz = QuizResource.get({id:$routeParams.quiz_id}, quizSuccess, quizError);
+  } else {
+    $location.path( "/404" );
+  };
+
   $scope.dateFormat = CONFIG.DATE_FORMAT;
   
   function quizSuccess(quiz) {
