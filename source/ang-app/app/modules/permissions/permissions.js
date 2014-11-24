@@ -138,6 +138,7 @@ angular.module('yunakQuiz.permission', ['ngRoute'])
       } 
       return true;
   };
-}]).run(function (getTabTemplates) {//get access tabs on page load for logged in user or guest
+}])
+.run(function (getTabTemplates) {//get access tabs on page load for logged in user or guest
   getTabTemplates.getResponse().then(function(){});
 });

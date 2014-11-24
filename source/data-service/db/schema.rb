@@ -47,10 +47,10 @@ ActiveRecord::Schema.define(version: 20141120120028) do
 
   create_table "permissions", force: true do |t|
     t.string  "tabs"
-    t.integer "admin"
-    t.integer "moder"
-    t.integer "user"
-    t.integer "superadmin"
+    t.boolean "admin"
+    t.boolean "moder"
+    t.boolean "user"
+    t.boolean "superadmin"
   end
 
   create_table "questions", force: true do |t|
