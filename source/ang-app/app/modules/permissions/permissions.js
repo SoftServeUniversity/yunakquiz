@@ -5,37 +5,37 @@ angular.module('yunakQuiz.permission', ['ngRoute'])
 .constant('tabs', {
   admin: 
   [
-    {'name' : 'admin1',
+    {'name' : 'adminUsersTab',
      'temp' : '/administration-panel/',
      'caption': 'Користувачі' 
     },
 
-    {'name' : 'admin2',
+    {'name' : 'adminBlackListTab',
      'temp' : '/administration-panel/blacklistTab',
      'caption': 'Чорний список'
     },
 
-    {'name' : 'admin3',
+    {'name' : 'adminAdministrationTab',
      'temp' : '/administration-panel/administrationTab',
      'caption': 'Адміністрація'
     },
 
-    {'name' : 'admin4',
+    {'name' : 'adminModeratorsTab',
      'temp' : '/administration-panel/moderatorsTab',
      'caption': 'Модератори'
     },
 
-    {'name' : 'admin5',
+    {'name' : 'adminCategoriesTab',
      'temp' : '/administration-panel/quizzescategoriesTab',
      'caption': 'Категорії тестів'
     },
 
-    {'name' : 'admin6',
+    {'name' : 'adminAboutUsTab',
      'temp' : '/administration-panel/aboutusTab',
      'caption': 'Про нас'
     },
 
-    {'name' : 'admin7',
+    {'name' : 'adminFAQ',
      'temp' : '/administration-panel/faqTab',
      'caption': 'Часті запитання'
     }
@@ -88,17 +88,17 @@ angular.module('yunakQuiz.permission', ['ngRoute'])
   ],
   menuAcces: 
   [
-    {'name' : 'menu1',
+    {'name' : 'menuPersonalCabinet',
      'temp' : '/admin/personalCabinet/profile',
      'caption': 'Особистий кабінет' 
     },
 
-    {'name' : 'menu2',
+    {'name' : 'menuAdminPanel',
      'temp' : '/administration-panel/userTab',
      'caption': 'Панель Адміністратора' 
     },
 
-    {'name' : 'menu3',
+    {'name' : 'menuModerationCabinet',
      'temp' : '/admin/moderationCabinet',
      'caption': 'Кабінет Модератора' 
     }        
