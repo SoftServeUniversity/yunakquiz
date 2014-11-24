@@ -1,6 +1,6 @@
 'use strict';
 
-describe('contactPage', function(){
+describe('contactPage', function () {
 
   var ptor =  protractor.getInstance();
   var mockModule = require('../mocked-backend.js');
@@ -12,44 +12,44 @@ describe('contactPage', function(){
     ];
   var contactsCount = 3;
 
-  beforeEach(function() {
+  beforeEach(function () {
     ptor.addMockModule('httpBackendMock', mockModule.httpBackendMock);
     browser.get('http://localhost:8000/#/contacts'); 
    });
 
-  describe('contactMainInfoPresense', function() {
-    function checkContactsTitle(){
+  describe('contactMainInfoPresense', function () {
+    function checkContactsTitle() {
       var contactsTitle = element.all(by.css('.pageTitle')).getText();
 
       expect(contactsTitle).toMatch(contactPageTitle);
     };
-    function checkContactBlock(){
+    function checkContactBlock() {
       var contactsBlocksOnPage = element.all(by.repeater('person in contacts')).count(); 
       expect(contactsBlocksOnPage).toBe(contactsCount);
     };
 
-    function check(elementToCheck){
-      contacts.forEach(function(contact,index){
+    function check(elementToCheck) {
+      contacts.forEach(function (contact,index) {
       expect(element.all(by.binding('{{person.'+ elementToCheck +'}}')).get(index).getText())
       .toBe(contact[elementToCheck]);  
       })
     };
-    it('should have page title "Контакти"', function() {
+    it('should have page title "Контакти"', function () {
       checkContactsTitle();
     }); 
-    it('should be 3 contacts block', function() {
+    it('should be 3 contacts block', function () {
       checkContactBlock();
     });
-    it('all contacts name should have correct names', function() {
+    it('all contacts name should have correct names', function () {
       check('role');
     });
-    it('all contacts should have corresponding addresses"', function() {
+    it('all contacts should have corresponding addresses"', function () {
       check('address');
     });
-    it('all contacts should have corresponding emails"', function() {
+    it('all contacts should have corresponding emails"', function () {
       check('mail');
     });
-    it('all contacts should have corresponding phones', function() {
+    it('all contacts should have corresponding phones', function () {
       check('phone');
     });
   });
