@@ -74,6 +74,7 @@ angular.module('yunakQuiz.permission', ['ngRoute'])
     getResponse: function(){
       var defer = $q.defer();
       $http.get("http://localhost:9292/permission").success(function(data){
+        
         var userAccess = data;
         tabsByRoles = {};
         
