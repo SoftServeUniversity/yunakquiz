@@ -1,6 +1,6 @@
 <div ng-hide="error" ng-include="'modules/user_statistic/user_statistic_tabs.html'"></div>
-
-<table class="table table-hover">
+<h4 ng-hide="quizzes.length" class="text-center quizMarginTop">Немає пройдених тестів</h4>
+<table ng-show="quizzes.length" class="table table-hover">
 	<thead>
 		<tr>
 			<th>№</th>

@@ -7,9 +7,6 @@ angular.module('yunakQuiz.assessments')
   function($scope, QuizResource, CommentsResource, $routeParams,
    $route, $location, QuizMngService, getAccess,CONFIG) {
 
-  getAccess($route.current.permision).then(function(data){
-    data ? init() : $location.path( "/403" );
-  });
   /** get Quiz by ID */
   
   $scope.dateFormat = CONFIG.DATE_FORMAT;
@@ -77,5 +74,7 @@ angular.module('yunakQuiz.assessments')
     window.scrollTo(0,0);
     $scope.errorMsg = 'Коментарі не збережено';
   };
+
+  init() 
   
 }]);
