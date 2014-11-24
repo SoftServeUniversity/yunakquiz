@@ -43,7 +43,7 @@ angular.module('yunakQuiz.permission', ['ngRoute'])
   moder:
   [
     {'name' : 'moder1',
-     'temp' : '/admin/personalCabinet',
+     'temp' : '/admin/moderationCabinet',
      'caption': 'Кабінет Модератора' 
     }
   ],
@@ -60,7 +60,7 @@ angular.module('yunakQuiz.permission', ['ngRoute'])
     },
 
     {'name' : 'menu3',
-     'temp' : '/admin/personalCabinet',
+     'temp' : '/admin/moderationCabinet',
      'caption': 'Кабінет Модератора' 
     }        
   ]  
@@ -138,6 +138,7 @@ angular.module('yunakQuiz.permission', ['ngRoute'])
       } 
       return true;
   };
-}]).run(function (getTabTemplates) {//get access tabs on page load for logged in user or guest
+}])
+.run(function (getTabTemplates) {//get access tabs on page load for logged in user or guest
   getTabTemplates.getResponse().then(function(){});
 });

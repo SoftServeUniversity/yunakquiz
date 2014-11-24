@@ -248,7 +248,7 @@ module PlastApp
     get '/permission' do
       if logged_user
         role = Role.find(logged_user.role_id)
-        base = Permission.where("#{role.name} = #{role.id}").pluck("tabs").to_json
+        base = Permission.where("#{role.name} = ?", true).pluck("tabs").to_json
         return base
       else
         return [401, "unauthorized"]
