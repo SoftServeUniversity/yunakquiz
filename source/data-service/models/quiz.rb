@@ -38,7 +38,12 @@ class Quiz < ActiveRecord::Base
     quiz.add_questions if quiz
   end
   
+  def self.quiz_validation(data, min_quest=0, min_answ=1)
+    return !data['title'].nil? && data['questions'].length>min_quest && data['questions'][0]['answers'].length>min_answ
+  end
+    
   def self.create_quiz(data, user)
+    return unless quiz_validation(data)
     category = Category.find(data['category_id'])
     quiz = category.quizzes.create(title: data['title'],description: data['description'], status: data['status'])
     quiz.update(user: user)

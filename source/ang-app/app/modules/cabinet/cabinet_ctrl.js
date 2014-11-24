@@ -12,8 +12,6 @@ angular.module('yunakQuiz.cabinet')
   var queryFnName = $route.current.queryFn;
   $scope.tab = $routeParams.state || "published";
 
-
-
   $scope.outputData={
     currentPage: 1,
     itemsPerPage: paginationConfig.items_per_page[0],
@@ -61,6 +59,12 @@ angular.module('yunakQuiz.cabinet')
     });
   };
   
+  // if (getAccess($location.path(),$route.current.permission)) {
+  //   $scope.queryList();
+  // } else {
+  //   $location.path( "/404" );
+  // };
+
   $scope.queryList();
   
 }]);
