@@ -12,10 +12,10 @@ describe('faq page', function(){
 		{"id": 4, "faq_question": "Де можна знайти тест на знання правил хокею?", "faq_answer": "В підкатегорії Хокей, яка знаходиться в категорії Спорт"},
 		{"id": 5, "faq_question": "Чи можна для пошук вибрати якусь конкретну підкатегорію?", "faq_answer": "Так, звичайно."}
 	];
-	var tabPosition = 5;
+	var tabPosition = 6;
 	var allQuestions = 5;
 	var generalTitle = "Адміністративна панель";
-	var faqTabTitle = "Часті питання";
+	var faqTabTitle = "Часті запитання";
 
 	beforeEach(function() {
     	ptor.addMockModule('httpBackendMock', mockModule.httpBackendMock);  
@@ -51,7 +51,7 @@ describe('faq page', function(){
 	   	});		
 
 	   	it('click on Edit Button and Save Button', function(){
-	   		var editButton = element.all(by.buttonText('Edit'));
+	   		var editButton = element.all(by.buttonText('Редагувати'));
 	   		editButton.get(4).click();
 	   		var inputQuestion = element(by.css('input.editable-input'));
 	   		inputQuestion.clear();
@@ -59,27 +59,19 @@ describe('faq page', function(){
 	   		var inputAnswer = element(by.css('textarea.editable-input'));
 	   		inputAnswer.clear();
 	   		inputAnswer.sendKeys('нова відповідь 5');
-	   		var saveButton = element.all(by.buttonText('Save'));
+	   		var saveButton = element.all(by.buttonText('Зберегти'));
 	   		saveButton.get(4).click();
 	   	});
 
 	   	it('click on Add Button', function(){
-	   		var addButton = element(by.buttonText('Add Question'));
+	   		var addButton = element(by.buttonText('Додати питання'));
 	   		addButton.click();
 	   		var inputQuestion = element(by.css('input.editable-input'));
 	   		inputQuestion.sendKeys('питання 6');
 	   		var inputAnswer = element(by.css('textarea.editable-input'));
 	   		inputAnswer.sendKeys('відповідь 6');
-	   		var saveButton = element.all(by.buttonText('Save'));
+	   		var saveButton = element.all(by.buttonText('Зберегти'));
 	   		saveButton.get(5).click();
 	   	});
-
-	   	// it('click on Delete Button', function(){
-	   	// 	var deleteButton = element.all(by.buttonText('Del'));
-	   	// 	deleteButton.get(4).click();
-	   	// 	var allRows = element.all(by.css('td.someClass'));
-	   	// 	//allRows.get(4).clear();
-	   	// 	expect(element.all(by.repeater('Question in Questions')).count()).toEqual(4);
-	   	// });
 	});
 });
