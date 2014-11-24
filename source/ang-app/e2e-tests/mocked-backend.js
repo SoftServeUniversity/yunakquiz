@@ -74,7 +74,7 @@ exports.httpBackendMock = function () {
        {"id": 9, "category_id": 7, "title": "Основи Java"}
       ];
       
-    var permission = ["admin1", "admin2", "admin3", "admin5", "admin6", "admin7"];
+    var permission = ["adminUsersTab", "adminBlackListTab", "adminAdministrationTab", "adminModeratorsTab", "adminCategoriesTab", "adminAboutUsTab", "adminFAQ"];
     var pwdCorrect = {password: '12345678'};
 
     $httpBackend.whenGET('http://localhost:9292/categories/parent').respond(parCategoryMock);
