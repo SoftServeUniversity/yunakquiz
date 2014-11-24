@@ -42,9 +42,48 @@ angular.module('yunakQuiz.permission', ['ngRoute'])
   ],  
   moder:
   [
-    {'name' : 'moder1',
-     'temp' : '/admin/personalCabinet',
+    {'name' : 'Moder_cabinet',
+     'temp' : '/admin/moderationCabinet',
      'caption': 'Кабінет Модератора' 
+    },
+    {'name' : 'Moder_published',
+     'temp' : '/admin/moderationCabinet/published',
+     'caption': 'Кабінет Модератора' 
+    },
+    {'name' : 'Moder_review',
+     'temp' : '/admin/moderationCabinet/review',
+     'caption': 'Кабінет Модератора' 
+    },
+    {'name' : 'Moder_enhance',
+     'temp' : '/admin/moderationCabinet/enhance',
+     'caption': 'Кабінет Модератора' 
+    }
+  ],
+    user:
+  [
+    {'name' : 'User_cabinet',
+     'temp' : '/admin/personalCabinet',
+     'caption': 'default' 
+    },
+    {'name' : 'User_published',
+     'temp' : '/admin/personalCabinet/published',
+     'caption': 'published' 
+    },
+    {'name' : 'User_enhance',
+     'temp' : '/admin/personalCabinet/enhance',
+     'caption': 'enhance' 
+    },
+    {'name' : 'User_review',
+     'temp' : '/admin/personalCabinet/review',
+     'caption': 'review' 
+    },
+    {'name' : 'User_draft',
+     'temp' : '/admin/personalCabinet/draft',
+     'caption': 'draft' 
+    },
+    {'name' : 'User_profile',
+     'temp' : '/admin/personalCabinet/profile',
+     'caption': 'profile' 
     }
   ],
   menuAcces: 
@@ -60,7 +99,7 @@ angular.module('yunakQuiz.permission', ['ngRoute'])
     },
 
     {'name' : 'menu3',
-     'temp' : '/admin/personalCabinet',
+     'temp' : '/admin/moderationCabinet',
      'caption': 'Кабінет Модератора' 
     }        
   ]  
@@ -138,6 +177,7 @@ angular.module('yunakQuiz.permission', ['ngRoute'])
       } 
       return true;
   };
-}]).run(function (getTabTemplates) {//get access tabs on page load for logged in user or guest
+}])
+.run(function (getTabTemplates) {//get access tabs on page load for logged in user or guest
   getTabTemplates.getResponse().then(function(){});
 });
