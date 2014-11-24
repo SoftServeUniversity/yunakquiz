@@ -47,10 +47,10 @@ ActiveRecord::Schema.define(version: 20141120120028) do
 
   create_table "permissions", force: true do |t|
     t.string  "tabs"
-    t.boolean "admin"
-    t.boolean "moder"
-    t.boolean "user"
-    t.boolean "superadmin"
+    t.integer "admin"
+    t.integer "moder"
+    t.integer "user"
+    t.integer "superadmin"
   end
 
   create_table "questions", force: true do |t|
@@ -104,7 +104,7 @@ ActiveRecord::Schema.define(version: 20141120120028) do
   end
 
   create_table "users", force: true do |t|
-    t.string   "username",        limit: 25,             null: false
+    t.string   "username",        limit: 25, null: false
     t.string   "first_name",      limit: 25
     t.string   "last_name",       limit: 50
     t.string   "hashed_password", limit: 65
@@ -116,7 +116,6 @@ ActiveRecord::Schema.define(version: 20141120120028) do
     t.string   "plast_level"
     t.string   "picture"
     t.integer  "role_id"
-    t.integer  "status",                     default: 1
     t.datetime "created_at"
     t.datetime "updated_at"
   end
