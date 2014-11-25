@@ -2,8 +2,11 @@
 
 // Declare app level module which depends on views, and components
 angular.module('yunakQuiz', [
+  'ui.bootstrap',
   'ngRoute',
+  'ngResource',
   'yunakQuiz.measures',
+  'yunakQuiz.userStatistic',
   'yunakQuiz.assessments',
   'yunakQuiz.users',
   'yunakQuiz.sessions',
