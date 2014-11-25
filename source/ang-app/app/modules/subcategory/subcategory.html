@@ -1,4 +1,4 @@
-<div class="subcat-section" ng-controller="subcatCtrl">
+<div class="subcat-section">
 
 	<div class="row">
 	  <div class="pageTitleBox bg-primary">
@@ -9,26 +9,35 @@
 	<div class="row">
 		<div class="col-xs-6 col-xs-offset-3"> 
 			<form>
-			  <input type="text" placeholder="Пошук" ng-model="searchTags" class="form-control subcat-form">
-			    <button class="btn btn-default" ng-click="check(searchData)">
-			        <i class="glyphicon glyphicon-search"></i>
+				<tags-input type="text" 
+							class="subcat-form" 
+							ng-model="searchTags" 
+							add-on-space="true"
+							add-on-comma="false"
+							add-on-enter="false"
+							min-length="3"
+							max-length="20"
+							placeholder="Пошук">
+				</tags-input>
+			    <button class="btn btn-primary" ng-click="search(searchData)">
+			        <span class="glyphicon glyphicon-search"></span>
 			    </button>
 			</form>
 		</div>
 	</div>
 
-	<div ng-repeat="quiz in searchResults|orderBy:'title'" class="row">
+	<div ng-repeat="quiz in searchResults" class="row">
 		<div class="col-xs-6 col-xs-offset-3">
 		   	<div class="content">
 		   		<h3 class="text-center quizTitle"><a href="#/assessments/{{quiz.id}}">{{quiz.title}}</a></h3>
 		    	<p class = "quizDescription">{{quiz.description}}</p><br>
-			 	<span ng-repeat="tag in quiz.allTags"><a>{{tag}}</a></span>
+			 	<span ng-repeat="tag in quiz.allTags"><a ng-click="addToSearch(tag, searchTags)">{{tag}}</a></span>
 		  	</div>
 		</div>
 	</div>
 
 	<div class="row" ng-hide="searchResults">
-		<div class="error-message"> Sorry, no matches found for {{searchTags}}</div>
+		<div class="error-message"> На жаль, нічого не знайдено</div>
 	</div>
 
 	<div class="row col-xs-offset-3 col-xs-6"> 
@@ -39,7 +48,7 @@
 	                  class="pagination-sm"
 	                  items-per-page="10" 
 	                  max-size="10"
-	                  ng-change="pageChanged()">
+	                  ng-change="changingPage()">
 	      	</pagination>
 	    </div>
 	</div>

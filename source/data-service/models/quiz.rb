@@ -105,10 +105,16 @@ class Quiz < ActiveRecord::Base
 
   def self.lastQuizzes (id)
     statusCode =  Quiz.statuses['published']
-    quizzes = Quiz.where("category_id = ? AND status = ?",id ,statusCode).order('updated_at').reverse_order.limit(10).as_json
-    quizzes.each_with_index do |value, index|
-      value['allTags'] = Quiz.find(value['id']).tags.select('tag').as_json 
-    end
+    requiredAmount = 10
+    quizzes = Quiz.find_by_sql(
+      "SELECT * FROM quizzes Q LEFT JOIN (\
+      SELECT QT.quiz_id, group_concat(T.tag, ' ') AS allTags \
+      FROM quizzes_tags QT JOIN tags T ON QT.tag_id = T.id \
+      GROUP BY QT.quiz_id) \
+      AS J ON J.quiz_id = Q.id \
+      WHERE category_id = #{id} AND STATUS = #{statusCode} \
+      ORDER BY updated_at DESC LIMIT #{requiredAmount}"
+    )
     return quizzes.to_json
   end
 
