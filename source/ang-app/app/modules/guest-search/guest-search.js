@@ -1,7 +1,7 @@
 'use strict';
 
-var  guestSearch = angular.module('yunakQuiz.guestSearch', ['ngRoute', 'ui.bootstrap',
-  'yunakQuiz.subcategory', 'ngTagsInput']);
+var  guestSearch = angular.module('yunakQuiz.guestSearch', ['ngRoute', 
+	'ui.bootstrap', 'yunakQuiz.subcategory', 'ngTagsInput']);
 
 guestSearch.config(['$routeProvider',function($routeProvider) {
   $routeProvider.when('/guest-search', {
@@ -9,4 +9,3 @@ guestSearch.config(['$routeProvider',function($routeProvider) {
     controller: 'SearchCtrl'
   })
 }]);  
-
