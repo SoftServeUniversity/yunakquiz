@@ -6,7 +6,7 @@
         $routeProvider.
         when('/subcategory/:id', {
           templateUrl: 'modules/subcategory/subcategory.html',
-          //controller: 'subcatCtrl'
+          controller: 'subcatCtrl'
         })
       }
     ]);
@@ -16,63 +16,65 @@
       ['$scope', '$http', '$routeParams', '$timeout', 'subcategoryFactory', 'categoriesQuery', 'guestSearchFactory',
       function ($scope, $http, $routeParams, $timeout, subcategoryFactory, categoriesQuery, guestSearchFactory) {
         //init
+        var itemsPerPage = 10;
         $scope.searchTags = [];
         $scope.currentPage = 1;
+        $scope.subcategory ={};
         $scope.searchData = {
             categories_id: [+$routeParams.id],
             tags:[],
             currentPage:0
         };
-        var itemsPerPage = 10;
         // getting current category object to set its name on page
         categoriesQuery.getCategoryById($routeParams.id)
         .success(function(data) {
             $scope.subcategory = data[0];
         });
         
-        // adding tags to search line, checking them to prevent doubling
-        $scope.addToSearch = function(tag, searchTags) {
-            subcategoryFactory.checkingTags(tag,searchTags)
-        };
-
         //getting last quizzes in current category,transforming tags string into array
-        subcategoryFactory.getLastQuizzes($routeParams.id)
-        .success(function(data) {
-            $scope.searchResults = guestSearchFactory.tagsToArray(data);
-        });
-        
-        
-        $scope.check = function() {
-            //if empty line -showing last quizzes of current category again  
-            if ($scope.searchTags.length == 0) {
-                subcategoryFactory.getLastQuizzes($routeParams.id)
+        $scope.lastQuizzes = function(){
+            subcategoryFactory.getLastQuizzes($routeParams.id)
                 .success(function(data) {
                     $scope.searchResults = guestSearchFactory.tagsToArray(data);
                     $scope.totalItems = itemsPerPage;
                 });
+        };
+        $scope.lastQuizzes();
+
+        // adding tags to search line, checking them to prevent doubling
+        $scope.addToSearch = function(tag, searchTags) {
+            subcategoryFactory.checkingTags(tag,searchTags)
+        };
+       
+        $scope.getResults = function(){
+            guestSearchFactory.guestSearch($scope.searchData)
+            .success(function(data){
+                $scope.searchResults = guestSearchFactory.tagsToArray(data.result);
+                $scope.totalItems = data.length;
+            }).error(function(data) {
+                  $scope.totalItems = 0;
+                });
+        }
+        
+        $scope.search = function() {
+            //if empty line -showing last quizzes of current category again 
+            $scope.searchData.tags=[];//removing previous tags in searchData
+            if ($scope.searchTags.length == 0) {
+                $scope.lastQuizzes()
             } else {
                 //adding tags to search request
                 subcategoryFactory.addingTags($scope.searchData,$scope.searchTags)
                 //sending search request
-                guestSearchFactory.guestSearch($scope.searchData)
-                .success(function(data){
-                    $scope.searchResults = guestSearchFactory.tagsToArray(data.result);
-                    $scope.currentPage = 1;
-                    $scope.totalItems = data.length;
-                }).error(function(data) {
-                  $scope.totalItems = 0;
-                });
+                $scope.getResults()
             }
         };
 
         //sending another request when pagination changed
         $scope.changingPage = function() {
-            $scope.searchData.currentPage = ($scope.currentPage-1);
-            guestSearchFactory.guestSearch($scope.searchData)
-            .success(function(data){
-                $scope.searchResults = guestSearchFactory.tagsToArray(data.result);
-                $scope.totalItems = data.length;
-            });
+            if ($scope.searchTags.length != 0) {
+                $scope.searchData.currentPage = ($scope.currentPage-1);
+                $scope.getResults()
+            }
         };
 
     }]);
