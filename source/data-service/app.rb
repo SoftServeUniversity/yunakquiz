@@ -183,22 +183,20 @@ module PlastApp
     get '/statistic/general' do
       user = User.find(session[:user_id])
       created = user.quizzes.count()
-      passed = user.results
-      grade = []
-      passed.each do |item|
-        grade.push(item.grade)
-      end
-      @statistic = {user_id:session[:user_id], created:created, passed:grade}
+      passed = user.results.count()
+      average = user.results.average(:grade).round(2)
+
+      @statistic = {user_id:session[:user_id], created:created, passed:passed, average:average}
 
       response_helper @statistic, ["not found!"]
     end
 
     get '/statistic/list' do
-      quizzes = Quiz.joins(:results)
-      .where(:results => { :user_id =>session[:user_id]}).select("id,title").group('id')
-      .as_json(:include => {:results =>{:only => [:grade,:created_at]}})
+      quizzes = Quiz.joins(:results).where(:results => { :user_id =>session[:user_id]})
+      .select("id,title").group('id')
+      result = Result.get_result(quizzes)
 
-      response_helper quizzes, ["not found!"]
+      response_helper result, ["not found!"]
     end 
     ##User_statistic block's end
 
