@@ -400,20 +400,12 @@ module PlastApp
       [200, {'success' => "success"}.to_json]
     end
 
-    # For all categories
-    get '/guest-search' do
-      content_type :json
-      Category.select('id, category_id, title').to_json
-    end 
-
     post '/search' do
       content_type :json
-      search_request = JSON.parse(request.body.read) 
-
-      # This function is part of module SerchQuizzes
+      query = JSON.parse(request.body.read) 
+      # This function is part of SerchQuizzes class
       # checkout /models/searchQuizzes.rb for details
-      SearchQuizzes.withTags(search_request) 
-
+      SearchQuizzes.withTags(query) 
     end
 
     get '/last_quizzes/:id' do
