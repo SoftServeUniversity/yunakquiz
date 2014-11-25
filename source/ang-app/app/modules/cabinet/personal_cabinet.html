@@ -1,0 +1,42 @@
+<div ng-hide="error" ng-include="'modules/cabinet/personal_cabinet_tabs.html'"></div>
+<h4 ng-show="error" class="text-center quizMarginTop">{{error}}</h4>
+<h4 ng-hide="totalItems||error" class="text-center quizMarginTop">В даній вкладці немає тестів</h4>
+<table ng-show="totalItems" class="table table-hover">
+	<thead>
+		<tr>
+			<th>№</th>
+			<th class="col-md-6">Назва тесту</th>
+			<th class="col-md-2 text-center">Категорія тесту</th>
+			<th class="col-md-2 text-center">Підкатегорія тесту</th>
+			<th class="col-md-1"></th>
+			<th class="col-md-1"></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="quiz in quizzes">
+			<td>{{outputData.itemsPerPage*(outputData.currentPage-1)+$index+1}}</td>
+			<td>
+				<a ng-if="tab=='published'" ng-href="{{quizUrl+quiz.id}}">{{quiz.title}}</a>
+				<span ng-if="tab!='published'">{{quiz.title}}</span>
+			</td>
+			<td class="text-center">{{quiz.category.category.title}}</td>
+			<td class="text-center">{{quiz.category.title}}</td>
+			<td>
+				<a ng-href="#/admin/assessments/{{quiz.id}}" type="button" class="btn btn-info btn-xs">Редагувати тест</a>
+			</td>
+			<td>
+				<a ng-click="deleteQuiz(quiz.id)" type="button" class="btn btn-danger btn-xs">Видалити тест</a>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<div ng-show="totalItems>outputData.itemsPerPage" class="row text-center">
+		<pagination total-items="totalItems" ng-model="outputData.currentPage" ng-change="queryList()"  items-per-page="outputData.itemsPerPage" class="pagination" ></pagination>
+	<div class="pagination pull-right">
+		<select ng-change="searchQuery()" ng-model="outputData.itemsPerPage" class="form-control">
+		  <option ng-repeat="item in items_per_page" value="{{item}}">{{item}}</option>
+		  <option value="{{totalItems}}">Всі</option>
+		</select>
+	</div>
+</div>

@@ -2,9 +2,12 @@
 
 // Declare app level module which depends on views, and components
 angular.module('yunakQuiz', [
+  'ui.bootstrap',
   'ngRoute',
+  'ngResource',
   'yunakQuiz.measures',
   'yunakQuiz.assessments',
+  'yunakQuiz.cabinet',
   'yunakQuiz.users',
   'yunakQuiz.sessions',
   'yunakQuiz.version',
@@ -13,7 +16,8 @@ angular.module('yunakQuiz', [
   'yunakQuiz.statistics',
   'yunakQuiz.staticPartialsRoute',
   'yunakQuiz.categoriesContainer',
-  'yunakQuiz.subcategory'
+  'yunakQuiz.subcategory',
+  'ngTagsInput',
 ])
 .config(['$routeProvider', 
   function($routeProvider) {

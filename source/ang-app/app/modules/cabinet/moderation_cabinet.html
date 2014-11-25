@@ -1,0 +1,65 @@
+<div class="row">
+	<h3 class="text-center assessment-title">Кабінет модератора</h3>
+
+	<div class="col-md-3">
+	<!--Search module -->
+	   <my-guest-search-cat button="searchQuery()" categories="allCats"></my-guest-search-cat>
+	<!-- end of Search module -->
+	</div>
+	<div class="col-md-9">
+		<div class="">
+        	<div ng-include="'modules/cabinet/search_input.html'"></div>
+    	</div>
+		<div class="input-group col-md-8 col-md-offset-2">
+		</div>
+
+		<ul class="nav nav-tabs quizMarginTop">
+			<li ng-class="{persCabActive:tab =='published'}">
+				<a href="#/admin/moderationCabinet/published" >Опубліковані</a>
+			</li>
+			<li ng-class="{persCabActive:tab =='review'}">
+				<a href="#/admin/moderationCabinet/review">Незатверджені</a>
+			</li>
+			<li ng-class="{persCabActive:tab =='enhance'}">
+				<a href="#/admin/moderationCabinet/enhance">На доопрацюванні</a>
+			</li>
+		</ul>
+		<h4 ng-show="!totalItems" class="text-center quizMarginTop">В даній вкладці немає тестів</h4>
+		<table ng-show="totalItems" class="table table-hover">
+			<thead>
+				<tr>
+					<th>№</th>
+					<th class="col-md-5">Назва тесту</th>
+					<th class="col-md-3 text-center">Автор тесту</th>
+					<th class="col-md-2"></th>
+					<th class="col-md-2"></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="quiz in quizzes">
+					<td>{{outputData.itemsPerPage*(outputData.currentPage-1)+$index+1}}</td>
+					<td>
+						<a ng-if="tab=='published'" ng-href="{{quizUrl+quiz.id}}">{{quiz.title}}</a>
+						<span ng-if="tab!='published'">{{quiz.title}}</span>
+					</td>
+					<td class="text-center">{{quiz.user.username}}</td>
+					<td>
+						<a ng-href="#/admin/assessments/review/{{quiz.id}}" type="button" class="btn btn-info btn-xs">Перевірити тест</a>
+					</td>
+					<td>
+						<a ng-click="deleteQuiz(quiz.id)" type="button" class="btn btn-danger btn-xs">Видалити тест</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<div ng-show="totalItems>outputData.itemsPerPage" class="row text-center">
+			<pagination total-items="totalItems" ng-model="outputData.currentPage" ng-change="queryList()"  items-per-page="outputData.itemsPerPage" class="pagination" ></pagination>
+			<div class="pagination pull-right">
+				<select ng-change="searchQuery()" ng-model="outputData.itemsPerPage" class="form-control">
+				  <option ng-repeat="item in items_per_page" value="{{item}}">{{item}}</option>
+				  <option value="{{totalItems}}">Всі</option>
+				</select>
+			</div>
+		</div>
+	</div>
+</div>

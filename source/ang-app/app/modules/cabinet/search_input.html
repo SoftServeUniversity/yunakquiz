@@ -1,0 +1,9 @@
+<form ng-submit="searchQuery()">
+    <div class="input-group">
+        <input ng-model="outputData.searchData" type="text" class="form-control" placeholder="Пошук по назві тесту" />
+        <button ng-if="outputData.searchData" type="button" ng-click="clearInput()" class="close clearSearchInput"><span aria-hidden="true">&times;</span></button>
+        <span class="input-group-btn">
+            <button ng-click="searchQuery()" class="btn btn-default" type="button">Вьо!</button>
+        </span>
+    </div>
+</form>

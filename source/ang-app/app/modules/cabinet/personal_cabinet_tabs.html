@@ -1,0 +1,30 @@
+<div class="row">
+        <h3 class="text-center assessment-title">Особистий кабінет</h3>
+</div>
+<div ng-class="{invisible:tab =='profile'}" class="row">
+    <div class="col-sm-4">
+        <div ng-include="'modules/cabinet/search_input.html'"></div>
+    </div>
+    <div class=" col-sm-8 text-right">
+        <a ng-href="#/admin/assessments/create/" class="btn btn-success">Додати тест</a>
+    </div>
+</div>
+
+    <ul class="nav nav-tabs nav-justified quizMarginTop">
+        <li ng-class="{persCabActive:tab =='published'}">
+            <a href="#/admin/personalCabinet/published" >Опубліковані</a>
+        </li>
+        <li ng-class="{persCabActive:tab =='enhance'}">
+            <a href="#/admin/personalCabinet/enhance">Недоопрацьовані</a>
+        </li>
+        <li ng-class="{persCabActive:tab =='review'}">
+            <a href="#/admin/personalCabinet/review">Незатверджені</a>
+        </li>
+        <li ng-class="{persCabActive:tab =='draft'}">
+            <a href="#/admin/personalCabinet/draft">Створені</a>
+        </li>
+        <li ng-class="{persCabActive:tab =='profile'}">
+            <a href="#/admin/personalCabinet/profile">Мій профіль</a>
+        </li>
+    </ul>
+
