@@ -112,17 +112,19 @@
 
 /*styles in subcategory*/
 
-.subcat-section  input.subcat-form {
+.subcat-section  tags-input.subcat-form {
   display: inline-block;
   margin-right: -4px;
   vertical-align: middle;
   width: 91%;
-  border-bottom-right-radius: 0;
-  border-top-right-radius: 0;
 }
-.subcat-section  input.subcat-form+button {
+.subcat-section  tags-input.subcat-form+button {
   border-bottom-left-radius: 0;
   border-top-left-radius: 0;
+}
+.subcat-section .tags {
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
 }
 .subcat-section .content {
   background:#f5f5f5;
@@ -132,7 +134,10 @@
   margin: 20px 0;
 }
 .subcat-section .content span {padding-right: 5px}
-.subcat-section .content span>a:hover{text-decoration:underline}
+.subcat-section .content span>a:hover{
+  text-decoration:underline;
+  cursor:pointer;
+}
 .subcat-section .content:hover {
 -webkit-box-shadow: 0px 0px 21px 0px rgba(0,0,0,0.75);
 -moz-box-shadow: 0px 0px 21px 0px rgba(0,0,0,0.75);

@@ -1,5 +1,5 @@
 
-  var  app = angular.module('yunakQuiz.subcategory', ['ngRoute', 'yunakQuiz.categoriesContainer', 'yunakQuiz.guestSearch', 'ui.bootstrap']);
+  var  app = angular.module('yunakQuiz.subcategory', ['ngRoute', 'yunakQuiz.categoriesContainer', 'yunakQuiz.guestSearch', 'ui.bootstrap', 'ngTagsInput']);
 
     app.config(['$routeProvider',
       function($routeProvider) {
@@ -15,8 +15,20 @@
     app.controller("subcatCtrl", 
       ['$scope', '$http', '$routeParams', '$timeout', 'subcategoryFactory', 'categoriesQuery', 'guestSearchFactory',
       function ($scope, $http, $routeParams, $timeout, subcategoryFactory, categoriesQuery, guestSearchFactory) {
-        $scope.searchTags;
-        var searchData = {categories_id: [+$routeParams.id]};
+        $scope.searchTags = [];
+        
+        $scope.addToSearch = function(tag) {
+            if ($scope.searchTags.length) {
+              for(var i =0; i< $scope.searchTags.length; i++) {
+                if ($scope.searchTags[i].text == tag) {
+                    return
+                }
+              }
+            };
+            $scope.searchTags.push({text:tag})
+        };
+
+        var searchData = {categories_id: [+$routeParams.id], tags:[]};
         searchData.currentPage = 0;
         categoriesQuery.getCategoryById($routeParams.id)
         .success(function(data) {
@@ -30,27 +42,28 @@
         
         
         $scope.check = function() {
-          
-          if ($scope.searchTags.length >= 3) {
-            searchData.tags = $scope.searchTags.toLowerCase().split(' ');
             
-            guestSearchFactory.guestSearch(searchData).success(function(data){
-              
-              $scope.searchResults = guestSearchFactory.tagsToArray(data.result);
-              $scope.currentPage = 1;
-              $scope.totalItems = data.length;
-
-            }).error(function(data) {
-              $scope.currentPage = 1;
-              $scope.totalItems = 0;
-            });
-          };
-
           if($scope.searchTags.length == 0) {
             subcategoryFactory.getLastQuizzes($routeParams.id).success(function(data) {
             $scope.searchResults = subcategoryFactory.doArr(data)});
           };
 
+          for (var i =0; i< $scope.searchTags.length; i++) {
+                searchData.tags.push($scope.searchTags[i].text)
+              }
+          
+          guestSearchFactory.guestSearch(searchData).success(function(data){
+            
+            $scope.searchResults = guestSearchFactory.tagsToArray(data.result);
+            $scope.currentPage = 1;
+            $scope.totalItems = data.length;
+            searchData.tags=[];
+
+          }).error(function(data) {
+            $scope.currentPage = 1;
+            $scope.totalItems = 0;
+          });
+        
         };
 
 
