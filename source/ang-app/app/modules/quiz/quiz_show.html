@@ -1,0 +1,19 @@
+
+<div class="quiz" ng-show="quiz.title">
+<h3 ng-bind="quiz.title" class="text-center assessment-title"></h3>
+<div ng-include="'modules/quiz/bread_crumbs.html'"></div>
+<ul class="list-group assessmentQuestion">
+	<li ng-repeat="question in quiz.questions" ng-class="{'list-group-item-danger':question.invalid,' disabled':!question.invalid}"  class="list-group-item" > 
+		<p>{{$index+1}}. {{question.title}}</p>
+		
+
+		<ul class="list-group assessmentAnswer">
+			<li ng-repeat="answer in question.answers" ng-click="checkAnswer(answer,question)" ng-class="{'list-group-item-info':answer.checked}" class="list-group-item"> {{answer.title}}</li>
+		</ul>
+		<p ng-show="question.invalid">* Виберіть хоча б одну відповідь</p>
+	</li>
+</ul>
+
+<button ng-click="passQuiz()" class="btn btn-primary">Пройти тест</button> 
+
+</div>

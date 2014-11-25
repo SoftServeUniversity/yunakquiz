@@ -1,0 +1,31 @@
+<div class="quiz">
+<h3  ng-bind="quiz.title" class="text-center assessment-title"></h3>
+
+<div ng-include="'modules/quiz/bread_crumbs.html'"></div>
+
+<div>
+	<h3 class="text-center">Твій вислід: <span>{{quiz.result}}</span> зі <span>100</span> балів!</h3>
+	<div class="progress">
+  		<div class="progress-bar" role="progressbar" aria-valuenow="{{quiz.result}}" aria-valuemin="0" aria-valuemax="100" style="width: {{quiz.result}}%;">{{quiz.result}}%
+  		</div>
+	</div>
+</div>
+<ul class="list-group assessmentQuestion">
+	<li ng-repeat="question in quiz.questions"  
+	ng-class="{'list-group-item-success': question.nice,'list-group-item-danger': !question.nice}" class="list-group-item"> 
+		<h5>{{$index+1}}. {{question.title}}</h5>
+		<h5>Ваша відповідь:</h5>
+		<ul class="list-group">
+			<li ng-repeat="answer in question.answers | filter:{checked:true}" class="list-group-item"> {{answer.title}}</li>
+		</ul>
+		<h5>Правильна відповідь:</h5>
+		<ul class="list-group">
+			<li ng-repeat="answer in question.answers | filter:{correct:true}" class="list-group-item"> {{answer.title}}</li>
+		</ul>
+		<p ng-show="question.description">Пояснення: {{question.description}}</p>
+	</li>
+</ul>
+
+<button ng-click="redirectToAssessment()" class="btn btn-primary" role="button">Пройти тест знову</button> 
+
+</div>
