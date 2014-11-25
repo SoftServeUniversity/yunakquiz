@@ -1,56 +1,59 @@
 
 angular.module('yunakQuiz.userStatistic')
 
-.controller('UserStatisticGeneralCtrl',['$scope','UserStatiticService','CONFIG',
-	function($scope,UserStatiticService,CONFIG) {
+.controller('UserStatisticGeneralCtrl',['$scope','UserStatisticService','$location','getAccess',
+	function($scope,UserStatisticService,$location,getAccess) {
   
-   $scope.tab = "general";
-   	UserStatiticService.getStat($scope.tab)
-      .success(function(data, status, headers, config) {
-        $scope.statistic = data; 
-        roundGrade($scope.statistic.passed);       
-      })
-      .error(function(data){
-        $scope.error = data;
-      });
+  $scope.tab = "general";
 
-    function roundGrade(arr){
-      	for(var count = 0, i = 0; i<arr.length; i++){
-      		count +=arr[i]
-      	}
-      	var res = count/arr.length || 0;
-        $scope.statistic.round = res.toFixed(CONFIG.SCORE_ROUND);
-    };
- 
+  if (getAccess('/admin/statistic','user')) {
+    UserStatisticService.get(getSuccess, getError);
+  } else {
+    $location.path( "/404" );
+  };
+
+  function getSuccess(data) {
+    $scope.statistic = data
+  };
+  
+  function getError(response) { 
+    $scope.errorMsg = response.data || 'Дані не отримано'
+  };
+
 }])
 
-.controller('UserStatisticListCtrl',['$scope','UserStatiticService', 'CONFIG',
-	function($scope,UserStatiticService,CONFIG) {
-   $scope.tab = "list";
-   $scope.dateFormat = CONFIG.DATE_FORMAT;
-   
-   	UserStatiticService.getStat($scope.tab)
-      .success(function(data, status, headers, config) {
-		$scope.quizzes = data;    
-    })
-      .error(function(data){
-        $scope.error = data;
-    });
+.controller('UserStatisticListCtrl',
+  ['$scope','UserStatisticService', 'CONFIG','getAccess','$location','paginationConfig',
+	function($scope,UserStatisticService,CONFIG,getAccess,$location,paginationConfig) {
+  
+  $scope.tab = "list";
+  $scope.dateFormat = CONFIG.DATE_FORMAT;
+  $scope.items_per_page = paginationConfig.items_per_page;
+  
+  $scope.pagination={
+    page : 1,
+    perPage : paginationConfig.items_per_page[0]
+  };
 
-    $scope.maxGrade = function(quiz){
-    	quiz.grade =[];
-    	quiz.results.forEach(function(item){
-    		quiz.grade.push(item.grade);
-    	});
-    	return quiz.grade.sort(function(a, b){return b-a})[0];
-    };
- 		
-    $scope.midGrade = function(arr){
-    	for(var count = 0, i = 0; i<arr.length; i++){
-    		count +=arr[i]
-    	}
-    	return (count/arr.length).toFixed(CONFIG.SCORE_ROUND);
-    };
+  $scope.query = function(){
+    UserStatisticService.get($scope.pagination, getSuccess, getError);
+  }
+
+  if (getAccess('/admin/statistic','user')) {
+    $scope.query()
+  } else {
+    $location.path( "/404" );
+  };
+
+
+  function getSuccess(data) {
+    $scope.quizzes = data.result;
+    $scope.totalItems = data.totalItems
+  };
+  
+  function getError(response) { 
+    $scope.errorMsg = response.data || 'Дані не отримано'
+  };
 
 }])
 

@@ -1,4 +1,34 @@
 angular.module('yunakQuiz.assessments')
+
+.directive('unique', [ 'QuizResource', function(QuizResource) {
+  return {
+    restrict: 'A',
+    require: 'ngModel',
+    link: function (scope, element, attrs, ngModel) {
+      function validate() {
+        console.log(attrs.unique)
+        if (!ngModel || !element.val()) {
+          ngModel.$setValidity('unique', true);
+          scope.$apply();
+          return
+        }
+        QuizResource.validate(
+          scope.$eval(attrs.unique), 
+          {query: element.val().trim()}, 
+          function(data){ 
+            ngModel.$setValidity('unique', !data.present);
+            ngModel.$setValidity('transfer', true);
+          },
+          function(data){
+            ngModel.$setValidity('transfer', false);
+          }
+        )
+      };
+        
+      element.bind('blur', validate);
+    }
+  }
+}])    
 .directive('quizForm', [ function() {
   return {
     restrict: 'EA',
@@ -9,8 +39,8 @@ angular.module('yunakQuiz.assessments')
   }
 }])
 .controller('quizFormCtrl', 
-  ['$scope', 'QuizMngService', 'TagsService', 'CategoriesService', 'QuizResource', 'CONFIG',
-  function($scope, QuizMngService, TagsService, CategoriesService, QuizResource, CONFIG){
+  ['$scope', 'QuizMngService', 'TagsService', 'CategoriesService', 'CONFIG',
+  function($scope, QuizMngService, TagsService, CategoriesService, CONFIG){
   
   $scope.MIN_ASWERS_QTY=CONFIG.MIN_ASWERS_QTY;
   $scope.MIN_QUESTIONS_QTY=CONFIG.MIN_QUESTIONS_QTY;
@@ -49,10 +79,6 @@ angular.module('yunakQuiz.assessments')
         return true;
       };
     };
-  };
-
-  $scope.validateTitle = function(){
-    QuizResource.validateTitle({id:$scope.quiz.id, query:$scope.quiz.title}, successTitle);
   };
 
   function successTitle(data){
