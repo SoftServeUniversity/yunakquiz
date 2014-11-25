@@ -24,8 +24,8 @@ angular.module('yunakQuiz', [
   'yunakQuiz.faqPage',
   'yunakQuiz.permission'
 ])
-.config(['$routeProvider', '$httpProvider',     
-  function($routeProvider, $httpProvider) {
+.config(['$routeProvider', '$httpProvider', '$locationProvider',    
+  function($routeProvider, $httpProvider, $locationProvider) {
     $httpProvider.defaults.withCredentials = true;
     $routeProvider.
       when('/', {
@@ -37,5 +37,7 @@ angular.module('yunakQuiz', [
       otherwise({
         redirectTo: '/'
       });
+
+      $locationProvider.html5Mode(true);
 }]);
 
