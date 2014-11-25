@@ -1,32 +1,28 @@
-class SearchQuizzes < ActiveRecord::Base
-  
+class SearchQuizzes 
+
+  @QUIZ_PER_PAGE = 10
+
   public
-  # Simple function that recives 
-  # request and call SearchQuizzes.dataCheck
-  # and if it all ok calls SearchQuizzes.mainSearch
-  def self.withTags(search_request)
 
-    checked_data = dataCheck(search_request)
+  # Simple function that receiving
+  # query from app.rb 
+  # and it call main_search and 
+  # puts data_check results as an argument 
+  def self.withTags(query)
 
-    if checked_data.is_a?(Hash)
-      mainSearch(checked_data)
-    elsif checked_data.is_a?(Array)
-      return checked_data
-    else 
-      return [500, "Internal Server Error"]
-    end
+    return self.main_search(self.data_check(query))
         
   end  
 
   private
-  # Main search function
-  # It's take object that contain two 
-  # keys: category_id(Array)
-  #       tags (Array) and returns result in json
-  #       currentPage (fixnum)
-  def self.mainSearch(search_request)
 
-    @QUIZ_PER_PAGE = 10
+  # Main search function
+  # It's take's hash that contain three 
+  # keys: category_id(Array),
+  #       tags (Array),
+  #       currentPage (fixnum);
+  # And it returns result in json
+  def self.main_search(search_request)
 
     # To lower case 
     search_request[:tags][0] = search_request[:tags][0].mb_chars.downcase
@@ -48,9 +44,15 @@ class SearchQuizzes < ActiveRecord::Base
       search_string << " AND allTags LIKE \"%#{tag}%\""
     }
 
+    # Count length of search result for paginating
+    length = Quiz.find_by_sql ["SELECT COUNT(*) FROM (#{search_string})", \
+    search_request[:categories_id]].as_json
+
     # Adding end of db request string
+    # and limiting the query
     search_string = search_string \
-    << " ORDER BY title;"
+    << " ORDER BY title LIMIT #{@QUIZ_PER_PAGE} OFFSET \
+    #{search_request[:currentPage]*@QUIZ_PER_PAGE}"
 
     # Main Request to db 
     # Using string that was generated
@@ -59,67 +61,69 @@ class SearchQuizzes < ActiveRecord::Base
 
     # If there no search results 
     # Just return empty array
-    if search_result.length == 0
-      return {result: search_result, length: 0}.to_json
-    else
-    end
+    return {result: search_result, length: 0}.to_json if \
+    length[0]["COUNT(*)"] == 0
 
-    # Count length of search result for paginating
-    length = search_result.length
-
-    # Delete all unneeded results
-    search_result = search_result.slice! \
-    (search_request[:currentPage]*@QUIZ_PER_PAGE), @QUIZ_PER_PAGE
-
-    return {result: search_result, length: length}.to_json
+    # Main response 
+    return {result: search_result, length: length[0]["COUNT(*)"]}.to_json
 
   end
 
+  # Function that generate 
+  # hash from checked data
+  def self.data_check(query)
 
-  # Function that takes four or three keys 
-  # and check if they are good for SearchQuizzes.mainSearch 
-  # function, if they are not good return an error
-  # and if all ok it returns hash 
-  def self.dataCheck(search_request)
+    checked_data = {}
 
-    # Checks all keys for right data in them 
-    if search_request['categories_id'].is_a?(Array) && \
-      search_request['tags'].is_a?(Array) && \
-      search_request['currentPage'].is_a?(Fixnum)
-        
-      # Check if categories_id are fixnum
-      # ,and if there something in it
-      if search_request['categories_id'].length > 0 
-        search_request['categories_id'].each { |cat_id| 
-          if !cat_id.is_a?(Fixnum)
-            return [400, "Bad Request"]
-          else
-          end
-        }
-      else
-        return [400, "Bad Request"] 
-      end 
+    checked_data[:tags] = self.tags_check(query['tags'])  
+    checked_data[:categories_id] = \
+    self.category_id_check(query['categories_id'])  
+    checked_data[:currentPage] = self.current_page_check(query['currentPage'])  
 
-      # Check if tags in array are string
-      # ,and if there something in it
-      if search_request['tags'].length > 0
-        search_request['tags'].each { |tag| 
-          if !tag.is_a?(String)
-            return [400, "Bad Request"]
-          else
-          end
-        }
-      else
-        return [400, "Bad Request"]
-      end
+    return checked_data
 
-    else
-      return [400, "Bad Request"]
-    end
+  end 
 
-  return {tags: search_request['tags'], \
-    currentPage: search_request['currentPage'], \
-    categories_id: search_request['categories_id']}
+  # Function that receiving data 
+  # and checks if it array and
+  # has strings inside 
+  def self.tags_check(tags)
+
+    halt 400, "Tags must be array" if !tags.is_a?(Array) 
+    
+    halt 400, "No tags in array" if tags.empty? 
+
+    tags.each { |tag| 
+      halt 400,  "Tags must be in string" if !tag.is_a?(String)
+    }
+
+    return tags
+
+  end 
+
+  # Function that receiving data
+  # and checks if it array and 
+  # has integers inside
+  def self.category_id_check(categories_id)
+
+    halt 400, "Categories must be array" if !categories_id.is_a?(Array)
+
+    halt 400, "No categories in array" if categories_id.empty?
+    
+    categories_id.each { |category| 
+      halt 400, "Categories must be integer" if !category.is_a?(Fixnum)
+    }
+
+    return categories_id
+
+  end
+  
+  # Checks if data is integer
+  def self.current_page_check(current_page)
+
+    halt 400, "Current page must be integer" if !current_page.is_a?(Fixnum)
+
+    return current_page
 
   end 
 

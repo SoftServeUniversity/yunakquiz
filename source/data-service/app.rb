@@ -92,11 +92,11 @@ module PlastApp
 
     post '/search' do
       content_type :json
-      search_request = JSON.parse(request.body.read) 
+      query = JSON.parse(request.body.read) 
 
-      # This function is part of module SerchQuizzes
+      # This function is part of SerchQuizzes class
       # checkout /models/searchQuizzes.rb for details
-      SearchQuizzes.withTags(search_request) 
+      SearchQuizzes.withTags(query) 
 
     end
 
