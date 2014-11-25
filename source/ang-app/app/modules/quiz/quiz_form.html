@@ -1,0 +1,65 @@
+<div class="row">
+	<form name="quizFormName" novalidate>
+			<div class="jumbotron" ng-class="{'col-md-12':quiz.id, 'col-md-8 col-md-offset-2':!quiz.id}">
+		
+				<label class="col-md-5 control-label text-right">Назва тесту</label>
+				<div class="col-md-7 ">
+					<input unique="{id: quiz.id, property: 'title'}" ng-model="quiz.title" name="title" class="form-control" type="text" required />
+					<div  ng-show="quizFormName.title.$error.unique" class="text-danger"> * Тест з такою назвою вже існує !</div>
+					<div  ng-show="quizFormName.title.$error.transfer" class="text-danger"> * помилка, спробуйте ще раз</div>
+				</div>
+			
+			
+				<label class="col-md-5 control-label quizMarginTop text-right">Опис тесту</label>
+				<div class="col-md-7 quizMarginTop ">
+					<textarea ng-model="quiz.description" class="form-control"  type="text" required></textarea>
+				</div>
+			
+				<label class="col-md-5 control-label quizMarginTop text-right">Теги до тесту</label>
+				<div class="col-md-7 quizMarginTop ">
+					<tags-input ng-model="quiz.tags" display-property="tag" add-on-comma="false" add-on-space="true"  placeholder="Додайте теги">
+						<auto-complete source="loadTags($query)" load-on-focus="true"></auto-complete>
+					</tags-input>
+				</div>
+			
+				<label class="col-md-5 control-label quizMarginTop  text-right">Категорія</label>
+				<div class="col-md-7 quizMarginTop ">
+					<select ng-change="clearSubcat()" ng-model="selectedCat" ng-options="category.title for category in categories" class="form-control" required>
+						<option ng-hide="selectedCat" value="">Оберіть Категорію</option>
+					</select>
+			   	</div>
+			   
+			   
+				<label class="col-md-5 control-label quizMarginTop  text-right">Підкатегорія</label>
+				<div class="col-md-7 quizMarginTop ">
+					<select ng-model="selectedSubcat" ng-change="setSubcat()" ng-options="subcat.title for subcat in selectedCat.categories track by subcat.id" class="form-control" required>
+						<option ng-hide="selectedSubcat" value="">Оберіть Підкатегорію</option>
+					</select>
+				</div>	
+			</div>
+
+			<div ng-repeat="question in quiz.questions | filter:filterFunction as questions"  class="well questionField" ng-class="{'col-md-12':quiz.id, 'col-md-8 col-md-offset-2':!quiz.id}">
+				
+				<input ng-model="question.title" class="form-control" placeholder="Введіть текст запитання" type="text" required />
+										
+				<textarea ng-model="question.description" class="form-control quizMarginTop" placeholder="Введіть пояснення до запитання" type="text" required>
+				</textarea>
+						
+				<div ng-repeat="answer in question.answers | filter:filterFunction as answers"  class="input-group quizMarginTop col-sm-11  col-xs-12  col-sm-offset-1">
+				    <span ng-click="setCorrectAnswer(question,answer)" class="input-group-addon glyphicon quizBtnFix glyphicon-ok markCorrectAnswerBtn" ng-class="{'quizCorrectAnswer':answer.correct}">
+				    </span>
+				    <input ng-model="answer.title" type="text" class="form-control" placeholder="Введіть відповідь" type="text" required />
+				    <span  ng-show="answers.length>MIN_ASWERS_QTY" ng-click="deleteAnswer(answer, question)" class="btn input-group-addon glyphicon glyphicon-remove quizDeleteAnswer quizBtnFix">
+				    </span>
+				</div>
+				<div ng-show="question.invalid" class="quizMarginTop col-sm-11 col-xs-12 col-sm-offset-1 text-danger">* Позначте хоча б одну правильну відповідь</div>
+				<button ng-click="addAnswer(question)" class="btn btn-info quizMarginTop"><span class="glyphicon glyphicon-plus"></span> Додати відповідь</button>
+				<div ng-show="questions.length>MIN_QUESTIONS_QTY" ng-click="deleteQuestion(question)" class="closeButton glyphicon glyphicon-remove"></div>
+			</div>
+			<div ng-class="{'col-md-12':quiz.id, 'col-md-8 col-md-offset-2':!quiz.id}">
+				<button ng-click="addQuestion()" class="btn btn-info"><span class="glyphicon glyphicon-plus"></span> Додати питання</button>
+			</div>
+
+		</form>
+</div>
+	

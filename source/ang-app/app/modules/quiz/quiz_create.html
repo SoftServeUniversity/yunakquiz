@@ -1,0 +1,11 @@
+<div ng-show="quiz" class="quiz row">
+	<h3 class="text-center assessment-title">Створення нового тесту</h3>
+	<div ng-if="errorMsg" ng-bind="errorMsg" class="alert col-sm-12 text-center alert-danger">
+	</div>
+		<quiz-form  quiz="quiz" quiz-form-name="quizFormName"> </quiz-form>
+		<div class="quizMarginTop text-center">
+			<button ng-click="saveQuiz()" ng-disabled="quizFormName.$invalid" class="btn btn-warning">Зберегти в чорновик</button>
+			<button ng-click="reviewQuiz()" ng-disabled="quizFormName.$invalid" class="btn btn-success">Відправити на модерацію</button>  
+		</div>
+</div>
+	
