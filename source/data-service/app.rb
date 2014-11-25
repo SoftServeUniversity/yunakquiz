@@ -352,17 +352,16 @@ module PlastApp
       Quiz.lastQuizzes(params['id'])
     end
     
-    post '/checkpassword/' do
-      content_type :json
+    post '/checkpass' do
       data = JSON.parse(request.body.read)
       if session[:user_id]
         userToCheck = User.find(session[:user_id])
         user = User.authenticate(userToCheck['username'], data['password'])
       end
       if user
-        return [200, 'ok']
+        return [200, 'Password Matched']
       end
-      return [400, 'bad request']
+      return [400, 'Невірний пароль']
     end
 
     post '/admin/users' do
@@ -371,22 +370,25 @@ module PlastApp
      response_helper @users, "Users not found!"
     end
 
-    delete '/admin/users:id' do
+    delete '/admin/users/:id' do
       user = User.find(params['id'])
       if !user.nil?
+        quizes = Quiz.where(user_id: params['id'])
+        quizes.update(user_id: 4)
         user.destroy
         return [200, 'ok']
       end
       return [400, 'User not found']
     end
 
-    put '/admin/users:id' do
+    put '/admin/users/:id/status' do
+      data = JSON.parse(request.body.read)
       user = User.find(params['id'])
       if !user.nil?
-        if user.enabled?
+        if data['status'] == "blocked"
           user.blocked!
           user.save
-        else 
+        else
           user.enabled!
           user.save
         end
@@ -395,7 +397,7 @@ module PlastApp
       return [400, 'user not found']
     end
 
-    put '/admin/user_role:id' do
+    put '/admin/users/:id/role' do
       data = JSON.parse(request.body.read)
       user = User.find(params['id'])
       if !user.nil?

@@ -440,4 +440,10 @@ box-shadow: 0px 0px 21px 0px rgba(0,0,0,0.75);
   border-color:red;
 }
 /*end of registration page*/
+.binocular {
+  width: 30%;
+}
+.page500 {
+  width: 50%
+}
 

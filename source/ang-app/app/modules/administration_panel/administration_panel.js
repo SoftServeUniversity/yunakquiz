@@ -34,54 +34,54 @@
     }]);
     app.constant('Roles', {
       1: "Адміністратор",
-      2: "Користувач",
-      3: "Модератор",
+      2: "Модератор",
+      3: "Користувач",
       4: "Убер адміністратор"
     });
 
-    app.controller('ModalConfirmCtrl', ['$scope','$modalInstance', function($scope, $modalInstance) {
-  
-    $scope.clearMsg = function(){
-      if($scope.errorMsg) $scope.enteredPassword = "";
-      $scope.errorMsg ="";
-    };
-
-    $scope.ok = function () {
-      var password = "qwerty";
-      if($scope.enteredPassword == password){
-        $scope.clearMsg();
-        $modalInstance.close();
+    app.constant('TabsOutputData', {
+      '/administration-panel/administrationTab': {
+        currentPage: 1,
+        itemsPerPage: 10,
+        searchData:'',
+        status: 'enabled',
+        roles: [1,4]
+      },
+      '/administration-panel/moderatorsTab': {
+        currentPage: 1,
+        itemsPerPage: 10,
+        searchData:'',
+        status: 'enabled',
+        roles: 2
+      },
+      '/administration-panel/': {
+      currentPage: 1,
+      itemsPerPage: 10,
+      searchData:'',
+      status: 'enabled',
+      roles: 3
+      },
+      '/administration-panel/blacklistTab': {
+        currentPage: 1,
+        itemsPerPage: 10,
+        searchData:'',
+        status: 'blocked',
+        roles: [1,2,3,4]
       }
-      else{$scope.errorMsg = "Невірний пароль!"}
-    };
+    });
 
-    $scope.cancel = function () {
-      $modalInstance.dismiss('cancel');
-    };
-
+    app.factory('usersResource', ['$resource',
+    function($resource) {
+      return $resource('http://localhost:9292/admin/users/:id/:action', null,
+        {'update': { method:'PUT' }
+      }); 
     }]);
 
-    app.controller('ModalStatusCtrl', ['$scope','$modalInstance', 'Roles', 'userRole', function($scope, $modalInstance, Roles, userRole) {
-    $scope.roles = Roles;
-    $scope.userRole = userRole;
-  
-    $scope.clearMsg = function(){
-      if($scope.errorMsg) $scope.enteredPassword = "";
-      $scope.errorMsg ="";
-    };
-
-    $scope.ok = function () {
-      var password = "qwerty";
-      if($scope.enteredPassword == password){
-        $scope.clearMsg();
-        $modalInstance.close($scope.newUserRole);
-      }
-      else{$scope.errorMsg = "Невірний пароль!"}
-    };
-
-    $scope.cancel = function () {
-      $modalInstance.dismiss('cancel');
-    };
-
+    app.factory('passwordCheck', ['$resource',
+    function($resource) {
+      return $resource('http://localhost:9292/checkpass', null,
+        {'update': { method:'PUT' }
+      }); 
     }]);
+
 })();

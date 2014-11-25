@@ -1,11 +1,5 @@
 (function (){
   var  app = angular.module('yunakQuiz.administrationTab' ,['ngRoute','yunakQuiz.permission'])
-  .factory('users', ['$resource',
-    function($resource) {
-      return $resource('http://localhost:9292/admin/users', null,
-        {'update': { method:'PUT' }
-      }); 
-  }])
 
     app.config(['$routeProvider',
       function($routeProvider) {
@@ -13,59 +7,64 @@
           when('/administration-panel/administrationTab', {
             templateUrl: './modules/administration_panel/administration_tab.html',
             controller: 'administrationTab'
+          }).
+           when('/administration-panel/', {
+            templateUrl: './modules/administration_panel/user_tab.html',
+            controller: 'administrationTab'
+          }).
+          when('/administration-panel/userTab', {
+            redirectTo: '/administration-panel/'
+          }).
+          when('/administration-panel/blacklistTab', {
+            templateUrl: './modules/administration_panel/black_list_tab.html',
+            controller: 'administrationTab' 
+          }).
+          when('/administration-panel/moderatorsTab', {
+            templateUrl: './modules/administration_panel/moderators_tab.html',
+            controller: 'administrationTab'
           })
       }
     ]);
 
-    app.controller('administrationTab', ['$scope', 'getAccess','$http', '$location', '$modal', 'Roles', "users", 
-      function ($scope, getAccess,$http, $location, $modal, Roles, users) {
+    app.controller('administrationTab', ['$scope', 'getAccess','$http', '$location', '$modal', 'Roles', 'usersResource','TabsOutputData',
+      function ($scope, getAccess,$http, $location, $modal, Roles, usersResource, TabsOutputData) {
       $scope.tab = 'Адміністрація';
+
       $scope.roles = Roles;
-      
-      $scope.outputData={
-        currentPage: 1,
-        itemsPerPage: 10,
-        searchData:'',
-        status: 'enabled',
-        roles: [1,4]
-      };
+      $scope.url = $location.path();
+      $scope.tabsabsOutputData = TabsOutputData;
+      $scope.outputData = $scope.tabsabsOutputData[$scope.url];
 
       getAccess($scope.tab).then(function(data){
           if(data) {
-      $scope.searchQuery();
-            
-          } else {
-            $location.path( "/404" );
-          }
-        },function(){
-          $location.path( "/404" ); 
-          }
-        );
+            $scope.searchQuery();
+          } 
+          else {
+              $location.path( "/404" );
+          }},function(){
+                  $location.path( "/404" ); 
+            });
+
       $scope.searchQuery = function(){
         $scope.outputData.currentPage = 1;
         $scope.queryList();
       };
 
-      // $scope.queryList = function() {
-      //   users.save($scope.outputData,
-      //     function(data){
-      //       $scope.updateData(data);    
-      //     }, 
-      //     function(response){
-      //      console.log("bad");
-      //     } 
-      // )};
-
       $scope.queryList = function() {
-        $http.post('http://localhost:9292/admin/users', $scope.outputData).success(function(data, status, headers, config) {
-            $scope.updateData(data);        
-        });
-      };
+        usersResource.save($scope.outputData,
+          function(data){
+            $scope.updateData(data);    
+          }, 
+          function(response){
+           console.log("bad");
+          } 
+      )};
 
       $scope.updateData = function(data){
         $scope.users = data.users;
         $scope.totalItems = data.totalItems;
       };
+
 
       $scope.deleteUser = function(userId){
         var modalDelete = $modal.open({
@@ -74,28 +73,53 @@
           size: 'sm'
         });
         modalDelete.result.then(function () {
-          $http.delete('http://localhost:9292/admin/users'+userId).success(function(data) {
-            $scope.searchQuery();
+
+          usersResource.delete({id: userId},
+          function(data){
+            $scope.searchQuery();   
+          }, 
+          function(response){
+           console.log("bad");
           });
         });
       };
 
-      $scope.blockUnblockUser = function(userId){
+      $scope.blockUser = function(userId){
         var modalBlock = $modal.open({
           templateUrl: 'modules/administration_panel/modalBlockUser.html',
           controller: 'ModalConfirmCtrl',
           size: 'sm'
         });
         modalBlock.result.then(function () {
-          $http.put('http://localhost:9292/admin/users'+userId).success(function(data) {
-            $scope.searchQuery();
-          });
+          usersResource.update({id: userId, action: 'status'},{status: "blocked"},
+            function(data){
+              $scope.searchQuery();   
+            }, 
+            function(response){
+             console.log("bad");
+            });
         });
       };
 
+      $scope.unblockUser = function(userId){
+        var modalBlock = $modal.open({
+          templateUrl: 'modules/administration_panel/modalBlockUser.html',
+          controller: 'ModalConfirmCtrl',
+          size: 'sm'
+        });
+        modalBlock.result.then(function () {
+          usersResource.update({id: userId, action: 'status'},{status: "enabled"},
+            function(data){
+              $scope.searchQuery();   
+            }, 
+            function(response){
+             console.log("bad");
+            });
+        });
+      };
 
       $scope.changeStatusUser = function(userId, userRole){
-        var modalBlock = $modal.open({
+        var modalStatus = $modal.open({
           templateUrl: 'modules/administration_panel/modalStatusUser.html',
           controller: 'ModalStatusCtrl',
           size: 'sm', 
@@ -105,14 +129,70 @@
             }
           }
         });
-        modalBlock.result.then(function (newUserRole) {
+        modalStatus.result.then(function (newUserRole) {
           $scope.newUserRole = {
             role: newUserRole
-          }
-          $http.put('http://localhost:9292/admin/user_role'+userId, $scope.newUserRole).success(function(data) {
-            $scope.searchQuery();
-          });
+          };
+          usersResource.update({id: userId, action: 'role'}, $scope.newUserRole,
+            function(data){
+              $scope.searchQuery();   
+            }, 
+            function(response){
+             console.log("bad");
+            });
         });
       };
+
     }]);
+
+    app.controller('ModalConfirmCtrl', ['$scope','$modalInstance', 'passwordCheck',  function($scope, $modalInstance, passwordCheck) {
+
+    $scope.clearMsg = function(){
+      if($scope.errorMsg) $scope.enteredPassword = "";
+      $scope.errorMsg ="";
+    };
+
+    $scope.ok = function () {
+      passwordCheck.save({password: $scope.enteredPassword},
+          function(data){
+              $scope.clearMsg();
+              $modalInstance.close();  
+          }, 
+          function(response){
+           $scope.errorMsg = "Невірний пароль!";
+          });
+    };
+
+    $scope.cancel = function () {
+      $modalInstance.dismiss('cancel');
+    };
+
+    }]);
+
+    app.controller('ModalStatusCtrl', ['$scope','$modalInstance', 'Roles', 'userRole', 'passwordCheck', function($scope, $modalInstance, Roles, userRole, passwordCheck) {
+    $scope.roles = Roles;
+    $scope.userRole = userRole;
+  
+    $scope.clearMsg = function(){
+      if($scope.errorMsg) $scope.enteredPassword = "";
+      $scope.errorMsg ="";
+    };
+
+    $scope.ok = function () {
+      passwordCheck.save({password: $scope.enteredPassword},
+          function(data){
+              $scope.clearMsg();
+              $modalInstance.close($scope.newUserRole);  
+          }, 
+          function(response){
+           $scope.errorMsg = "Невірний пароль!";
+          });
+    };
+
+    $scope.cancel = function () {
+      $modalInstance.dismiss('cancel');
+    };
+
+    }]);
+
 })();
