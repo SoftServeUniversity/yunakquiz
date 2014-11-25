@@ -100,12 +100,15 @@ module PlastApp
     ## Validate if quiz title exists
     post '/admin/assessments/title' do
       data = JSON.parse(request.body.read)
-      if data['id']
-        query = Quiz.where(title: data['query']).where.not(id: data['id']).exists? 
-      else
-        query = Quiz.where(title: data['query']).exists?
-      end  
-      @result = {titlePresent: query}
+      query = Quiz.where(title: data['query']).exists?
+      @result = {present: query}
+      response_helper @result, "Error"
+    end
+
+    post '/admin/assessments/:id/title' do
+      data = JSON.parse(request.body.read)
+      query = Quiz.where(title: data['query']).where.not(id: params['id']).exists? 
+      @result = {present: query}
       response_helper @result, "Error"
     end
     ## Quiz resource end
@@ -180,25 +183,24 @@ module PlastApp
     ##Quiz comments section end
 
     ##User_statistic block
-    get '/statistic/general' do
+    get '/statistic' do
       user = User.find(session[:user_id])
       created = user.quizzes.count()
-      passed = user.results
-      grade = []
-      passed.each do |item|
-        grade.push(item.grade)
-      end
-      @statistic = {user_id:session[:user_id], created:created, passed:grade}
+      passed = user.results.count()
+      average = user.results.average(:grade).round(2)
+      statistic = {user_id:session[:user_id], created:created, passed:passed, average:average}
 
-      response_helper @statistic, ["not found!"]
+      response_helper statistic, ["not found!"]
     end
 
-    get '/statistic/list' do
-      quizzes = Quiz.joins(:results)
-      .where(:results => { :user_id =>session[:user_id]}).select("id,title").group('id')
-      .as_json(:include => {:results =>{:only => [:grade,:created_at]}})
+    get '/statistic/:page/:per_page' do
+      query = Quiz.joins(:results).where(:results => {:user_id =>session[:user_id]})
+      .select("id,title").group('id')
+      total_items = query.as_json.count()
+      quizzes = query.offset((params['page'].to_i-1)*params['per_page'].to_i).limit(params['per_page'])
+      result = Result.get_result(quizzes,total_items)
 
-      response_helper quizzes, ["not found!"]
+      response_helper result, ["not found!"]
     end 
     ##User_statistic block's end
 
@@ -400,20 +402,12 @@ module PlastApp
       [200, {'success' => "success"}.to_json]
     end
 
-    # For all categories
-    get '/guest-search' do
-      content_type :json
-      Category.select('id, category_id, title').to_json
-    end 
-
     post '/search' do
       content_type :json
-      search_request = JSON.parse(request.body.read) 
-
-      # This function is part of module SerchQuizzes
+      query = JSON.parse(request.body.read) 
+      # This function is part of SerchQuizzes class
       # checkout /models/searchQuizzes.rb for details
-      SearchQuizzes.withTags(search_request) 
-
+      SearchQuizzes.withTags(query) 
     end
 
     get '/last_quizzes/:id' do

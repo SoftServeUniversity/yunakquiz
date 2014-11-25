@@ -10,6 +10,7 @@ guestSearch.controller('SearchCtrl', ['$scope', '$http',
   $scope.tags = [];
   $scope.searchResults = {};
   $scope.searchError = 0;
+  $scope.searchRequest = {};
 
   // Pagination part
   // Init pagination part 
@@ -21,25 +22,12 @@ guestSearch.controller('SearchCtrl', ['$scope', '$http',
   // and checks recived data
   $scope.searchData = function(allCats) {
 
-    // Clean searchRequest variable
-    $scope.searchRequest = {categories_id:[], tags:[]};
-
-    // Writing selected cat in search request
-    $scope.searchRequest.categories_id=guestSearchFactory.checkAllCats(allCats);
-    
-    // Adding all tags to request
-    // and all tags to lower case 
-    for (var i = 0 ; $scope.tags.length > i ; i++) {
-      $scope.searchRequest.tags.push($scope.tags[i].text.toLowerCase());
+    // Init search request
+    $scope.searchRequest = { 
+      categories_id: guestSearchFactory.checkAllCats(allCats), 
+      tags: guestSearchFactory.checkTags($scope.tags), 
+      currentPage: 0
     };
-
-    // Check if there were some tags
-    // if not search response all quizzes
-    if ($scope.searchRequest.tags.length === 0) {
-      $scope.searchRequest.tags = ['_']; // It takes all words 
-    };
-
-    $scope.searchRequest.currentPage = 0;
 
     // Main request to server for search
     // If it empty show error
