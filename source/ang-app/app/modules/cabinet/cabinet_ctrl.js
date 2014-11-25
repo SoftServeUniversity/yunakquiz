@@ -58,7 +58,7 @@ angular.module('yunakQuiz.cabinet')
       QuizResource.delete({id:quizId}, function(){ $scope.searchQuery() })
     });
   };
-  
+
   if (getAccess($location.path(),$route.current.permission)) {
     $scope.queryList();
   } else {
