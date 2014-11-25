@@ -16,22 +16,22 @@
       </li>
     </ul>
   </div>
+  <div class="col-md-2">
     <a href="" data-toggle="modal" data-target="#login" ng-hide="appCtrl.userLoggedIn()"> 
-      <img class="login-header-menu " src="./modules/img/login.jpg" alt="Login" height="42" width="42" >
+      <img class="login-header-menu " src="./modules/img/login.jpg" alt="Login" height="40" width="40" >
     </a>
-    <div class="col-md-2">
-      <div class="dropdown" ng-show="appCtrl.userLoggedIn()">
-        <a class="btn btn-xs dropdown-toggle" data-toggle="dropdown" href="">
-          <h4>{{appCtrl.user.username}}<span class="caret"></span></h4>
-        </a>
-        <ul class="dropdown-menu" role="menu">
-          <li ng-repeat="currentTab in tabs" role="presentation">
-            <a role="menuitem" tabindex="-1" href="#{{currentTab.temp}}">{{currentTab.caption}}</a>
+    <div  dropdown on-toggle="toggled(open)" ng-show="appCtrl.userLoggedIn()">
+      <a href class="btn " dropdown-toggle>
+        {{appCtrl.user.username}}<span class="caret"></span>
+      </a>
+        <ul class="dropdown-menu">
+          <li ng-repeat="currentTab in tabs">
+            <a href="#{{currentTab.temp}}">{{currentTab.caption}}</a>
           </li>
-          <li role="presentation">
-            <a role="menuitem" tabindex="-1" href="#" ng-click="appCtrl.logout()">Вийти</a>
+          <li>
+            <a href="#/" ng-click="appCtrl.logout()">Вийти</a>
           </li>
         </ul>
-      </div>
     </div>
+  </div>
 </div>

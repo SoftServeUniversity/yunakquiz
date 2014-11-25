@@ -100,12 +100,15 @@ module PlastApp
     ## Validate if quiz title exists
     post '/admin/assessments/title' do
       data = JSON.parse(request.body.read)
-      if data['id']
-        query = Quiz.where(title: data['query']).where.not(id: data['id']).exists? 
-      else
-        query = Quiz.where(title: data['query']).exists?
-      end  
-      @result = {titlePresent: query}
+      query = Quiz.where(title: data['query']).exists?
+      @result = {present: query}
+      response_helper @result, "Error"
+    end
+
+    post '/admin/assessments/:id/title' do
+      data = JSON.parse(request.body.read)
+      query = Quiz.where(title: data['query']).where.not(id: params['id']).exists? 
+      @result = {present: query}
       response_helper @result, "Error"
     end
     ## Quiz resource end
