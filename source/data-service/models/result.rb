@@ -7,7 +7,7 @@ class Result < ActiveRecord::Base
   	user.results.create(quiz: @quiz, grade: grade)
   end
 
-  def self.get_result(quizzes)
+  def self.get_result(quizzes,total_items)
   	result = []
       quizzes.each do |quiz|
         stat_res ={}
@@ -20,7 +20,7 @@ class Result < ActiveRecord::Base
         stat_res[:average] = quiz.results.average(:grade).round(2)
         result << stat_res
       end
-      result
+      {result: result, totalItems: total_items}
    end	
 
 end

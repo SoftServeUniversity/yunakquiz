@@ -180,21 +180,22 @@ module PlastApp
     ##Quiz comments section end
 
     ##User_statistic block
-    get '/statistic/general' do
+    get '/statistic' do
       user = User.find(session[:user_id])
       created = user.quizzes.count()
       passed = user.results.count()
       average = user.results.average(:grade).round(2)
+      statistic = {user_id:session[:user_id], created:created, passed:passed, average:average}
 
-      @statistic = {user_id:session[:user_id], created:created, passed:passed, average:average}
-
-      response_helper @statistic, ["not found!"]
+      response_helper statistic, ["not found!"]
     end
 
-    get '/statistic/list' do
-      quizzes = Quiz.joins(:results).where(:results => { :user_id =>session[:user_id]})
+    get '/statistic/:page/:per_page' do
+      query = Quiz.joins(:results).where(:results => {:user_id =>session[:user_id]})
       .select("id,title").group('id')
-      result = Result.get_result(quizzes)
+      total_items = query.as_json.count()
+      quizzes = query.offset((params['page'].to_i-1)*params['per_page'].to_i).limit(params['per_page'])
+      result = Result.get_result(quizzes,total_items)
 
       response_helper result, ["not found!"]
     end 

@@ -24,3 +24,12 @@
 		</tr>
 	</tbody>
 </table>
+<div ng-show="totalItems>pagination.perPage" class="row text-center">
+	<pagination total-items="totalItems" ng-model="pagination.page" ng-change="query()"  items-per-page="pagination.perPage" class="pagination" ></pagination>
+		<div class="pagination pull-right">
+			<select ng-change="query()" ng-model="pagination.perPage" class="form-control">
+				<option ng-repeat="item in items_per_page" value="{{item}}">{{item}}</option>
+				<option value="{{totalItems}}">Всі</option>
+			</select>
+		</div>
+</div>
