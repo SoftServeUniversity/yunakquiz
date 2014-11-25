@@ -27,7 +27,7 @@ exports.httpBackendMock = function() {
     "created_at":"2014-11-07T16:17:41.336Z",
     "updated_at":"2014-11-07T16:17:41.336Z"}],"length":2};
 
-    $httpBackend.whenGET('http://localhost:9292/guest-search').respond(allCategories);
+    $httpBackend.whenGET('http://localhost:9292/categories/all').respond(allCategories);
     $httpBackend.whenGET().passThrough();
 
     $httpBackend.whenPOST('http://localhost:9292/search').respond(postResult);

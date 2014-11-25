@@ -84,12 +84,6 @@ module PlastApp
       end
     end
 
-    # For all categories
-    get '/guest-search' do
-      content_type :json
-      Category.select('id, category_id, title').to_json
-    end 
-
     post '/search' do
       content_type :json
       query = JSON.parse(request.body.read) 

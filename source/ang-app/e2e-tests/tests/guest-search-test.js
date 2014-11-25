@@ -87,7 +87,7 @@ describe('Guest search page', function() {
 
     it('When i prees on quiz title i should redirect to quiz pass page', function() {
       element(by.css('[href="#/assessments/3"]')).click();
-      expect(browser.driver.getCurrentUrl()).toMatch("#/assessments/3");
+      expect(browser.driver.getCurrentUrl()).toMatch("http://localhost:8000/#/404");
     });
 
   });  
