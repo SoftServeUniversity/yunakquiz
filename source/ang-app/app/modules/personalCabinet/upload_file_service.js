@@ -26,7 +26,7 @@ angular.module("yunakQuiz.personalCabinet")
       service.syncUserAvatar();
     });
     this.$flow.upload();
-};
+  };
      
   UploadFile.prototype.changeAvatar = function(){
     var service = this;
