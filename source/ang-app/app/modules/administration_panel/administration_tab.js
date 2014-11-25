@@ -27,7 +27,7 @@
     ]);
 
     app.controller('administrationTab', ['$scope', 'getAccess','$http', '$location', '$modal', 'Roles', 'usersResource','TabsOutputData', 'pwdCheck',
-      function ($scope, getAccess,$http, $location, $modal, Roles, usersResource, TabsOutputData, pwdCheck) {
+      function ($scope, getAccess, $http, $location, $modal, Roles, usersResource, TabsOutputData, pwdCheck) {
 
       $scope.roles = Roles;
       $scope.url = $location.path();
@@ -140,7 +140,7 @@
 
     }]);
 
-    app.controller('ModalConfirmCtrl', ['$scope','$modalInstance', 'passwordCheck', 'pwdCheck', function($scope, $modalInstance, passwordCheck, pwdCheck) {
+    app.controller('ModalConfirmCtrl', ['$scope','$modalInstance', 'pwdCheck', function($scope, $modalInstance, pwdCheck) {
 
     $scope.clearMsg = function(){
       if($scope.errorMsg) $scope.enteredPassword = "";
@@ -148,14 +148,13 @@
     };
 
     $scope.ok = function () {
-      passwordCheck.save({password: $scope.enteredPassword},
-          function(data){
-              $scope.clearMsg();
-              $modalInstance.close();  
-          }, 
-          function(response){
-           $scope.errorMsg = "Невірний пароль!";
-          });
+
+      pwdCheck($scope.enteredPassword).success(function (data) {
+          $scope.clearMsg();
+          $modalInstance.close();
+        }).error(function (data) {
+          $scope.errorMsg = "Невірний пароль!";
+        });
     };
 
     $scope.cancel = function () {
@@ -164,10 +163,10 @@
 
     }]);
 
-    app.controller('ModalStatusCtrl', ['$scope','$modalInstance', 'Roles', 'userRole', 'passwordCheck', 'pwdCheck', function($scope, $modalInstance, Roles, userRole, passwordCheck, pwdCheck) {
+    app.controller('ModalStatusCtrl', ['$scope','$modalInstance', 'Roles', 'userRole', 'pwdCheck', function($scope, $modalInstance, Roles, userRole, pwdCheck) {
     $scope.roles = Roles;
     $scope.userRole = userRole;
-  
+
     $scope.clearMsg = function(){
       if($scope.errorMsg) $scope.enteredPassword = "";
       $scope.errorMsg ="";
@@ -181,17 +180,6 @@
             }).error(function (data) {
                 $scope.errorMsg = "Невірний пароль!";
             });
-
-
-
-      // passwordCheck.save({password: $scope.enteredPassword},
-      //     function(data){
-      //         $scope.clearMsg();
-      //         $modalInstance.close($scope.newUserRole);  
-      //     }, 
-      //     function(response){
-      //      $scope.errorMsg = "Невірний пароль!";
-      //     });
     };
 
     $scope.cancel = function () {

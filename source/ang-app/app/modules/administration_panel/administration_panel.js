@@ -31,8 +31,8 @@
     }]);
     app.constant('Roles', {
       1: "Адміністратор",
-      2: "Користувач",
-      3: "Модератор",
+      2: "Модератор",
+      3: "Користувач",
       4: "Убер адміністратор"
     });
 
@@ -70,13 +70,6 @@
     app.factory('usersResource', ['$resource',
     function($resource) {
       return $resource('http://localhost:9292/admin/users/:id/:action', null,
-        {'update': { method:'PUT' }
-      }); 
-    }]);
-
-    app.factory('passwordCheck', ['$resource',
-    function($resource) {
-      return $resource('http://localhost:9292/checkpassword', null,
         {'update': { method:'PUT' }
       }); 
     }]);
