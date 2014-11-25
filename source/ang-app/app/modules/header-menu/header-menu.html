@@ -21,8 +21,8 @@
       <img class="login-header-menu " src="./modules/img/login.jpg" alt="Login" height="40" width="40" >
     </a>
     <div  dropdown on-toggle="toggled(open)" ng-show="appCtrl.userLoggedIn()">
-      <a href class="btn " dropdown-toggle>
-        {{appCtrl.user.username}}<span class="caret"></span>
+      <a href class="btn btn-xs" dropdown-toggle>
+        <h4>{{appCtrl.user.username}}<span class="caret"></span></h4>
       </a>
         <ul class="dropdown-menu">
           <li ng-repeat="currentTab in tabs">
