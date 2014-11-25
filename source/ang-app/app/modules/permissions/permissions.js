@@ -184,7 +184,6 @@ angular.module('yunakQuiz.permission', ['ngRoute'])
 
       tabs = getTabTemplates.getTabs(role);
       if (!tabs) {
-        console.log("fail");
         return false;
       }; 
       angular.forEach(tabs, function (tab) {
