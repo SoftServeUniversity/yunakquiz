@@ -6,15 +6,16 @@ angular.module('yunakQuiz.assessments')
     require: 'ngModel',
     link: function (scope, element, attrs, ngModel) {
       function validate() {
-        console.log(attrs.unique)
-        if (!ngModel || !element.val()) {
+        var quiz_id = scope.$parent.quiz.id;
+        var property = attrs.name;
+        var propertyValue = element.val().trim();
+        
+        if (!propertyValue) {
           ngModel.$setValidity('unique', true);
           scope.$apply();
           return
         }
-        QuizResource.validate(
-          scope.$eval(attrs.unique), 
-          {query: element.val().trim()}, 
+        QuizResource.validate({id: quiz_id, property: property}, {query: propertyValue}, 
           function(data){ 
             ngModel.$setValidity('unique', !data.present);
             ngModel.$setValidity('transfer', true);
