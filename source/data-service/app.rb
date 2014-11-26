@@ -436,9 +436,8 @@ module PlastApp
     delete '/admin/users/:id' do
       user = User.find(params['id'])
       if !user.nil?
-        # quizes = Quiz.where(user_id: params['id'])
-        # puts "hohohohoh #{quizes}"
-        # quizes.update(user_id: 4)
+        quizes = Quiz.where(user_id: params['id'])
+        quizes.update_all(user_id: 4)
         user.destroy
         return [200, 'ok']
       end
