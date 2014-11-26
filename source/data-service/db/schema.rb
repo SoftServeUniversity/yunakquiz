@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141013210013) do
+ActiveRecord::Schema.define(version: 20141027113651) do
 
   create_table "answers", force: true do |t|
     t.integer "question_id"
@@ -22,6 +22,13 @@ ActiveRecord::Schema.define(version: 20141013210013) do
   create_table "categories", force: true do |t|
     t.integer  "category_id"
     t.string   "title"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "comments", force: true do |t|
+    t.integer  "quiz_id"
+    t.string   "text"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -38,6 +45,7 @@ ActiveRecord::Schema.define(version: 20141013210013) do
     t.integer  "category_id"
     t.string   "title"
     t.text     "description"
+    t.integer  "status",      default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -45,6 +53,12 @@ ActiveRecord::Schema.define(version: 20141013210013) do
   create_table "quizzes_tags", id: false, force: true do |t|
     t.integer "quiz_id"
     t.integer "tag_id"
+  end
+
+  create_table "staticinfos", force: true do |t|
+    t.text     "about_us"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "tags", force: true do |t|

@@ -1,5 +1,5 @@
 (function(){
-angular.module("yunakQuiz.personalCabinet")
+angular.module("yunakQuiz.cabinet")
 .factory("uploadFileService", ["userService", function(userService){
   function UploadFile($flow){
     this.$flow = $flow;

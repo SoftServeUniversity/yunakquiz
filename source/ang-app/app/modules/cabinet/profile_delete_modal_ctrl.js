@@ -33,7 +33,7 @@ angular.module("yunakQuiz.cabinet")
         });
         userService.remove(requestParams,
         function (data) {
-          modalInstance.close(data);
+          $modalInstance.close(data);
         },
         function () {
           $scope.deleteError = "Невірно введений пароль";

@@ -57,13 +57,9 @@
   font: 18px italic arial;     
   color: #9b9a9a;
 }
-.pageTitleBox {
-  height: 50px;
+.pageTitle{
+  line-height: 50px;
   margin-bottom: 20px;
-}
-.pageTitle {
-  margin-bottom: 15px;
-  margin-top: 15px;
   text-align: center;
 }
 .greetings-container{
@@ -79,72 +75,26 @@
   position: relative;
   min-height: 100%;
 }
-.pageTitleBox {
-  height: 50px;
-  margin-bottom: 20px;
-}
-.pageTitle {
-  margin-bottom: 15px;
-  margin-top: 15px;
-  text-align: center;
-}
-.form-group {
-  margin-bottom: 15px;
-}
+
 /* assessment styles */
-.quizMarginTop{
-  margin-top:20px;
-}
-.questionField{
-  position:relative;
-}
-.closeButton{
-  position:absolute;
-  top:5px; 
-  right:5px;
-   cursor:pointer;
- }
-.assessmentQuestion>li{
-  margin-top:10px;
-}
-.quizBtnFix{
-  position:relative;
-  top:0;
-   width:40px;
-    cursor:pointer;
+.assessmentQuestions>li{
+  list-style-position:inside;
+  padding-left:15px;
   }
-.markCorrectAnswerBtn{
-  opacity:0.4;
-}
-.quizCorrectAnswer{
-  background:#99E6AC;
-  opacity:1;
-}
-.quizDeleteAnswer{
-  background:#F69999;
-}
-.assessmentAnswer>li{
+
+.assessmentAnswers li {
   cursor:pointer;
+  padding:5px;
+  margin:5px;
+  list-style-type:lower-alpha;
 }
-.assessment-title{
-  background:#428bca;
-  color:#fff; 
-  line-height:50px;
-  margin:0 0 20px 0;
+
+.assessmentQuestionInvalid{
+  background:rgb(255,0,0);
 }
-.nav-tabs>li.persCabActive>a{
-  background:#31b0d5;
-  color:#fff;
-  border-color:#31b0d5;
-}
-.nav-tabs>li.persCabActive>a:hover{
-  border-color:#31b0d5;
-  cursor:default;
-}
-.quiz .ng-dirty.ng-invalid{
-  border-color: #a94442;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-  box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+
+.assessmentAnswerChecked {
+  background:rgb(192,192,192);
 }
 
 .assessmentAnswerCorrect {
@@ -155,13 +105,61 @@
   background:rgb(255,0,0);
 }
 /* end assessment styles */
+
+/*Category Container*/
+.triangle-topright {
+  width: 0;
+  height: 0;
+  border-top: 15px solid rgb(6,106,255);
+  border-left: 15px solid transparent;
+}
+.rectangle {
+  color:white;
+  position: relative;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 2px;
+  display: block;
+  width: 120px;
+  height: 23px;
+  overflow: hidden;
+  background: rgb(74,147,255);
+  text-align: center;
+  z-index: 2;
+}
+.rectangle a {
+color: white;
+}
+.categories-container{
+  border: 1px solid #ccc;
+  padding: 18px 20px 0px;
+  margin-bottom: 30px;
+  margin-top: -25px;
+  margin-left: 14px;
+  z-index: 1;
+}
+/* eof Category container*/
+
+/* login styles */
+.modal-header {
+	background-color: #eae8e8;
+	border-radius: 7px 7px 0px 0px;
+}
+
+.border {
+	border: 1px solid #990000;
+}
+
+.form-label {
+	min-width: 22%;
+}
+/* end login styles */
+/* profile styles */
 .profile-avatar {
     width: 170px;
     height: 170px;
 }
-
 .profile-container {
 	margin-top: 20px;
 }
-
-/* end assessment styles */
+/* end profile styles */

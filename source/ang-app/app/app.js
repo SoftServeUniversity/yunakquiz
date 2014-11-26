@@ -2,13 +2,11 @@
 
 // Declare app level module which depends on views, and components
 angular.module('yunakQuiz', [
-  'ui.bootstrap',
   'ngRoute',
   'ngResource',
   'yunakQuiz.measures',
   'yunakQuiz.assessments',
-  'yunakQuiz.personalCabinet',
-  'yunakQuiz.moderationCabinet',
+  'yunakQuiz.cabinet',
   'yunakQuiz.users',
   'yunakQuiz.sessions',
   'yunakQuiz.version',
@@ -20,25 +18,14 @@ angular.module('yunakQuiz', [
   'yunakQuiz.subcategory',
   'ngTagsInput'
  ])
-
 .config(['$routeProvider',
- 	function($routeProvider) {
- 		$routeProvider
+  function($routeProvider) {
+    $routeProvider
       .when('/', {
-     		templateUrl: 'modules/partials/home-page-greetings.html',
-     	})
+        templateUrl: 'modules/partials/home-page-greetings.html',
+      })
       .otherwise({
-     	  redirectTo: '/'
+        redirectTo: '/'
       });
   }
-])
-.constant('paginationConfig', {
-  boundaryLinks: true,
-  directionLinks: true,
-  maxSize : 10,
-  rotate: false,
-  firstText: '≪',
-  previousText: '<',
-  nextText: '>',
-  lastText: '≫'
-});
+]);

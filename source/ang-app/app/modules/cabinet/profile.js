@@ -1,5 +1,5 @@
 (function(){
-angular.module('yunakQuiz.personalCabinet')
+angular.module('yunakQuiz.cabinet')
 .config(["flowFactoryProvider", function(flowFactoryProvider) {
   flowFactoryProvider.defaults = {
     target: 'http://localhost:9292/avatar',
