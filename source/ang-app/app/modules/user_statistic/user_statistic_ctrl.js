@@ -14,10 +14,28 @@ angular.module('yunakQuiz.userStatistic')
 
   function getSuccess(data) {
     $scope.statistic = data
+    setBarClass(data.average)
   };
   
   function getError(response) { 
     $scope.errorMsg = response.data || 'Дані не отримано'
+  };
+
+  function setBarClass(data){
+    switch (true) {
+      case (data>75):
+        $scope.barClass = 'progress-bar-success';
+        break;
+      case (data>50 && data<=75):
+        $scope.barClass = 'progress-bar-info';
+        break;
+      case (data>25 && data<=50):
+        $scope.barClass = 'progress-bar-warning';
+        break;
+      case (data<=25):
+        $scope.barClass = 'progress-bar-danger';
+        break;
+    };
   };
 
 }])
