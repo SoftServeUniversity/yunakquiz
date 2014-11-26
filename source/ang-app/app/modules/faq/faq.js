@@ -11,6 +11,17 @@
     }
   ]);
 
+  // app.directive('fadeInAnimate', function(){
+  //   return {
+  //     restrict: 'A',
+  //     link: function(){
+  //         $("p").each(function(){
+  //           $(this).fadeIn("slow");
+  //         });
+  //     }
+  //   };
+  // });
+
   app.controller('faqCtrl', ['$scope', '$http', 'QuestionService', function ($scope, $http, QuestionService) {
 
     QuestionService.get().success(function(data){
@@ -31,9 +42,9 @@
     $scope.showAnswer = function(index){
       $scope.Questions[index].visible = !$scope.Questions[index].visible;
       $scope.showIcon(index);
-      $("p").each(function(){
-        $(this).fadeIn("slow");
-      });
+      // $("p").each(function(){
+      //   $(this).fadeIn("slow");
+      // });
     };
           
   }])
