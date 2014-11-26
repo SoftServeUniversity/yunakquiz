@@ -6,7 +6,7 @@
 <p ng-show="errorMsg" ng-bind="errorMsg" class="text-danger text-center"></p>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-danger" ng-click="ok()">Видалити</button>
+    <button class="btn btn-danger" ng-click="ok()" ng-disabled="!pwd.password.length">Видалити</button>
     <button class="btn btn-info" ng-click="cancel()">Відміна</button>
 
 </div>

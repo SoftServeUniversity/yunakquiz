@@ -5,6 +5,7 @@ angular.module('yunakQuiz.assessments')
     restrict: 'A',
     require: 'ngModel',
     link: function (scope, element, attrs, ngModel) {
+      /** Set validity on input uniqueness */
       function validate() {
         var quiz_id = scope.$parent.quiz.id;
         var property = attrs.name;
@@ -25,7 +26,8 @@ angular.module('yunakQuiz.assessments')
           }
         )
       };
-        
+      
+      /** bind validate function on blur event  */  
       element.bind('blur', validate);
     }
   }
@@ -43,9 +45,11 @@ angular.module('yunakQuiz.assessments')
   ['$scope', 'QuizMngService', 'TagsService', 'CategoriesService', 'CONFIG',
   function($scope, QuizMngService, TagsService, CategoriesService, CONFIG){
   
+  /** set default values */
   $scope.MIN_ASWERS_QTY=CONFIG.MIN_ASWERS_QTY;
   $scope.MIN_QUESTIONS_QTY=CONFIG.MIN_QUESTIONS_QTY;
   
+  /** Get categories and set selected values if quiz is loaded */
   CategoriesService.getCat().success(function(data, status, headers, config) {
     $scope.categories=data;  
     $scope.$watch('quiz.id', function(newVal) {
@@ -53,18 +57,22 @@ angular.module('yunakQuiz.assessments')
     });
   });
 
+  /** Promise for autocomplete Tags  */
   $scope.loadTags = function (query) {
       return TagsService.getTags(query)
   };
 
+  /** Clear subcategory on parent category change  */
   $scope.clearSubcat = function(){
     $scope.selectedSubcat='';
   };
 
+  /** Set selected subcategory to Quiz  */
   $scope.setSubcat = function(){
     $scope.quiz.category_id = $scope.selectedSubcat.id;
   };
 
+  /** Define and set selected category according to selected subcategory */
   function selectCat(){
     angular.forEach($scope.categories, function(category){
       if (selectSubcat(category.categories)) {
@@ -73,6 +81,7 @@ angular.module('yunakQuiz.assessments')
     });
   }
 
+  /** Define and set selected subcategory according to quiz.category */
   function selectSubcat(subCatsArray){
     for (var i=0; i < subCatsArray.length; i++){    
       if (subCatsArray[i].id == $scope.quiz.category_id){
@@ -82,18 +91,17 @@ angular.module('yunakQuiz.assessments')
     };
   };
 
-  function successTitle(data){
-    $scope.titleError =  data.titlePresent;
-  };
-  
+  /** Filer elements with toDelete mark */
   $scope.filterFunction = function(element) {
     return !element.toDelete
   };
 
+  /** Add answer */
   $scope.addAnswer = function(question) {
     question.answers.push(new QuizMngService.Answer());
   };
 
+  /** Delete or mark toDelete Answer */
   $scope.deleteAnswer = function(answer, question) {
     if (answer.id){
       answer.toDelete = true;
@@ -104,15 +112,18 @@ angular.module('yunakQuiz.assessments')
     }  
   }
 
+  /** Mark correct answer */
   $scope.setCorrectAnswer=function(question,answer){
     question.invalid = false;
     answer.correct = !answer.correct;
   };
 
+  /** Add answer */
   $scope.addQuestion = function(){
     $scope.quiz.questions.push(new QuizMngService.Question())    
   };
     
+  /** Delet or mark toDelete question */  
   $scope.deleteQuestion = function(question){
     if(question.id){
       question.toDelete = true;
@@ -122,7 +133,5 @@ angular.module('yunakQuiz.assessments')
       $scope.quiz.questions.splice(index, 1);
     }
   };
-
-  
   
 }]);
