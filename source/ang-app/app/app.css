@@ -481,3 +481,10 @@ box-shadow: 0px 0px 21px 0px rgba(0,0,0,0.75);
 }
 /*end of registration page*/
 
+/*404 page*/
+.page404 {
+  width: 30%;
+}
+.page500 {
+  width: 30%
+}
