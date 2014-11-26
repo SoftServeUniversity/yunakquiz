@@ -5,11 +5,13 @@
 	<li class="list-group-item"><span class="badge">{{statistic.created}}</span>Створено тестів </li>
 
 	<li class="list-group-item">
-	<div class="text-center">Середній результат проходження тестів:</div>
-	<div class="progress quizMarginTop">
-	<div class="progress-bar" role="progressbar" aria-valuenow="{{statistic.average}}" aria-valuemin="0" aria-valuemax="100" style="width: {{statistic.average}}%;">
-    {{statistic.average}}
-  </div></div>
+		<span class="badge">{{statistic.average}}</span>Середній результат проходження тестів: 
+
+		<div class="progress quizMarginTop">
+		  <div ng-class="barClass" class="progress-bar" role="progressbar" aria-valuenow="{{statistic.average}}" aria-valuemin="0" aria-valuemax="100" style="width:{{statistic.average}}%">
+		    <span class="sr-only">{{statistic.average}}</span>
+		  </div>
+		</div>
 	</li>
 
 	

@@ -1,20 +1,14 @@
-class SearchQuizzes 
-
-  @QUIZ_PER_PAGE = 10
-
-  public
+module SearchQuizzes 
 
   # Simple function that receiving
   # query from app.rb 
   # and it call main_search and 
   # puts data_check results as an argument 
-  def self.withTags(query)
+  def search_and_check(query)
 
-    return self.main_search(self.data_check(query))
+    return main_search(data_check(query))
         
   end  
-
-  private
 
   # Main search function
   # It's take's hash that contain three 
@@ -22,7 +16,9 @@ class SearchQuizzes
   #       tags (Array),
   #       currentPage (fixnum);
   # And it returns result in json
-  def self.main_search(search_request)
+  def main_search(search_request)
+
+    @QUIZ_PER_PAGE = 10
 
     # To lower case 
     search_request[:tags][0] = search_request[:tags][0].mb_chars.downcase
@@ -71,14 +67,14 @@ class SearchQuizzes
 
   # Function that generate 
   # hash from checked data
-  def self.data_check(query)
+  def data_check(query)
 
     checked_data = {}
 
-    checked_data[:tags] = self.tags_check(query['tags'])  
+    checked_data[:tags] = tags_check(query['tags'])  
     checked_data[:categories_id] = \
-    self.category_id_check(query['categories_id'])  
-    checked_data[:currentPage] = self.current_page_check(query['currentPage'])  
+    category_id_check(query['categories_id'])  
+    checked_data[:currentPage] = current_page_check(query['currentPage'])  
 
     return checked_data
 
@@ -87,7 +83,7 @@ class SearchQuizzes
   # Function that receiving data 
   # and checks if it array and
   # has strings inside 
-  def self.tags_check(tags)
+  def tags_check(tags)
 
     halt 400, "Tags must be array" if !tags.is_a?(Array) 
     
@@ -104,7 +100,7 @@ class SearchQuizzes
   # Function that receiving data
   # and checks if it array and 
   # has integers inside
-  def self.category_id_check(categories_id)
+  def category_id_check(categories_id)
 
     halt 400, "Categories must be array" if !categories_id.is_a?(Array)
 
@@ -119,7 +115,7 @@ class SearchQuizzes
   end
   
   # Checks if data is integer
-  def self.current_page_check(current_page)
+  def current_page_check(current_page)
 
     halt 400, "Current page must be integer" if !current_page.is_a?(Fixnum)
 

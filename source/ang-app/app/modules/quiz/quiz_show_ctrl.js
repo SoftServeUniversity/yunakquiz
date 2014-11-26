@@ -5,18 +5,17 @@ angular.module('yunakQuiz.assessments')
   ['$scope','QuizPassService', '$routeParams', '$location', 
   function($scope, QuizPassService, $routeParams, $location) {
 
-  /** get quiz by _id from  service  */
+  /** get Quiz by Id */
   QuizPassService.getQuiz($routeParams.quiz_id)
     .success(function(data, status, headers, config){
-      QuizPassService.quiz = data;
-      $scope.quiz = QuizPassService.quiz;
+      $scope.quiz = QuizPassService.initQuiz(data);
       $scope.quiz.parentCategory = QuizPassService.quiz.category.category;
     })
     .error(function(data){
       $location.path('/404/');
     });
 
-  /** mark checked answers, and call validate function  */
+  /** Mark answer and validate question  */
   $scope.checkAnswer = function(answer,question){
     answer.checked = !answer.checked;
     QuizPassService.validateQuestion(question);

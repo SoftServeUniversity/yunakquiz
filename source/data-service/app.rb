@@ -9,8 +9,10 @@ module PlastApp
   require 'sinatra/cross_origin'
   require 'sinatra/asset_pipeline'
   require 'securerandom'
+  require './models/search_quizzes.rb'
 
   class YunakQuiz < Sinatra::Base
+    helpers SearchQuizzes
     register Sinatra::AssetPipeline
     register Sinatra::ActiveRecordExtension
     register Sinatra::CrossOrigin
@@ -187,8 +189,8 @@ module PlastApp
       user = User.find(session[:user_id])
       created = user.quizzes.count()
       passed = user.results.count()
-      average = user.results.average(:grade).round(2)
-      statistic = {user_id:session[:user_id], created:created, passed:passed, average:average}
+      average = user.results.average(:grade)||0
+      statistic = {user_id:session[:user_id], created:created, passed:passed, average:average.round(2)}
 
       response_helper statistic, ["not found!"]
     end
@@ -198,7 +200,7 @@ module PlastApp
       .select("id,title").group('id')
       total_items = query.as_json.count()
       quizzes = query.offset((params['page'].to_i-1)*params['per_page'].to_i).limit(params['per_page'])
-      result = Result.get_result(quizzes,total_items)
+      result = Result.get_result(quizzes,total_items,session[:user_id])
 
       response_helper result, ["not found!"]
     end 
@@ -407,7 +409,7 @@ module PlastApp
       query = JSON.parse(request.body.read) 
       # This function is part of SerchQuizzes class
       # checkout /models/searchQuizzes.rb for details
-      SearchQuizzes.withTags(query) 
+      search_and_check(query) 
     end
 
     get '/last_quizzes/:id' do

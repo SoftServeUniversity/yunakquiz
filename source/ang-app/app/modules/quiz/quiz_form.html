@@ -4,7 +4,7 @@
 		
 				<label class="col-md-5 control-label text-right">Назва тесту</label>
 				<div class="col-md-7 ">
-					<input unique="{id: quiz.id, property: 'title'}" ng-model="quiz.title" name="title" class="form-control" type="text" required />
+					<input name="title" unique ng-model="quiz.title" class="form-control" type="text" required />
 					<div  ng-show="quizFormName.title.$error.unique" class="text-danger"> * Тест з такою назвою вже існує !</div>
 					<div  ng-show="quizFormName.title.$error.transfer" class="text-danger"> * помилка, спробуйте ще раз</div>
 				</div>

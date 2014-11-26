@@ -6,10 +6,11 @@
 <div class="FAQ_Page">
 	<div class="col-md-6 col-center">
 		<span ng-repeat="Question in Questions">
-			<a href="" ng-click="showAnswer($index)" ng-class="showIcon($index)">
+			<a href="" ng-click="showAnswer($index)">
 				{{$index+1}}. {{Question.faq_question}}
-			</a>
-			<p id="Question{{$index+1}}" ng-show="Question.visible">
+				<span ng-class="showIcon($index)"></span> 
+			</a><br/>
+			<p class="scale-fade" id="Question{{$index+1}}" ng-show="Question.visible">
 				{{Question.faq_answer}}
 			</p>
 		</span>

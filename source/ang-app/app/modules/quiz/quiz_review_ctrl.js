@@ -7,48 +7,49 @@ angular.module('yunakQuiz.assessments')
   function($scope, QuizResource, CommentsResource, $routeParams,
    $route, $location, QuizMngService, getAccess,CONFIG) {
 
-  /** get Quiz by ID */
+  $scope.dateFormat = CONFIG.DATE_FORMAT;
+  
+  /** Check access to this page */
   if (getAccess('/admin/assessments/review','moder')) {
     init();
   } else {
     $location.path( "/404" );
   };
 
-  $scope.dateFormat = CONFIG.DATE_FORMAT;
-
+  /** Initiate Quiz by Id and load comments */
   function init(){
-    $scope.quiz = QuizResource.get({id:$routeParams.quiz_id}, quizSuccess, quizError);
-    console.log($scope.quiz);
+    $scope.quiz = QuizResource.get({id:$routeParams.quiz_id}, 
+      function (quiz) {
+        $scope.comments = CommentsResource.get({id: quiz.id});
+      },
+      function (response) { 
+       $scope.errorMsg = response.data || 'Тест не отримано'
+      }
+    )
   };
-
-  function quizSuccess(quiz) {
-    $scope.comments = CommentsResource.get({id: quiz.id});
-  };
-  
-  function quizError(response) { 
-    $scope.errorMsg = response.data || 'Тест не отримано'
-  };
-
+ 
+  /** Add new comments */
   $scope.addComment=function(){
     $scope.comments.arr.push({'text':$scope.newComments});
     $scope.newComments='';
   };
 
+  /** Delete newly added comment */
   $scope.deleteComment=function(index){
     $scope.comments.arr.splice(index,1);
   };
 
-  /** save draft Quiz */
+  /** Send Quiz with enhance status */
   $scope.enhanceQuiz=function(){
     sendQuiz("enhance");
   };
 
-  /** save Quiz for review */
+  /** Send Quiz with review status */
   $scope.publishQuiz=function(){
     sendQuiz("published");
   };
 
-  /** send Quiz to backend  */
+  /** Update Quiz on backend  */
   function sendQuiz(state){
     $scope.quiz.status = state;
     if(!QuizMngService.validateQuiz($scope.quiz)){
@@ -63,12 +64,16 @@ angular.module('yunakQuiz.assessments')
   function sendQuizError(response){
     window.scrollTo(0,0);
     $scope.errorMsg = 'Ваш тест не збережено';
-  }
+  };
 
+  /** Delete comments if Quiz is published or save them */
   function sendComments(state){
-    state === "published"?
-      $scope.comments.$delete(sendCommentsSuccess, sendCommentsError):
+    if (state === "published") {
+      $scope.comments.$delete(sendCommentsSuccess, sendCommentsError);
+    }
+    else {
       $scope.comments.$save(sendCommentsSuccess, sendCommentsError);
+    }
   };
 
   function sendCommentsSuccess(){

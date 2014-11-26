@@ -4,14 +4,14 @@
       <div class="row col-md-12 profile-container" >
         <div class="col-md-2"></div>
         <div class="col-md-2">
+        <div class="text-center"><a href="#/admin/statistic">Статистика</a></div>
           <div class="row" flow-init="{singleFile:true}" flow-name="profile.$flow" ng-init="profile.setUploadService()">
             <img class="thumbnail profile-avatar center-block" ng-src="http://localhost:9292/avatar/{{profile.user.picture || 'no_avatar.png'}}" flow-img="$flow.files[0]" />
             <div class="btn button-group col-md-12">
               <button type="button" class="btn btn-default" flow-btn ng-click="profile.uploadFile.changeAvatar()" >Змінити</button>
               <button type="button" class="btn btn-primary" ng-show="$flow.files.length" ng-click="profile.uploadFile.saveAvatar()">Зберегти</button>
             </div>
-            <div class="text-center"><a href="#/admin/statistic">Статистика</a></div>
-          </div>
+            </div>
         </div>
         <div class="col-md-6 form-horizontal">
           <div class="row" ng-class="{'form-group': profile.editable}">

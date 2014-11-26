@@ -31,9 +31,6 @@
     $scope.showAnswer = function(index){
       $scope.Questions[index].visible = !$scope.Questions[index].visible;
       $scope.showIcon(index);
-      $("p").each(function(){
-        $(this).fadeIn("slow");
-      });
     };
           
   }])

@@ -5,13 +5,13 @@ angular.module('yunakQuiz.assessments')
 	['$scope','QuizPassService', '$location', 
 	function($scope, QuizPassService, $location) {
 
-	/**    */
+	/** Get Quiz */
 	$scope.quiz = QuizPassService.quiz;
-	if (!$scope.quiz.id) {
-		$location.path('/');	
-	}
+	
+	/** Redirect to main page if quiz was not  passed */
+	if (!$scope.quiz.id) { $location.path('/') }
 
-	/** redirection to pass quiz again  */
+	/** Redirection to pass quiz again  */
 	$scope.redirectToAssessment = function(){
 		$location.path('/assessments/'+$scope.quiz.id);	
 	};

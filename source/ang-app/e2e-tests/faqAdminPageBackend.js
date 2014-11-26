@@ -11,6 +11,7 @@ exports.httpBackendMock = function() {
     ];
 
     var postQuestion = [{"id": 6, "faq_question": "нове питання 6", "faq_answer": "нова відповідь 6"}];
+    var permission = ["adminUsersTab", "adminBlackListTab", "adminAdministrationTab", "adminModeratorsTab", "adminCategoriesTab", "adminAboutUsTab", "adminFAQ"];
 
     $httpBackend.whenGET('http://localhost:9292/faq').respond(questions);
     $httpBackend.whenPOST('http://localhost:9292/saveQuestion', questions[{"id": 6, "faq_question": "нове питання 6", "faq_answer": "нова відповідь 6"}])
@@ -18,6 +19,7 @@ exports.httpBackendMock = function() {
         data = angular.fromJson(data);
         return [200, postQuestion, {status: 'ok'}];
     });
+    $httpBackend.whenGET('http://localhost:9292/permission').respond(permission);
     $httpBackend.whenGET().passThrough();
   });
 };
