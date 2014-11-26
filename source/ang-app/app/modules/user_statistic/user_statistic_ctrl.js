@@ -69,9 +69,9 @@ angular.module('yunakQuiz.userStatistic')
       }, 
       function (response) { 
         $scope.errorMsg = response.data || 'Дані не отримано'
-      };
+      }
     );
-  }
+  };
 
   /** Check access to this page */
   if (getAccess('/admin/statistic','user')) {
