@@ -6,10 +6,11 @@ module PlastApp
   require 'sinatra/activerecord'
   require 'json/ext' # required for .to_json
   require 'sinatra/cross_origin'
-
   require 'sinatra/asset_pipeline'
+  require './models/search_quizzes.rb'
 
   class YunakQuiz < Sinatra::Base
+    helpers SearchQuizzes
     register Sinatra::AssetPipeline
     register Sinatra::ActiveRecordExtension
     register Sinatra::CrossOrigin
@@ -87,11 +88,9 @@ module PlastApp
     post '/search' do
       content_type :json
       query = JSON.parse(request.body.read) 
-
       # This function is part of SerchQuizzes class
       # checkout /models/searchQuizzes.rb for details
-      SearchQuizzes.withTags(query) 
-
+      search_and_check(query)
     end
 
   end
