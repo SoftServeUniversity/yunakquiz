@@ -12,10 +12,10 @@ describe('faq page', function(){
 		{"id": 4, "faq_question": "Де можна знайти тест на знання правил хокею?", "faq_answer": "В підкатегорії Хокей, яка знаходиться в категорії Спорт"},
 		{"id": 5, "faq_question": "Чи можна для пошук вибрати якусь конкретну підкатегорію?", "faq_answer": "Так, звичайно."}
 	];
-	var tabPosition = 5;
+	var tabPosition = 6;
 	var allQuestions = 5;
 	var generalTitle = "Адміністративна панель";
-	var faqTabTitle = "Часті питання";
+	var faqTabTitle = "Часті запитання";
 
 	beforeEach(function() {
     	ptor.addMockModule('httpBackendMock', mockModule.httpBackendMock);  

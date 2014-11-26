@@ -299,20 +299,20 @@ quiz10.tags << tag22
 quiz10.tags << tag23
 quiz10.update(user: valera)
 
-quiz11 = subcat4.quizzes.create(category_id: 6,status:"published", title: "Війна у Вєтнамі", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
-question11_1 = quiz11.questions.create(title: "Скільки гравців в команді?", description: "Згідно правил на полі знаходиться 11 гравців однієї команди")
-question11_1.answers.create(title: "11", correct: true)
-question11_1.answers.create( title: "12", correct: false)
-question11_1.answers.create( title: "5", correct: false)
-question11_2 = quiz11.questions.create(title: "Скільки триває один тайм?", description: "Один тайм матчу триває 45 хв. не враховуючи додаткового часу")
-question11_2.answers.create( title: "20хв", correct: false)
-question11_2.answers.create( title: "45хв", correct: true)
-question11_2.answers.create( title: "до останнього гравця", correct: false)
-question11_3 = quiz11.questions.create(title: "Що відбудеться, коли гравець торкнеться м’яча рукою?", description: "Це є порушенням правил, після того як гравець торкнувся мяча рукою гра зупиняється, та назначається штрафний")
-question11_3.answers.create( title: "Порушенння правил", correct: true)
-question11_3.answers.create( title: "Штрафний удар", correct: true)
-question11_3.answers.create( title: "Дадуть пиріжок", correct: false)
-question11_3.answers.create(title: "Дадуть в голову", correct: false)
+quiz11 = subcat3.quizzes.create(category_id: 6,status:"published", title: "Тест на знання війни в Вєтнамі", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
+question11_1 = quiz11.questions.create(title: "В якому році почалася війна?", description: "Війна почалася в 1959 році")
+question11_1.answers.create(title: "1959", correct: true)
+question11_1.answers.create( title: "1976", correct: false)
+question11_1.answers.create( title: "1983", correct: false)
+question11_2 = quiz11.questions.create(title: "Між якими країнами?", description: "Війна між комуністичним Північним В'єтнамом (підтримуваним СРСР та КНР) і Південним В'єтнамом (підтримуваним США, Австралією, Новою Зеландією, Південною Кореєю)")
+question11_2.answers.create( title: "Північний Вєтнам - Австралія", correct: false)
+question11_2.answers.create( title: "Південний Вєтнам - Південний Вєтнам", correct: true)
+question11_2.answers.create( title: "Південний Вєтнам - Австралія", correct: false)
+question11_3 = quiz11.questions.create(title: "В якому році закінчилася війна?", description: "Війна закінчилася в 1975 році")
+question11_3.answers.create( title: "1975", correct: true)
+question11_3.answers.create( title: "1985", correct: false)
+question11_3.answers.create(title: "1992", correct: false)
+
 quiz11.tags << tag24
 quiz11.tags << tag25
 quiz11.tags << tag26
