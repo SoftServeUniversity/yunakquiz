@@ -49,11 +49,11 @@
         }) 
       };
 
-      if (getAccess($scope.url,'admin')) {
+       getAccess($scope.url,'admin').then(function (acces) {
         init();
-      } else {
+      },function () {
         $location.path( "/404" );
-      };
+      });
 
       $scope.saveQuestion = function(data, id) {
         angular.extend(data, {id: id});

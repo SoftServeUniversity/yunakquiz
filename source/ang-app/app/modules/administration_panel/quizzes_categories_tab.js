@@ -124,11 +124,11 @@
           $scope.catDelRelationalDataMsg = 'Увага, будуть видалені підкатегорії';
           $scope.catDelQuizzesMsg = 'Увага підкатегорії містять тести, видалення не можливе';
 //Getting permission for page load 
-          if (getAccess($scope.url,'admin')){
+          getAccess($scope.url,'admin').then(function () {
             updateCatPage();
-          } else {
+          },function () {
             $location.path( "/404" );
-          };
+          });
 
           $scope.modalCreateCat = function () {
             clearData();
