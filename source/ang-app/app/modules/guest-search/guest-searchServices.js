@@ -44,7 +44,29 @@
           };
         };
          return searchRequestCategoriesId;
-      } 
+      }, 
+
+      //
+      checkTags: function(tags){
+
+        // For LIKE method in sqlite
+        // that returns all results
+        var allWords = ['_']
+        var checkedTags = [];
+
+        if (tags.length === 0) {
+          checkedTags = allWords;
+        } else {
+
+          // Adding all tags to request
+          // and all tags to lower case 
+          for (var i = 0 ; tags.length > i ; i++) {
+            checkedTags.push(tags[i].text.toLowerCase());
+          };
+        };
+
+        return checkedTags;
+      }
 
     };
 }]);

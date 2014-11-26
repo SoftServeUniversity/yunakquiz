@@ -9,8 +9,10 @@ module PlastApp
   require 'sinatra/cross_origin'
   require 'sinatra/asset_pipeline'
   require 'securerandom'
+  require './models/search_quizzes.rb'
 
   class YunakQuiz < Sinatra::Base
+    helpers SearchQuizzes
     register Sinatra::AssetPipeline
     register Sinatra::ActiveRecordExtension
     register Sinatra::CrossOrigin
@@ -100,12 +102,15 @@ module PlastApp
     ## Validate if quiz title exists
     post '/admin/assessments/title' do
       data = JSON.parse(request.body.read)
-      if data['id']
-        query = Quiz.where(title: data['query']).where.not(id: data['id']).exists? 
-      else
-        query = Quiz.where(title: data['query']).exists?
-      end  
-      @result = {titlePresent: query}
+      query = Quiz.where(title: data['query']).exists?
+      @result = {present: query}
+      response_helper @result, "Error"
+    end
+
+    post '/admin/assessments/:id/title' do
+      data = JSON.parse(request.body.read)
+      query = Quiz.where(title: data['query']).where.not(id: params['id']).exists? 
+      @result = {present: query}
       response_helper @result, "Error"
     end
     ## Quiz resource end
@@ -137,12 +142,9 @@ module PlastApp
     post '/assessments/:status' do
       if logged_user
         data = JSON.parse(request.body.read)
-        @quizzes = Quiz.quiz_query(
-          logged_user,
-          params['status'],
-          data['searchData'],
-          data['currentPage'],
-          data['itemsPerPage'])
+        categories = nil
+        @quizzes = Quiz.quiz_query(params['status'], data['searchData'],
+        data['currentPage'], data['itemsPerPage'], categories, logged_user)
       end
       response_helper @quizzes, "Потрібно залогуватись"
     end
@@ -153,7 +155,8 @@ module PlastApp
         data = JSON.parse(request.body.read)
         categories = data['categoryFilter'] 
         categories = Category.all.pluck("id") if categories.empty? 
-        @quizzes = Quiz.quiz_query_cat(params['status'],categories,data['currentPage'],data['itemsPerPage'])
+        @quizzes = Quiz.quiz_query(params['status'], data['searchData'],
+         data['currentPage'], data['itemsPerPage'],categories)
         response_helper @quizzes, "Quizzes not found"
       end
       response_helper @quizzes, "Forbidden!"
@@ -161,14 +164,14 @@ module PlastApp
     
     ##Quiz comments section start
     get '/assessments/:id/comments' do
-      @comment = Comment.get_by_quiz(params['id'])
+      @comment = {quiz_id:params['id'].to_i, arr: Comment.get_by_quiz(params['id'])}
 
       response_helper @comment, ["Comments #{params['id']} not found!"]
     end 
 
     post '/assessments/:id/comments' do
       data = JSON.parse(request.body.read)
-      @comments = {comments: Comment.update_comments(data['comments'])}
+      @comments = {updated: Comment.update_comments(data['arr'],params['id'])}
 
       response_helper @comments, ["comments not updated"]
     end 
@@ -180,6 +183,28 @@ module PlastApp
       response_helper @comments, ["Comments not deleted!"]
     end
     ##Quiz comments section end
+
+    ##User_statistic block
+    get '/statistic' do
+      user = User.find(session[:user_id])
+      created = user.quizzes.count()
+      passed = user.results.count()
+      average = user.results.average(:grade)||0
+      statistic = {user_id:session[:user_id], created:created, passed:passed, average:average.round(2)}
+
+      response_helper statistic, ["not found!"]
+    end
+
+    get '/statistic/:page/:per_page' do
+      query = Quiz.joins(:results).where(:results => {:user_id =>session[:user_id]})
+      .select("id,title").group('id')
+      total_items = query.as_json.count()
+      quizzes = query.offset((params['page'].to_i-1)*params['per_page'].to_i).limit(params['per_page'])
+      result = Result.get_result(quizzes,total_items,session[:user_id])
+
+      response_helper result, ["not found!"]
+    end 
+    ##User_statistic block's end
 
     get '/tags/:query' do
       content_type :json
@@ -379,20 +404,12 @@ module PlastApp
       [200, {'success' => "success"}.to_json]
     end
 
-    # For all categories
-    get '/guest-search' do
-      content_type :json
-      Category.select('id, category_id, title').to_json
-    end 
-
     post '/search' do
       content_type :json
-      search_request = JSON.parse(request.body.read) 
-
-      # This function is part of module SerchQuizzes
+      query = JSON.parse(request.body.read) 
+      # This function is part of SerchQuizzes class
       # checkout /models/searchQuizzes.rb for details
-      SearchQuizzes.withTags(search_request) 
-
+      search_and_check(query) 
     end
 
     get '/last_quizzes/:id' do
@@ -400,7 +417,7 @@ module PlastApp
     end
     
     post '/checkpassword/' do
-      content_type :json
+      # content_type :json
       data = JSON.parse(request.body.read)
       if session[:user_id]
         userToCheck = User.find(session[:user_id])
@@ -418,22 +435,26 @@ module PlastApp
      response_helper @users, "Users not found!"
     end
 
-    delete '/admin/users:id' do
+    delete '/admin/users/:id' do
       user = User.find(params['id'])
       if !user.nil?
+        # quizes = Quiz.where(user_id: params['id'])
+        # puts "hohohohoh #{quizes}"
+        # quizes.update(user_id: 4)
         user.destroy
         return [200, 'ok']
       end
       return [400, 'User not found']
     end
 
-    put '/admin/users:id' do
+    put '/admin/users/:id/status' do
+      data = JSON.parse(request.body.read)
       user = User.find(params['id'])
       if !user.nil?
-        if user.enabled?
+        if data['status'] == "blocked"
           user.blocked!
           user.save
-        else 
+        else
           user.enabled!
           user.save
         end
@@ -442,7 +463,7 @@ module PlastApp
       return [400, 'user not found']
     end
 
-    put '/admin/user_role:id' do
+    put '/admin/users/:id/role' do
       data = JSON.parse(request.body.read)
       user = User.find(params['id'])
       if !user.nil?

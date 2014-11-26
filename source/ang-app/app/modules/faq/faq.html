@@ -10,7 +10,7 @@
 				{{$index+1}}. {{Question.faq_question}}
 				<span ng-class="showIcon($index)"></span> 
 			</a><br/>
-			<p id="Question{{$index+1}}" ng-show="Question.visible">
+			<p class="scale-fade" id="Question{{$index+1}}" ng-show="Question.visible">
 				{{Question.faq_answer}}
 			</p>
 		</span>

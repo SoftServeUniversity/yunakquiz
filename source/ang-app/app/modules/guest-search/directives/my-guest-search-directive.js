@@ -4,11 +4,11 @@ guestSearch.directive('myGuestSearchCat', [ function() {
   return {
     restrict: 'E',
     templateUrl: './modules/guest-search/directives/guest-search-cat-tmpl.html',
-    controller: function($scope, guestSearchFactory) {
+    controller: function($scope, categoriesQuery) {
 
       // Reciving all Categories from server in one 
       // array 
-      guestSearchFactory.getAllCats().success(function(data) {
+      categoriesQuery.getAllCategories().success(function(data) {
         $scope.allCats = data;
       }).error(function(data) {
         $scope.searchError = 2; // need to change

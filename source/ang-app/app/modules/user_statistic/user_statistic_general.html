@@ -1,0 +1,19 @@
+<div ng-hide="error" ng-include="'modules/user_statistic/user_statistic_tabs.html'"></div>
+<div class="col-md-6 col-md-offset-3 quizMarginTop">
+<ul class="list-group">
+	<li class="list-group-item"><span class="badge">{{statistic.passed}}</span>Пройдено тестів </li>
+	<li class="list-group-item"><span class="badge">{{statistic.created}}</span>Створено тестів </li>
+
+	<li class="list-group-item">
+		<span class="badge">{{statistic.average}}</span>Середній результат проходження тестів: 
+
+		<div class="progress quizMarginTop">
+		  <div ng-class="barClass" class="progress-bar" role="progressbar" aria-valuenow="{{statistic.average}}" aria-valuemin="0" aria-valuemax="100" style="width:{{statistic.average}}%">
+		    <span class="sr-only">{{statistic.average}}</span>
+		  </div>
+		</div>
+	</li>
+
+	
+</ul>
+</div>

@@ -11,17 +11,6 @@
     }
   ]);
 
-  // app.directive('fadeInAnimate', function(){
-  //   return {
-  //     restrict: 'A',
-  //     link: function(){
-  //         $("p").each(function(){
-  //           $(this).fadeIn("slow");
-  //         });
-  //     }
-  //   };
-  // });
-
   app.controller('faqCtrl', ['$scope', '$http', 'QuestionService', function ($scope, $http, QuestionService) {
 
     QuestionService.get().success(function(data){

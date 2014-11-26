@@ -50,6 +50,7 @@ Permission.create(tabs: 'Moder_cabinet', moder: true, superadmin: true)
 Permission.create(tabs: 'Moder_published', moder: true, superadmin: true)
 Permission.create(tabs: 'Moder_review', moder: true, superadmin: true)
 Permission.create(tabs: 'Moder_enhance', moder: true, superadmin: true)
+Permission.create(tabs: 'Moder_review_quiz', moder: true, superadmin: true)
 
 Permission.create(tabs: 'User_cabinet', user: true, moder: true, admin: true, superadmin: true)
 Permission.create(tabs: 'User_published', user: true, moder: true, admin: true, superadmin: true)
@@ -57,6 +58,9 @@ Permission.create(tabs: 'User_enhance', user: true, moder: true, admin: true, su
 Permission.create(tabs: 'User_review', user: true, moder: true, admin: true, superadmin: true)
 Permission.create(tabs: 'User_draft', user: true, moder: true, admin: true, superadmin: true)
 Permission.create(tabs: 'User_profile', user: true, moder: true, admin: true, superadmin: true)
+Permission.create(tabs: 'User_create_quiz', user: true, moder: true, admin: true, superadmin: true)
+Permission.create(tabs: 'User_edit_quiz', user: true, moder: true, admin: true, superadmin: true)
+Permission.create(tabs: 'User_statistic', user: true, moder: true, admin: true, superadmin: true)
 
 Permission.create(tabs: 'menuPersonalCabinet', admin: true, moder: true, user: true, superadmin: true)
 Permission.create(tabs: 'menuAdminPanel', admin: true, superadmin: true)
@@ -96,7 +100,7 @@ tag31 = Tag.create(tag: "батьківщина")
 tag32 = Tag.create(tag: "ооп")
 tag33 = Tag.create(tag: "поліморфізм")
 
-quiz1 = subcat1.quizzes.create(status:"published", title: "Тест на знання правил футболу", description: "Детальний опис тесту")
+quiz1 = subcat1.quizzes.create(status:"published", title: "Правила футболу", description: "Детальний опис тесту")
 question1_1 = quiz1.questions.create(title: "Скільки гравців в команді?", description: "Згідно правил на полі знаходиться 11 гравців однієї команди")
 question1_1.answers.create(title: "11", correct: true)
 question1_1.answers.create( title: "12", correct: false)
@@ -115,7 +119,7 @@ quiz1.tags << tag2
 quiz1.tags << tag3
 quiz1.update(user: valera)
 
-quiz2 = subcat3.quizzes.create(status:"enhance", title: "Тест на знання історії України", description: "Детальний опис тесту монголо-татар")
+quiz2 = subcat3.quizzes.create(status:"enhance", title: "Знання історії України", description: "Детальний опис тесту монголо-татар")
 question2_1 = quiz2.questions.create(title: "У 1223 р. на Київську Русь напали орди", description: "У 1223 р. на Київську Русь напали орди")
 question2_1.answers.create(title: "печенігів", correct: false)
 question2_1.answers.create( title: "половців", correct: false)
@@ -196,7 +200,7 @@ quiz5.update(user: vasyl)
 
 
 
-quiz6 = subcat4.quizzes.create(category_id: 6,status: "published", title: "Тест на знання історії світу", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
+quiz6 = subcat4.quizzes.create(category_id: 6,status: "published", title: "Знання історії світу", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
 question6_1 = quiz6.questions.create(title: "У 1223 р. на Київську Русь напали орди", description: "У 1223 р. на Київську Русь напали орди")
 question6_1.answers.create(title: "печенігів", correct: false)
 question6_1.answers.create( title: "половців", correct: false)
@@ -216,7 +220,7 @@ quiz6.tags << tag5
 quiz6.tags << tag10
 quiz6.update(user: valera)
 
-quiz7 = subcat4.quizzes.create(category_id: 6,status:"published", title: "Тест на знання другої світової війни", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
+quiz7 = subcat4.quizzes.create(category_id: 6,status:"published", title: "Знання другої світової війни", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
 question7_1 = quiz7.questions.create(title: "У якому році почалась Друга Світова Війна?", description: "Друга світова війна почалась з нападу Третього Рейху на Польщу 9-го вересня 1939р року")
 question7_1.answers.create(title: "1941р.", correct: false)
 question7_1.answers.create( title: "1939р.", correct: true)
@@ -237,7 +241,7 @@ quiz7.tags << tag13
 quiz7.tags << tag14
 quiz7.update(user: valera)
 
-quiz8 = subcat4.quizzes.create(category_id: 6,status:"published", title: "Тест на знання першої світової війни", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
+quiz8 = subcat4.quizzes.create(category_id: 6,status:"published", title: "Знання першої світової війни", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
 question8_1 = quiz8.questions.create(title: "У якому році почалась Друга Світова Війна?", description: "Друга світова війна почалась з нападу Третього Рейху на Польщу 9-го вересня 1939р року")
 question8_1.answers.create(title: "1941р.", correct: false)
 question8_1.answers.create( title: "1939р.", correct: true)
@@ -257,7 +261,7 @@ quiz8.tags << tag16
 quiz8.tags << tag17
 quiz8.update(user: valera)
 
-quiz9 = subcat2.quizzes.create(category_id: 3,status:"published", title: "Тест на знання правил хокею", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
+quiz9 = subcat2.quizzes.create(category_id: 3,status:"published", title: "Правила хокею", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
 question9_1 = quiz9.questions.create(title: "Скільки гравців в команді?", description: "Згідно правил на полі знаходиться 11 гравців однієї команди")
 question9_1.answers.create(title: "11", correct: true)
 question9_1.answers.create( title: "12", correct: false)
@@ -276,7 +280,7 @@ quiz9.tags << tag19
 quiz9.tags << tag20
 quiz9.update(user: valera)
 
-quiz10 = subcat1.quizzes.create(category_id: 2,status:"published", title: "Тест на знання видатних футболістів", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
+quiz10 = subcat1.quizzes.create(category_id: 2,status:"published", title: "Видатні футболісти", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
 question10_1 = quiz10.questions.create(title: "Скільки гравців в команді?", description: "Згідно правил на полі знаходиться 11 гравців однієї команди")
 question10_1.answers.create(title: "11", correct: true)
 question10_1.answers.create( title: "12", correct: false)
@@ -308,12 +312,13 @@ question11_3 = quiz11.questions.create(title: "В якому році закін
 question11_3.answers.create( title: "1975", correct: true)
 question11_3.answers.create( title: "1985", correct: false)
 question11_3.answers.create(title: "1992", correct: false)
+
 quiz11.tags << tag24
 quiz11.tags << tag25
 quiz11.tags << tag26
 quiz11.update(user: valera)
 
-quiz12 = subcat3.quizzes.create(category_id: 5,status:"published", title: "Тест на знання революції гідності 2014 року", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
+quiz12 = subcat3.quizzes.create(category_id: 5,status:"published", title: "Революція гідності 2014 року", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
 question12_1 = quiz12.questions.create(title: "Скільки гравців в команді?", description: "Згідно правил на полі знаходиться 11 гравців однієї команди")
 question12_1.answers.create(title: "11", correct: true)
 question12_1.answers.create( title: "12", correct: false)
@@ -332,7 +337,7 @@ quiz12.tags << tag4
 quiz12.tags << tag28
 quiz12.update(user: valera)
 
-quiz13 = subcat3.quizzes.create(category_id: 5,status:"published", title: "Тест на знання Украйни в часи незалежності", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
+quiz13 = subcat3.quizzes.create(category_id: 5,status:"published", title: "Украйна в часи незалежності", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
 question13_1 = quiz13.questions.create(title: "Скільки гравців в команді?", description: "Згідно правил на полі знаходиться 11 гравців однієї команди")
 question13_1.answers.create(title: "11", correct: true)
 question13_1.answers.create( title: "12", correct: false)
@@ -352,7 +357,7 @@ quiz13.tags << tag30
 quiz13.tags << tag31
 quiz13.update(user: valera)
 
-quiz14 = subcat5.quizzes.create(category_id: 5,status:"published", title: "Тест на знання Поліморфізму", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
+quiz14 = subcat5.quizzes.create(category_id: 5,status:"published", title: "Поліморфізм", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
 question14_1 = quiz14.questions.create(title: "Скільки гравців в команді?", description: "Згідно правил на полі знаходиться 11 гравців однієї команди")
 question14_1.answers.create(title: "11", correct: true)
 question14_1.answers.create( title: "12", correct: false)

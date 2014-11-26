@@ -1,17 +1,17 @@
-<delete-user-profile></delete-user-profile>
-<div class="container" ng-init="profile.copyAppUser(appCtrl.user)">
   <div ng-include="'modules/cabinet/personal_cabinet_tabs.html'"></div>
+<div class="container" ng-init="profile.copyAppUser(appCtrl.user)">
   <div class="row">
       <div class="row col-md-12 profile-container" >
         <div class="col-md-2"></div>
         <div class="col-md-2">
-          <div class="col-md-6" flow-init="{singleFile:true}" flow-name="profile.$flow" ng-init="profile.setUploadService()">
-            <img class="thumbnail profile-avatar" ng-src="http://localhost:9292/avatar/{{profile.user.picture || 'no_avatar.png'}}" flow-img="$flow.files[0]" />
-            <div class="btn button-group row col-md-6">
+        <div class="text-center"><a href="#/admin/statistic">Статистика</a></div>
+          <div class="row" flow-init="{singleFile:true}" flow-name="profile.$flow" ng-init="profile.setUploadService()">
+            <img class="thumbnail profile-avatar center-block" ng-src="http://localhost:9292/avatar/{{profile.user.picture || 'no_avatar.png'}}" flow-img="$flow.files[0]" />
+            <div class="btn button-group col-md-12">
               <button type="button" class="btn btn-default" flow-btn ng-click="profile.uploadFile.changeAvatar()" >Змінити</button>
               <button type="button" class="btn btn-primary" ng-show="$flow.files.length" ng-click="profile.uploadFile.saveAvatar()">Зберегти</button>
             </div>
-          </div>
+            </div>
         </div>
         <div class="col-md-6 form-horizontal">
           <div class="row" ng-class="{'form-group': profile.editable}">
@@ -72,7 +72,7 @@
             <button type="button" class="btn btn-primary" ng-click="profile.edit()" ng-hide="profile.editable">Редагувати</button>
             <button type="button" class="btn btn-success" ng-show="profile.editable" ng-click="profile.saveEdit()">Зберегти</button>
             <button type="button" class="btn btn-danger" ng-show="profile.editable" ng-click="profile.cancelEdit()">Відмінити</button>
-            <button type="button" class="btn btn-danger" ng-hide="profile.editable" data-toggle="modal" data-target="#deleteProfile">Видалити</button>
+            <button type="button" class="btn btn-danger" ng-hide="profile.editable" ng-click="profile.deleteUser()">Видалити</button>
           </div>
         </div>  
         <div class="col-md-2"></div>

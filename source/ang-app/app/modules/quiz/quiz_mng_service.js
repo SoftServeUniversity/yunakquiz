@@ -4,11 +4,12 @@
 angular.module('yunakQuiz.assessments')
 
 .factory('QuizMngService', 
-  ['$http', '$location', 'QuizResource', '$filter', 'CONFIG',
-  function($http, $location, QuizResource, $filter, CONFIG){
+  ['$http', '$location','CommentsResource', 'QuizResource', '$filter', 'CONFIG',
+  function($http, $location,CommentsResource, QuizResource, $filter, CONFIG){
 
   var quiz = {}
   
+  /** Question costructor */
   function Question(){
     this.answers = [];
     for (var i=0; i < (CONFIG.MIN_ASWERS_QTY); i++){
@@ -16,18 +17,22 @@ angular.module('yunakQuiz.assessments')
     };
   };
 
+  /** Answer constructor */
   function Answer(){
     this.correct = false;
   };
 
+  /** Initialize empty Quiz */
   function initQuiz(){
     this.quiz = new QuizResource();
     this.quiz.questions = [];
     for (var i=0; i < (CONFIG.MIN_QUESTIONS_QTY); i++){
       this.quiz.questions.push(new Question());
     };
+    return this.quiz;
   };
 
+  /** Check if each question in Quiz is valid */
   function validateQuiz(quiz){
     var invalid = false;
     var questions = $filter('filter')(quiz.questions, filterDeleted);
@@ -40,13 +45,14 @@ angular.module('yunakQuiz.assessments')
     return invalid;
   };
 
-  /** check question to have at least one correct answer */
+  /** Check question to have at least one correct answer */
   function validateQuestion (question){
     var answers = $filter('filter')(question.answers, filterDeleted);
     var correctAnswers = $filter('filter')(answers, {correct: true})
     question.invalid = !correctAnswers.length;
   };
  
+  /** Filter elements that not marked as toDelete */
   function filterDeleted(element) {
     return !element.toDelete
   };
