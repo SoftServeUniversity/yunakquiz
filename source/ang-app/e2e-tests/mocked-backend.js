@@ -74,8 +74,19 @@ exports.httpBackendMock = function () {
        {"id": 9, "category_id": 7, "title": "Основи Java"}
       ];
       
-    var permission = ["admin1", "admin2", "admin3", "admin5", "admin6", "admin7"];
+    var permission = ["adminUsersTab", "adminBlackListTab", "adminAdministrationTab", "adminModeratorsTab", "adminCategoriesTab", "adminAboutUsTab", "adminFAQ"];
     var pwdCorrect = {password: '12345678'};
+    var user = {
+      "id":1,
+      "username":"tfilonych",
+      "first_name":"Tanya",
+      "last_name":"Filonych",
+      "password": "12345678",
+      "email":"tfilonych@mail.ru",
+      "birthday":"1989-12-31T22:00:00.000Z",
+      "plast_hovel":"some",
+      "plast_region":"Lviv",
+      "plast_level":"досвідчений"};
 
     $httpBackend.whenGET('http://localhost:9292/categories/parent').respond(parCategoryMock);
     $httpBackend.whenGET('http://localhost:9292/categories/subcats').respond(subCategoryMock);
@@ -88,6 +99,13 @@ exports.httpBackendMock = function () {
     $httpBackend.whenPUT('http://localhost:9292/about_us').respond("succes");
     $httpBackend.whenPOST('http://localhost:9292/checkpassword/', pwdCorrect).respond("Password Match");
     $httpBackend.whenPUT('http://localhost:9292/admin/category/create').respond("succes");
+    $httpBackend.whenGET('http://localhost:9292/access').respond(user);
+    $httpBackend.whenDELETE('http://localhost:9292/user', user)
+    .respond(function(method, url, data, headers){ return [200, "ok", {}];  
+    });
+    $httpBackend.whenPUT('http://localhost:9292/user')
+    .respond(function(method, url, data, headers){ return [200, "ok", {}];         
+    });   
     $httpBackend.whenGET().passThrough();
   });
 };

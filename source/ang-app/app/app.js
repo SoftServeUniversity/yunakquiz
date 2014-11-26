@@ -5,6 +5,7 @@ angular.module('yunakQuiz', [
   'ui.bootstrap',
   'ngRoute',
   'ngResource',
+  'ngAnimate',
   'yunakQuiz.measures',
   'yunakQuiz.assessments',
   'yunakQuiz.userStatistic',
@@ -34,8 +35,11 @@ angular.module('yunakQuiz', [
       when('/404', {
         templateUrl: 'modules/404/404.html',
       }).
+      when('/500', {
+        templateUrl: 'modules/404/500.html',
+      }).
       otherwise({
-        redirectTo: '/'
+        redirectTo: '/404'
       });
 }]);
 

@@ -1,56 +1,84 @@
 
 angular.module('yunakQuiz.userStatistic')
 
-.controller('UserStatisticGeneralCtrl',['$scope','UserStatiticService','CONFIG',
-	function($scope,UserStatiticService,CONFIG) {
+.controller('UserStatisticGeneralCtrl',['$scope','UserStatisticService','$location','getAccess',
+	function($scope,UserStatisticService,$location,getAccess) {
   
-   $scope.tab = "general";
-   	UserStatiticService.getStat($scope.tab)
-      .success(function(data, status, headers, config) {
-        $scope.statistic = data; 
-        roundGrade($scope.statistic.passed);       
-      })
-      .error(function(data){
-        $scope.error = data;
-      });
+  /** Set values */
+  $scope.tab = "general";
 
-    function roundGrade(arr){
-      	for(var count = 0, i = 0; i<arr.length; i++){
-      		count +=arr[i]
-      	}
-      	var res = count/arr.length || 0;
-        $scope.statistic.round = res.toFixed(CONFIG.SCORE_ROUND);
+  /** Check access to this page */
+  if (getAccess('/admin/statistic','user')) {
+    init();
+  } else {
+    $location.path( "/404" );
+  };
+
+  /** Initiation */
+  function init(){
+    UserStatisticService.get(
+      function (data) {
+        $scope.statistic = data
+        setBarClass(data.average)
+      },
+      function (response) { 
+        $scope.errorMsg = response.data || 'Дані не отримано'
+      }
+    );
+  };  
+
+  /** Set class for progressbar */
+  function setBarClass(data){
+    switch (true) {
+      case (data>75):
+        $scope.barClass = 'progress-bar-success';
+        break;
+      case (data>50 && data<=75):
+        $scope.barClass = 'progress-bar-info';
+        break;
+      case (data>25 && data<=50):
+        $scope.barClass = 'progress-bar-warning';
+        break;
+      case (data<=25):
+        $scope.barClass = 'progress-bar-danger';
+        break;
     };
- 
+  };
 }])
 
-.controller('UserStatisticListCtrl',['$scope','UserStatiticService', 'CONFIG',
-	function($scope,UserStatiticService,CONFIG) {
-   $scope.tab = "list";
-   $scope.dateFormat = CONFIG.DATE_FORMAT;
-   
-   	UserStatiticService.getStat($scope.tab)
-      .success(function(data, status, headers, config) {
-		$scope.quizzes = data;    
-    })
-      .error(function(data){
-        $scope.error = data;
-    });
+.controller('UserStatisticListCtrl',
+  ['$scope','UserStatisticService', 'CONFIG','getAccess','$location','paginationConfig',
+	function($scope,UserStatisticService,CONFIG,getAccess,$location,paginationConfig) {
+  
+  /** Set values */
+  $scope.tab = "list";
+  $scope.dateFormat = CONFIG.DATE_FORMAT;
+  $scope.items_per_page = paginationConfig.items_per_page;
+  
+  $scope.pagination={
+    page : 1,
+    perPage : paginationConfig.items_per_page[0]
+  };
 
-    $scope.maxGrade = function(quiz){
-    	quiz.grade =[];
-    	quiz.results.forEach(function(item){
-    		quiz.grade.push(item.grade);
-    	});
-    	return quiz.grade.sort(function(a, b){return b-a})[0];
-    };
- 		
-    $scope.midGrade = function(arr){
-    	for(var count = 0, i = 0; i<arr.length; i++){
-    		count +=arr[i]
-    	}
-    	return (count/arr.length).toFixed(CONFIG.SCORE_ROUND);
-    };
+  /** Query statistics info */
+  $scope.query = function(){
+    UserStatisticService.get($scope.pagination, 
+      function (data) {
+        $scope.quizzes = data.result;
+        $scope.totalItems = data.totalItems
+      }, 
+      function (response) { 
+        $scope.errorMsg = response.data || 'Дані не отримано'
+      }
+    );
+  };
+
+  /** Check access to this page */
+  if (getAccess('/admin/statistic','user')) {
+    $scope.query()
+  } else {
+    $location.path( "/404" );
+  };
 
 }])
 

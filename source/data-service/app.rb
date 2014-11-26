@@ -102,12 +102,15 @@ module PlastApp
     ## Validate if quiz title exists
     post '/admin/assessments/title' do
       data = JSON.parse(request.body.read)
-      if data['id']
-        query = Quiz.where(title: data['query']).where.not(id: data['id']).exists? 
-      else
-        query = Quiz.where(title: data['query']).exists?
-      end  
-      @result = {titlePresent: query}
+      query = Quiz.where(title: data['query']).exists?
+      @result = {present: query}
+      response_helper @result, "Error"
+    end
+
+    post '/admin/assessments/:id/title' do
+      data = JSON.parse(request.body.read)
+      query = Quiz.where(title: data['query']).where.not(id: params['id']).exists? 
+      @result = {present: query}
       response_helper @result, "Error"
     end
     ## Quiz resource end
@@ -182,25 +185,24 @@ module PlastApp
     ##Quiz comments section end
 
     ##User_statistic block
-    get '/statistic/general' do
+    get '/statistic' do
       user = User.find(session[:user_id])
       created = user.quizzes.count()
-      passed = user.results
-      grade = []
-      passed.each do |item|
-        grade.push(item.grade)
-      end
-      @statistic = {user_id:session[:user_id], created:created, passed:grade}
+      passed = user.results.count()
+      average = user.results.average(:grade)||0
+      statistic = {user_id:session[:user_id], created:created, passed:passed, average:average.round(2)}
 
-      response_helper @statistic, ["not found!"]
+      response_helper statistic, ["not found!"]
     end
 
-    get '/statistic/list' do
-      quizzes = Quiz.joins(:results)
-      .where(:results => { :user_id =>session[:user_id]}).select("id,title").group('id')
-      .as_json(:include => {:results =>{:only => [:grade,:created_at]}})
+    get '/statistic/:page/:per_page' do
+      query = Quiz.joins(:results).where(:results => {:user_id =>session[:user_id]})
+      .select("id,title").group('id')
+      total_items = query.as_json.count()
+      quizzes = query.offset((params['page'].to_i-1)*params['per_page'].to_i).limit(params['per_page'])
+      result = Result.get_result(quizzes,total_items,session[:user_id])
 
-      response_helper quizzes, ["not found!"]
+      response_helper result, ["not found!"]
     end 
     ##User_statistic block's end
 
@@ -433,22 +435,26 @@ module PlastApp
      response_helper @users, "Users not found!"
     end
 
-    delete '/admin/users:id' do
+    delete '/admin/users/:id' do
       user = User.find(params['id'])
       if !user.nil?
+        # quizes = Quiz.where(user_id: params['id'])
+        # puts "hohohohoh #{quizes}"
+        # quizes.update(user_id: 4)
         user.destroy
         return [200, 'ok']
       end
       return [400, 'User not found']
     end
 
-    put '/admin/users:id' do
+    put '/admin/users/:id/status' do
+      data = JSON.parse(request.body.read)
       user = User.find(params['id'])
       if !user.nil?
-        if user.enabled?
+        if data['status'] == "blocked"
           user.blocked!
           user.save
-        else 
+        else
           user.enabled!
           user.save
         end
@@ -457,7 +463,7 @@ module PlastApp
       return [400, 'user not found']
     end
 
-    put '/admin/user_role:id' do
+    put '/admin/users/:id/role' do
       data = JSON.parse(request.body.read)
       user = User.find(params['id'])
       if !user.nil?
