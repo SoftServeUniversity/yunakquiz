@@ -6,6 +6,7 @@ angular.module('yunakQuiz.assessments', ['ngRoute'])
   	.when('/assessments/:quiz_id', {
     templateUrl: 'modules/quiz/quiz_show.html',
     controller: 'QuizShowCtrl',
+    permission: 'user'
     })
     .when('/assessments/:quiz_id/result', {
     templateUrl: 'modules/quiz/quiz_result.html',
@@ -13,16 +14,18 @@ angular.module('yunakQuiz.assessments', ['ngRoute'])
   })
     .when('/admin/assessments/create', {
     templateUrl: 'modules/quiz/quiz_create.html',
-    controller: 'QuizCreateCtrl'
+    controller: 'QuizCreateCtrl',
+    permission: 'user'
   })
     .when('/admin/assessments/:quiz_id/', {
     templateUrl: 'modules/quiz/quiz_edit.html',
-    controller: 'QuizEditCtrl'
+    controller: 'QuizEditCtrl',
+    permission: 'user'
   })
     .when('/admin/assessments/review/:quiz_id', {
     templateUrl: 'modules/quiz/quiz_review.html',
     controller: 'QuizReviewCtrl',
-    permision: "moderationCabinet"
+    permission: 'moder'
   }) ;
 }]);
 

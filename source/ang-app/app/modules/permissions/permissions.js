@@ -100,7 +100,17 @@ angular.module('yunakQuiz.permission', ['ngRoute'])
     {'name' : 'User_statistic',
      'temp' : '/admin/statistic',
      'caption': 'user_statistic' 
+    },
+    {'name' : 'User_statistic',
+     'temp' : '/admin/statistic/list',
+     'caption': 'user_statistic' 
+    },
+    {'name' : 'User_statistic',
+     'temp' : '/admin/statistic/general',
+     'caption': 'user_statistic' 
     }
+
+
 
   ],
   menuAcces: 

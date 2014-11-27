@@ -65,11 +65,10 @@ angular.module('yunakQuiz.cabinet')
   };
 
   /** Check access to this page */
-  if (getAccess($location.path(),$route.current.permission)) {
-    $scope.queryList();
-  } else {
-    $location.path( "/404" );
-  };
-  
+  getAccess($location.path(),$route.current.permission).then(
+    function () { $scope.queryList(); },
+    function () { $location.path( "/404" ); }
+  );
+
 }]);
 
