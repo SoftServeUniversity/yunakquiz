@@ -32,11 +32,11 @@
                        saved: {msg: "Зміни збережено", color: '#419641'}
                       };
 
-        if (getAccess($scope.url,'admin')) {
+        getAccess($scope.url,'admin').then(function () {
           read();
-        } else {
+        },function(){
           $location.path( "/404" );
-        };
+        });
 
         function read(param) {
           aboutUsReadUpdate.read().success(function (data) {

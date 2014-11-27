@@ -16,12 +16,17 @@
           controller: ['$scope', '$http', function ($scope, $http) {
             $scope.tabs = {};
 
-          $scope.tabs = getTabTemplates.getTabs('admin');
-          if (!$scope.tabs.length) {
+          getTabTemplates.getTabs('admin').then(function (data) {
+            $scope.tabs = data;
+            if (!$scope.tabs.length) {
+              $location.path( "/404" );
+            }
+          }, function () {
             $location.path( "/404" );
-          }
+          });
+
           $scope.isSelected = function (url, curent) {
-            if ($scope.tabs){
+            if ($scope.tabs) {
               return curent ===  url;
             }
             else return false;
