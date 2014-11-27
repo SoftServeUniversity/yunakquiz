@@ -10,11 +10,10 @@ angular.module('yunakQuiz.assessments')
   $scope.dateFormat = CONFIG.DATE_FORMAT;
   
   /** Check access to this page */
-  if (getAccess('/admin/assessments/review','moder')) {
-    init();
-  } else {
-    $location.path( "/404" );
-  };
+  getAccess('/admin/assessments/review', $route.current.permission).then(
+    function () { init(); },
+    function () { $location.path( "/404" ); }
+  );
 
   /** Initiate Quiz by Id and load comments */
   function init(){

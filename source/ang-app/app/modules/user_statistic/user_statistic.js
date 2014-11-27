@@ -4,15 +4,18 @@ angular.module('yunakQuiz.userStatistic', ['ngRoute'])
   $routeProvider
   .when('/admin/statistic', {
     templateUrl: 'modules/user_statistic/user_statistic_general.html',
-    controller: 'UserStatisticGeneralCtrl'
+    controller: 'UserStatisticGeneralCtrl',
+    permission: 'user'
   })
   .when('/admin/statistic/general', {
     templateUrl: 'modules/user_statistic/user_statistic_general.html',
-    controller: 'UserStatisticGeneralCtrl'
+    controller: 'UserStatisticGeneralCtrl',
+    permission: 'user'
   })
   .when('/admin/statistic/list', {
     templateUrl: 'modules/user_statistic/user_statistic_list.html',
-    controller: 'UserStatisticListCtrl'
+    controller: 'UserStatisticListCtrl',
+    permission: 'user'
   })
 
 }]);

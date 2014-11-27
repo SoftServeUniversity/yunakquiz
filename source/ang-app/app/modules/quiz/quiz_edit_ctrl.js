@@ -2,17 +2,18 @@
 /** Quiz Edit controller  */
 angular.module('yunakQuiz.assessments')
 .controller('QuizEditCtrl', 
-  ['$scope', 'QuizResource', 'CommentsResource', '$routeParams', '$location', 'QuizMngService', 'CONFIG', 'getAccess', 
-  function($scope, QuizResource, CommentsResource, $routeParams, $location, QuizMngService, CONFIG, getAccess) {
+  ['$scope', 'QuizResource', 'CommentsResource', '$routeParams', '$location', 
+   'QuizMngService', 'CONFIG', 'getAccess', '$route', 
+  function($scope, QuizResource, CommentsResource, $routeParams, $location, 
+    QuizMngService, CONFIG, getAccess, $route) {
 
   $scope.dateFormat = CONFIG.DATE_FORMAT;
 
   /** Check access to this page  */
-  if (getAccess('/admin/assessments/edit','user')) {
-    init();
-  } else {
-    $location.path( "/404" );
-  };
+  getAccess('/admin/assessments/edit',$route.current.permission).then(
+    function () { init(); },
+    function () { $location.path( "/404" ); }
+  );
 
   /** Initiate Quiz by Id and load comments */
   function init(){

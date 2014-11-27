@@ -9,8 +9,10 @@ module PlastApp
   require 'sinatra/cross_origin'
   require 'sinatra/asset_pipeline'
   require 'securerandom'
+  require './models/search_quizzes.rb'
 
   class YunakQuiz < Sinatra::Base
+    helpers SearchQuizzes
     register Sinatra::AssetPipeline
     register Sinatra::ActiveRecordExtension
     register Sinatra::CrossOrigin
@@ -407,7 +409,7 @@ module PlastApp
       query = JSON.parse(request.body.read) 
       # This function is part of SerchQuizzes class
       # checkout /models/searchQuizzes.rb for details
-      SearchQuizzes.withTags(query) 
+      search_and_check(query) 
     end
 
     get '/last_quizzes/:id' do
@@ -436,9 +438,8 @@ module PlastApp
     delete '/admin/users/:id' do
       user = User.find(params['id'])
       if !user.nil?
-        # quizes = Quiz.where(user_id: params['id'])
-        # puts "hohohohoh #{quizes}"
-        # quizes.update(user_id: 4)
+        quizes = Quiz.where(user_id: params['id'])
+        quizes.update_all(user_id: 4)
         user.destroy
         return [200, 'ok']
       end

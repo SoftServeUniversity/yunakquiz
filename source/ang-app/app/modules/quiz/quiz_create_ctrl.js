@@ -2,15 +2,14 @@
 /** Quiz Create controller  */
 angular.module('yunakQuiz.assessments')
 .controller('QuizCreateCtrl', 
-  ['$scope', 'QuizResource', 'QuizMngService', '$location', 'getAccess', 
-  function($scope, QuizResource, QuizMngService, $location,getAccess) {
+  ['$scope', 'QuizResource', 'QuizMngService', '$location', 'getAccess', '$route',
+  function($scope, QuizResource, QuizMngService, $location,getAccess, $route ) {
 
   /** Check access to this page*/
-  if (getAccess('/admin/assessments/create','user')) {
-    init();
-  } else {
-    $location.path( "/404" );
-  };
+  getAccess($location.path(),$route.current.permission).then(
+    function () { init(); },
+    function () { $location.path( "/404" ); }
+  );
 
   /** Init new Quiz */
   function init(){

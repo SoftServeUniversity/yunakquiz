@@ -2,13 +2,13 @@
 
 /* http://docs.angularjs.org/guide/dev_guide.e2e-testing */
 
-xdescribe('Login Model Window', function() {
+describe('Login Model Window', function() {
   var httpBackendMock = function() {
         angular.module('httpBackendMock', ['yunakQuiz', 'ngMockE2E']).run(function($httpBackend) {
-          var successfulLoginRespose = {"id":2,"username":"qwerty","first_name":null,"last_name":null,"hashed_password":"3294a196c78a08bbc9fe7cf26788ca2c387926d0a60e0eacd153b75551eb3b18","salt":"b397bef7c4fd2cfd069a949c9ac15d992f6116459cf3126a06f445decdc79fd2","email":"edlert@rambler.ru","birthday":"2014-10-28T00:00:00.000Z","plast_hovel":null,"plast_region":null,"plast_level":null,"picture":null,"created_at":"2014-11-04T00:51:57.504Z","updated_at":"2014-11-04T00:51:57.504Z"};
-          var userIgoryan = {username: 'Igoryan', password: '12345678', password_confirmation: '12345678', email: 'ewrrg@fgfgf.com', birthday: '2014-10-08'};
+          var successfulLoginRespose = {"id":13,"username":"Ignatiy","first_name":null,"last_name":null,"email":"admin@mail.com","birthday":"2000-12-31T22:00:00.000Z","plast_hovel":null,"plast_region":null,"plast_level":null,"picture":null}
+          var permission = ["adminUsersTab", "adminBlackListTab", "adminAdministrationTab", "adminModeratorsTab", "adminCategoriesTab", "adminAboutUsTab", "adminFAQ"];
 
-          $httpBackend.whenPOST('http://localhost:9292/access', {username: "qwerty", password: "12345678"}).respond(function(method, url, data, headers) {
+          $httpBackend.whenPOST('http://localhost:9292/access', {username: "Ignatiy", password: "12345678"}).respond(function(method, url, data, headers) {
             console.log('Received these data:', method, url, data, headers);
             return [200, successfulLoginRespose, {}];
           });
@@ -22,6 +22,8 @@ xdescribe('Login Model Window', function() {
             console.log('Sorry this is not your day', method, url, data, headers);
             return [401, "unauthorized", {}];
           });
+
+          $httpBackend.whenGET('http://localhost:9292/permission').respond(permission);
 
          $httpBackend.whenGET(/modules\/\w+.*/).passThrough();
          $httpBackend.whenGET(/^\w+.*/).passThrough();
@@ -65,12 +67,11 @@ xdescribe('Login Model Window', function() {
     describe('Login with correct data', function() {
 
       it('should close modal window and show name of user', function() {
-        element(by.model('lgn.user.username')).sendKeys("qwerty");
+        element(by.model('lgn.user.username')).sendKeys("Ignatiy");
         element(by.model('lgn.user.password')).sendKeys("12345678");
         element(by.buttonText('Увійти')).click();
-        browser.sleep(1000);
         expect(element(by.id('login')).isDisplayed()).toBe(false);
-        expect(element(by.binding('appCtrl.user.username')).getText()).toBe("qwerty");
+        expect(element(by.binding('appCtrl.user.username')).getText()).toBe("Ignatiy");
       });
 
     });
