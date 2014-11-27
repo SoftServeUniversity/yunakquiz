@@ -2,35 +2,35 @@
 
 /* http://docs.angularjs.org/guide/dev_guide.e2e-testing */
 
-xdescribe('Signup page', function() {
+describe('Signup page', function() {
     var httpBackendMock = function() {
         angular.module('httpBackendMock', ['yunakQuiz', 'ngMockE2E']).run(function($httpBackend) {
-          var userInokentiy = {username: 'Inokentiy', password: '12345678', password_confirmation: '12345678', email: 'ewrrg@fgfgf.com', birthday: '2014-10-08'};
-          var userIgoryan = {username: 'Igoryan', password: '12345678', password_confirmation: '12345678', email: 'ewrrg@fgfgf.com', birthday: '2014-10-08'};
+          var userInokentiy = {username: 'Inokentiy', password: '12345678', password_confirmation: '12345678', email: 'ewrrg@fgfgf.com', birthday: '2014-10-07T21:00:00.000Z'};
+          var userIgoryan = {username: 'Igoryan', password: '12345678', password_confirmation: '12345678', email: 'ewrrg@fgfgf.com', birthday: '2014-10-07T21:00:00.000Z'};
+          var permission = ["adminUsersTab", "adminBlackListTab", "adminAdministrationTab", "adminModeratorsTab", "adminCategoriesTab", "adminAboutUsTab", "adminFAQ"];
 
           $httpBackend.whenPOST('http://localhost:9292/user', userInokentiy).respond(function(method, url, data, headers) {
             console.log('Received these data:', method, url, data, headers);
-            return [400, {"username":"has already been taken"}, {}];
+            return [400, {"username":["has already been taken"]}, {}];
           });
 
           $httpBackend.whenPOST('http://localhost:9292/user', userIgoryan).respond(function(method, url, data, headers) {
             console.log('Hohoho you are lucky', method, url, data, headers);
             return [200, "ok", {}];
           });
-
-         $httpBackend.whenGET(/modules\/\w+.*/).passThrough();
-         $httpBackend.whenGET(/^\w+.*/).passThrough();
-         $httpBackend.whenGET().passThrough();
+          $httpBackend.whenGET('http://localhost:9292/permission').respond(permission);
+          $httpBackend.whenGET(/modules\/\w+.*/).passThrough();
+          $httpBackend.whenGET(/^\w+.*/).passThrough();
+          $httpBackend.whenGET().passThrough();
         });
     };
     var ptor =  protractor.getInstance();
     //var mockModule = require('../mocked-backend.js');
     ptor.addMockModule('httpBackendMock', httpBackendMock);
 
-
   beforeEach(function() {
       browser.get('http://localhost:8000/#/auth/signup');
-      //ptor.addMockModule('httpBackendMock', mockModule.httpBackendMock);
+      //ptor.addMockModule('httpBackendMock', httpBackendMock);
     });
 
   it('should redirect to the Main page when we click cancel botton', function() {
@@ -79,7 +79,7 @@ xdescribe('Signup page', function() {
         element(by.css('[name=birthday]')).sendKeys("10082014");
         element(by.model('reg.enteredCaptcha')).sendKeys(captcha);
         element(by.buttonText('Реєстрація')).click();
-        //ptor.sleep(10000);
+        //ptor.sleep(30000);
         expect(element(by.css('[name=username]+div')).getText()).toBe("Користувач з таким іменем вже існує");
     });
 
@@ -92,7 +92,7 @@ xdescribe('Signup page', function() {
       element(by.css('[name=birthday]')).sendKeys("10082014");
       element(by.model('reg.enteredCaptcha')).sendKeys(captcha);
       element(by.buttonText('Реєстрація')).click();
-      //ptor.sleep(50000);
+      // ptor.sleep(30000);
       expect(browser.getLocationAbsUrl()).toMatch("/");
     });
 
