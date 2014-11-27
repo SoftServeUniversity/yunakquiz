@@ -16,6 +16,20 @@ describe('faq page', function(){
 	var answerArray = ['p#Question1', 'p#Question2', 'p#Question3', 'p#Question4', 'p#Question5'];
 	var faqTitle = "Часті Питання";
 
+	function currQuestion(faq_question){
+		for(var i = 0; i < questionsLength; i++){
+			faq_question.forEach(function(questions[i]){
+				var currentElem = element.all(by.repeater('Question in Questions'));
+				expect(currentElem.get(i).getText()).toMatch(questions[i].faq_question);
+			});
+
+			currentElem.get(i).click();
+		   	var curAnswer = element(by.css(answerArray[i]));
+		   	expect(curAnswer.getText()).toMatch(questions[i].faq_answer);
+		   	currentElem.get(i).click();
+		};
+	};
+
 	beforeEach(function() {
     	ptor.addMockModule('httpBackendMock', mockModule.httpBackendMock);  
  	});
@@ -39,15 +53,16 @@ describe('faq page', function(){
 	   	// should see all questions and answers	   	
 
 		it('should see current question', function(){
-			for(var i = 0; i < questionsLength; i++){
-		  		var curQuestion = element.all(by.repeater('Question in Questions'));
-		   		expect(curQuestion.get(i).getText()).toMatch(questions[i].faq_question);
+			currQuestion(faq_question);
+			// for(var i = 0; i < questionsLength; i++){
+		 //  		var curQuestion = element.all(by.repeater('Question in Questions'));
+		 //   		expect(curQuestion.get(i).getText()).toMatch(questions[i].faq_question);
 		   	
-		   		curQuestion.get(i).click();
-		   		var curAnswer = element(by.css(answerArray[i]));
-		   		expect(curAnswer.getText()).toMatch(questions[i].faq_answer);
-		   		curQuestion.get(i).click();
-			};
+		 //   		curQuestion.get(i).click();
+		 //   		var curAnswer = element(by.css(answerArray[i]));
+		 //   		expect(curAnswer.getText()).toMatch(questions[i].faq_answer);
+		 //   		curQuestion.get(i).click();
+			// };
 	   	});
 	});
 });

@@ -14,11 +14,7 @@
   app.controller('faqCtrl', ['$scope', '$http', 'QuestionService', function ($scope, $http, QuestionService) {
 
     QuestionService.get().success(function(data){
-      $scope.Questions = data;
-
-      for (var i = $scope.Questions.length - 1; i >= 0; i--) {
-        $scope.Questions[i].visible = false;
-      };
+      $scope.Questions = data;      
     });
 
     $scope.showIcon = function(index){
