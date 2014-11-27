@@ -1,8 +1,8 @@
 'use strict';
 
-xdescribe('ModerationlCabinet', function() {
+describe('ModerationlCabinet', function() {
 	var ptor =  protractor.getInstance();
- 	var mockModule = require('../http_backend_quiz.js');
+ 	var mockModule = require('../cabinets-backend.js');
  	ptor.addMockModule('httpBackendMock', mockModule.httpBackendMock);
 
  	describe('page structure', function() {
@@ -40,23 +40,20 @@ xdescribe('ModerationlCabinet', function() {
 		it('should show pablished tab activeted ', function() {
 			var tab = element.all(by.css('ul.nav li.persCabActive'))
 			expect(tab.getText()).toMatch(/Опубліковані/); 
-			
-
 		});
 
 		it('should show table title', function() {
 			expect(element.all(by.css('table thead tr th')).count()).toBe(5);
-		
 		});
 
-		it('should show n Quizzess', function() {
-			expect(element.all(by.repeater('quiz in quizzes')).count()).toBe(13);
+		it('should show 5 Quizzess', function() {
+			expect(element.all(by.repeater('quiz in quizzes')).count()).toBe(5);
 		});
 
-		it('should show Edit button', function() {
+		it('should show review button', function() {
 			var quizzess = element.all(by.repeater('quiz in quizzes'));
 			expect(quizzess.get(0).element(by.linkText('Перевірити тест')).getAttribute('href'))
-			.toMatch('#/admin/moderationCabinet/review/1')
+			.toMatch('#/admin/moderationCabinet/review/')
 
 		});
 

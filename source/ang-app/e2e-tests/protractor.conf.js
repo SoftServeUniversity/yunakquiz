@@ -2,11 +2,13 @@ exports.config = {
   allScriptsTimeout: 11000,
 
   specs: [
-    './tests/*.js'
+    // './tests/*.js'
     //'./tests/signup.js'
     //'./tests/login.js'
     //'./tests/guest-search-test.js'
-    //'./tests/profile.js'
+    './tests/personalCabinet.js',
+    './tests/moderationCabinet.js'
+
 
 
   ],
