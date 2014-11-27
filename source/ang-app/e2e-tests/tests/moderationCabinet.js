@@ -29,6 +29,16 @@ describe('ModerationlCabinet', function() {
 			
 		});
 
+		it('should move to enhance', function() {
+			element(by.linkText("На доопрацюванні")).click()
+			expect(browser.getLocationAbsUrl()).toMatch('admin/moderationCabinet/enhance');
+		});
+
+		it('should move to review', function() {
+			element(by.linkText("Незатверджені")).click()
+			expect(browser.getLocationAbsUrl()).toMatch('admin/moderationCabinet/review');
+		});
+
 	});
 
 	describe('Published tab view', function() {
@@ -53,7 +63,7 @@ describe('ModerationlCabinet', function() {
 		it('should show review button', function() {
 			var quizzess = element.all(by.repeater('quiz in quizzes'));
 			expect(quizzess.get(0).element(by.linkText('Перевірити тест')).getAttribute('href'))
-			.toMatch('#/admin/moderationCabinet/review/')
+			.toMatch('#/admin/assessments/review/')
 
 		});
 
@@ -62,32 +72,29 @@ describe('ModerationlCabinet', function() {
 			expect(quizzess.get(0).element(by.linkText('Видалити тест')).isPresent()).toBe(true);
 		});
 
+		it('should show error msg', function() {
+			element.all(by.linkText('Видалити тест')).first().click()
+			browser.sleep(1000);
+			element(by.model('pwd.password')).sendKeys('1234567');
+			element(by.buttonText('Видалити')).click();
+			expect(element(by.binding('errorMsg')).getText())
+			.toMatch(/Невірний пароль/);
+		});
+
+		it('should close modal', function() {
+			element.all(by.linkText('Видалити тест')).first().click()
+			browser.sleep(1000);
+			element(by.model('pwd.password')).sendKeys('1234567');
+			element(by.buttonText('Видалити')).click();
+			expect(element(by.css('.modal-dialog')).isPresent()).toBe(false);
+		});
+
 		it('should show pagination', function() {
 			expect(element(by.css('ul.pagination')).isPresent()).toBe(true);
 		});
 
 	});
 
-	// xdescribe('Draft tab actions', function() {
-		
-	// 	beforeEach(function() {
-	// 		browser.get('http://localhost:8000/#/admin/personalCabinet/draft');
-	// 	});
 
-	// 	it('should be able to search by title', function() {
-		
-	// 	});
-
-	// 	it('should be able to edit Quiz', function() {
-			
-	// 	});
-
-	// 	it('should be able to delete Quiz', function() {
-			
-	// 	});
-
-	// });
-
-	
 
 });

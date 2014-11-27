@@ -24,7 +24,21 @@ describe('PersonalCabinet', function() {
 
 		it('should have 5 tabs: published, enhance, review, draft and profile', function() {
 			expect(element.all(by.css('ul.nav li')).count()).toBe(5);
-			
+		});
+
+		it('should move to enhance', function() {
+			element(by.linkText('Недоопрацьовані')).click()
+			expect(browser.getLocationAbsUrl()).toMatch('admin/personalCabinet/enhance');
+		});
+
+		it('should move to review', function() {
+			element(by.linkText('Незатверджені')).click()
+			expect(browser.getLocationAbsUrl()).toMatch('admin/personalCabinet/review');
+		});
+
+		it('should move to draft', function() {
+			element(by.linkText('Створені')).click()
+			expect(browser.getLocationAbsUrl()).toMatch('admin/personalCabinet/draft');
 		});
 
 		it('should have search input', function() {
@@ -64,32 +78,26 @@ describe('PersonalCabinet', function() {
 			expect(quizzess.get(0).element(by.linkText('Видалити тест')).isPresent()).toBe(true);
 		});
 
+		it('should show error msg', function() {
+			element.all(by.linkText('Видалити тест')).first().click()
+			browser.sleep(1000);
+			element(by.model('pwd.password')).sendKeys('1234567');
+			element(by.buttonText('Видалити')).click();
+			expect(element(by.binding('errorMsg')).getText())
+			.toMatch(/Невірний пароль/);
+		});
+
+		it('should close modal', function() {
+			element.all(by.linkText('Видалити тест')).first().click()
+			browser.sleep(1000);
+			element(by.model('pwd.password')).sendKeys('1234567');
+			element(by.buttonText('Видалити')).click();
+			expect(element(by.css('.modal-dialog')).isPresent()).toBe(false);
+		});
+
 		it('should show pagination', function() {
 			expect(element(by.css('ul.pagination')).isPresent()).toBe(true);
 		});
 
 	});
-
-	// xdescribe('Draft tab actions', function() {
-		
-	// 	beforeEach(function() {
-	// 		browser.get('http://localhost:8000/#/admin/personalCabinet/draft');
-	// 	});
-
-	// 	it('should be able to search by title', function() {
-		
-	// 	});
-
-	// 	it('should be able to edit Quiz', function() {
-			
-	// 	});
-
-	// 	it('should be able to delete Quiz', function() {
-			
-	// 	});
-
-	// });
-
-	
-
 });

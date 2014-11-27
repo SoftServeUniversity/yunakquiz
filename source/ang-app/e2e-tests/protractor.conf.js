@@ -3,11 +3,11 @@ exports.config = {
 
   specs: [
     // './tests/*.js'
-    //'./tests/signup.js'
-    //'./tests/login.js'
-    //'./tests/guest-search-test.js'
-    './tests/personalCabinet.js',
-    './tests/moderationCabinet.js'
+    // './tests/quiz.js',
+    './tests/quizCreate.js',
+    // './tests/quizEdit.js',
+    // './tests/review.js',
+    // './tests/moderationCabinet.js'
 
 
 
