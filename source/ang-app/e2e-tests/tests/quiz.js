@@ -1,6 +1,6 @@
 'use strict';
 
-xdescribe('quiz', function() {
+describe('quiz', function() {
 	var ptor =  protractor.getInstance();
  	var mockModule = require('../http_backend_quiz.js');
  	ptor.addMockModule('httpBackendMock', mockModule.httpBackendMock);
@@ -51,8 +51,7 @@ xdescribe('quiz', function() {
 			questions.get(1).all(by.repeater('answer in question.answers')).get(1).click();
 			questions.get(2).all(by.repeater('answer in question.answers')).get(2).click();
 			element.all(by.buttonText('Пройти тест')).click();
-			expect(browser.getLocationAbsUrl()).
-				toMatch('/assessments/1/result');
+			expect(browser.getLocationAbsUrl()).toMatch('/assessments/1/result');
 		});
 
 	});
@@ -73,14 +72,13 @@ xdescribe('quiz', function() {
 				toMatch('Тест на знання правил футболу');
 		});
 
-		it('should show that gained result equals 67 points', function() {
-			expect(element.all(by.binding('counter')).getText()).
-				toMatch('67');
+		it('should show that gained result equals 66.67 points', function() {
+			expect(element.all(by.binding('quiz.result')).getText()).toMatch('66.67');
 		});
 
-		it('should show gained result equals that equals 67 points in result progress-bar', function() {
+		it('should show gained result equals that equals 66.67  points in result progress-bar', function() {
 			expect(element.all(by.css('.progress .progress-bar')).getText()).
-				toMatch('67%');
+				toMatch('66.67%');
 		});
 
 		it('should show two questions that is marked as correct by green background color', function() {
@@ -128,7 +126,7 @@ xdescribe('quiz', function() {
 		});
 
 		it('should show that gained result equals 100 points', function() {
-			expect(element.all(by.binding('counter')).getText()).
+			expect(element.all(by.binding('quiz.result')).getText()).
 				toMatch('100');
 		});
 

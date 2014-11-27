@@ -1,8 +1,8 @@
 'use strict';
 
-xdescribe('ModerationlCabinet', function() {
+describe('ModerationlCabinet', function() {
 	var ptor =  protractor.getInstance();
- 	var mockModule = require('../http_backend_quiz.js');
+ 	var mockModule = require('../cabinets-backend.js');
  	ptor.addMockModule('httpBackendMock', mockModule.httpBackendMock);
 
  	describe('page structure', function() {
@@ -29,6 +29,16 @@ xdescribe('ModerationlCabinet', function() {
 			
 		});
 
+		it('should move to enhance', function() {
+			element(by.linkText("На доопрацюванні")).click()
+			expect(browser.getLocationAbsUrl()).toMatch('admin/moderationCabinet/enhance');
+		});
+
+		it('should move to review', function() {
+			element(by.linkText("Незатверджені")).click()
+			expect(browser.getLocationAbsUrl()).toMatch('admin/moderationCabinet/review');
+		});
+
 	});
 
 	describe('Published tab view', function() {
@@ -40,23 +50,20 @@ xdescribe('ModerationlCabinet', function() {
 		it('should show pablished tab activeted ', function() {
 			var tab = element.all(by.css('ul.nav li.persCabActive'))
 			expect(tab.getText()).toMatch(/Опубліковані/); 
-			
-
 		});
 
 		it('should show table title', function() {
 			expect(element.all(by.css('table thead tr th')).count()).toBe(5);
-		
 		});
 
-		it('should show n Quizzess', function() {
-			expect(element.all(by.repeater('quiz in quizzes')).count()).toBe(13);
+		it('should show 5 Quizzess', function() {
+			expect(element.all(by.repeater('quiz in quizzes')).count()).toBe(5);
 		});
 
-		it('should show Edit button', function() {
+		it('should show review button', function() {
 			var quizzess = element.all(by.repeater('quiz in quizzes'));
 			expect(quizzess.get(0).element(by.linkText('Перевірити тест')).getAttribute('href'))
-			.toMatch('#/admin/moderationCabinet/review/1')
+			.toMatch('#/admin/assessments/review/')
 
 		});
 
@@ -65,32 +72,29 @@ xdescribe('ModerationlCabinet', function() {
 			expect(quizzess.get(0).element(by.linkText('Видалити тест')).isPresent()).toBe(true);
 		});
 
+		it('should show error msg', function() {
+			element.all(by.linkText('Видалити тест')).first().click()
+			browser.sleep(1000);
+			element(by.model('pwd.password')).sendKeys('1234567');
+			element(by.buttonText('Видалити')).click();
+			expect(element(by.binding('errorMsg')).getText())
+			.toMatch(/Невірний пароль/);
+		});
+
+		it('should close modal', function() {
+			element.all(by.linkText('Видалити тест')).first().click()
+			browser.sleep(1000);
+			element(by.model('pwd.password')).sendKeys('1234567');
+			element(by.buttonText('Видалити')).click();
+			expect(element(by.css('.modal-dialog')).isPresent()).toBe(false);
+		});
+
 		it('should show pagination', function() {
 			expect(element(by.css('ul.pagination')).isPresent()).toBe(true);
 		});
 
 	});
 
-	// xdescribe('Draft tab actions', function() {
-		
-	// 	beforeEach(function() {
-	// 		browser.get('http://localhost:8000/#/admin/personalCabinet/draft');
-	// 	});
 
-	// 	it('should be able to search by title', function() {
-		
-	// 	});
-
-	// 	it('should be able to edit Quiz', function() {
-			
-	// 	});
-
-	// 	it('should be able to delete Quiz', function() {
-			
-	// 	});
-
-	// });
-
-	
 
 });
