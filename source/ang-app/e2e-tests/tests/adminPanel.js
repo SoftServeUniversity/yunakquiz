@@ -5,14 +5,15 @@ describe('AdminPanel', function () {
     var ptor =  protractor.getInstance();
     var mockModule = require('../mocked-backend.js');
     var adminPanel = 
-    [{tabName: "Користувачі", url: "http://localhost:8000/#/administration-panel/"},
-     {tabName: "Чорний список", url: "http://localhost:8000/#/administration-panel/blacklistTab"},
-     {tabName: "Адміністрація", url: "http://localhost:8000/#/administration-panel/administrationTab"},
-     {tabName: "Категорії тестів", url: "http://localhost:8000/#/administration-panel/quizzescategoriesTab"},
-     {tabName: "Про нас", url: "http://localhost:8000/#/administration-panel/aboutusTab"},
-     {tabName: "Часті запитання", url: "http://localhost:8000/#/administration-panel/faqTab"}
+    [{tabName: "Користувачі", url: "/administration-panel/"},
+     {tabName: "Чорний список", url: "/administration-panel/blacklistTab"},
+     {tabName: "Адміністрація", url: "/administration-panel/administrationTab"},
+     {tabName: "Модератори", url: "/administration-panel/moderatorsTab"},
+     {tabName: "Категорії тестів", url: "/administration-panel/quizzescategoriesTab"},
+     {tabName: "Про нас", url: "/administration-panel/aboutusTab"},
+     {tabName: "Часті запитання", url: "/administration-panel/faqTab"}
     ]
-    var tabsCount = 6;
+    var tabsCount = 7;
       ptor.addMockModule('httpBackendMock', mockModule.httpBackendMock);
       var adminPanelTabs = element.all(by.css('.admin-panel-tabs li'));
 

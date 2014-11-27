@@ -6,36 +6,36 @@ describe('HomePage', function(){
   var mockModule = require('../mocked-backend.js');
   var headerMenuTitle = 'Система Пластових електронних опитників';
   var HeaderMenu = [
-      {menuName: 'Головна', menuClass: '.menuHomeLnk',url: 'http://localhost:8000/#/'},
-      {menuName: 'Пошук', menuClass: '.menuSearchLnk', url: 'http://localhost:8000/#/guest-search'},
-      {menuName: 'Контакти', menuClass: '.menuContactsLnk', url: 'http://localhost:8000/#/contacts'},
-      {menuName: 'Статистика', menuClass: '.menuStatisticsLnk', url: 'http://localhost:8000/#/statistics'}
+      {menuName: 'Головна', menuClass: '.menuHomeLnk',url: '/'},
+      {menuName: 'Пошук', menuClass: '.menuSearchLnk', url: '/guest-search'},
+      {menuName: 'Контакти', menuClass: '.menuContactsLnk', url: '/contacts'},
+      {menuName: 'Статистика', menuClass: '.menuStatisticsLnk', url: '/statistics'}
       ];
   var FooterMenu = [
-      {menuName: 'Головна', menuClass: '.footerHomeLnk', url: 'http://localhost:8000/#/'},
-      {menuName: 'Про Нас', menuClass: '.footerAboutLnk', url: 'http://localhost:8000/#/about-us'},
-      {menuName: 'Контакти', menuClass: '.footerContactsLnk', url: 'http://localhost:8000/#/contacts'},
+      {menuName: 'Головна', menuClass: '.footerHomeLnk', url: '/'},
+      {menuName: 'Про Нас', menuClass: '.footerAboutLnk', url: '/about-us'},
+      {menuName: 'Контакти', menuClass: '.footerContactsLnk', url: '/contacts'},
       ];
   var parCategories = [
-      {catName: 'Спорт', testcount: 'Тестів: 8', subcatQuantity: 3, url: 'http://localhost:8000/#/parentcat-page/1'},
-      {catName: "Комп'ютери", testcount: 'Тестів: 4', subcatQuantity: 3, url: 'http://localhost:8000/#/parentcat-page/3'},
-      {catName: 'Туризм', testcount: 'Тестів: 1', subcatQuantity: 3, url: 'http://localhost:8000/#/parentcat-page/4'}
+      {catName: 'Спорт', testcount: 'Тестів: 8', subcatQuantity: 3, url: '/parentcat-page/1'},
+      {catName: "Комп'ютери", testcount: 'Тестів: 4', subcatQuantity: 3, url: '/parentcat-page/3'},
+      {catName: 'Туризм', testcount: 'Тестів: 1', subcatQuantity: 3, url: 'parentcat-page/4'}
       ];
   var subCategories = [
       [
-       {catName:'Футбол', url: 'http://localhost:8000/#/subcategory/2'},
-       {catName:'Хокей', url: 'http://localhost:8000/#/subcategory/6'},
-       {catName:'Баскетбол', url: 'http://localhost:8000/#/subcategory/7'}
+       {catName:'Футбол', url: '/subcategory/2'},
+       {catName:'Хокей', url: '/subcategory/6'},
+       {catName:'Баскетбол', url: '/subcategory/7'}
       ],
       [
-       {catName:'Комплектуючі', url: 'http://localhost:8000/#/subcategory/8'},
-       {catName:'Програмування', url: 'http://localhost:8000/#/subcategory/9'},
-       {catName:'Мережі', url: 'http://localhost:8000/#/subcategory/10'}
+       {catName:'Комплектуючі', url: '/subcategory/8'},
+       {catName:'Програмування', url: '/subcategory/9'},
+       {catName:'Мережі', url: '/subcategory/10'}
       ],
       [
-       {catName:'Країни', url: 'http://localhost:8000/#/subcategory/5'},
-       {catName:'Столиці', url: 'http://localhost:8000/#/subcategory/11'},
-       {catName:'Гори', url: 'http://localhost:8000/#/subcategory/12'}
+       {catName:'Країни', url: '/subcategory/5'},
+       {catName:'Столиці', url: '/subcategory/11'},
+       {catName:'Гори', url: '/subcategory/12'}
       ]
       ];
 
@@ -117,7 +117,6 @@ describe('HomePage', function(){
 
   describe('categoriesContainer', function () {
     var parCatContainer = element.all(by.repeater('parCat in parCategories'));
-    
 
     function getCatTestQuantity(elemNumber){
       var subCats = element.all(by.css('li .quote-author'));
@@ -126,14 +125,14 @@ describe('HomePage', function(){
     };
 
     function subCatItems(catNumber, elemNumber){
-      var subCatContainer = element.all(by.css('.categories-container'));
-      var curentElem = subCatContainer.get(catNumber).all(by.binding('{{subCat.title | limitStringTo:true:13}}')).get(elemNumber).getText();
+      var subCatContainer = element.all(by.className('categories-container'));
+      var curentElem = subCatContainer.get(catNumber).all(by.binding('subCat.title')).get(elemNumber).getText();
       return curentElem
     };
 
     function subCatContainer(elemNumber){
-      var subCatContainer = element.all(by.css('.categories-container')); 
-      var curentElem = subCatContainer.get(elemNumber).all(by.binding('{{subCat.title | limitStringTo:true:13}}')).count();
+      var subCatContainer = element.all(by.className('categories-container')); 
+      var curentElem = subCatContainer.get(elemNumber).all(by.binding('subCat.title')).count();
       return curentElem
     };
     function parCategoriesNameCheck(){
@@ -160,7 +159,8 @@ describe('HomePage', function(){
       }
     }
     beforeEach(function () {
-        browser.get('http://localhost:8000/#/');
+      browser.get('http://localhost:8000/#/');
+      ptor.addMockModule('httpBackendMock', mockModule.httpBackendMock); 
     });
   
     it('should be 3 Parent Categories', function () {
@@ -202,13 +202,14 @@ describe('HomePage', function(){
       for(var i = 0; i < parCategoriesQuantity;i++) {
         for(var j = 0; j < parCategories[i].subcatQuantity; j++){
           browser.get('http://localhost:8000/#/');
-          element.all(by.css('.categories-container')).get(i).all(by.binding('{{subCat.title | limitStringTo:true:13}}')).get(j).click(); 
+          element.all(by.css('.categories-container')).get(i).all(by.binding('subCat.title')).get(j).click(); 
           expect(browser.getLocationAbsUrl()).toMatch(subCategories[i][j].url);
         }
       }
     }
     beforeEach(function () {
         browser.get('http://localhost:8000/#/');
+        ptor.addMockModule('httpBackendMock', mockModule.httpBackendMock); 
     });
     it('click ParCats should redirect to corresponding link', function () {
       checkParCatClickLinkLoaction();

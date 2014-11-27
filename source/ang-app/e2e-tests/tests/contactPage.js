@@ -30,7 +30,7 @@ describe('contactPage', function () {
 
     function check(elementToCheck) {
       contacts.forEach(function (contact,index) {
-      expect(element.all(by.binding('{{person.'+ elementToCheck +'}}')).get(index).getText())
+      expect(element.all(by.binding('person.'+ elementToCheck +'')).get(index).getText())
       .toBe(contact[elementToCheck]);  
       })
     };
