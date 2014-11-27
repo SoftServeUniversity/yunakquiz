@@ -6,10 +6,16 @@ angular.module('yunakQuiz.sessions', ['ngRoute', "ngResource",'yunakQuiz.permiss
     var lgnCtrl = this;
     this.user = {};
     this.message = "";
-    this.submitLogin = function(){
+    this.validateInputs = function(){
       if (!this.user.username || !this.user.password){
         this.message = "Введіть нікнейм і пароль!";
-      } else {
+        return false;
+      }else{
+        return true;
+      }  
+    };
+    this.submitLogin = function(){
+      if (this.validateInputs()){
         accessService.save(this.user,
           function(data){
             getTabTemplates.getResponse().then(function(){

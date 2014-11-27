@@ -19,10 +19,9 @@ describe('AdminPanel', function () {
       {catName:'Гори', testcount: '', parentCategory: 'Туризм', subcatQuantity: 0, catId: 12}
     ];
   var parCatRowSel = 
-    {catId: '{{category.id}}',
-     catName: '{{category.title}}',
-     parentCategory: '{{category.parCatTitle}}',
-     testcount: '{{groupedQuizzes[category.id]}}'
+    {catName: 'category.title',
+     parentCategory: 'category.parCatTitle',
+     testcount: 'groupedQuizzes[category.id]'
     };
 
   var title = 
@@ -133,9 +132,7 @@ describe('AdminPanel', function () {
     it('All elements in panel title should be and corectly named', function () {
       checkTitleElem();
     });
-    it('All category Id\'s in panel should be corect', function () {
-      checkCatListBy(parCatRowSel.catId,'catId');
-    });
+
     it('All category Names in panel should be corect', function () {
       checkCatListBy(parCatRowSel.catName,'catName');
     });
@@ -242,7 +239,7 @@ describe('Admin panel modal window Edit', function () {
         currentElem = element(by.model(input.modelSelector)).getAttribute('value');
         expect(currentElem).toMatch(input.inputModelText);
       });
-      currentElem = element(by.binding('{{errorModalMsg}}')).getText();
+      currentElem = element(by.binding('errorModalMsg')).getText();
       expect(currentElem).toMatch('Увага, категорія містить підкатегорії');
       currentElem = element(by.model('subParCatSelect')).isEnabled();
       expect(currentElem).toBe(false);

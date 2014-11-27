@@ -100,7 +100,17 @@ angular.module('yunakQuiz.permission', ['ngRoute'])
     {'name' : 'User_statistic',
      'temp' : '/admin/statistic',
      'caption': 'user_statistic' 
+    },
+    {'name' : 'User_statistic',
+     'temp' : '/admin/statistic/list',
+     'caption': 'user_statistic' 
+    },
+    {'name' : 'User_statistic',
+     'temp' : '/admin/statistic/general',
+     'caption': 'user_statistic' 
     }
+
+
 
   ],
   menuAcces: 
@@ -130,71 +140,87 @@ angular.module('yunakQuiz.permission', ['ngRoute'])
   'CONFIG',
   function($location, $http, tabs, $q, CONFIG) {
     var tabsByRoles = {};
-  
+    var access = 'false';
     return {
       getResponse: function(){
       
         var defer = $q.defer();
+        access = 'pending';
 
-        $http.get(CONFIG.BASE_URL + '/permission').success(function (data) {
+        $http.get(CONFIG.BASE_URL + '/permission')
+          .success(function (data) {
           var userAccess = data;
-          tabsByRoles = {};
-// helper function to sort tabs by roles
-          function sortTabsByRoles(givenTabs, role) {
-            angular.forEach(userAccess, function (uAccess) {
-              angular.forEach(givenTabs, function (givenTab) {
-                if(givenTab.name == uAccess) {
-                  tabsByRoles[role].push(givenTab);
-                }
-              });            
-            });
-          }
-// sort tabs by all roles which stored in constant , roles will be key wor array of tabs
-          function initRolesTabs(rolesToInit) {
-            for(var role in rolesToInit) {
-              tabsByRoles[role] = [];
-              sortTabsByRoles(tabs[role], role);
-            }
-          };
-          initRolesTabs(tabs);
-          defer.resolve(true);
-          })
-          .error(function(data) {
             tabsByRoles = {};
-            defer.reject(data);
-          });
+// helper function to sort tabs by roles
+            function sortTabsByRoles(givenTabs, role) {
+              angular.forEach(userAccess, function (uAccess) {
+                angular.forEach(givenTabs, function (givenTab) {
+                  if(givenTab.name == uAccess) {
+                    tabsByRoles[role].push(givenTab);
+                  }
+                });            
+              });
+            }
+// sort tabs by all roles which stored in constant , roles will be key wor array of tabs
+            function initRolesTabs(rolesToInit) {
+              for(var role in rolesToInit) {
+                tabsByRoles[role] = [];
+                sortTabsByRoles(tabs[role], role);
+              }
+            };
+
+            initRolesTabs(tabs);
+            access = 'true';
+            defer.resolve(true);
+            })
+            .error(function(data) {
+              tabsByRoles = {};
+              access = 'false';
+              defer.reject(data);
+            });
       return defer.promise;     
       },
       getTabs: function (role) {
-        if (tabsByRoles[role]) {
-          return tabsByRoles[role];
-        };
-        return false;
+        var defer = $q.defer();
+
+          if (tabsByRoles[role] && (access === 'true')) {
+            defer.resolve(tabsByRoles[role]);
+          } else {
+            if (access === 'false') {
+              defer.reject('unauthorized');
+            };
+          };
+        return defer.promise;
       }
     }
 }])
-.factory('getAccess', [
-  "$location",
-  "$http",
-  'getTabTemplates',
-  function ($location, $http, getTabTemplates) {
+.factory('getAccess', ['getTabTemplates', '$q',
+  function (getTabTemplates, $q) {
     return function (curUrl, role) {
+
+      var defer = $q.defer();
       var access = {};
       var tabs;
 
-      tabs = getTabTemplates.getTabs(role);
+      getTabTemplates.getTabs(role).then(function (data) {
+        tabs = data;
       if (!tabs) {
-        return false;
+        defer.reject(false);
+        return defer.promise;
       }; 
       angular.forEach(tabs, function (tab) {
         access[tab.temp] = tab;
       });
       if (!access[curUrl]) {
-        return false;
-      } 
-      return true;
-  };
-}])
+        defer.reject(false);
+        return defer.promise;
+      };
+      defer.resolve(true);
+  }, function () {
+   defer.reject(false);
+  });
+    return defer.promise;
+    }}])
 .run(function (getTabTemplates) {//get access tabs on page load for logged in user or guest
   getTabTemplates.getResponse().then(function(){});
 });

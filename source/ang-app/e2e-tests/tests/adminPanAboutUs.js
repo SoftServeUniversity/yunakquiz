@@ -45,7 +45,7 @@ describe('AdminPanel', function() {
   function checkSaveCancelButton() {
     buttons.forEach(function (button) {
       element(by.className(button.selector)).click();
-      expect(element(by.binding('{{msg}}')).getText()).toMatch(button.msg);
+      expect(element(by.binding('msg')).getText()).toMatch(button.msg);
     })
   }
 

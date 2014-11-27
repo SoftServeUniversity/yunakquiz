@@ -1,18 +1,17 @@
 
 angular.module('yunakQuiz.userStatistic')
 
-.controller('UserStatisticGeneralCtrl',['$scope','UserStatisticService','$location','getAccess',
-	function($scope,UserStatisticService,$location,getAccess) {
+.controller('UserStatisticGeneralCtrl',['$scope','UserStatisticService','$location','getAccess', '$route',
+	function($scope,UserStatisticService,$location,getAccess, $route) {
   
   /** Set values */
   $scope.tab = "general";
 
   /** Check access to this page */
-  if (getAccess('/admin/statistic','user')) {
-    init();
-  } else {
-    $location.path( "/404" );
-  };
+  getAccess($location.path(),$route.current.permission).then(
+    function () { init(); },
+    function () { $location.path( "/404" ); }
+  );
 
   /** Initiation */
   function init(){

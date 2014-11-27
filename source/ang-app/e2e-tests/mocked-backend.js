@@ -23,14 +23,14 @@ exports.httpBackendMock = function () {
       [
        {"id": 1,"category_id": 0, "title": "Спорт"},
        {"id": 2,"category_id": 1, "title": "Футбол"},
+       {"id": 3,"category_id": 0, "title": "Комп'ютери"},
+       {"id": 4,"category_id": 0, "title": "Туризм"},
+       {"id": 5,"category_id": 4, "title": "Країни"},
        {"id": 6,"category_id": 1, "title": "Хокей"},
        {"id": 7,"category_id": 1, "title": "Баскетбол"},
-       {"id": 3,"category_id": 0, "title": "Комп'ютери"},
        {"id": 8,"category_id": 3, "title": "Комплектуючі"},
        {"id": 9,"category_id": 3, "title": "Програмування"},
        {"id": 10,"category_id": 3, "title": "Мережі"},
-       {"id": 4,"category_id": 0, "title": "Туризм"},
-       {"id": 5,"category_id": 4, "title": "Країни"},
        {"id": 11,"category_id": 4, "title": "Столиці"},
        {"id": 12,"category_id": 4, "title": "Гори"}
       ];
