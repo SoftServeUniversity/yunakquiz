@@ -21,6 +21,7 @@ angular.module('yunakQuiz.sessions', ['ngRoute', "ngResource",'yunakQuiz.permiss
             getTabTemplates.getResponse().then(function(){
             $("#login").modal("hide");
             $location.path("/");
+            lgnCtrl.user = {};
             $scope.$emit("user_logged_in", data);
           });
           },
