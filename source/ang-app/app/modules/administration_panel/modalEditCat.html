@@ -1,0 +1,47 @@
+<!--Modal Edit Category -->
+<div class="modal-content">
+  <div class="modal-header">
+    <button type="button" class="close" ng-click="cancel()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <h4 class="modal-title text-center">
+      <label class="modTitle">Редагувати категорію</label>
+    </h4>
+    <div class="admin-pan-modal-msg">{{errorModalMsg}}</div>
+  </div>
+  <form name="editCat" ng-submit="editCat.$valid && updateCategory()" novalidate>
+    <div class="modal-body">
+      <div class="row">
+        <label class="col-xs-5 control-lablel category-label catName">Назва категорії</label>
+        <div class="col-xs-7 admin-pan-category-edit-input">
+          <input type="text" class="form-control" placeholder="Введіть назву категорії..." ng-model="catToEditDelete.title" required>
+        </div>
+      </div>
+      <div class="row">
+        <label class="col-xs-5 control-lablel category-label parCatName">Батьківська категорія</label>
+        <div class="col-xs-7 admin-pan-category-edit-input">
+          <select class="form-control" ng-model="subParCatSelect" ng-options="parCat.title for parCat in parCatGrouped" ng-disabled="lockSubcatSelect">
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <label class="col-xs-5 control-lablel category-label pwdInputLbl">Пароль</label>
+        <div class="col-xs-7 admin-pan-category-edit-input">
+          <input type="password" class="form-control" placeholder="{{pwdPlaceHolder}}" ng-model="pwdInput"required>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div class="btn-group pull-left" dropdown is-open="modalEditdropDown.isopen" ng-show="showDropdownSubCats">
+        <button type="button" class="btn btn-danger dropdown-toggle" dropdown-toggle ng-disabled="disabled">Підкатегорії
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+          <li ng-repeat="subCat in subCategories"><a>{{subCat.title}}</a></li>
+        </ul>
+      </div>
+      <button type="button" class="btn btn-default btnCancel" ng-click="cancel()">Скасувати</button>
+      <button type="submit" class="btn btn-primary btnSubmit">Застосувати</button>
+    </div>
+  </form>
+</div>

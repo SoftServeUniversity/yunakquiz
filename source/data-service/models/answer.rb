@@ -7,14 +7,14 @@ class Answer < ActiveRecord::Base
       if a['toDelete']
         answer.destroy()
       else
-        answer.update(a)
+        answer.update(title: a['title'], correct: a['correct'])
       end
     end
   end
 
   def self.createQ (answers, question)
     answers.each do |a|
-      question.answers.create(a)
+      question.answers.create(title: a['title'], correct: a['correct'])
     end 
   end
 end

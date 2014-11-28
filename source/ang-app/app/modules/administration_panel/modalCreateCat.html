@@ -1,0 +1,41 @@
+<!-- Modal Create Category-->
+<div class="modal-content">
+  <div class="panel panel-success">
+    <div class="panel-heading">
+      <button type="button" class="close" ng-click='cancel()'>
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <h4 class="modal-title text-center">
+        <label class="modTitle">Створення Категорії</label>
+        <div class="admin-pan-modal-msg">{{errorModalMsg}}</div>
+      </h4>
+    </div>
+  </div>
+  <form name="createCat" ng-submit="createCat.$valid && createCategory()" novalidate>
+    <div class="modal-body">
+      <div class="row">
+        <label class="col-xs-5 control-lablel category-label catName">Назва категорії</label>
+        <div class="col-xs-7 admin-pan-category-edit-input">
+          <input type="text" class="form-control" placeholder="Введіть назву категорії..." ng-model="currentCategory.title" required>
+        </div>
+      </div>
+      <div class="row">
+        <label class="col-xs-5 control-lablel category-label parCatName">Батьківська категорія</label>
+        <div class="col-xs-7 admin-pan-category-edit-input">
+          <select class="form-control" ng-model="subParCatSelect" ng-options="parCat.title for parCat in parCatGrouped">
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <label class="col-xs-5 control-lablel category-label pwdInputLbl">Пароль</label>
+        <div class="col-xs-7 admin-pan-category-edit-input">
+          <input type="password" class="form-control" placeholder="{{pwdPlaceHolder}}" ng-model="pwdInput"required>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-default btnCancel" ng-click="cancel()">Скасувати</button>
+      <button type="submit" class="btn btn-primary btnSubmit">Додати категорію</button>
+    </div>
+  </form>
+</div>

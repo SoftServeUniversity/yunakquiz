@@ -1,0 +1,26 @@
+<div ng-show="quiz" class="quiz row">
+<h3 class="text-center assessment-title">Редагування тесту</h3>
+	<div ng-if="errorMsg" ng-bind="errorMsg" class="alert col-sm-12 text-center alert-danger"></div>
+	<div class="col-md-8">
+		<quiz-form  quiz="quiz" quiz-form-name="quizFormName"> </quiz-form>
+		<div class="quizMarginTop text-center">
+			<button ng-click="saveQuiz()" ng-disabled="quizFormName.$invalid" class="btn btn-warning">Зберегти в чорновик</button>
+			<button ng-click="reviewQuiz()" ng-disabled="quizFormName.$invalid" class="btn btn-success">Відправити на модерацію</button> 
+		</div>
+	</div>
+
+	<div class="col-md-4" >
+		<div class="panel panel-default">
+		  	<div class="panel-heading text-uppercase text-center"><strong>Коментарі модератора</strong>
+		  		<span ng-bind="comments.arr.length" class="badge pull-right"></span>
+		  	</div>
+		  	<ul class="list-group">
+		    	<li ng-repeat="comment in comments.arr" class="list-group-item">
+		    		<button ng-if="!comment.id" type="button" ng-click="deleteComment($index)" class="close pull-right"><span aria-hidden="true">&times;</span></button>
+		    		{{comment.text}}
+		    		<div ng-if="comment.updated_at" class="text-right"><i class="small"><span class="glyphicon glyphicon-time"></span>&nbsp;&nbsp;{{comment.updated_at| date:dateFormat}}</i></div>
+		    	</li>
+		    </ul>
+		</div>
+	</div>
+</div>

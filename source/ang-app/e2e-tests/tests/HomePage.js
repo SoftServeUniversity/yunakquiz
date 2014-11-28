@@ -6,15 +6,15 @@ describe('HomePage', function(){
   var mockModule = require('../mocked-backend.js');
   var headerMenuTitle = 'Система Пластових електронних опитників';
   var HeaderMenu = [
-      {menuName: 'Головна', menuId: 'headerPrimary',url: 'http://localhost:8000/#/'},
-      {menuName: 'Пошук', menuId: 'headerSearch', url: 'http://localhost:8000/#/guest-search'},
-      {menuName: 'Контакти', menuId: 'headerContacts', url: 'http://localhost:8000/#/contacts'},
-      {menuName: 'Статистика', menuId: 'headerStatistics', url: 'http://localhost:8000/#/statistics'}
+      {menuName: 'Головна', menuClass: '.menuHomeLnk',url: 'http://localhost:8000/#/'},
+      {menuName: 'Пошук', menuClass: '.menuSearchLnk', url: 'http://localhost:8000/#/guest-search'},
+      {menuName: 'Контакти', menuClass: '.menuContactsLnk', url: 'http://localhost:8000/#/contacts'},
+      {menuName: 'Статистика', menuClass: '.menuStatisticsLnk', url: 'http://localhost:8000/#/statistics'}
       ];
   var FooterMenu = [
-      {menuName: 'Головна', menuId: 'footerPrimary', url: 'http://localhost:8000/#/'},
-      {menuName: 'Про Нас', menuId: 'footerAbout', url: 'http://localhost:8000/#/about-us'},
-      {menuName: 'Контакти', menuId: 'footerContacts', url: 'http://localhost:8000/#/contacts'},
+      {menuName: 'Головна', menuClass: '.footerHomeLnk', url: 'http://localhost:8000/#/'},
+      {menuName: 'Про Нас', menuClass: '.footerAboutLnk', url: 'http://localhost:8000/#/about-us'},
+      {menuName: 'Контакти', menuClass: '.footerContactsLnk', url: 'http://localhost:8000/#/contacts'},
       ];
   var parCategories = [
       {catName: 'Спорт', testcount: 'Тестів: 8', subcatQuantity: 3, url: 'http://localhost:8000/#/parentcat-page/1'},
@@ -42,71 +42,71 @@ describe('HomePage', function(){
   var parCategoriesQuantity = 3;
 
 
-  beforeEach(function() {
+  beforeEach(function () {
       ptor.addMockModule('httpBackendMock', mockModule.httpBackendMock); 
   });
 
-  function checkMenuItems(menuName){
-    menuName.forEach(function(menuItem){
-      var curelem = element(by.id(menuItem.menuId)).getText();
+  function checkMenuItems(menuName) {
+    menuName.forEach(function (menuItem) {
+      var curelem = element(by.css(menuItem.menuClass)).getText();
 
       expect(curelem).toMatch(menuItem.menuName);
     });
   };
 
-  function menuItemsClick(menuName){
-    menuName.forEach(function(menuItem){
-      var curelem = element(by.id(menuItem.menuId));
+  function menuItemsClick(menuName) {
+    menuName.forEach(function (menuItem) {
+      var curelem = element(by.css(menuItem.menuClass));
 
       curelem.click();
       expect(browser.getLocationAbsUrl()).toMatch(menuItem.url);
     });
   };
 
-  function parCatItems(elemNumber){
+  function parCatItems(elemNumber) {
     var parCatContainer = element.all(by.css('.rectangle'));
     var curentElem = parCatContainer.get(elemNumber).getText();
       return curentElem
   };
 
-  describe('HeaderMenu', function() {
+  describe('HeaderMenu', function () {
     
     browser.get('http://localhost:8000/#/');
     
     var headerTitle = element(by.css('.page-header h4')).getText();
 
 
-    it('All menu items should be and corectly named', function(){
+    it('All menu items should be and corectly named', function () {
       expect(headerTitle).toMatch(headerMenuTitle);
     });
-    it('Header title should be corectly named', function(){
+    it('Header title should be corectly named', function () {
       checkMenuItems(HeaderMenu);
     });   
 
   });
 
-  describe('HeaderMenuOnClick', function() {
+  describe('HeaderMenuOnClick', function () {
     
 
-    beforeEach(function() {
+    beforeEach(function () {
       browser.get('http://localhost:8000/#/');
     });
 
-    it('should redirect on each menuitem to corresponding linc', function(){
+    it('should redirect on each menuitem to corresponding linc', function () {
       menuItemsClick(HeaderMenu);
      });
  });
-  describe('Footer', function() {
+  describe('Footer', function () {
 
     browser.get('http://localhost:8000/#/');
 
-    it('All menu items should be and corectly named', function() {
+    it('All menu items should be and corectly named', function () {
       checkMenuItems(FooterMenu);
     });
   });
 
-  describe('FooterClick', function() {
-    beforeEach(function() {
+  describe('FooterClick', function () {
+    beforeEach(function () {
       browser.get('http://localhost:8000/#/');
     });
 
@@ -115,7 +115,7 @@ describe('HomePage', function(){
     });
   });
 
-  describe('categoriesContainer', function() {
+  describe('categoriesContainer', function () {
     var parCatContainer = element.all(by.repeater('parCat in parCategories'));
     
 
@@ -132,7 +132,7 @@ describe('HomePage', function(){
     };
 
     function subCatContainer(elemNumber){
-      var subCatContainer = element.all(by.css('.categories-container')) 
+      var subCatContainer = element.all(by.css('.categories-container')); 
       var curentElem = subCatContainer.get(elemNumber).all(by.binding('{{subCat.title | limitStringTo:true:13}}')).count();
       return curentElem
     };
@@ -159,40 +159,40 @@ describe('HomePage', function(){
         }
       }
     }
-    beforeEach(function() {
+    beforeEach(function () {
         browser.get('http://localhost:8000/#/');
     });
   
-    it('should be 3 Parent Categories', function() {
+    it('should be 3 Parent Categories', function () {
       expect(parCatContainer.count()).toBe(parCategoriesQuantity);
     });
-    it('all categories should have coresponding names', function() {
+    it('all categories should have coresponding names', function () {
       parCategoriesNameCheck(parCategoriesQuantity);
     });
 
-    it('all parCategories should have coresponding testcount', function() {
+    it('all parCategories should have coresponding testcount', function () {
       parCategoriesTestCount(parCategoriesQuantity);
     });
-    it('each parCategory container should have coresponding quantity of subcats', function() {
+    it('each parCategory container should have coresponding quantity of subcats', function () {
       subCatCountInParCatContainer(parCategoriesQuantity);
     });
 
-    it('all subcategories should have corespinding names', function() {
+    it('all subcategories should have corespinding names', function () {
       checkCategoriesNameInParCatContainer(parCategoriesQuantity);
     });
   });
 
-  describe('categoriesContainerClick', function() {
+  describe('categoriesContainerClick', function () {
       
 
-    function parCatItems(elemNumber){
+    function parCatItems(elemNumber) {
       var parCatContainer = element.all(by.css('.rectangle'));
       var curentElem = parCatContainer.get(elemNumber);
         return curentElem;
     };
 
-    function checkParCatClickLinkLoaction(){
-      for(var i = 0; i < parCategoriesQuantity; i++){
+    function checkParCatClickLinkLoaction() {
+      for(var i = 0; i < parCategoriesQuantity; i++) {
         browser.get('http://localhost:8000/#/');
         parCatItems(i).click();
         expect(browser.getLocationAbsUrl()).toMatch(parCategories[i].url);
@@ -207,13 +207,13 @@ describe('HomePage', function(){
         }
       }
     }
-    beforeEach(function() {
+    beforeEach(function () {
         browser.get('http://localhost:8000/#/');
     });
-    it('click ParCats should redirect to corresponding link', function(){
+    it('click ParCats should redirect to corresponding link', function () {
       checkParCatClickLinkLoaction();
     });
-    it('click subCats should redirect to corresponding link', function(){
+    it('click subCats should redirect to corresponding link', function () {
       checkSubCatClickLinkLocation();
     });
   });

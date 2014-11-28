@@ -1,0 +1,35 @@
+<div ng-hide="error" ng-include="'modules/user_statistic/user_statistic_tabs.html'"></div>
+<h4 ng-hide="quizzes.length" class="text-center quizMarginTop">Немає пройдених тестів</h4>
+<table ng-show="quizzes.length" class="table table-hover">
+	<thead>
+		<tr>
+			<th>№</th>
+			<th class="">Назва тесту</th>
+			<th class="">Кількість спроб</th>
+			<th class="">Останнє проходження</th>
+			<th class="">Максимальний бал</th>
+			<th class="">Останній бал</th>
+			<th class="">Середній бал</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="quiz in quizzes">
+			<td>{{$index+1}}</td>
+			<td>{{quiz.title}}</td>
+			<td>{{quiz.tries}}</td>
+			<td>{{quiz.time| date:dateFormat}}</td>
+			<td>{{quiz.max}}</td>
+			<td>{{quiz.last}}</td>
+			<td>{{quiz.average}}</td>
+		</tr>
+	</tbody>
+</table>
+<div ng-show="totalItems>pagination.perPage" class="row text-center">
+	<pagination total-items="totalItems" ng-model="pagination.page" ng-change="query()"  items-per-page="pagination.perPage" class="pagination" ></pagination>
+		<div class="pagination pull-right">
+			<select ng-change="query()" ng-model="pagination.perPage" class="form-control">
+				<option ng-repeat="item in items_per_page" value="{{item}}">{{item}}</option>
+				<option value="{{totalItems}}">Всі</option>
+			</select>
+		</div>
+</div>

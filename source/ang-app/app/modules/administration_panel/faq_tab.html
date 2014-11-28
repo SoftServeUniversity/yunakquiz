@@ -1,0 +1,34 @@
+<admin-panel></admin-panel>
+  <div class="panel">
+    <div class="FAQ_AdminPage">
+      <table class="table table-bordered table-condensed">
+        <tr ng-repeat="Question in Questions" >
+          <td class="someClass">
+            <span class="inputClass" editable-text="Question.faq_question" e-name="Question" e-form="rowform" e-required>
+            {{$index+1}}. {{Question.faq_question || 'Введіть питання'}} 
+            </span></br>
+            <span editable-textarea="Question.faq_answer" e-name="Answer" e-form="rowform" e-required>
+            {{Question.faq_answer || 'Введіть відповідь'}}
+            </span> 
+          </td>
+
+          <td class="tdStyle">
+            <form editable-form name="rowform" oncancel="validate($index)" onbeforesave="saveQuestion($data, Question.id)" ng-show="rowform.$visible" class="form-buttons form-inline" shown="inserted == Question"  ng-disable="showButton">
+              <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary">
+              Зберегти
+              </button>
+              <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel();cancelEction()" class="btn btn-default" ng-disabled="showButton">
+              Відмінити
+              </button>
+            </form>
+
+          <div class="buttons" ng-show="!rowform.$visible">
+            <button class="btn btn-primary" ng-click="rowform.$show()">Редагувати</button>
+            <button class="btn btn-danger" ng-click="removeQuestion(Question.id)">Видалити</button>
+          </div>    
+          </td>
+        </tr>
+      </table>
+      <button class="btn btn-success" ng-click="addQuestion()" ng-disabled="showButton"> Додати питання </button> 
+  </div>
+</div>

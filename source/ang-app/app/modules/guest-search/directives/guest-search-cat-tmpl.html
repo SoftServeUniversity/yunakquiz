@@ -1,0 +1,27 @@
+<div>
+  <div ng-repeat="parCat in allCats | filter: {category_id: '0'}">
+                
+    <a  class="list-group-item"
+        ng-init="parCat.search=false"
+        ng-click="selectSubCat(allCats, parCat)"
+        ng-class="{active: parCat.search}"> 
+        {{parCat.title}} 
+    </a>
+
+    <div ng-repeat="subCat in allCats"> 
+
+      <a  ng-if="subCat.category_id === parCat.id"
+          class="list-group-item col-xs-offset-1"
+          ng-init="subCat.search=false" 
+          ng-class="{search_subcat_select: subCat.search}"
+          ng-click="subCat.search = !subCat.search">
+          {{subCat.title}}
+      </a>
+    </div>
+  </div>
+
+  <button class="guestSearchMarginTop btn btn-info btn-block" 
+          ng-click="button()">
+          Застосувати фільтр
+  </button>
+<div>

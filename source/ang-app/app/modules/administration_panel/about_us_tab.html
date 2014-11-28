@@ -1,0 +1,17 @@
+<admin-panel></admin-panel>
+<div class="about-us-msg-panel">
+  <div class="panel panel-success" ng-show="msg">
+    <div class="panel-heading">
+      <button type="button" class="close" ng-click='msgHide()'>
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <div class="modal-title">{{msg}}</div>
+    </div>
+  </div>
+</div>
+<div class="panel aboutUsWindow" ng-click="msgHide()">
+  <button type="button" class="btn btn-success pull-right" ng-click="updateData()">Зберегти</button>
+  <button type="button" class="btn btn-default about-us-read-btn pull-right" ng-click="readData('reload')">Відмінити</button>
+  <div ng-model="content" text-angular="" ta-toolbar="[['bold', 'italics', 'underline', 'strikeThrough', 'ul', 'ol', 'redo', 'undo', 'clear'],['justifyLeft','justifyCenter','justifyRight','indent','outdent'],['html', 'insertImage', 'insertLink']]">
+  </div>
+</div>

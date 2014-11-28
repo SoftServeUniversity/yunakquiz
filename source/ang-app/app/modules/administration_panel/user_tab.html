@@ -1,0 +1,32 @@
+<admin-panel></admin-panel>
+<div class="panel">
+<div ng-include src="'./modules/administration_panel/search.html'"></div>
+	<table ng-show="totalItems" class="table table-hover">
+		<thead>
+			<tr>
+				<th class="col-md-3 text-center">Псевдо</th>
+				<th class="col-md-3 text-center">Пошта</th>
+				<th class="col-md-1"></th>
+				<th class="col-md-1"></th>
+				<th class="col-md-1"></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="user in users" class="toggle">
+				<td class="text-center">{{user.username}}</td>
+				<td class="text-center">{{user.email}}</td>
+				<td>
+					<a ng-click="changeStatusUser(user.id, user.role_id)" type="button" class="btn btn-success btn-xs">Змінити статус</a>
+				</td>
+				<td>
+					<a ng-click="blockUser(user.id)" type="button" class="btn btn-warning btn-xs">Внести в чорний список</a>
+				</td>
+				<td>
+					<a ng-click="deleteUser(user.id)" type="button" class="btn btn-danger btn-xs">Видалити</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+<div ng-hide="totalItems" class="alert alert-info text-center" role="alert">Користувачив в системі немае</div>
+<div ng-include src="'./modules/administration_panel/pagination.html'"></div>
+</div>

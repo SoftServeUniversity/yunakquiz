@@ -1,0 +1,29 @@
+<div class="modal-header" id="deleteProfile">
+  <button type="button" class="close" ng-click="close()">
+    <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+  </button>
+  <h4 class="modal-title text-center" id="myModalLabel">Видалення профайлу</h4>
+</div>
+<div class="modal-body">
+  <small class="text-danger">{{deleteError}}</small>  
+  <form role="form" novalidate="true" class="form-horizontal">
+    <div class="form-group">
+      <label for="password" class="control-label col-sm-6">Введіть пароль</label>
+      <div class="col-sm-6" >   
+        <input ng-model="model.password" type="password" class="form-control" id="password" required>
+      </div>
+      </div>
+      <div class="form-group">
+        <label for="number" class="control-label col-sm-6">Введіть число</label>
+        <div class="col-sm-6"> 
+          <input type="text" class="form-control" ng-model="model.enteredCaptcha"> </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-6 text-right">{{model.captcha}}</div>
+        <div class="col-sm-6"></div>
+      </div>
+    </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-danger" ng-click="deleteUser()">Видалити профайл</button>
+</div>

@@ -1,0 +1,10 @@
+<div class="row">
+  <h3 class="pageTitle bg-primary">Адміністративна панель</h3>
+</div>
+<section>
+  <ul class="nav nav-tabs nav-justified admin-panel-tabs">  
+    <li ng-repeat="curentTab in tabs"ng-class="{active:isSelected(url, curentTab.temp)}">
+      <a href="#{{curentTab.temp}}" >{{curentTab.caption}}</a>
+    </li>
+  </ul>
+</section>
