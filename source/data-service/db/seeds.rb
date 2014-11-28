@@ -312,7 +312,6 @@ question11_3 = quiz11.questions.create(title: "В якому році закін
 question11_3.answers.create( title: "1975", correct: true)
 question11_3.answers.create( title: "1985", correct: false)
 question11_3.answers.create(title: "1992", correct: false)
-
 quiz11.tags << tag24
 quiz11.tags << tag25
 quiz11.tags << tag26
@@ -375,6 +374,216 @@ quiz14.tags << tag32
 quiz14.tags << tag33
 quiz14.tags << tag7
 quiz14.update(user: valera)
+
+quiz15 = subcat3.quizzes.create(category_id: 5,status:"published", title: "Тест на знання історії Галичини", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
+question15_1 = quiz15.questions.create(title: "Скільки гравців в команді?", description: "Згідно правил на полі знаходиться 11 гравців однієї команди")
+question15_1.answers.create(title: "11", correct: true)
+question15_1.answers.create( title: "12", correct: false)
+question15_1.answers.create( title: "5", correct: false)
+question15_2 = quiz15.questions.create(title: "Скільки триває один тайм?", description: "Один тайм матчу триває 45 хв. не враховуючи додаткового часу")
+question15_2.answers.create( title: "20хв", correct: false)
+question15_2.answers.create( title: "45хв", correct: true)
+question15_2.answers.create( title: "до останнього гравця", correct: false)
+question15_3 = quiz15.questions.create(title: "Що відбудеться, коли гравець торкнеться м’яча рукою?", description: "Це є порушенням правил, після того як гравець торкнувся мяча рукою гра зупиняється, та назначається штрафний")
+question15_3.answers.create( title: "Порушенння правил", correct: true)
+question15_3.answers.create( title: "Штрафний удар", correct: true)
+question15_3.answers.create( title: "Дадуть пиріжок", correct: false)
+question15_3.answers.create(title: "Дадуть в голову", correct: false)
+quiz15.tags << tag4
+quiz15.tags << tag31
+quiz15.tags << tag5
+quiz15.update(user: valera)
+
+quiz16 = subcat3.quizzes.create(category_id: 5,status:"published", title: "Тест на знання історії світових воєн", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
+question16_1 = quiz16.questions.create(title: "Скільки гравців в команді?", description: "Згідно правил на полі знаходиться 11 гравців однієї команди")
+question16_1.answers.create(title: "11", correct: true)
+question16_1.answers.create( title: "12", correct: false)
+question16_1.answers.create( title: "5", correct: false)
+question16_2 = quiz16.questions.create(title: "Скільки триває один тайм?", description: "Один тайм матчу триває 45 хв. не враховуючи додаткового часу")
+question16_2.answers.create( title: "20хв", correct: false)
+question16_2.answers.create( title: "45хв", correct: true)
+question16_2.answers.create( title: "до останнього гравця", correct: false)
+question16_3 = quiz16.questions.create(title: "Що відбудеться, коли гравець торкнеться м’яча рукою?", description: "Це є порушенням правил, після того як гравець торкнувся мяча рукою гра зупиняється, та назначається штрафний")
+question16_3.answers.create( title: "Порушенння правил", correct: true)
+question16_3.answers.create( title: "Штрафний удар", correct: true)
+question16_3.answers.create( title: "Дадуть пиріжок", correct: false)
+question16_3.answers.create(title: "Дадуть в голову", correct: false)
+quiz16.tags << tag14
+quiz16.tags << tag16
+quiz16.tags << tag15
+quiz16.tags << tag5
+quiz16.update(user: valera)
+
+quiz17 = subcat3.quizzes.create(category_id: 5,status:"published", title: "Тест на знання історії першої світової війни", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
+question17_1 = quiz17.questions.create(title: "Скільки гравців в команді?", description: "Згідно правил на полі знаходиться 11 гравців однієї команди")
+question17_1.answers.create(title: "11", correct: true)
+question17_1.answers.create( title: "12", correct: false)
+question17_1.answers.create( title: "5", correct: false)
+question17_2 = quiz17.questions.create(title: "Скільки триває один тайм?", description: "Один тайм матчу триває 45 хв. не враховуючи додаткового часу")
+question17_2.answers.create( title: "20хв", correct: false)
+question17_2.answers.create( title: "45хв", correct: true)
+question17_2.answers.create( title: "до останнього гравця", correct: false)
+question17_3 = quiz17.questions.create(title: "Що відбудеться, коли гравець торкнеться м’яча рукою?", description: "Це є порушенням правил, після того як гравець торкнувся мяча рукою гра зупиняється, та назначається штрафний")
+question17_3.answers.create( title: "Порушенння правил", correct: true)
+question17_3.answers.create( title: "Штрафний удар", correct: true)
+question17_3.answers.create( title: "Дадуть пиріжок", correct: false)
+question17_3.answers.create(title: "Дадуть в голову", correct: false)
+quiz17.tags << tag15
+quiz17.tags << tag5
+quiz17.update(user: valera)
+
+quiz18 = subcat3.quizzes.create(category_id: 5,status:"published", title: "Тест на знання історії другої світової війни", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
+question18_1 = quiz18.questions.create(title: "Скільки гравців в команді?", description: "Згідно правил на полі знаходиться 11 гравців однієї команди")
+question18_1.answers.create(title: "11", correct: true)
+question18_1.answers.create( title: "12", correct: false)
+question18_1.answers.create( title: "5", correct: false)
+question18_2 = quiz18.questions.create(title: "Скільки триває один тайм?", description: "Один тайм матчу триває 45 хв. не враховуючи додаткового часу")
+question18_2.answers.create( title: "20хв", correct: false)
+question18_2.answers.create( title: "45хв", correct: true)
+question18_2.answers.create( title: "до останнього гравця", correct: false)
+question18_3 = quiz18.questions.create(title: "Що відбудеться, коли гравець торкнеться м’яча рукою?", description: "Це є порушенням правил, після того як гравець торкнувся мяча рукою гра зупиняється, та назначається штрафний")
+question18_3.answers.create( title: "Порушенння правил", correct: true)
+question18_3.answers.create( title: "Штрафний удар", correct: true)
+question18_3.answers.create( title: "Дадуть пиріжок", correct: false)
+question18_3.answers.create(title: "Дадуть в голову", correct: false)
+quiz18.tags << tag15
+quiz18.tags << tag5
+quiz18.tags << tag11
+quiz18.tags << tag12
+quiz18.update(user: valera)
+
+quiz19 = subcat3.quizzes.create(category_id: 5,status:"published", title: "Тест на знання історії революцій України", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
+question19_1 = quiz19.questions.create(title: "Скільки гравців в команді?", description: "Згідно правил на полі знаходиться 11 гравців однієї команди")
+question19_1.answers.create(title: "11", correct: true)
+question19_1.answers.create( title: "12", correct: false)
+question19_1.answers.create( title: "5", correct: false)
+question19_2 = quiz19.questions.create(title: "Скільки триває один тайм?", description: "Один тайм матчу триває 45 хв. не враховуючи додаткового часу")
+question19_2.answers.create( title: "20хв", correct: false)
+question19_2.answers.create( title: "45хв", correct: true)
+question19_2.answers.create( title: "до останнього гравця", correct: false)
+question19_3 = quiz19.questions.create(title: "Що відбудеться, коли гравець торкнеться м’яча рукою?", description: "Це є порушенням правил, після того як гравець торкнувся мяча рукою гра зупиняється, та назначається штрафний")
+question19_3.answers.create( title: "Порушенння правил", correct: true)
+question19_3.answers.create( title: "Штрафний удар", correct: true)
+question19_3.answers.create( title: "Дадуть пиріжок", correct: false)
+question19_3.answers.create(title: "Дадуть в голову", correct: false)
+quiz19.tags << tag27
+quiz19.tags << tag5
+quiz19.update(user: valera)
+
+quiz20 = subcat3.quizzes.create(category_id: 5,status:"published", title: "Тест на знання історії Революції Гідності України", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
+question20_1 = quiz20.questions.create(title: "Скільки гравців в команді?", description: "Згідно правил на полі знаходиться 11 гравців однієї команди")
+question20_1.answers.create(title: "11", correct: true)
+question20_1.answers.create( title: "12", correct: false)
+question20_1.answers.create( title: "5", correct: false)
+question20_2 = quiz20.questions.create(title: "Скільки триває один тайм?", description: "Один тайм матчу триває 45 хв. не враховуючи додаткового часу")
+question20_2.answers.create( title: "20хв", correct: false)
+question20_2.answers.create( title: "45хв", correct: true)
+question20_2.answers.create( title: "до останнього гравця", correct: false)
+question20_3 = quiz20.questions.create(title: "Що відбудеться, коли гравець торкнеться м’яча рукою?", description: "Це є порушенням правил, після того як гравець торкнувся мяча рукою гра зупиняється, та назначається штрафний")
+question20_3.answers.create( title: "Порушенння правил", correct: true)
+question20_3.answers.create( title: "Штрафний удар", correct: true)
+question20_3.answers.create( title: "Дадуть пиріжок", correct: false)
+question20_3.answers.create(title: "Дадуть в голову", correct: false)
+quiz20.tags << tag27
+quiz20.tags << tag5
+quiz20.tags << tag4
+quiz20.tags << tag28
+quiz20.update(user: valera)
+
+quiz21 = subcat3.quizzes.create(category_id: 5,status:"published", title: "Тест на знання історії незалежності України", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
+question21_1 = quiz21.questions.create(title: "Скільки гравців в команді?", description: "Згідно правил на полі знаходиться 11 гравців однієї команди")
+question21_1.answers.create(title: "11", correct: true)
+question21_1.answers.create( title: "12", correct: false)
+question21_1.answers.create( title: "5", correct: false)
+question21_2 = quiz21.questions.create(title: "Скільки триває один тайм?", description: "Один тайм матчу триває 45 хв. не враховуючи додаткового часу")
+question21_2.answers.create( title: "20хв", correct: false)
+question21_2.answers.create( title: "45хв", correct: true)
+question21_2.answers.create( title: "до останнього гравця", correct: false)
+question21_3 = quiz21.questions.create(title: "Що відбудеться, коли гравець торкнеться м’яча рукою?", description: "Це є порушенням правил, після того як гравець торкнувся мяча рукою гра зупиняється, та назначається штрафний")
+question21_3.answers.create( title: "Порушенння правил", correct: true)
+question21_3.answers.create( title: "Штрафний удар", correct: true)
+question21_3.answers.create( title: "Дадуть пиріжок", correct: false)
+question21_3.answers.create(title: "Дадуть в голову", correct: false)
+quiz21.tags << tag30
+quiz21.tags << tag5
+quiz21.tags << tag4
+quiz21.tags << tag31
+quiz21.update(user: valera)
+
+quiz22 = subcat3.quizzes.create(category_id: 5,status:"published", title: "Тест на знання історії президентів України", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
+question22_1 = quiz22.questions.create(title: "Скільки гравців в команді?", description: "Згідно правил на полі знаходиться 11 гравців однієї команди")
+question22_1.answers.create(title: "11", correct: true)
+question22_1.answers.create( title: "12", correct: false)
+question22_1.answers.create( title: "5", correct: false)
+question22_2 = quiz22.questions.create(title: "Скільки триває один тайм?", description: "Один тайм матчу триває 45 хв. не враховуючи додаткового часу")
+question22_2.answers.create( title: "20хв", correct: false)
+question22_2.answers.create( title: "45хв", correct: true)
+question22_2.answers.create( title: "до останнього гравця", correct: false)
+question22_3 = quiz22.questions.create(title: "Що відбудеться, коли гравець торкнеться м’яча рукою?", description: "Це є порушенням правил, після того як гравець торкнувся мяча рукою гра зупиняється, та назначається штрафний")
+question22_3.answers.create( title: "Порушенння правил", correct: true)
+question22_3.answers.create( title: "Штрафний удар", correct: true)
+question22_3.answers.create( title: "Дадуть пиріжок", correct: false)
+question22_3.answers.create(title: "Дадуть в голову", correct: false)
+quiz22.tags << tag28
+quiz22.tags << tag5
+quiz22.tags << tag4
+quiz22.update(user: valera)
+
+quiz23 = subcat3.quizzes.create(category_id: 5,status:"published", title: "Тест на знання історії голодомору в Україні", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
+question23_1 = quiz23.questions.create(title: "Скільки гравців в команді?", description: "Згідно правил на полі знаходиться 11 гравців однієї команди")
+question23_1.answers.create(title: "11", correct: true)
+question23_1.answers.create( title: "12", correct: false)
+question23_1.answers.create( title: "5", correct: false)
+question23_2 = quiz23.questions.create(title: "Скільки триває один тайм?", description: "Один тайм матчу триває 45 хв. не враховуючи додаткового часу")
+question23_2.answers.create( title: "20хв", correct: false)
+question23_2.answers.create( title: "45хв", correct: true)
+question23_2.answers.create( title: "до останнього гравця", correct: false)
+question23_3 = quiz23.questions.create(title: "Що відбудеться, коли гравець торкнеться м’яча рукою?", description: "Це є порушенням правил, після того як гравець торкнувся мяча рукою гра зупиняється, та назначається штрафний")
+question23_3.answers.create( title: "Порушенння правил", correct: true)
+question23_3.answers.create( title: "Штрафний удар", correct: true)
+question23_3.answers.create( title: "Дадуть пиріжок", correct: false)
+question23_3.answers.create(title: "Дадуть в голову", correct: false)
+quiz23.tags << tag12
+quiz23.tags << tag5
+quiz23.tags << tag13
+quiz23.update(user: valera)
+
+quiz24 = subcat3.quizzes.create(category_id: 5,status:"published", title: "Тест на знання історії України у складі СРСР", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
+question24_1 = quiz24.questions.create(title: "Скільки гравців в команді?", description: "Згідно правил на полі знаходиться 11 гравців однієї команди")
+question24_1.answers.create(title: "11", correct: true)
+question24_1.answers.create( title: "12", correct: false)
+question24_1.answers.create( title: "5", correct: false)
+question24_2 = quiz24.questions.create(title: "Скільки триває один тайм?", description: "Один тайм матчу триває 45 хв. не враховуючи додаткового часу")
+question24_2.answers.create( title: "20хв", correct: false)
+question24_2.answers.create( title: "45хв", correct: true)
+question24_2.answers.create( title: "до останнього гравця", correct: false)
+question24_3 = quiz24.questions.create(title: "Що відбудеться, коли гравець торкнеться м’яча рукою?", description: "Це є порушенням правил, після того як гравець торкнувся мяча рукою гра зупиняється, та назначається штрафний")
+question24_3.answers.create( title: "Порушенння правил", correct: true)
+question24_3.answers.create( title: "Штрафний удар", correct: true)
+question24_3.answers.create( title: "Дадуть пиріжок", correct: false)
+question24_3.answers.create(title: "Дадуть в голову", correct: false)
+quiz24.tags << tag12
+quiz24.tags << tag5
+quiz24.tags << tag11
+quiz24.update(user: valera)
+
+quiz25 = subcat3.quizzes.create(category_id: 5,status:"published", title: "Тест на знання історії України у в час 2 світової війни", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in fringilla quam. Donec arcu ex, egestas ut lobortis ac, tempus et nisl. Ut vulputate efficitur.")
+question25_1 = quiz25.questions.create(title: "Скільки гравців в команді?", description: "Згідно правил на полі знаходиться 11 гравців однієї команди")
+question25_1.answers.create(title: "11", correct: true)
+question25_1.answers.create( title: "12", correct: false)
+question25_1.answers.create( title: "5", correct: false)
+question25_2 = quiz25.questions.create(title: "Скільки триває один тайм?", description: "Один тайм матчу триває 45 хв. не враховуючи додаткового часу")
+question25_2.answers.create( title: "20хв", correct: false)
+question25_2.answers.create( title: "45хв", correct: true)
+question25_2.answers.create( title: "до останнього гравця", correct: false)
+question25_3 = quiz25.questions.create(title: "Що відбудеться, коли гравець торкнеться м’яча рукою?", description: "Це є порушенням правил, після того як гравець торкнувся мяча рукою гра зупиняється, та назначається штрафний")
+question25_3.answers.create( title: "Порушенння правил", correct: true)
+question25_3.answers.create( title: "Штрафний удар", correct: true)
+question25_3.answers.create( title: "Дадуть пиріжок", correct: false)
+question25_3.answers.create(title: "Дадуть в голову", correct: false)
+quiz25.tags << tag5
+quiz25.tags << tag14
+quiz25.update(user: valera)
 
 Faq.create(faq_question: "Як створити свій тест?", faq_answer: "Для цього потрібно зареєструватись")
 Faq.create(faq_question: "Де можна знайти інформацію про сайт?", faq_answer: "В нижньому меню, яке називається Про Нас")
