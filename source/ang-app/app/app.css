@@ -19,6 +19,7 @@
 }
 .header-navmenu li a {
   font-size: 1.5em;
+  text-decoration: none;
   color: #5bc0de;
 }
 .header-navmenu li a:hover  {
@@ -45,6 +46,9 @@
 }
 .footer-menu ul {
   padding-left: 0px;
+}
+.footer-menu li a {
+  text-decoration: none;
 }
 .about-test-quotation{
   border-left: 2px solid #ccc; 
