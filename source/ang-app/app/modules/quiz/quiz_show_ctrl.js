@@ -26,6 +26,7 @@ angular.module('yunakQuiz.assessments')
     if (QuizPassService.validateQuiz()) {
       QuizPassService.submitQuiz()
       .success(function(){
+        window.scrollTo(0,0);
         $location.path($location.path()+'/result'); 
       })
       .error(function(data){
