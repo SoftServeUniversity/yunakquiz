@@ -33,6 +33,7 @@
             <div class="col-md-7">
               <input type="text" ng-model="profile.user.email" class="form-control" ng-show="profile.editable">
               <p ng-hide="profile.editable">{{profile.user.email}}</p>
+              <small class="text-danger">{{profile.emailErr}}</small>
             </div>
           </div>
           <div class="row" ng-class="{'form-group': profile.editable}">
@@ -40,6 +41,7 @@
             <div class="col-md-7">
               <input type="date" ng-model="profile.user.birthday" class="form-control" ng-show="profile.editable">
               <p ng-hide="profile.editable">{{profile.user.birthday | date: "MMM dd, yyyy"}}</p>
+              <small class="text-danger">{{profile.birthdayErr}}</small>
             </div>
           </div>
           <div class="row" ng-class="{'form-group': profile.editable}">
