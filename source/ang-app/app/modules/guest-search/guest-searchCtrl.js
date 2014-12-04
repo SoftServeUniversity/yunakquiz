@@ -22,6 +22,8 @@ guestSearch.controller('SearchCtrl', ['$scope', '$http',
   // and checks recived data
   $scope.searchData = function(allCats) {
 
+    angular.element($(":input").blur());
+
     // Init search request
     $scope.searchRequest = { 
       categories_id: guestSearchFactory.checkAllCats(allCats), 
