@@ -281,7 +281,7 @@ module PlastApp
       if newCat
         return [200, newCat.to_json]
       else
-        return [400, " категорія вже існує"]
+        return [400, {'error' => "категорія вже існує"}.to_json]
       end    
     end
 
@@ -292,7 +292,7 @@ module PlastApp
       if newCat
         return [200, newCat.to_json]
       else
-        return [400, " оновлення категорії невдале"]
+        return [400, {'error' => " оновлення категорії невдале"}.to_json]
       end    
     end
 
@@ -302,7 +302,7 @@ module PlastApp
       if catToDel
         return [200, catToDel.to_json]
       else
-        return [400, " видалення категорії невдале"]
+        return [400, {'error' => " видалення категорії невдале"}.to_json]
       end    
     end
     

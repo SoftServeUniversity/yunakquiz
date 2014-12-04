@@ -43,7 +43,7 @@
               categoryEdit.update(request).success(function () {
                 $scope.submit();
               }).error(function (msg) {
-                $scope.errorModalMsg = $scope.serverError + msg;
+                $scope.errorModalMsg = $scope.serverError + msg.error;
                 $scope.pwdInput = '';
               });
             }).error(function (msg) {
@@ -62,7 +62,7 @@
               categoryEdit.create(request).success(function () {
                 $scope.submit();
               }).error(function (msg) {
-                $scope.errorModalMsg = $scope.serverError + msg;
+                $scope.errorModalMsg = $scope.serverError + msg.error;
                 $scope.pwdInput = '';
               });
             }).error(function (msg) {
@@ -78,7 +78,7 @@
               categoryEdit.delCat(request).success(function () {
                 $scope.submit();
               }).error(function (msg) {
-                $scope.errorModalMsg = $scope.serverError + msg;
+                $scope.errorModalMsg = $scope.serverError + msg.error;
                 $scope.pwdInput = '';
               });
             }).error(function (msg) {
