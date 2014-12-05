@@ -4,9 +4,8 @@
 	<table ng-show="totalItems" class="table table-hover">
 		<thead>
 			<tr>
-				<th class="col-md-3 text-center">Псевдо</th>
-				<th class="col-md-3 text-center">Пошта</th>
-				<th class="col-md-3 text-center">Роль</th>
+				<th class="col-md-4 text-center">Псевдо</th>
+				<th class="col-md-5 text-center">Пошта</th>
 				<th class="col-md-1"></th>
 				<th class="col-md-1"></th>
 				<th class="col-md-1"></th>
@@ -16,7 +15,6 @@
 			<tr ng-repeat="user in users" class="toggle">
 				<td class="text-center">{{user.username}}</td>
 				<td class="text-center">{{user.email}}</td>
-				<td class="text-center">{{roles[user.role_id]}}</td>
 				<td>
 					<a ng-click="changeStatusUser(user.id, user.role_id)" type="button" class="btn btn-success btn-xs">Змінити статус</a>
 				</td>

@@ -47,7 +47,7 @@
         itemsPerPage: 10,
         searchData:'',
         status: 'enabled',
-        roles: [1,4]
+        roles: 1
       },
       '/administration-panel/moderatorsTab': {
         currentPage: 1,
@@ -68,7 +68,7 @@
         itemsPerPage: 10,
         searchData:'',
         status: 'blocked',
-        roles: [1,2,3,4]
+        roles: [1,2,3]
       }
     });
 
