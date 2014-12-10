@@ -1,7 +1,7 @@
-<div class="row">
-  <div class="page-header col-md-8 col-md-offset-2">
-    <h4>Система Пластових електронних опитників</h4>
-    <ul class="header-navmenu">
+  <div class="row">
+  <div class="page-header">
+    <h4 class="text-center">Система Пластових електронних опитників</h4>
+    <ul class="nav navbar-nav nav-justified header-navmenu">
       <li>
         <a href="#/" class="menuHomeLnk">Головна</a>
       </li>
@@ -14,24 +14,24 @@
       <li>
         <a href="#/statistics" class="menuStatisticsLnk">Статистика</a>
       </li>
-    </ul>
+      <li>
+        <a href="" data-toggle="modal" data-target="#login" ng-hide="appCtrl.userLoggedIn()"> 
+          <img class="login-header-menu " src="./modules/img/login.jpg" alt="Login" height="40" width="40" >
+        </a>
+      </li>
+      <li dropdown is-open="userDropdown.isopen" ng-show="appCtrl.userLoggedIn()">
+          <a href class="dropdown-toggle" dropdown-toggle ng-disabled="disabled">
+            {{appCtrl.user.username}}<span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+            <li ng-repeat="currentTab in tabs">
+              <a href="#{{currentTab.temp}}">{{currentTab.caption}}</a>
+            </li>
+            <li>
+              <a href="#/" ng-click="appCtrl.logout()">Вийти</a>
+            </li>
+          </ul>
+      </li>
+    </ul>  
   </div>
-  <div class="col-md-2">
-    <a href="" data-toggle="modal" data-target="#login" ng-hide="appCtrl.userLoggedIn()"> 
-      <img class="login-header-menu " src="./modules/img/login.jpg" alt="Login" height="40" width="40" >
-    </a>
-    <div  dropdown on-toggle="toggled(open)" ng-show="appCtrl.userLoggedIn()">
-      <a href class="btn btn-xs" dropdown-toggle>
-        <h4>{{appCtrl.user.username}}<span class="caret"></span></h4>
-      </a>
-        <ul class="dropdown-menu">
-          <li ng-repeat="currentTab in tabs">
-            <a href="#{{currentTab.temp}}">{{currentTab.caption}}</a>
-          </li>
-          <li>
-            <a href="#/" ng-click="appCtrl.logout()">Вийти</a>
-          </li>
-        </ul>
-    </div>
   </div>
-</div>
