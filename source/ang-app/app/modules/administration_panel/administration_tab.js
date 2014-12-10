@@ -45,7 +45,7 @@
             $scope.updateData(data);    
           }, 
           function(response){
-           console.log("bad");
+           console.log("Users not found");
           } 
       )};
 
@@ -68,7 +68,7 @@
             $scope.searchQuery();   
           }, 
           function(response){
-           console.log("bad");
+           console.log("User not found");
           });
         });
       };
@@ -85,7 +85,7 @@
               $scope.searchQuery();   
             }, 
             function(response){
-             console.log("bad");
+             console.log("User not found");
             });
         });
       };
@@ -102,7 +102,7 @@
               $scope.searchQuery();   
             }, 
             function(response){
-             console.log("bad");
+             console.log("User not found");
             });
         });
       };
@@ -127,7 +127,7 @@
               $scope.searchQuery();   
             }, 
             function(response){
-             console.log("bad");
+             console.log("User not found");
             });
         });
       };
