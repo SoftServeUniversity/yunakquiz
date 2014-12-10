@@ -18,6 +18,7 @@
   color: #5bc0de;
 }
 .header-navmenu>li>a:focus {
+
   color: #0490ba;
   background: none;
  }
@@ -26,6 +27,13 @@
   color: #0490ba;
   background: none;
  }
+
+.header-navmenu>li>a:hover  {
+  list-style: none;
+  color: #0490ba;
+  background: none;
+ }
+
  .header-navmenu .open>a, .header-navmenu .open>a:hover, .header-navmenu .open>a:focus {
   background: none;
   border-color: none;
