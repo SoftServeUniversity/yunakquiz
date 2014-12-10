@@ -7,8 +7,8 @@ angular.module('yunakQuiz.cabinet')
     testChunks: false
   };
 }])
-.controller("ProfileController", ["userService", "$scope", "$timeout", "$location", "uploadFileService", "$modal", 
-  function(userService, $scope, $timeout, $location, uploadFileService, $modal){
+.controller("ProfileController", ["userService", "$scope", "$timeout", "$location", "uploadFileService", "$modal", "existUser", 
+  function(userService, $scope, $timeout, $location, uploadFileService, $modal, existUser){
     $scope.tab = 'profile';
     this.user = {};
     var profile = this; 
@@ -16,6 +16,8 @@ angular.module('yunakQuiz.cabinet')
     this.editable = false;
     this.uploadFile = undefined;
     this.deleteError = "";
+    this.emailErr = "";
+    this.birthdayErr = "";
     
     this.setUploadService = function(){
       this.uploadFile = new uploadFileService(this.$flow);
@@ -36,19 +38,30 @@ angular.module('yunakQuiz.cabinet')
     };
     
     this.cancelEdit = function(){
+      this.emailErr = ""; 
+      this.birthdayErr = "";  
       angular.copy(this.previousUser, this.user);
       this.editable = false;
     };
     
     this.saveEdit = function(){
-      userService.update(this.user, 
-        function(data){
-          console.log("OK");  
-        }, 
-        function(response, status, headers, config){
-          console.log("Fail");
-        });
-      this.editable = false;
+      this.emailErr = "";
+      this.birthdayErr = ""; 
+      if (!this.user.birthday){
+        this.birthdayErr = "Введіть дату народження"; 
+      }else{  
+        userService.update(this.user, 
+          function(data){
+            profile.editable = false;   
+            console.log("OK");  
+          }, 
+          function(response, status, headers, config){
+            profile.editable = true;
+            if (!!response.data.email && response.data.email.indexOf(existUser) !== -1){
+              profile.emailErr = "Користувач з такою електронною адресою вже існує";
+            }
+          });
+      }
     };
     
     this.deleteUser = function(){

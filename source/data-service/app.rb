@@ -281,7 +281,7 @@ module PlastApp
       if newCat
         return [200, newCat.to_json]
       else
-        return [400, " категорія вже існує"]
+        return [400, {'error' => "категорія вже існує"}.to_json]
       end    
     end
 
@@ -292,7 +292,7 @@ module PlastApp
       if newCat
         return [200, newCat.to_json]
       else
-        return [400, " оновлення категорії невдале"]
+        return [400, {'error' => " оновлення категорії невдале"}.to_json]
       end    
     end
 
@@ -302,7 +302,7 @@ module PlastApp
       if catToDel
         return [200, catToDel.to_json]
       else
-        return [400, " видалення категорії невдале"]
+        return [400, {'error' => " видалення категорії невдале"}.to_json]
       end    
     end
     
@@ -322,11 +322,15 @@ module PlastApp
     post '/access' do
       data = JSON.parse request.body.read
       user = User.authenticate(data['username'], data['password'])
-      if !user.nil?
-        session[:user_id] = user.id
-        return [200, filtered_user(user).to_json]
+      if user
+         if user.blocked?
+            return [403, "User is blocked!"]
+         else
+            session[:user_id] = user.id
+            return [200, filtered_user(user).to_json]
+         end
       end
-        return [401, "unauthorized"]
+      return [401, "unauthorized"]
     end
     
     delete '/access' do
@@ -437,7 +441,7 @@ module PlastApp
 
     delete '/admin/users/:id' do
       user = User.find(params['id'])
-      if !user.nil?
+      if user
         quizes = Quiz.where(user_id: params['id'])
         quizes.update_all(user_id: 4)
         user.destroy
@@ -449,11 +453,11 @@ module PlastApp
     put '/admin/users/:id/status' do
       data = JSON.parse(request.body.read)
       user = User.find(params['id'])
-      if !user.nil?
+      if user
         if data['status'] == "blocked"
           user.blocked!
           user.save
-        else
+        elsif data['status'] == "enabled"
           user.enabled!
           user.save
         end
@@ -465,7 +469,7 @@ module PlastApp
     put '/admin/users/:id/role' do
       data = JSON.parse(request.body.read)
       user = User.find(params['id'])
-      if !user.nil?
+      if user
           user.role_id = data['role'].to_i
           user.save
           return [200, 'ok']

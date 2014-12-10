@@ -26,8 +26,14 @@ angular.module('yunakQuiz.sessions', ['ngRoute', "ngResource",'yunakQuiz.permiss
           });
           },
           function(data){
-            lgnCtrl.message = "Не валідний нік і/або пароль!";
-            lgnCtrl.user = {};
+            if (data.data == "User is blocked!"){
+              lgnCtrl.message ="Нажаль, цей аккаунт заблоковано";
+              lgnCtrl.user = {};
+            }
+            else if (data.data == "unauthorized"){
+              lgnCtrl.message = "Не валідний нік і/або пароль!";
+              lgnCtrl.user = {};
+            }
           });
       }
     };
