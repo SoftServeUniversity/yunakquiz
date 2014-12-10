@@ -22,7 +22,10 @@ guestSearch.controller('SearchCtrl', ['$scope', '$http',
   // and checks recived data
   $scope.searchData = function(allCats) {
 
+    angular.element($(":input").blur());
+
     // Init search request
+    setTimeout(function(){
     $scope.searchRequest = { 
       categories_id: guestSearchFactory.checkAllCats(allCats), 
       tags: guestSearchFactory.checkTags($scope.tags), 
@@ -62,6 +65,7 @@ guestSearch.controller('SearchCtrl', ['$scope', '$http',
       // Show error message 
       $scope.searchError = 2;
     });
+  }, 1);
   };
 
   // Adding tags from results container 
