@@ -195,7 +195,7 @@ color: white;
 .categories-container{
   border: 1px solid #ccc;
   padding: 18px 20px 0px;
-  margin-bottom: 30px;
+  margin-bottom: 50px;
   margin-top: -25px;
   margin-left: 14px;
   z-index: 1;
@@ -491,4 +491,9 @@ box-shadow: 0px 0px 21px 0px rgba(0,0,0,0.75);
 }
 .page500 {
   width: 30%
+}
+
+/*style to category page*/
+.col-sm-12{
+  height: 100px;
 }
