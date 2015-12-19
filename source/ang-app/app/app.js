@@ -17,14 +17,39 @@ angular.module('yunakQuiz', [
   'yunakQuiz.staticPartialsRoute',
   'yunakQuiz.categoriesContainer',
   'yunakQuiz.subcategory'
-])
-.config(['$routeProvider', 
-  function($routeProvider) {
-    $routeProvider.
+]).
+config(['$routeProvider',
+    function($routeProvider) {
+      $routeProvider.
       when('/', {
         templateUrl: 'modules/partials/home-page-greetings.html',
-      })
-      .otherwise({
+      }).
+      otherwise({
         redirectTo: '/'
       });
-}]);
+    }
+  ])
+  .controller("ApplicationController", ["$http", "$scope", function($http, $scope) {
+    var app = this;
+    this.username = "";
+    $http.get("http://localhost:9292/access")
+      .success(function(data) {
+        app.username = data;
+      }).error(function() {
+        app.username = undefined;
+      });
+    $scope.$on("user_logged_in", function(event, data) {
+      app.username = data;
+    });
+    this.userLoggedIn = function() {
+      return (this.username != "") && (this.username != undefined);
+    };
+    this.logout = function() {
+      $http.get("http://localhost:9292/logout")
+        .success(function(data) {
+          app.username = undefined;
+        });
+    };
+  }]);
+
+])
