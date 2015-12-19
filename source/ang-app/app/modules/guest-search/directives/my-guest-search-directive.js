@@ -1,5 +1,7 @@
 'use strict';
 
+var  guestSearch = angular.module('yunakQuiz.guestSearch');
+
 guestSearch.directive('myGuestSearchCat', [ function() {
   return {
     restrict: 'E',

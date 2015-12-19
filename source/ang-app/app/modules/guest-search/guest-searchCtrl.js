@@ -1,6 +1,7 @@
 'use strict'; 
 
 //Ctrl for guest search page
+var  guestSearch = angular.module('yunakQuiz.guestSearch');
 guestSearch.controller('SearchCtrl', ['$scope', '$http', 
   'guestSearchFactory',  
   function ($scope, $http, guestSearchFactory) {
