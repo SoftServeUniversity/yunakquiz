@@ -16,4 +16,3 @@ var yunakQuizApp = angular.module('yunakQuiz.assessments', ['ngRoute'])
   ;
    
 }]);
-

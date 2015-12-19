@@ -16,10 +16,29 @@
   <link rel="stylesheet" href="app.css"/>
   <script src="bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"></script>
 </head>
-<body>
-  <div class="inner-wraper container ">
-    <header-menu></header-menu> 
-    <div ng-view></div>
+<body ng-controller="ApplicationController as appCtrl">
+  <div class="outer-wraper container">
+    <div class="inner-wraper container ">
+      <login> </login>
+      <header-menu></header-menu> 
+      <div ng-view></div>
+    </div>
+    <footer class="footer-menu-container container">
+      <nav class="footer-menu">
+        <ul >
+          <li>
+            <a href="#">Головна</a> &nbsp;|
+          </li>
+          <li>
+            <a href="#about-us">Про Нас</a> &nbsp;|
+          </li>
+          <li>
+            <a href="#contacts">Контакти</a>
+          </li>
+         </ul>
+      </nav>
+      <p>Copyright@ Softserve 2014 <div>App version: v<span app-version></span></div></p>
+    </footer>  
   </div>
   <footer class="footer-menu-container">
     <nav class="footer-menu">
@@ -41,8 +60,6 @@
   <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
   <![endif]-->
-
-  
 
   <!-- In production use:
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
@@ -76,3 +93,4 @@
   <script src="components/version/interpolate-filter.js"></script>
 </body>
 </html>
+
