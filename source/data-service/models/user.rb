@@ -78,4 +78,14 @@ class User < ActiveRecord::Base
       user.save
     end
   end
+
+  public
+  def can?(action)
+    case action
+      when :moderate_quizzess
+        self.role.name === "moder" || self.role.name === "superadmin"
+      else
+        false
+      end
+  end  
 end

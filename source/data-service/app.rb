@@ -151,7 +151,7 @@ module PlastApp
 
     ## Quizzes list for moderators
     post '/assessments/moderator/:status' do
-      if logged_user && logged_user.role.name === "moder"
+      if logged_user && logged_user.can?(:moderate_quizzess)
         data = JSON.parse(request.body.read)
         categories = data['categoryFilter'] 
         categories = Category.all.pluck("id") if categories.empty? 
