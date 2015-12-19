@@ -1,7 +1,7 @@
 module PlastApp
 	class YunakQuiz < Sinatra::Base
  	 set :cross_origin, true
-	 set :allow_origin, 'http://localhost:8000'
+	 set :allow_origin, :any
 	 set :allow_methods, [:post, :get, :options, :put, :delete]
 	 set :allow_credentials, true
 	 set :allow_headers, ["*", "Content-Type", "Accept", "AUTHORIZATION", "Cache-Control", "origin"]

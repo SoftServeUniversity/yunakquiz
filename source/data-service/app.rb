@@ -16,46 +16,46 @@ module PlastApp
     register Sinatra::AssetPipeline
     register Sinatra::ActiveRecordExtension
     register Sinatra::CrossOrigin
-    
-    use Rack::Session::Cookie, 
-      :secret => 'cca369ff55af5ceefc50939498d93f5905272422baf5d86dd0c4271e2e68a9ba'
+
+    use Rack::Session::Cookie,
+    :secret => 'cca369ff55af5ceefc50939498d93f5905272422baf5d86dd0c4271e2e68a9ba'
 
     Dir.glob('./config/*.rb').each {|file| require file}
     Dir.glob('./models/*.rb').each {|file| require file}
-    Dir.glob('./lib/*.rb').each {|file| require file}    
-    
+    Dir.glob('./lib/*.rb').each {|file| require file}
+
     helpers do
       def filtered_user(user)
         filter = %w(id username first_name last_name email birthday plast_level plast_region plast_hovel picture)
         if user.methods.include?(:attributes)
-          return user.attributes.delete_if{|key, value| !filter.include? key.to_s} 
+          return user.attributes.delete_if{|key, value| !filter.include? key.to_s}
         else
           return user.delete_if{|key, value| !filter.include? key.to_s}
-        end  
+        end
       end
     end
 
-    def logged_user 
-     if session[:user_id]
-      return User.find(session[:user_id])
-     end
-     nil
+    def logged_user
+      if session[:user_id]
+        return User.find(session[:user_id])
+      end
+      nil
     end
 
     options '/*' do
     end
-    
+
     get '/' do
-        erb :index
+      erb :index
     end
-    
+
     get '/categories' do
       content_type :json
       JSON.pretty_generate(Category.catList)
-    end  
+    end
 
 
-  ## Assessments block starts here!
+    ## Assessments block starts here!
 
     def response_helper data,msg
       content_type :json
@@ -64,7 +64,7 @@ module PlastApp
       else
         return [400, msg.to_json]
       end
-    end 
+    end
 
 
     ## Quiz resource start
@@ -80,7 +80,7 @@ module PlastApp
       if logged_user
         data = JSON.parse(request.body.read)
         @quiz = Quiz.create_quiz(data, logged_user)
-      end  
+      end
       response_helper @quiz, "Quiz not created!"
     end
 
@@ -90,7 +90,7 @@ module PlastApp
         @quiz = Quiz.update_quiz(data, logged_user) unless data['id'].nil?
       end
       response_helper @quiz, "Quiz not found!"
-    end    
+    end
 
     delete '/admin/assessments/:id' do
       if logged_user
@@ -109,7 +109,7 @@ module PlastApp
 
     post '/admin/assessments/:id/title' do
       data = JSON.parse(request.body.read)
-      query = Quiz.where(title: data['query']).where.not(id: params['id']).exists? 
+      query = Quiz.where(title: data['query']).where.not(id: params['id']).exists?
       @result = {present: query}
       response_helper @result, "Error"
     end
@@ -125,10 +125,10 @@ module PlastApp
       data = JSON.parse(request.body.read)
       if logged_user
         Result.save(logged_user, data['quiz_id'], data['grade'])
-      end  
+      end
       @quiz={}
       response_helper @quiz, "Quiz not created!"
-    end    
+    end
 
     ## end of Assessment resource.
 
@@ -153,28 +153,28 @@ module PlastApp
     post '/assessments/moderator/:status' do
       if logged_user && logged_user.can?(:moderate_quizzess)
         data = JSON.parse(request.body.read)
-        categories = data['categoryFilter'] 
-        categories = Category.all.pluck("id") if categories.empty? 
+        categories = data['categoryFilter']
+        categories = Category.all.pluck("id") if categories.empty?
         @quizzes = Quiz.quiz_query(params['status'], data['searchData'],
-         data['currentPage'], data['itemsPerPage'],categories)
+        data['currentPage'], data['itemsPerPage'],categories)
         response_helper @quizzes, "Quizzes not found"
       end
       response_helper @quizzes, "Forbidden!"
     end
-    
+
     ##Quiz comments section start
     get '/assessments/:id/comments' do
       @comment = {quiz_id:params['id'].to_i, arr: Comment.get_by_quiz(params['id'])}
 
       response_helper @comment, ["Comments #{params['id']} not found!"]
-    end 
+    end
 
     post '/assessments/:id/comments' do
       data = JSON.parse(request.body.read)
       @comments = {updated: Comment.update_comments(data['arr'],params['id'])}
 
       response_helper @comments, ["comments not updated"]
-    end 
+    end
 
     delete '/assessments/:id/comments' do
       content_type :json
@@ -203,7 +203,7 @@ module PlastApp
       result = Result.get_result(quizzes,total_items,session[:user_id])
 
       response_helper result, ["not found!"]
-    end 
+    end
     ##User_statistic block's end
 
     get '/tags/:query' do
@@ -212,12 +212,12 @@ module PlastApp
       Tag.select(:tag, :id).where("tag like ?", query).to_json
     end
 
-  ## Assessments block ends here!
+    ## Assessments block ends here!
 
     get '/about_us' do
       content_type :json
       Staticinfo.select(['id','about_us','updated_at']).to_json
-    end  
+    end
 
     get '/categories/parent' do
       Category.getParentCategories()
@@ -232,21 +232,21 @@ module PlastApp
     end
 
     get '/categories/category/:id' do
-      Category.getCategoryById(params['id'])  
+      Category.getCategoryById(params['id'])
     end
 
     get '/categories/subcat/:id' do
       Category.getSubCatByParCatId(params['id'])
     end
-    
+
     put '/about_us' do
-       data = request.body.read
-       status = Staticinfo.updateInfo(data)
-       if status
+      data = request.body.read
+      status = Staticinfo.updateInfo(data)
+      if status
         return [200, {'Success' => "operation success"}.to_json]
-       else
-         return [400, {'error' => "operation failed"}.to_json]
-       end    
+      else
+        return [400, {'error' => "operation failed"}.to_json]
+      end
     end
 
     get '/permission' do
@@ -263,11 +263,11 @@ module PlastApp
       content_type :json
       quizzes = Quiz.queryListAll(params['status'])
       if quizzes
-        JSON.pretty_generate(quizzes) 
+        JSON.pretty_generate(quizzes)
       else
         return [400, "Not found "+params['status']]
       end
-    end   
+    end
 
     get '/contacts' do
       content_type :json
@@ -282,7 +282,7 @@ module PlastApp
         return [200, newCat.to_json]
       else
         return [400, {'error' => "категорія вже існує"}.to_json]
-      end    
+      end
     end
 
     put '/admin/category/update' do
@@ -293,7 +293,7 @@ module PlastApp
         return [200, newCat.to_json]
       else
         return [400, {'error' => " оновлення категорії невдале"}.to_json]
-      end    
+      end
     end
 
     delete '/admin/category/delete/:id' do
@@ -303,41 +303,41 @@ module PlastApp
         return [200, catToDel.to_json]
       else
         return [400, {'error' => " видалення категорії невдале"}.to_json]
-      end    
+      end
     end
-    
+
     get '/faq' do
       content_type :json
       Faq.select(['id', 'faq_question', 'faq_answer']).to_json
     end
-    
+
     get '/access' do
       if session[:user_id]
         user = User.find(session[:user_id])
         return [200, filtered_user(user).to_json]
       end
       return [401, "unauthorized"]
-    end 
-    
+    end
+
     post '/access' do
       data = JSON.parse request.body.read
       user = User.authenticate(data['username'], data['password'])
       if user
-         if user.blocked?
-            return [403, "User is blocked!"]
-         else
-            session[:user_id] = user.id
-            return [200, filtered_user(user).to_json]
-         end
+        if user.blocked?
+          return [403, "User is blocked!"]
+        else
+          session[:user_id] = user.id
+          return [200, filtered_user(user).to_json]
+        end
       end
       return [401, "unauthorized"]
     end
-    
+
     delete '/access' do
       session.clear
       return [200, "ok"]
     end
-    
+
     post '/user' do
       data = JSON.parse request.body.read
       user = User.new(data)
@@ -348,7 +348,7 @@ module PlastApp
         return [400, user.errors.messages.to_json]
       end
     end
-    
+
     put '/user' do
       data = JSON.parse request.body.read
       filter = %w(first_name last_name email birthday plast_level plast_region plast_hovel picture)
@@ -368,8 +368,8 @@ module PlastApp
       saved_name = "#{SecureRandom.hex(5)}#{File.extname(filename)}"
       FileUtils.copy(tempfile.path, "public/avatar/#{saved_name}")
       return [200, saved_name]
-    end  
-    
+    end
+
     delete '/user' do
       data = params
       user = User.authenticate(data['username'], data['password'])
@@ -379,14 +379,14 @@ module PlastApp
       end
       return [400, 'bad request']
     end
-    
+
     put '/saveQuestion' do
       content_type :json
       save_Question = JSON.parse(request.body.read)
 
       if(Faq.where('id=?', save_Question['id']).length == 0)
         curFaq = Faq.create(faq_question:save_Question['Question'], faq_answer:save_Question['Answer'])
-    
+
         if curFaq
           return [200, "Creation Success"]
         else
@@ -403,23 +403,23 @@ module PlastApp
 
     delete '/deleteQuestion/:id' do
       content_type :json
-      
+
       Faq.find(params['id']).destroy()
       [200, {'success' => "success"}.to_json]
     end
 
     post '/search' do
       content_type :json
-      query = JSON.parse(request.body.read) 
+      query = JSON.parse(request.body.read)
       # This function is part of SerchQuizzes class
       # checkout /models/searchQuizzes.rb for details
-      search_and_check(query) 
+      search_and_check(query)
     end
 
     get '/last_quizzes/:id' do
       Quiz.lastQuizzes(params['id'])
     end
-    
+
     post '/checkpassword/' do
       # content_type :json
       data = JSON.parse(request.body.read)
@@ -436,7 +436,7 @@ module PlastApp
     post '/admin/users' do
       data = JSON.parse(request.body.read)
       @users = User.user_query(data['status'], data['searchData'],data['currentPage'],data['itemsPerPage'], data['roles'])
-     response_helper @users, "Users not found!"
+      response_helper @users, "Users not found!"
     end
 
     delete '/admin/users/:id' do
@@ -466,13 +466,41 @@ module PlastApp
       return [400, 'user not found']
     end
 
+    get '/faq' do
+      content_type :json
+      Faq.select(['id', 'faq_question', 'faq_answer']).to_json
+    end
+
+    post '/saveQuestion' do
+      content_type :json
+      save_Question = JSON.parse(request.body.read)
+
+      if(Faq.where('id=?', save_Question['id']).length == 0)
+        Faq.create(id:save_Question['id'], faq_question:save_Question['Question'], faq_answer:save_Question['Answer'])
+      end
+
+      curfaq = Faq.where('id=?', save_Question['id'])
+      curfaq[0].faq_answer = save_Question['Answer']
+      curfaq[0].faq_question = save_Question['Question']
+      curfaq[0].save()
+    end
+
+    delete '/deleteQuestion/:id' do
+      content_type :json
+      # getQuestion = JSON.parse(request.body.read)
+      Faq.find(params['id']).delete()
+      [200, {'success' => "success"}.to_json]
+
+      Faq.select(['id', 'faq_question', 'faq_answer']).to_json
+    end
+
     put '/admin/users/:id/role' do
       data = JSON.parse(request.body.read)
       user = User.find(params['id'])
       if user
-          user.role_id = data['role'].to_i
-          user.save
-          return [200, 'ok']
+        user.role_id = data['role'].to_i
+        user.save
+        return [200, 'ok']
       end
       return [400, 'user not found']
     end
