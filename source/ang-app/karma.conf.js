@@ -10,6 +10,7 @@ module.exports = function(config){
       'app/components/**/*.js',
       'app/modules/assessments/assessments.js',
       'app/modules/users/users.js',
+      'app/modules/guest-search/guest-search.js',
       'app/modules/**/*.js'
     ],
 
