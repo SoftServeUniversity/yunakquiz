@@ -2,5 +2,9 @@
 .sass-cache
 *.log
 *~
+<<<<<<< HEAD
 .project
+=======
+*.project
+>>>>>>> df2acfa3900a29855480cc8b05025785d4cbacfd
 

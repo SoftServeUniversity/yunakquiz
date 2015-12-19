@@ -2,78 +2,84 @@
   <div class="col-md-2"></div>
   <div class="col-md-8">
     <h3 class="text-center">Реєстрація</h3>
-    		<form class="form-horizontal" role="form" ng-submit="reg.submitRegistration()" name="regform" novalidate>
+    		<form class="form-horizontal" role="form" ng-submit="reg.submitRegistration()" 
+    		  name="regform" novalidate>
       <div class="form-group">
-        <label for="first_name" class="col-sm-4 control-label">Імя</label>
+        <label for="first_name" class="col-sm-4 control-label">Ім'я</label>
         <div class="col-sm-6">
-          <input type="text" class="form-control" id="first_name" placeholder="First name" ng-model="reg.user.first_name">
+          <input type="text" class="form-control" id="first_name" placeholder="Ім'я" 
+            ng-model="reg.user.first_name">
         </div>
       </div>
       <div class="form-group">
         <label for="last_name" class="col-sm-4 control-label">Прізвище</label>
         <div class="col-sm-6">
-          <input type="text" class="form-control" id="last_name" placeholder="Last name" ng-model="reg.user.last_name">
+          <input type="text" class="form-control" id="last_name" placeholder="Прізвище" 
+            ng-model="reg.user.last_name">
         </div>
       </div>
       <div class="form-group">
         <label for="username" class="col-sm-4 control-label">Нік*</label>
         <div class="col-sm-6">
-          <input type="text" class="form-control" name="username" ng-minlength=3 id="username" placeholder="Nick name" ng-change="reg.checkUsernameUniqueness()" ng-model="reg.user.username" required>
-          <div class="error-container text-danger" ng-show="(regform.username.$dirty && regform.username.$invalid) || (regform.submitted && regform.username.$invalid)">
-            <small class="error" ng-show="regform.username.$error.required">Please input a username</small>
-            <small class="error" ng-show="regform.username.$error.minlength">Your username is required to be at least 3 characters</small>
-            <small ng-show="regform.username.$error.unique">Username has already been taken</small>
+          <input type="text" class="form-control" id="username" name="username" ng-minlength=3
+            placeholder="Нік" ng-model="reg.user.username" required>
+          <div class="error-container text-danger" ng-show="reg.validation.usernameError()">
+            <small>{{reg.validation.error.username}}</small>
           </div>
         </div>
       </div> 
-       <div class="form-group">
+      <div class="form-group">
         <label for="password" class="col-sm-4 control-label">Пароль*</label>
         <div class="col-sm-6">
-          <input type="password" class="form-control" name="password" ng-minlength=8 id="last_name" placeholder="Password" ng-model="reg.user.password" required>
-          <div class="error-container text-danger" ng-show="(regform.password.$dirty && regform.password.$invalid) || (regform.submitted && regform.password.$invalid)">
-            <small class="error" ng-show="regform.password.$error.required">Please input a password</small>
-            <small class="error" ng-show="regform.password.$error.minlength">Your password is required to be at least 8 characters</small>
+          <input type="password" class="form-control" id="password" name="password" ng-minlength=8 
+            placeholder="Пароль" ng-model="reg.user.password" required>
+          <div class="error-container text-danger" ng-show="reg.validation.passwordError()">
+            <small>{{reg.validation.error.password}}</small>
           </div>
         </div>
       </div>
-       <div class="form-group">
+      <div class="form-group">
         <label for="confirm_password" class="col-sm-4 control-label">Повторіть пароль*</label>
         <div class="col-sm-6">
-          <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Repeat password" ng-model="reg.user.password_confirmation" ng-change="reg.checkPassword()" required>
-          <small class="text-danger" ng-show="regform.password_confirmation.$dirty && regform.password_confirmation.$error.dontMatch">Passwords don't match!</small>
-        </div>
-      </div>
-        <div class="form-group">
-        <label for="email" class="col-sm-4 control-label">Пошта*</label>
-        <div class="col-sm-6">
-          <input type="email" class="form-control" id="email" name="email" placeholder="Email" ng-model="reg.user.email" required>
-          <div class="error-container text-danger" ng-show="(regform.email.$dirty && regform.email.$invalid) || (regform.submitted && regform.email.$invalid)">
-            <small class="error" ng-show="regform.email.$error.required">Please input your email</small>
-            <small class="error" ng-show="regform.email.$error.email">
-                That is not a valid email. Please input a valid email.
-            </small>
+          <input type="password" class="form-control" id="confirm_password" name="password_confirmation" 
+            placeholder="Повторіть пароль" ng-model="reg.user.password_confirmation" required> 
+          <div class="error-container text-danger" ng-show="reg.validation.confirmPassError()">
+            <small>{{reg.validation.error.password_confirmation}}</small>
           </div>
         </div>
       </div>
-       <div class="form-group">
+      <div class="form-group">
+      <label for="email" class="col-sm-4 control-label">Пошта*</label>
+        <div class="col-sm-6">
+          <input type="email" class="form-control" ng-pattern="reg.emailPattern" id="email" name="email" 
+            placeholder="Пошта" ng-model="reg.user.email" required>
+          <div class="error-container text-danger" ng-show="reg.validation.emailError()">
+            <small>{{reg.validation.error.email}}</small>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
         <label for="birthday" class="col-sm-4 control-label">День народження*</label>
         <div class="col-sm-6">
-          <input type="date" class="form-control" id="birthday" name="birthday" placeholder="Birthday" ng-model="reg.user.birthday" required>
-          <div class="error-container text-danger" ng-show="(regform.birthday.$dirty && regform.birthday.$invalid) || (regform.submitted && regform.birthday.$invalid)">
-            <small class="error" ng-show="regform.birthday.$error.required">Please input your birthday</small>
+          <input type="date" class="form-control" id="birthday" name="birthday" placeholder="День народження" 
+            ng-model="reg.user.birthday" required>
+          <div class="error-container text-danger" ng-show="reg.validation.birthdayError()">
+            <small>{{reg.validation.error.birthday}}</small>
           </div>
         </div>
       </div>
-       <div class="form-group">
+      <div class="form-group">
         <label for="plast_hovel" class="col-sm-4 control-label">Пластовий курінь</label>
         <div class="col-sm-6">
-          <input type="text" class="form-control" id="plast_hovel" placeholder="Plast hovel" ng-model="reg.user.plast_hovel">
+          <input type="text" class="form-control" id="plast_hovel" placeholder="Пластовий курінь" 
+            ng-model="reg.user.plast_hovel">
         </div>
       </div>
       <div class="form-group">
         <label for="plast_region" class="col-sm-4 control-label">Станиця</label>
         <div class="col-sm-6">
-          <input type="text" class="form-control" id="plast_region" placeholder="Plast region" ng-model="reg.user.plast_region">
+          <input type="text" class="form-control" id="plast_region" placeholder="Станиця" 
+            ng-model="reg.user.plast_region">
         </div>
       </div>
       <div class="form-group">

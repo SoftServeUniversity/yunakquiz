@@ -10,9 +10,5 @@
       }
     ]);
     app.controller("subcategoryController", function($http,$scope){
-      $http.get('components/DataBase/tests.json').success(function(data){
-        $scope.testBase=data;
-      });
-      $scope.sorting ="date";
     });
 })();

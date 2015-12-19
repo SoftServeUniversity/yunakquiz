@@ -1,23 +1,32 @@
 <div class="row">
-	<div class="col-lg-1 col-md-1 col-sm-10 col col-sx-10"></div>
-	<div class="text-center page-header col-lg-10  col-md-10  col-sm-10  col-xs-10 ">
+	<div class="page-header col-md-10 col-md-offset-1">
 		<h4>Система Пластових електронних опитників</h4>
-   		<div >
-			<ul class="header-navmenu">
-				<li>
-					<a href="#" >Головна</a>
-				</li>
-				<li>
-					<a href="#guest-search">Пошук</a>
-				</li>
-				<li>
-					<a href="#contacts">Контакти</a>
-				</li>
-				<li>
-					<a href="#statistics">Статистика</a>
-				</li>
-			</ul>
-		</div>
-		<a href=""><img class="login-header-menu " src="./modules/img/login.jpg" alt="Login" height="42" width="42"></a>
+		<ul class="header-navmenu">
+			<li>
+				<a href="#" >Головна</a>
+			</li>
+			<li>
+				<a href="#guest-search">Пошук</a>
+			</li>
+			<li>
+				<a href="#contacts">Контакти</a>
+			</li>
+			<li>
+				<a href="#statistics">Статистика</a>
+			</li>
+		</ul>
 	</div>
+	  <a href="" data-toggle="modal" data-target="#login" ng-hide="appCtrl.userLoggedIn()"> 
+	    <img class="login-header-menu " src="./modules/img/login.jpg" alt="Login" height="42" width="42" ></a>
+      <div class="col-md-1">
+        <div class="dropdown" ng-show="appCtrl.userLoggedIn()">
+          <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><h4>{{appCtrl.username}} <span class="caret"></span></h4></a>
+            <ul class="dropdown-menu" role="menu">
+              <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Особистий кабінет</a></li>
+              <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Панель адміністратора</a></li>
+              <li role="presentation" class="divider"></li>
+              <li role="presentation"><a role="menuitem" tabindex="-1" href="#" ng-click="appCtrl.logout()">Вийти</a></li>
+            </ul>
+        </div>
+      </div>
 </div>
